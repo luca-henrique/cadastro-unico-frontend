@@ -1,23 +1,27 @@
-import { injectGlobal } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
-import "font-awesome/css/font-awesome.css";
+export default createGlobalStyle`
+  @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
-injectGlobal`
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  outline: 0;
-  
-}
-body, html {
-  background: #eee;
-  font-family: 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
-  text-rendering: optimizeLegibility !important;
-  -webkit-font-smoothing: antialiased !important;
-  height: 100%;
-  width: 100%;
-  
-  
-}
+  *{
+    padding:0;
+    margin:0;
+    outline:0;
+    box-sizing:border-box;
+  }
+
+  body{
+    background:rgb(246, 238, 89);
+    overflow:hidden;
+    font-family: 'Roboto', sans-serif;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+
+  html,body, #root{
+    height:100%;
+  }
+
+
+
 `;

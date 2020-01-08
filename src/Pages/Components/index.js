@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
   height: 100vh;
 `;
@@ -12,28 +12,39 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 400px;
-  background: #fff;
-  input {
-    color: #777;
-    border: 1px solid #ddd;
-    font-size: 15px;
-    height: 45px;
-    width: 88%;
-    margin-top: 20px;
-    padding-left: 2%;
-    &::placeholder {
-      color: #999;
+  width: 500px;
+  background: rgb(2, 99, 44);
+  border-radius: 5px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+
+  div {
+    width: 90%;
+    margin-top: 5%;
+
+    input {
+      background-color: #fff;
+      border: none;
+      font-size: 18px;
+      height: 45px;
+      width: 100%;
+      margin-top: 2%;
+      border-radius: 5px;
+      &::placeholder {
+        color: #999;
+      }
     }
   }
+
   button {
-    font-size: 16px;
+    font-size: 20px;
     height: 45px;
     width: 90%;
     border: none;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    color: #848484;
   }
 `;

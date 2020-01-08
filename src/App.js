@@ -1,7 +1,19 @@
-import React from "react";
-import SignUp from "./Pages/Account/SignUp/index";
-import "./Styles/global";
+import React, { Fragment } from "react";
 
-const App = () => <SignUp />;
+import { Provider } from "react-redux";
+
+import Routes from "./Routes/index";
+import store from "./store";
+
+import GlobalStyle from "./Styles/global";
+
+const App = () => (
+  <Provider store={store}>
+    <Fragment>
+      <Routes />
+      <GlobalStyle />
+    </Fragment>
+  </Provider>
+);
 
 export default App;
