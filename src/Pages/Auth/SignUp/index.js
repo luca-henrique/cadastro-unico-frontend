@@ -12,12 +12,12 @@ function SignUp(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  console.log(props);
+
   function handleSubmit(e) {
     e.preventDefault();
     const { signInRequest } = props;
     signInRequest(email, password);
-
-    console.log(props);
   }
 
   return (
