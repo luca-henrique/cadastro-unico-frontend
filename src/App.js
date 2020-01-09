@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 
 import Routes from "./Routes/index";
 import store from "./store";
+import ReduxToastr from "react-redux-toastr";
 
 import GlobalStyle from "./Styles/global";
 
@@ -12,6 +13,7 @@ const App = () => (
     <Fragment>
       <Routes />
       <GlobalStyle />
+      <ReduxToastr />
     </Fragment>
   </Provider>
 );
