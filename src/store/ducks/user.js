@@ -2,26 +2,26 @@ import Immutable from "seamless-immutable";
 
 export const Types = {
   /* NOVO USER */
-  SHOW_NEW_MODAL_USER: "@user/SHOW_NEW_MODAL_USER",
-  HIDE_NEW_MODAL_USER: "@user/HIDE_NEW_MODAL_USER"
+  SHOW_NEW_VIEW: "@user/SHOW_NEW_VIEW",
+  HIDE_NEW_VIEW: "@user/HIDE_NEW_VIEW"
 };
 
 const INITIAL_STATE = Immutable({
-  isVisible: false,
+  show: { visible: false, type: "default" },
   users: {}
 });
 
 export default function User(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case Types.SHOW_NEW_MODAL_USER:
+    case Types.SHOW_NEW_VIEW:
       return {
         ...state,
-        isVisible: true
+        show: { visible: true, type: action.payload.type }
       };
-    case Types.HIDE_NEW_MODAL_USER:
+    case Types.HIDE_NEW_VIEW:
       return {
         ...state,
-        isVisible: false
+        show: { visible: false }
       };
 
     default:
@@ -30,11 +30,14 @@ export default function User(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
-  showModalNewUser: () => ({
-    type: Types.SHOW_NEW_MODAL_USER
+  show: type => ({
+    type: Types.SHOW_NEW_VIEW,
+    payload: {
+      type
+    }
   }),
 
-  hideModalNewUser: () => ({
-    type: Types.HIDE_NEW_MODAL_USER
+  hide: () => ({
+    type: Types.HIDE_NEW_VIEW
   })
 };

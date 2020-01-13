@@ -4,29 +4,24 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as UserCreators } from "../../../store/ducks/user";
-import { ContainerOwner } from "../../Components/index";
 
-import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
-import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import {
+  AppBar,
+  CssBaseline,
+  Drawer,
+  Hidden,
+  IconButton,
+  Toolbar,
+  Typography,
+  makeStyles,
+  useTheme
+} from "@material-ui/core/";
 
-import Person from "@material-ui/icons/Person";
-import Home from "@material-ui/icons/Home";
-import Exit from "@material-ui/icons/ExitToApp";
+import { Menu } from "@material-ui/icons/";
+
+import LeftBar from "./Components/LeftBar";
+
+import Perfil from "./Components/Perfil";
 
 const drawerWidth = 240;
 
@@ -57,69 +52,28 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth
   },
   content: {
-    flexGrow: 1,
     padding: theme.spacing(3)
   }
 }));
 
 function View(props) {
-  const { signOut } = props;
-  const { showModalNewUser } = props;
-
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  console.log(props);
+
+  const { type } = props.redux.show;
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const drawer = (
-    <div>
-      <div
-        className={classes.toolbar}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "rgb(246,238,89)"
-        }}
-      >
-        <Home
-          style={{
-            fontSize: 80,
-            color: "rgb(2, 99, 44)",
-            margin: "10px"
-          }}
-        />
-      </div>
-
-      <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
-        <ListItem button style={{ backgroundColor: "rgb(2, 99, 44)" }}>
-          <ListItemIcon>
-            <Person style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
-          </ListItemIcon>
-          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
-            Perfil
-          </ListItemText>
-        </ListItem>
-        <ListItem
-          button
-          style={{ backgroundColor: "rgb(2, 99, 44)" }}
-          onClick={signOut}
-        >
-          <ListItemIcon>
-            <Exit style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
-          </ListItemIcon>
-          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
-            Sair
-          </ListItemText>
-        </ListItem>
-      </List>
-    </div>
-  );
+  const PAGES = {
+    default: <h2>Teste</h2>,
+    perfil: <Perfil />
+  };
 
   return (
     <div className={classes.root}>
@@ -137,7 +91,7 @@ function View(props) {
             onClick={handleDrawerToggle}
             className={classes.menuButton}
           >
-            <MenuIcon />
+            <Menu />
           </IconButton>
           <Typography variant="h6" noWrap style={{ color: "rgb(246,238,89)" }}>
             Cadastro único
@@ -160,7 +114,7 @@ function View(props) {
               keepMounted: true // Better open performance on mobile.
             }}
           >
-            {drawer}
+            <LeftBar />
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
@@ -171,20 +125,13 @@ function View(props) {
             variant="permanent"
             open
           >
-            {drawer}
+            <LeftBar />
           </Drawer>
         </Hidden>
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla
-        </Typography>
+        {PAGES[type]}
       </main>
     </div>
   );
