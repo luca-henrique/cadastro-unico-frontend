@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import AuthActions from "../../../../store/ducks/auth";
-import { Creators as UserCreators } from "../../../../store/ducks/user";
+import AuthActions from "../../../store/ducks/auth";
+import { Creators as UserCreators } from "../../../store/ducks/user";
 
 import { TextField, Grid, Typography, makeStyles } from "@material-ui/core/";
 

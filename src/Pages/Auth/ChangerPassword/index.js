@@ -7,8 +7,8 @@ import Fade from "@material-ui/core/Fade";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import AuthActions from "../../../../store/ducks/auth";
-import { Creators as LoginCreators } from "../../../../store/ducks/login";
+import AuthActions from "../../../store/ducks/auth";
+import { Creators as LoginCreators } from "../../../store/ducks/login";
 
 import { TextField, Typography, Button } from "@material-ui/core/";
 

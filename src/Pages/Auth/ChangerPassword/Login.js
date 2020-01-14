@@ -4,10 +4,10 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { TextField, Grid, Typography, Button } from "@material-ui/core/";
-import Modal from "./ChangerPassword";
+import Modal from "./inde";
 
-import AuthActions from "../../../../store/ducks/auth";
-import { Creators as LoginCreators } from "../../../../store/ducks/login";
+import AuthActions from "../../../store/ducks/auth";
+import { Creators as LoginCreators } from "../../../store/ducks/login";
 
 function Components(props) {
   const [email, setEmail] = useState("");
