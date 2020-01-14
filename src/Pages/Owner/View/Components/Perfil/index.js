@@ -7,10 +7,10 @@ import { Grid, Typography, Button } from "@material-ui/core/";
 
 // import { Container } from './styles';
 
-import PersonalInformation from "./PersonalInformation";
-import Login from "./Login";
-import Address from "./Address";
-import Contact from "./Contact";
+import PersonalInformation from "../../../../Components/personal-information/index";
+import Login from "../../../../Auth/ChangerPassword/Login";
+import Address from "../../../../Components/Address/index";
+import Contact from "../../../../Components/Contact/index";
 
 const Perfil = () => (
   <div>

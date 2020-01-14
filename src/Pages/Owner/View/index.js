@@ -2,10 +2,9 @@ import React from "react";
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as UserCreators } from "../../../store/ducks/user";
-
-import "./Style/styles.css";
 
 import {
   AppBar,
@@ -21,9 +20,9 @@ import {
 
 import { Menu } from "@material-ui/icons/";
 
-import LeftBar from "./Components/LeftBar";
+import LeftBar from "./Components/LeftBar/index";
 
-import Perfil from "./Components/Perfil";
+import Perfil from "./Components/Perfil/index";
 
 const drawerWidth = 240;
 
@@ -65,8 +64,6 @@ function View(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  console.log(props);
 
   const { type } = props.redux.show;
 

@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { TextField, Grid, Typography, Button } from "@material-ui/core/";
-import Modal from "./inde";
+import Modal from "./index";
 
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as LoginCreators } from "../../../store/ducks/login";
