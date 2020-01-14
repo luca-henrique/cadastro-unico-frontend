@@ -14,7 +14,13 @@ import {
   makeStyles
 } from "@material-ui/core/";
 
-import { Person, Home, ExitToApp } from "@material-ui/icons/";
+import {
+  Person,
+  Home,
+  ExitToApp,
+  HomeWorkOutlined,
+  Group
+} from "@material-ui/icons/";
 
 const drawerWidth = 240;
 
@@ -90,6 +96,36 @@ function LeftBar(props) {
           </ListItemIcon>
           <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
             Perfil
+          </ListItemText>
+        </ListItem>
+        <ListItem
+          button
+          style={{ backgroundColor: "rgb(2, 99, 44)" }}
+          onClick={() => {
+            show("prefeitura");
+          }}
+        >
+          <ListItemIcon>
+            <HomeWorkOutlined
+              style={{ fontSize: "35", color: "rgb(246,238,89)" }}
+            />
+          </ListItemIcon>
+          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
+            Prefeitura
+          </ListItemText>
+        </ListItem>
+        <ListItem
+          button
+          style={{ backgroundColor: "rgb(2, 99, 44)" }}
+          onClick={() => {
+            show("funcionario");
+          }}
+        >
+          <ListItemIcon>
+            <Group style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
+          </ListItemIcon>
+          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
+            Funcionario
           </ListItemText>
         </ListItem>
         <ListItem

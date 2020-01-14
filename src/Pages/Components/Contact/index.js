@@ -32,7 +32,7 @@ function Components(props) {
         >
           <Grid item xs={12} sm={4}>
             <div>
-              <Typography variant="button">Telefone(cel)</Typography>
+              <Typography variant="button">Telefone(fixo)</Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -40,6 +40,15 @@ function Components(props) {
                 onChange={e => setContact(e.target.value)}
                 value={contact}
               />
+            </div>
+          </Grid>
+
+          <Grid item xs={12} sm={2} />
+
+          <Grid item xs={12} sm={4}>
+            <div>
+              <Typography variant="button">Celular</Typography>
+              <TextField variant="outlined" size="small" fullWidth />
             </div>
           </Grid>
         </Grid>

@@ -23,6 +23,8 @@ import { Menu } from "@material-ui/icons/";
 import LeftBar from "./Components/LeftBar/index";
 
 import Perfil from "./Components/Perfil/index";
+import Prefeitura from "./Components/Prefeitura/index";
+import Funcionario from "./Components/Funcionario/index";
 
 const drawerWidth = 240;
 
@@ -55,7 +57,8 @@ const useStyles = makeStyles(theme => ({
   content: {
     padding: theme.spacing(3),
     height: "900px",
-    overflowY: "scroll"
+    overflowY: "scroll",
+    width: "100%"
   }
 }));
 
@@ -73,7 +76,9 @@ function View(props) {
 
   const PAGES = {
     default: <h2>Teste</h2>,
-    perfil: <Perfil />
+    perfil: <Perfil />,
+    prefeitura: <Prefeitura />,
+    funcionario: <Funcionario />
   };
 
   return (
