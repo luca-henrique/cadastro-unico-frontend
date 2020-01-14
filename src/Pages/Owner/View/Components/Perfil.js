@@ -1,14 +1,16 @@
 import React from "react";
 
-import { bindActionCreators } from "redux";
+//import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { TextField, Grid, Typography, Button } from "@material-ui/core/";
+import { Grid, Typography, Button } from "@material-ui/core/";
 
 // import { Container } from './styles';
 
 import PersonalInformation from "./PersonalInformation";
+import Login from "./Login";
 import Address from "./Address";
+import Contact from "./Contact";
 
 const Perfil = () => (
   <div>
@@ -32,7 +34,19 @@ const Perfil = () => (
         <Typography variant="h5">Informações pessoais</Typography>
       </Grid>
 
-      <PersonalInformation />
+      <Grid item xs={12}>
+        <PersonalInformation />
+      </Grid>
+
+      {/* Login */}
+
+      <Grid item xs={12} style={{ marginTop: "20px" }}>
+        <Typography variant="h5">Login</Typography>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Login />
+      </Grid>
 
       {/* Endereço */}
 
@@ -40,7 +54,9 @@ const Perfil = () => (
         <Typography variant="h5">Endereço</Typography>
       </Grid>
 
-      <Address />
+      <Grid item xs={12} style={{ marginTop: "20px" }}>
+        <Address />
+      </Grid>
 
       {/* Contato */}
 
@@ -48,27 +64,10 @@ const Perfil = () => (
         <Typography variant="h5">Contato</Typography>
       </Grid>
 
-      <Grid
-        container
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-        style={{ marginTop: "15px" }}
-      >
-        <Grid item xs={12} sm={4}>
-          <div>
-            <Typography variant="button">Fixo</Typography>
-            <TextField variant="outlined" size="small" fullWidth />
-          </div>
-        </Grid>
-        <Grid item xs={12} sm={2} />
-        <Grid item xs={12} sm={4}>
-          <div>
-            <Typography variant="button">celular</Typography>
-            <TextField variant="outlined" size="small" fullWidth />
-          </div>
-        </Grid>
+      <Grid item xs={12} style={{ marginTop: "20px" }}>
+        <Contact />
       </Grid>
+
       <Grid
         container
         direction="row"
@@ -76,10 +75,13 @@ const Perfil = () => (
         alignItems="flex-start"
         style={{ marginTop: "15px" }}
       >
-        <Grid item xs={12} sm={9} />
-        <Grid item xs={12} sm={1} style={{ marginTop: "20px" }}>
-          <div>
-            <Button style={{ width: "100px" }} size="large">
+        <Grid item xs={12} sm={8} />
+        <Grid item xs={12} sm={2} style={{ marginTop: "20px" }}>
+          <div style={{ width: "100%", paddingLeft: "20px" }}>
+            <Button
+              variant="contained"
+              style={{ width: "200px", color: "rgb(2,99,44)" }}
+            >
               Salvar
             </Button>
           </div>

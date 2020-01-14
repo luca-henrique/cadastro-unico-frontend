@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as UserCreators } from "../../../store/ducks/user";
 
+import "./Style/styles.css";
+
 import {
   AppBar,
   CssBaseline,
@@ -52,7 +54,9 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth
   },
   content: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
+    height: "900px",
+    overflowY: "scroll"
   }
 }));
 
