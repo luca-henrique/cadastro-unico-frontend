@@ -8,6 +8,10 @@ export const Container = styled.div`
   height: 100vh;
 `;
 
+export const ContainerOwner = styled.div`
+  height: 100vh;
+`;
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;

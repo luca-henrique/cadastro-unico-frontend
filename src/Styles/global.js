@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 
 export default createGlobalStyle`
   @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
@@ -11,7 +12,7 @@ export default createGlobalStyle`
   }
 
   body{
-    background:rgb(246, 238, 89);
+   
     overflow:hidden;
     font-family: 'Roboto', sans-serif;
     text-rendering: optimizeLegibility !important;

@@ -1,13 +1,21 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import SignUp from "../Pages/Auth/SignUp/index";
+import { Switch } from "react-router-dom";
+import SignIn from "../Pages/Auth/SignIn/index";
+import OwnerView from "../Pages/Owner/View/index";
+import history from "./history";
+import Private from "./private";
+import Guest from "./guest";
+
+import { ConnectedRouter } from "connected-react-router";
 
 const Routes = () => (
-  <BrowserRouter>
+  <ConnectedRouter history={history}>
     <Switch>
-      <Route path="/" exact component={SignUp} />
+      <Guest path="/" exact component={SignIn} />
+
+      <Private path="/owner" component={OwnerView} />
     </Switch>
-  </BrowserRouter>
+  </ConnectedRouter>
 );
 
 export default Routes;
