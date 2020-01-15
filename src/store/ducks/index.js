@@ -6,6 +6,7 @@ import users from "./user";
 import login from "./login";
 import address from "./address";
 import contact from "./contact";
+import funcionario from "./funcionario";
 
 import { reducer as auth } from "./auth";
 
@@ -13,6 +14,7 @@ export default history =>
   combineReducers({
     toastr,
     contact,
+    funcionario,
     login,
     address,
     users,

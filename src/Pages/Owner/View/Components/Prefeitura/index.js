@@ -1,14 +1,12 @@
 import React from "react";
 
-import { bindActionCreators } from "redux";
+//import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { Grid, Typography, Button, TextField } from "@material-ui/core/";
 
 import Address from "../../../../Components/Address/";
 import Contact from "../../../../Components/Contact/";
-
-// import { Container } from './styles';
 
 const Prefeitura = () => (
   <>
@@ -35,14 +33,14 @@ const Prefeitura = () => (
         justify="flex-start"
         alignItems="flex-start"
       >
-        <Grid item xs={12} sm={4} style={{ marginTop: "15px" }}>
+        <Grid item xs={12} sm={5} style={{ marginTop: "15px" }}>
           <div>
             <Typography variant="button">CNPJ</Typography>
             <TextField variant="outlined" size="small" fullWidth />
           </div>
         </Grid>
         <Grid item xs={12} sm={2} />
-        <Grid item xs={12} sm={4} style={{ marginTop: "15px" }}>
+        <Grid item xs={12} sm={5} style={{ marginTop: "15px" }}>
           <div>
             <Typography variant="button">Razão(Nome)</Typography>
             <TextField variant="outlined" size="small" fullWidth />
@@ -54,7 +52,7 @@ const Prefeitura = () => (
       <Grid item xs={12} style={{ marginTop: "10px" }}>
         <Typography variant="h5">Endereço</Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={12}>
         <Address />
       </Grid>
 
@@ -62,7 +60,7 @@ const Prefeitura = () => (
       <Grid item xs={12} style={{ marginTop: "10px" }}>
         <Typography variant="h5">Contato</Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={12}>
         <Contact />
       </Grid>
 
@@ -72,8 +70,7 @@ const Prefeitura = () => (
         justify="flex-start"
         alignItems="flex-start"
       >
-        <Grid item xs={10} sm={8}></Grid>
-        <Grid item xs={10} sm={2} style={{ marginTop: "20px" }}>
+        <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
           <div style={{ width: "100%" }}>
             <Button
               variant="contained"

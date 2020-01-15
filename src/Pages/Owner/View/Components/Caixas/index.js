@@ -3,53 +3,30 @@ import React, { useState } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Creators as FuncionarioCreators } from "../../../../../store/ducks/funcionario";
+import { Creators as UserCreators } from "../../../../../store/ducks/user";
 
 import MaterialTable from "material-table";
 
-import Modal from "./Create/";
-
-function Funcionario(props) {
+const Caixas = props => {
   const [state, setState] = useState({
     columns: [
       {
-        title: "CPF",
-        field: "cpf",
+        title: "id",
+        field: "id",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
-        title: "Nome",
-        field: "nome",
+        title: "Quantidade de pastas",
+        field: "qtdPastas",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
-        title: "Cargo",
-        field: "cargo",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "Cidade",
-        field: "cidade",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "Telefone(fixo)",
-        field: "telefone",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "celular",
-        field: "celular",
+        title: "Quantidade maxima de pastas",
+        field: "qtdMax",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
@@ -57,34 +34,36 @@ function Funcionario(props) {
     ],
     data: [
       {
-        cpf: "111.111.111-11",
-        nome: "Lucas Henrique Paes de Carvalho",
-        cargo: "administrador",
-        cidade: "São josé do egito",
-        telefone: "87 9 98093765",
-        celular: "87 9998093765"
+        id: 1,
+        qtdPastas: 30,
+        qtdMax: 30
       },
       {
-        cpf: "111.",
-        nome: "Lucas Henrique ",
-        cargo: "admin",
-        cidade: "São josé",
-        telefone: "873765",
-        celular: "87093765"
+        id: 1,
+        qtdPastas: 30,
+        qtdMax: 30
+      },
+      {
+        id: 1,
+        qtdPastas: 30,
+        qtdMax: 30
       }
     ]
   });
 
   const [selectedRow, setSelectedRow] = useState("");
-  console.log(props);
 
-  const { showModalNewFuncionario } = props;
+  const { show } = props;
+
+  function abrirPastar(e) {
+    console.log(e);
+  }
 
   return (
     <>
       <MaterialTable
         style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
-        title="Funcionarios"
+        title="Caixas"
         columns={state.columns}
         data={state.data}
         editable={{
@@ -120,7 +99,7 @@ function Funcionario(props) {
           rowStyle: rowData => ({
             backgroundColor:
               selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#F4FA58"
+                ? "#F3F781"
                 : "#FFF"
           })
         }}
@@ -129,20 +108,28 @@ function Funcionario(props) {
             icon: "add",
             tooltip: "Add User",
             isFreeAction: true,
-            onClick: event => showModalNewFuncionario()
+            onClick: event => {
+              console.log(event);
+            }
+          },
+          {
+            icon: "visibility",
+            tooltip: "Mostrar pastas",
+            onClick: (event, rowData) => {
+              show("pasta");
+            }
           }
         ]}
       />
-      <Modal />;
     </>
   );
-}
+};
 
 const mapStateToProps = state => ({
   redux: state
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...FuncionarioCreators }, dispatch);
+  bindActionCreators({ ...UserCreators }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Funcionario);
+export default connect(mapStateToProps, mapDispatchToProps)(Caixas);

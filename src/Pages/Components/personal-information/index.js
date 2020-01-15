@@ -58,8 +58,8 @@ function Components(props) {
               />
             </div>
           </Grid>
-          <Grid item xs={12} sm={1}></Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={2}></Grid>
+          <Grid item xs={12} sm={5}>
             <div>
               <Typography variant="button">Cargo</Typography>
               <TextField
@@ -71,7 +71,8 @@ function Components(props) {
               />
             </div>
           </Grid>
-          <Grid item xs={12} sm={10} className={classes.inputs}>
+
+          <Grid item xs={12} sm={12} className={classes.inputs}>
             <div>
               <Typography variant="button">Nome</Typography>
               <TextField

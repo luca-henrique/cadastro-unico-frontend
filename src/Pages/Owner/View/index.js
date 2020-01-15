@@ -25,6 +25,7 @@ import LeftBar from "./Components/LeftBar/index";
 import Perfil from "./Components/Perfil/index";
 import Prefeitura from "./Components/Prefeitura/index";
 import Funcionario from "./Components/Funcionario/index";
+import Caixa from "./Components/Caixas";
 
 const drawerWidth = 240;
 
@@ -78,7 +79,9 @@ function View(props) {
     default: <h2>Teste</h2>,
     perfil: <Perfil />,
     prefeitura: <Prefeitura />,
-    funcionario: <Funcionario />
+    funcionario: <Funcionario />,
+    caixa: <Caixa />,
+    pasta: <h2>pasta</h2>
   };
 
   return (
@@ -87,7 +90,7 @@ function View(props) {
       <AppBar
         position="fixed"
         className={classes.appBar}
-        style={{ backgroundColor: "rgb(2, 99, 44)" }}
+        style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
       >
         <Toolbar>
           <IconButton

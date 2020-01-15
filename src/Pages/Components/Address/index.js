@@ -56,7 +56,7 @@ function Components(props) {
             </div>
           </Grid>
 
-          <Grid item xs={12} sm={1}></Grid>
+          <Grid item xs={12} sm={2} />
 
           <Grid item xs={12} sm={4}>
             <div>
@@ -71,7 +71,7 @@ function Components(props) {
             </div>
           </Grid>
 
-          <Grid item xs={12} sm={1}></Grid>
+          <Grid item xs={12} sm={2} />
           <Grid item xs={12} sm={1}>
             <div>
               <Typography variant="button">Nº</Typography>
@@ -85,7 +85,7 @@ function Components(props) {
             </div>
           </Grid>
 
-          <Grid item xs={12} sm={10} style={{ marginTop: "10px" }}>
+          <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
             <div>
               <Typography variant="button">Bairro</Typography>
               <TextField
@@ -97,7 +97,7 @@ function Components(props) {
               />
             </div>
           </Grid>
-          <Grid item xs={12} sm={10} style={{ marginTop: "10px" }}>
+          <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
             <div>
               <Typography variant="button">Rua</Typography>
               <TextField
@@ -109,7 +109,7 @@ function Components(props) {
               />
             </div>
           </Grid>
-          <Grid item xs={12} sm={10} style={{ marginTop: "10px" }}>
+          <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
             <div>
               <Typography variant="button">Complemento</Typography>
               <TextField

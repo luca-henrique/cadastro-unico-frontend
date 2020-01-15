@@ -30,41 +30,41 @@ const Perfil = () => (
       justify="flex-start"
       alignItems="flex-start"
     >
-      <Grid item xs={12} style={{ marginTop: "5px" }}>
+      <Grid item xs={12} sm={12} style={{ marginTop: "5px" }}>
         <Typography variant="h5">Informações pessoais</Typography>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={12}>
         <PersonalInformation />
       </Grid>
 
       {/* Login */}
 
-      <Grid item xs={12} style={{ marginTop: "20px" }}>
+      <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
         <Typography variant="h5">Login</Typography>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={12}>
         <Login />
       </Grid>
 
       {/* Endereço */}
 
-      <Grid item xs={12} style={{ marginTop: "20px" }}>
+      <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
         <Typography variant="h5">Endereço</Typography>
       </Grid>
 
-      <Grid item xs={12} style={{ marginTop: "20px" }}>
+      <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
         <Address />
       </Grid>
 
       {/* Contato */}
 
-      <Grid item xs={12} style={{ marginTop: "20px" }}>
+      <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
         <Typography variant="h5">Contato</Typography>
       </Grid>
 
-      <Grid item xs={12} style={{ marginTop: "20px" }}>
+      <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
         <Contact />
       </Grid>
 
@@ -73,16 +73,14 @@ const Perfil = () => (
         direction="row"
         justify="flex-start"
         alignItems="flex-start"
-        style={{ marginTop: "15px" }}
       >
-        <Grid item xs={12} sm={8} />
-        <Grid item xs={12} sm={2} style={{ marginTop: "20px" }}>
-          <div style={{ width: "100%", paddingLeft: "20px" }}>
+        <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
+          <div style={{ width: "100%" }}>
             <Button
               variant="contained"
-              style={{ width: "200px", color: "rgb(2,99,44)" }}
+              style={{ width: "100%", color: "rgb(2,99,44)" }}
             >
-              Salvar
+              Salvar alterações
             </Button>
           </div>
         </Grid>
