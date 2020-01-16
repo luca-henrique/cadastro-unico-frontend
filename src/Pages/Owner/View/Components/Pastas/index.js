@@ -135,7 +135,7 @@ const Pasta = props => {
             icon: "visibility",
             tooltip: "Mostrar grupo familiar",
             onClick: (event, rowData) => {
-              console.log(props);
+              show("familiar");
             }
           }
         ]}

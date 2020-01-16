@@ -22,7 +22,8 @@ import {
   Group,
   Description,
   Wc,
-  AllInbox
+  AllInbox,
+  FileCopy
 } from "@material-ui/icons/";
 
 const drawerWidth = 240;
@@ -62,8 +63,6 @@ const useStyles = makeStyles(theme => ({
 function LeftBar(props) {
   const { show, signOut } = props;
   const classes = useStyles();
-
-  console.log(props);
 
   return (
     <div>
@@ -137,7 +136,22 @@ function LeftBar(props) {
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
-            show("grupo");
+            show("pasta");
+          }}
+        >
+          <ListItemIcon>
+            <FileCopy style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
+          </ListItemIcon>
+          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
+            Pasta
+          </ListItemText>
+        </ListItem>
+
+        <ListItem
+          button
+          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+          onClick={() => {
+            show("familiar");
           }}
         >
           <ListItemIcon>
