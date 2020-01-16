@@ -3,33 +3,60 @@ import React, { useState } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Creators as UserCreators } from "../../../../../store/ducks/user";
-import { Creators as BoxCreators } from "../../../../../store/ducks/caixa";
+// import { Container } from './styles';
 
-import MaterialTable from "material-table";
+import MaterialTable, { MTableToolbar } from "material-table";
+
+import { ArrowBackIos } from "@material-ui/icons/";
 
 import Modal from "./Create/";
 
-const Caixas = props => {
+import { Creators as UserCreators } from "../../../../../store/ducks/user";
+import { Creators as PasteCreators } from "../../../../../store/ducks/pasta";
+
+const Pasta = props => {
   const [state, setState] = useState({
     columns: [
       {
-        title: "id",
-        field: "id",
+        title: "Caixa",
+        field: "id_caixa",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
-        title: "Quantidade de pastas",
-        field: "qtdPastas",
+        title: "Pasta",
+        field: "id_pasta",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
-        title: "Quantidade maxima de pastas",
-        field: "qtdMax",
+        title: "Codigo domiciliar",
+        field: "cod_domiciliar",
+        headerStyle: {
+          color: "rgb(2,90,10)"
+        }
+      },
+      {
+        title: "Bairro",
+        field: "bairro",
+        headerStyle: {
+          color: "rgb(2,90,10)"
+        }
+      },
+      {
+        title: "Data da visita",
+        field: "dt_visita",
+        type: "date",
+        headerStyle: {
+          color: "rgb(2,90,10)"
+        }
+      },
+      {
+        title: "Data da entrevista",
+        field: "dt_entrevista",
+        type: "date",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
@@ -37,32 +64,25 @@ const Caixas = props => {
     ],
     data: [
       {
-        id: 1,
-        qtdPastas: 30,
-        qtdMax: 30
-      },
-      {
-        id: 1,
-        qtdPastas: 30,
-        qtdMax: 30
-      },
-      {
-        id: 1,
-        qtdPastas: 30,
-        qtdMax: 30
+        id_caixa: 1,
+        id_pasta: 1,
+        cod_domiciliar: "161.947.937.17",
+        bairro: "Boa vista",
+        dt_visita: "16.01.2020",
+        dt_entrevista: "25.01.2020"
       }
     ]
   });
 
   const [selectedRow, setSelectedRow] = useState("");
 
-  const { show, showModalNewBox } = props;
+  const { show, showModalNewPaste } = props;
 
   return (
     <>
       <MaterialTable
         style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
-        title="Caixas"
+        title="Pastas"
         columns={state.columns}
         data={state.data}
         editable={{
@@ -105,20 +125,39 @@ const Caixas = props => {
         actions={[
           {
             icon: "add",
-            tooltip: "Add User",
+            tooltip: "Adicionar nova pasta",
             isFreeAction: true,
-            onClick: (event, rowData) => {
-              showModalNewBox();
+            onClick: event => {
+              showModalNewPaste();
             }
           },
           {
             icon: "visibility",
-            tooltip: "Mostrar pastas",
+            tooltip: "Mostrar grupo familiar",
             onClick: (event, rowData) => {
-              show("pasta");
+              console.log(props);
             }
           }
         ]}
+        components={{
+          Toolbar: props => (
+            <div>
+              <MTableToolbar {...props} />
+              <div
+                style={{
+                  marginLeft: "25px",
+                  marginTop: "5px",
+                  marginBottom: "5px"
+                }}
+              >
+                <ArrowBackIos
+                  style={{ fontSize: 30 }}
+                  onClick={() => show("caixa")}
+                />
+              </div>
+            </div>
+          )
+        }}
       />
       <Modal />
     </>
@@ -130,6 +169,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...UserCreators, ...BoxCreators }, dispatch);
+  bindActionCreators({ ...UserCreators, ...PasteCreators }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Caixas);
+export default connect(mapStateToProps, mapDispatchToProps)(Pasta);

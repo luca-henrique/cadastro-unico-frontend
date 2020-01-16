@@ -74,7 +74,8 @@ function LeftBar(props) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "rgb(246,238,89)"
+          backgroundColor: "rgb(246,238,89)",
+          height: "150px"
         }}
       >
         <Home

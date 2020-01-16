@@ -26,6 +26,7 @@ import Perfil from "./Components/Perfil/index";
 import Prefeitura from "./Components/Prefeitura/index";
 import Funcionario from "./Components/Funcionario/index";
 import Caixa from "./Components/Caixas";
+import Pasta from "./Components/Pastas/";
 
 const drawerWidth = 240;
 
@@ -81,7 +82,7 @@ function View(props) {
     prefeitura: <Prefeitura />,
     funcionario: <Funcionario />,
     caixa: <Caixa />,
-    pasta: <h2>pasta</h2>
+    pasta: <Pasta />
   };
 
   return (
