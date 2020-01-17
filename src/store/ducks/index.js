@@ -6,13 +6,21 @@ import users from "./user";
 import login from "./login";
 import address from "./address";
 import contact from "./contact";
+import funcionario from "./funcionario";
+import paste from "./pasta";
+import box from "./caixa";
+import familiar from "./familiar";
 
 import { reducer as auth } from "./auth";
 
 export default history =>
   combineReducers({
     toastr,
+    box,
+    familiar,
+    paste,
     contact,
+    funcionario,
     login,
     address,
     users,

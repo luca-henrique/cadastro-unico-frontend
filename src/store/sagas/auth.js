@@ -18,7 +18,7 @@ export function* signIn({ email, password }) {
       toastrActions.add({
         title: "Falha no login",
         message:
-          "Email/password errados, entre em contato com a empresa responsavel ou com administrador do sistema"
+          "Email/senha errados, entre em contato com a empresa responsavel ou com o administrador."
       })
     );
   }

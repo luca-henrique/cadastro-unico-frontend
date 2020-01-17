@@ -19,7 +19,11 @@ import {
   Home,
   ExitToApp,
   HomeWorkOutlined,
-  Group
+  Group,
+  Description,
+  Wc,
+  AllInbox,
+  FileCopy
 } from "@material-ui/icons/";
 
 const drawerWidth = 240;
@@ -60,8 +64,6 @@ function LeftBar(props) {
   const { show, signOut } = props;
   const classes = useStyles();
 
-  console.log(props);
-
   return (
     <div>
       <div
@@ -71,13 +73,14 @@ function LeftBar(props) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "rgb(246,238,89)"
+          backgroundColor: "rgb(246,238,89)",
+          height: "150px"
         }}
       >
         <Home
           style={{
             fontSize: 80,
-            color: "rgb(2, 99, 44)",
+            color: "rgba(2,99,44,0.7)",
             margin: "10px"
           }}
         />
@@ -86,7 +89,7 @@ function LeftBar(props) {
       <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
         <ListItem
           button
-          style={{ backgroundColor: "rgb(2, 99, 44)" }}
+          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
             show("perfil");
           }}
@@ -98,9 +101,69 @@ function LeftBar(props) {
             Perfil
           </ListItemText>
         </ListItem>
+
         <ListItem
           button
-          style={{ backgroundColor: "rgb(2, 99, 44)" }}
+          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+          onClick={() => {
+            show("funcionario");
+          }}
+        >
+          <ListItemIcon>
+            <Group style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
+          </ListItemIcon>
+          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
+            Funcionario
+          </ListItemText>
+        </ListItem>
+
+        <ListItem
+          button
+          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+          onClick={() => {
+            show("caixa");
+          }}
+        >
+          <ListItemIcon>
+            <AllInbox style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
+          </ListItemIcon>
+          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
+            Caixa
+          </ListItemText>
+        </ListItem>
+
+        <ListItem
+          button
+          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+          onClick={() => {
+            show("pasta");
+          }}
+        >
+          <ListItemIcon>
+            <FileCopy style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
+          </ListItemIcon>
+          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
+            Pasta
+          </ListItemText>
+        </ListItem>
+
+        <ListItem
+          button
+          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+          onClick={() => {
+            show("familiar");
+          }}
+        >
+          <ListItemIcon>
+            <Wc style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
+          </ListItemIcon>
+          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
+            Grupo Familiar
+          </ListItemText>
+        </ListItem>
+        <ListItem
+          button
+          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
             show("prefeitura");
           }}
@@ -116,21 +179,22 @@ function LeftBar(props) {
         </ListItem>
         <ListItem
           button
-          style={{ backgroundColor: "rgb(2, 99, 44)" }}
+          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
-            show("funcionario");
+            show("gerar");
           }}
         >
           <ListItemIcon>
-            <Group style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
+            <Description style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
           </ListItemIcon>
           <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
-            Funcionario
+            Log
           </ListItemText>
         </ListItem>
+
         <ListItem
           button
-          style={{ backgroundColor: "rgb(2, 99, 44)" }}
+          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={signOut}
         >
           <ListItemIcon>

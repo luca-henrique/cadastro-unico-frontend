@@ -30,7 +30,7 @@ function Components(props) {
           alignItems="flex-start"
           style={{ marginTop: "15px" }}
         >
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={5}>
             <div>
               <Typography variant="button">Telefone(fixo)</Typography>
               <TextField
@@ -45,7 +45,7 @@ function Components(props) {
 
           <Grid item xs={12} sm={2} />
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={5}>
             <div>
               <Typography variant="button">Celular</Typography>
               <TextField variant="outlined" size="small" fullWidth />

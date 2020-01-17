@@ -43,9 +43,9 @@ function Components(props) {
               />
             </div>
           </Grid>
-          <Grid item xs={12} sm={3} />
-          <Grid item xs={12} sm={2} style={{ marginTop: "40px" }}>
-            <div>
+          <Grid item xs={12} sm={2} />
+          <Grid item xs={12} sm={5} style={{ marginTop: "40px" }}>
+            <div style={{ width: "100%" }}>
               <Button
                 onClick={showModalEmail}
                 variant="contained"

@@ -3,15 +3,22 @@ import React, { useState } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Creators as FuncionarioCreators } from "../../../../../store/ducks/funcionario";
+import { Creators as UserCreators } from "../../../../../store/ducks/user";
+import { Creators as FamiliarCreators } from "../../../../../store/ducks/familiar";
 
 import MaterialTable from "material-table";
-
 import Modal from "./Create/";
 
-function Funcionario(props) {
+const Familiar = props => {
   const [state, setState] = useState({
     columns: [
+      {
+        title: "id",
+        field: "id",
+        headerStyle: {
+          color: "rgb(2,90,10)"
+        }
+      },
       {
         title: "CPF",
         field: "cpf",
@@ -20,36 +27,22 @@ function Funcionario(props) {
         }
       },
       {
-        title: "Nome",
-        field: "nome",
+        title: "NIS",
+        field: "nis",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
-        title: "Cargo",
-        field: "cargo",
+        title: "Tipo",
+        field: "type",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
-        title: "Cidade",
-        field: "cidade",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "Telefone(fixo)",
-        field: "telefone",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "celular",
-        field: "celular",
+        title: "Situação",
+        field: "situation",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
@@ -57,34 +50,33 @@ function Funcionario(props) {
     ],
     data: [
       {
+        id: 1,
         cpf: "111.111.111-11",
-        nome: "Lucas Henrique Paes de Carvalho",
-        cargo: "administrador",
-        cidade: "São josé do egito",
-        telefone: "87 9 98093765",
-        celular: "87 9998093765"
+        nis: "11111111111",
+        name: "Paes",
+        type: "dependente",
+        situation: "transferido"
       },
       {
-        cpf: "111.",
-        nome: "Lucas Henrique ",
-        cargo: "admin",
-        cidade: "São josé",
-        telefone: "873765",
-        celular: "87093765"
+        id: 1,
+        cpf: "111.111.111-11",
+        nis: "11111111111",
+        name: "Paes",
+        type: "dependente",
+        situation: "transferido"
       }
     ]
   });
 
   const [selectedRow, setSelectedRow] = useState("");
-  console.log(props);
 
-  const { showModalNewFuncionario } = props;
+  const { show, showModalNewFamiliar } = props;
 
   return (
     <>
       <MaterialTable
         style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
-        title="Funcionarios"
+        title="Grupo Familiar"
         columns={state.columns}
         data={state.data}
         editable={{
@@ -120,7 +112,7 @@ function Funcionario(props) {
           rowStyle: rowData => ({
             backgroundColor:
               selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#F4FA58"
+                ? "#F3F781"
                 : "#FFF"
           })
         }}
@@ -129,20 +121,29 @@ function Funcionario(props) {
             icon: "add",
             tooltip: "Add User",
             isFreeAction: true,
-            onClick: event => showModalNewFuncionario()
+            onClick: (event, rowData) => {
+              showModalNewFamiliar();
+            }
+          },
+          {
+            icon: "visibility",
+            tooltip: "Mostrar pastas",
+            onClick: (event, rowData) => {
+              show("pasta");
+            }
           }
         ]}
       />
-      <Modal />;
+      <Modal />
     </>
   );
-}
+};
 
 const mapStateToProps = state => ({
   redux: state
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...FuncionarioCreators }, dispatch);
+  bindActionCreators({ ...UserCreators, ...FamiliarCreators }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Funcionario);
+export default connect(mapStateToProps, mapDispatchToProps)(Familiar);
