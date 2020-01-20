@@ -23,6 +23,8 @@ const useStyles = makeStyles(theme => ({
 function Components(props) {
   const classes = useStyles();
 
+  console.log(props);
+
   const [cpf, setCpf] = useState("");
   const [cargo, setCargo] = useState("");
   const [nome, setNome] = useState("");

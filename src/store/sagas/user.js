@@ -5,9 +5,15 @@ import { push } from "connected-react-router";
 
 import { actions as toastrActions } from "react-redux-toastr";
 
-export function* store({ payload }) {
+export function* index() {
   try {
-    yield call([api, "post"], "/users", payload.user);
+    const response = yield call(api.get, "/users");
+
+    yield put(UsersCreatos.loadUserSuccess(response));
+
+    console.log(response);
+
+    //const user = yield call([api.get, `users/${response.data}`])
   } catch (err) {}
 }
 
