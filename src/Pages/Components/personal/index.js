@@ -6,11 +6,14 @@ import { connect } from "react-redux";
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as UserCreators } from "../../../store/ducks/user";
 
-import { TextField, Grid, Typography, makeStyles } from "@material-ui/core/";
+import { Grid, Typography, makeStyles } from "@material-ui/core/";
+
+import Field from "../TextField/";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: "15px"
+    marginTop: "15px",
+    color: "#BDBDBD"
   },
   inputs: {
     marginTop: "15px"
@@ -49,7 +52,7 @@ function Components(props) {
           <Grid item xs={12} sm={5}>
             <div>
               <Typography variant="button">CPF</Typography>
-              <TextField
+              <Field
                 variant="outlined"
                 size="small"
                 fullWidth
@@ -62,7 +65,7 @@ function Components(props) {
           <Grid item xs={12} sm={5}>
             <div>
               <Typography variant="button">Cargo</Typography>
-              <TextField
+              <Field
                 variant="outlined"
                 size="small"
                 fullWidth
@@ -75,7 +78,7 @@ function Components(props) {
           <Grid item xs={12} sm={12} className={classes.inputs}>
             <div>
               <Typography variant="button">Nome</Typography>
-              <TextField
+              <Field
                 variant="outlined"
                 size="small"
                 fullWidth

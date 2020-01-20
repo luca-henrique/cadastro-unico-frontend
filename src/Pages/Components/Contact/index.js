@@ -6,7 +6,9 @@ import { connect } from "react-redux";
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as ContactCreators } from "../../../store/ducks/contact";
 
-import { TextField, Grid, Typography } from "@material-ui/core/";
+import { Grid, Typography } from "@material-ui/core/";
+
+import TextField from "../TextField/";
 
 function Components(props) {
   const [contact, setContact] = useState("");
@@ -28,11 +30,13 @@ function Components(props) {
           direction="row"
           justify="flex-start"
           alignItems="flex-start"
-          style={{ marginTop: "15px" }}
+          style={{ marginTop: "10px" }}
         >
           <Grid item xs={12} sm={5}>
             <div>
-              <Typography variant="button">Telefone(fixo)</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Telefone(fixo)
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -47,7 +51,9 @@ function Components(props) {
 
           <Grid item xs={12} sm={5}>
             <div>
-              <Typography variant="button">Celular</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Celular
+              </Typography>
               <TextField variant="outlined" size="small" fullWidth />
             </div>
           </Grid>

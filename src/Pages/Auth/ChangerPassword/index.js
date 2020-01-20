@@ -10,7 +10,9 @@ import { connect } from "react-redux";
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as LoginCreators } from "../../../store/ducks/login";
 
-import { TextField, Typography, Button } from "@material-ui/core/";
+import { Typography, Button } from "@material-ui/core/";
+
+import TextField from "../../Components/TextField/";
 
 function TransitionsModal(props) {
   const [password, setPassword] = useState("");

@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Creators as UserCreators } from "../../../../../store/ducks/user";
-import { Creators as FamiliarCreators } from "../../../../../store/ducks/familiar";
+import { Creators as UserCreators } from "../../../store/ducks/user";
+import { Creators as FamiliarCreators } from "../../../store/ducks/familiar";
 
 import MaterialTable from "material-table";
 import Modal from "./Create/";

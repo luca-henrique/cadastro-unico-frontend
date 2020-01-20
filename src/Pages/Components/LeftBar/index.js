@@ -3,8 +3,8 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Creators as UserCreators } from "../../../../../store/ducks/user";
-import AuthActions from "../../../../../store/ducks/auth";
+import { Creators as UserCreators } from "../../../store/ducks/user";
+import AuthActions from "../../../store/ducks/auth";
 
 import {
   List,
@@ -65,7 +65,7 @@ function LeftBar(props) {
   const classes = useStyles();
 
   return (
-    <div>
+    <div style={{ backgroundColor: "rgb(10,103,30)" }}>
       <div
         className={classes.toolbar}
         style={{
@@ -73,14 +73,14 @@ function LeftBar(props) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "rgb(246,238,89)",
+          backgroundColor: "#D8D8D8",
           height: "150px"
         }}
       >
         <Home
           style={{
-            fontSize: 80,
-            color: "rgba(2,99,44,0.7)",
+            fontSize: 100,
+            color: "rgb(2,99,44)",
             margin: "10px"
           }}
         />
@@ -89,7 +89,9 @@ function LeftBar(props) {
       <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
         <ListItem
           button
-          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+          style={{
+            backgroundColor: "rgba(2,99,44,0.7)"
+          }}
           onClick={() => {
             show("perfil");
           }}
@@ -104,7 +106,9 @@ function LeftBar(props) {
 
         <ListItem
           button
-          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+          style={{
+            backgroundColor: "rgba(2,99,44,0.7)"
+          }}
           onClick={() => {
             show("funcionario");
           }}
@@ -195,7 +199,10 @@ function LeftBar(props) {
         <ListItem
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
-          onClick={signOut}
+          onClick={() => {
+            signOut();
+            show("default");
+          }}
         >
           <ListItemIcon>
             <ExitToApp style={{ fontSize: "35", color: "rgb(246,238,89)" }} />

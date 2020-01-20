@@ -20,14 +20,16 @@ import {
 
 import { Menu } from "@material-ui/icons/";
 
-import LeftBar from "./Components/LeftBar/index";
+/* Componentes que só o usuario tem */
+import Prefeitura from "./Components/Prefeitura/";
+import Funcionario from "./Components/Funcionario/";
 
-import Perfil from "./Components/Perfil/index";
-import Prefeitura from "./Components/Prefeitura/index";
-import Funcionario from "./Components/Funcionario/index";
-import Caixa from "./Components/Caixas";
-import Pasta from "./Components/Pastas/";
-import Familiar from "./Components/Familiar/";
+import Perfil from "../../Components/Perfil/";
+import LeftBar from "../../Components/LeftBar/";
+
+import Caixa from "../../Components/Caixa";
+import Pasta from "../../Components/Pasta/";
+import Familiar from "../../Components/Familiar/";
 
 const drawerWidth = 240;
 
@@ -55,7 +57,8 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    backgroundColor: "#D8D8D8"
   },
   content: {
     padding: theme.spacing(3),
@@ -78,7 +81,7 @@ function View(props) {
   };
 
   const PAGES = {
-    default: <h2>Teste</h2>,
+    default: <Perfil />,
     perfil: <Perfil />,
     prefeitura: <Prefeitura />,
     funcionario: <Funcionario />,
@@ -93,7 +96,7 @@ function View(props) {
       <AppBar
         position="fixed"
         className={classes.appBar}
-        style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+        style={{ backgroundColor: "rgb(10,103,30)" }}
       >
         <Toolbar>
           <IconButton
@@ -105,7 +108,7 @@ function View(props) {
           >
             <Menu />
           </IconButton>
-          <Typography variant="h6" noWrap style={{ color: "rgb(246,238,89)" }}>
+          <Typography variant="h5" noWrap style={{ color: "rgb(246,238,89)" }}>
             Cadastro único
           </Typography>
         </Toolbar>
@@ -114,6 +117,7 @@ function View(props) {
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
+            style={{ backgroundColor: "#D8D8D8" }}
             container={container}
             variant="temporary"
             anchor={theme.direction === "rtl" ? "right" : "left"}
@@ -136,6 +140,7 @@ function View(props) {
             }}
             variant="permanent"
             open
+            style={{ backgroundColor: "#D8D8D8" }}
           >
             <LeftBar />
           </Drawer>

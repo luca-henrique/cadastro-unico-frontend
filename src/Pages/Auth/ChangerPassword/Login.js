@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { TextField, Grid, Typography, Button } from "@material-ui/core/";
+import { Grid, Typography, Button } from "@material-ui/core/";
 import Modal from "./index";
+import TextField from "../../Components/TextField/";
 
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as LoginCreators } from "../../../store/ducks/login";
@@ -33,11 +34,14 @@ function Components(props) {
         >
           <Grid item xs={12} sm={5} style={{ marginTop: "15px" }}>
             <div>
-              <Typography variant="button">Email</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Email
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
                 fullWidth
+                required
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />

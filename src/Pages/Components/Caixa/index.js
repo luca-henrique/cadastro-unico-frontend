@@ -3,12 +3,11 @@ import React, { useState } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Creators as UserCreators } from "../../../../../store/ducks/user";
-import { Creators as BoxCreators } from "../../../../../store/ducks/caixa";
+import { Creators as UserCreators } from "../../../store/ducks/user";
+import { Creators as BoxCreators } from "../../../store/ducks/caixa";
 
 import MaterialTable from "material-table";
-
-import Modal from "./Create/";
+import Modal from "./Create";
 
 const Caixas = props => {
   const [state, setState] = useState({

@@ -7,10 +7,10 @@ import { Grid, Typography, Button } from "@material-ui/core/";
 
 // import { Container } from './styles';
 
-import PersonalInformation from "../../../../Components/personal-information/index";
-import Login from "../../../../Auth/ChangerPassword/Login";
-import Address from "../../../../Components/Address/index";
-import Contact from "../../../../Components/Contact/index";
+import PersonalInformation from "../personal/index";
+import Login from "../../Auth/ChangerPassword/Login";
+import Address from "../Address/index";
+import Contact from "../Contact/index";
 
 const Perfil = () => (
   <div>
@@ -77,8 +77,9 @@ const Perfil = () => (
         <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
           <div style={{ width: "100%" }}>
             <Button
+              fullWidth
               variant="contained"
-              style={{ width: "100%", color: "rgb(2,99,44)" }}
+              style={{ color: "rgb(2,99,44)" }}
             >
               Salvar alterações
             </Button>

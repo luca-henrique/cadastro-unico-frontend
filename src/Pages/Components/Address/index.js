@@ -6,7 +6,9 @@ import { connect } from "react-redux";
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as AddressCreators } from "../../../store/ducks/address";
 
-import { TextField, Grid, Typography } from "@material-ui/core/";
+import { Grid, Typography } from "@material-ui/core/";
+
+import TextField from "../TextField/";
 
 function Components(props) {
   const [cep, setCep] = useState("");
@@ -45,7 +47,9 @@ function Components(props) {
         >
           <Grid item xs={12} sm={3}>
             <div>
-              <Typography variant="button">CEP</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                CEP
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -60,7 +64,9 @@ function Components(props) {
 
           <Grid item xs={12} sm={4}>
             <div>
-              <Typography variant="button">Estado</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Estado
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -74,7 +80,9 @@ function Components(props) {
           <Grid item xs={12} sm={2} />
           <Grid item xs={12} sm={1}>
             <div>
-              <Typography variant="button">Nº</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Nº
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -87,7 +95,9 @@ function Components(props) {
 
           <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
             <div>
-              <Typography variant="button">Bairro</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Bairro
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -99,7 +109,9 @@ function Components(props) {
           </Grid>
           <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
             <div>
-              <Typography variant="button">Rua</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Rua
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -111,7 +123,9 @@ function Components(props) {
           </Grid>
           <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
             <div>
-              <Typography variant="button">Complemento</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Complemento
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
