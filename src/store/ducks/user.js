@@ -1,9 +1,6 @@
 import Immutable from "seamless-immutable";
-import { createActions, createReducer } from "reduxsauce";
 
-/*
 export const Types = {
-  NOVO USER 
   SHOW_NEW_VIEW: "@user/SHOW_NEW_VIEW",
   HIDE_NEW_VIEW: "@user/HIDE_NEW_VIEW",
 
@@ -12,9 +9,41 @@ export const Types = {
 
   SET_PROFILE: "@user/SET_PROFILE"
 };
-*/
 
-/*
+const INITIAL_STATE = Immutable({
+  show: { visible: false, type: "default" },
+  profile: { data: {} },
+  address: {},
+  contact: {},
+  login: {},
+  user: {}
+});
+
+export default function User(state = INITIAL_STATE, action) {
+  switch (action.type) {
+    case Types.SHOW_NEW_VIEW:
+      return { ...state, show: { visible: true, type: action.payload.type } };
+    case Types.HIDE_NEW_VIEW:
+      return {
+        ...state,
+        show: { visible: false }
+      };
+
+    case Types.LOAD_USER_SUCCESS:
+      return { ...state, user: action.payload.user };
+
+    case Types.SET_PROFILE: {
+      return {
+        ...state,
+        profile: { data: action.payload.profile }
+      };
+    }
+
+    default:
+      return state;
+  }
+}
+
 export const Creators = {
   show: type => ({
     type: Types.SHOW_NEW_VIEW,
@@ -43,55 +72,3 @@ export const Creators = {
     payload: { user }
   })
 };
-
-
-
-*/
-
-export const { Types, Creators } = createActions({
-  show: ["type"],
-  hide: [],
-  setProfile: ["profile"],
-  loadUserRequest: [],
-  loadUserSuccess: ["user"]
-});
-
-console.log(Types);
-
-console.log(Creators);
-
-const show = (state = INITIAL_STATE, action) => [...state];
-
-const INITIAL_STATE = Immutable({
-  show: { visible: false, type: "default" },
-  profile: { data: {} },
-  address: {},
-  contact: {},
-  login: {},
-  user: {}
-});
-
-export default function User(state = INITIAL_STATE, action) {
-  switch (action.type) {
-    case Types.SHOW_NEW_VIEW:
-      return {};
-    case Types.HIDE_NEW_VIEW:
-      return {
-        ...state,
-        show: { visible: false }
-      };
-
-    case Types.LOAD_USER_SUCCESS:
-      return { ...state, user: action.payload.user };
-
-    case Types.SET_PROFILE: {
-      return {
-        ...state,
-        profile: { data: action.payload.profile }
-      };
-    }
-
-    default:
-      return state;
-  }
-}

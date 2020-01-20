@@ -64,6 +64,9 @@ function LeftBar(props) {
   const { show, signOut } = props;
   const classes = useStyles();
 
+  console.log("Leftbar");
+  console.log(props);
+
   return (
     <div style={{ backgroundColor: "rgb(10,103,30)" }}>
       <div
@@ -93,6 +96,7 @@ function LeftBar(props) {
             backgroundColor: "rgba(2,99,44,0.7)"
           }}
           onClick={() => {
+            console.log(props);
             show("perfil");
           }}
         >
@@ -217,7 +221,7 @@ function LeftBar(props) {
 }
 
 const mapStateToProps = state => ({
-  redux: state.users
+  redux: state
 });
 
 const mapDispatchToProps = dispatch =>

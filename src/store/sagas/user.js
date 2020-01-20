@@ -9,12 +9,12 @@ export function* index() {
   try {
     const response = yield call(api.get, "/users");
 
-    yield put(UsersCreatos.loadUserSuccess(response));
+    const user = yield call(api.get, `/users/${response.data}`);
 
-    console.log(response);
-
-    //const user = yield call([api.get, `users/${response.data}`])
-  } catch (err) {}
+    yield put(UsersCreatos.loadUserSuccess(user.data));
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export function* list() {
@@ -26,6 +26,6 @@ export function* list() {
 
 export function* updateUser({ payload }) {
   try {
-    const response = yield call([api, "put"], `clients/${payload.id}`);
+    yield call([api, "put"], `clients/${payload.id}`);
   } catch (err) {}
 }

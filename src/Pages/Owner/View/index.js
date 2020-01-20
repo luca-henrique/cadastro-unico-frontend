@@ -76,6 +76,11 @@ function View(props) {
 
   const { type } = props.redux.show;
 
+  console.log("Main");
+  console.log(props);
+
+  console.log(type);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -155,7 +160,7 @@ function View(props) {
 }
 
 const mapStateToProps = state => ({
-  redux: state.users
+  redux: state.user
 });
 
 const mapDispatchToProps = dispatch =>

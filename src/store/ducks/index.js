@@ -2,7 +2,6 @@ import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 import { reducer as toastr } from "react-redux-toastr";
 
-import users from "./user";
 import login from "./login";
 import address from "./address";
 import contact from "./contact";
@@ -12,6 +11,8 @@ import box from "./caixa";
 import familiar from "./familiar";
 
 import { reducer as auth } from "./auth";
+
+import user from "./user";
 
 export default history =>
   combineReducers({
@@ -23,7 +24,7 @@ export default history =>
     funcionario,
     login,
     address,
-    users,
+    user,
     auth,
     router: connectRouter(history)
   });
