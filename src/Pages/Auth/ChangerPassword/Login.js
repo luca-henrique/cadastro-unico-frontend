@@ -10,14 +10,17 @@ import TextField from "../../Components/TextField/";
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as LoginCreators } from "../../../store/ducks/login";
 
+import { Creators as UserCreators } from "../../../store/ducks/user";
+
 function Components(props) {
-  const [email, setEmail] = useState("");
+  const { user } = props.redux.user;
+  console.log(user);
+
+  const [email, setEmail] = useState();
 
   const { showModalEmail } = props;
 
   function onUpdate() {
-    console.log(props);
-
     const { changerEmail } = props;
 
     changerEmail(email);
@@ -71,6 +74,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AuthActions, ...LoginCreators }, dispatch);
+  bindActionCreators(
+    { ...AuthActions, ...LoginCreators, ...UserCreators },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(Components);
