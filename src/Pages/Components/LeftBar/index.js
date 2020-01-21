@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function LeftBar(props) {
-  const { show, signOut } = props;
+  const { show, signOut, loadUserSuccess } = props;
   const classes = useStyles();
 
   console.log("Leftbar");
@@ -206,6 +206,7 @@ function LeftBar(props) {
           onClick={() => {
             signOut();
             show("default");
+            loadUserSuccess(null);
           }}
         >
           <ListItemIcon>

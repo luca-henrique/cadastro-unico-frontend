@@ -72,14 +72,10 @@ function View(props) {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const { type } = props.redux.show;
-
-  console.log("Main");
-  console.log(props);
-
-  console.log(type);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

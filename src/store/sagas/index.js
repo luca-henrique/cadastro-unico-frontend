@@ -12,6 +12,6 @@ export default function* rootSaga() {
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
     takeLatest(AuthTypes.SIGN_OUT, signOut),
 
-    index()
+    takeLatest(UserTypes.LOAD_USER_REQUEST, index)
   ]);
 }

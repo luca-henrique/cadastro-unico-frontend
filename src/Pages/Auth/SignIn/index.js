@@ -7,6 +7,7 @@ import Logo from "../../../Assets/Images/cadunico.png";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import AuthActions from "../../../store/ducks/auth";
+import { Creators as UserCreators } from "../../../store/ducks/user";
 
 import { Typography, Link, TextField, Button } from "@material-ui/core/";
 
@@ -82,6 +83,7 @@ function SignUp(props) {
   function handleSubmit(e) {
     e.preventDefault();
     const { signInRequest } = props;
+
     signInRequest(email, password);
   }
 
@@ -141,7 +143,7 @@ function SignUp(props) {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(AuthActions, dispatch);
+  bindActionCreators({ ...AuthActions, ...UserCreators }, dispatch);
 
 export default connect(null, mapDispatchToProps)(SignUp);
 

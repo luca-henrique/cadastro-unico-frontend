@@ -1,31 +1,44 @@
-import { call, put } from "redux-saga/effects";
-import api from "../../services/api";
-import { Creators as UsersCreatos } from "../ducks/user";
-import { push } from "connected-react-router";
+//Usuario logado
 
-import { actions as toastrActions } from "react-redux-toastr";
+import { call, put } from "redux-saga/effects";
+
+import { Creators as UsersCreatos } from "../ducks/user";
+
+import { toastr } from "react-redux-toastr";
+
+import api from "../../services/api";
 
 export function* index() {
   try {
-    const response = yield call(api.get, "/users");
-
-    const user = yield call(api.get, `/users/${response.data}`);
-
-    yield put(UsersCreatos.loadUserSuccess(user.data));
+    const id = yield call(api.get, "/user/");
+    const response = yield call(api.get, `/user/${id.data}`);
+    yield put(UsersCreatos.loadUserSuccess(response.data));
   } catch (err) {
     console.log(err);
   }
 }
 
-export function* list() {
+export function* update({ payload }) {
   try {
-    const response = yield call([api, "get"], "/users");
-    yield put(UsersCreatos.loadUsersSuccess(response.data));
-  } catch (err) {}
+    yield call(api.put, `user/${payload.id}`, payload.user);
+  } catch (err) {
+    yield toastr.error("Falha", "Falha ao atualizar o email");
+  }
 }
 
-export function* updateUser({ payload }) {
+export function* destroy({ payload }) {
   try {
-    yield call([api, "put"], `clients/${payload.id}`);
-  } catch (err) {}
+    yield call(api.delete, `user/${payload.id}`);
+  } catch (err) {
+    yield toastr.error("Falha", "Falha ao excluir o funcionario");
+  }
+}
+
+export function* list() {
+  try {
+    const response = yield call(api.get, "/users");
+    console.log(response);
+  } catch (err) {
+    yield toastr.error("Falha", "Falha ao carregar funcionarios");
+  }
 }

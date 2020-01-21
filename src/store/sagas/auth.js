@@ -1,6 +1,7 @@
 import { call, put } from "redux-saga/effects";
 import api from "../../services/api";
 import AuthActions from "../ducks/auth";
+import { Creators as UserCreators } from "../ducks/user";
 import { push } from "connected-react-router";
 
 import { actions as toastrActions } from "react-redux-toastr";
@@ -12,6 +13,7 @@ export function* signIn({ email, password }) {
     localStorage.setItem("@Omni:token", response.data.token);
 
     yield put(AuthActions.signInSuccess(response.data.token));
+    yield put(UserCreators.loadUserRequest());
     yield put(push("/owner"));
   } catch (err) {
     yield put(
