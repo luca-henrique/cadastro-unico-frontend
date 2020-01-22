@@ -7,6 +7,9 @@ export const Types = {
   LOAD_USER_REQUEST: "@user/LOAD_USER_REQUEST",
   LOAD_USER_SUCCESS: "@user/LOAD_USER_SUCCESS",
 
+  UPDATE_USER_REQUEST: "@user/UPDATE_USER_REQUEST",
+  UPDATE_USER_SUCESS: "@user/UPDATE_USER_SUCESS",
+
   SET_PROFILE: "@user/SET_PROFILE"
 };
 
@@ -15,8 +18,8 @@ const INITIAL_STATE = Immutable({
   profile: { data: {} },
   address: {},
   contact: {},
-  login: {},
-  user: {}
+  email: {},
+  user: localStorage.getItem("user")
 });
 
 export default function User(state = INITIAL_STATE, action) {
@@ -36,6 +39,13 @@ export default function User(state = INITIAL_STATE, action) {
       return {
         ...state,
         profile: { data: action.payload.profile }
+      };
+    }
+
+    case Types.UPDATE_USER_REQUEST: {
+      return {
+        ...state,
+        email: action.payload.user
       };
     }
 
@@ -69,6 +79,15 @@ export const Creators = {
 
   loadUserSuccess: user => ({
     type: Types.LOAD_USER_SUCCESS,
+    payload: { user }
+  }),
+
+  updateUserRequest: user => ({
+    type: Types.UPDATE_USER_REQUEST,
+    payload: { user }
+  }),
+  updateUserSucess: user => ({
+    type: Types.UPDATE_USER_SUCESS,
     payload: { user }
   })
 };

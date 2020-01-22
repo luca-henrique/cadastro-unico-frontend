@@ -8,22 +8,26 @@ import Modal from "./index";
 import TextField from "../../Components/TextField/";
 
 import AuthActions from "../../../store/ducks/auth";
-import { Creators as LoginCreators } from "../../../store/ducks/login";
 
 import { Creators as UserCreators } from "../../../store/ducks/user";
 
 function Components(props) {
-  const { user } = props.redux.user;
-  console.log(user);
+  const user = JSON.parse(props.redux.user.user);
 
-  const [email, setEmail] = useState();
+  console.log(user);
+  console.log(props);
+
+  const [email, setEmail] = useState(user.email);
 
   const { showModalEmail } = props;
 
   function onUpdate() {
-    const { changerEmail } = props;
-
-    changerEmail(email);
+    const { updateUserRequest } = props;
+    const updateUser = {
+      id: user.id,
+      email
+    };
+    updateUserRequest(updateUser);
   }
 
   return (
@@ -69,14 +73,15 @@ function Components(props) {
   );
 }
 
+TextField.defaultProps = {
+  value: ""
+};
+
 const mapStateToProps = state => ({
   redux: state
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { ...AuthActions, ...LoginCreators, ...UserCreators },
-    dispatch
-  );
+  bindActionCreators({ ...AuthActions, ...UserCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Components);

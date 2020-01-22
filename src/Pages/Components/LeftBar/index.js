@@ -61,11 +61,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function LeftBar(props) {
-  const { show, signOut, loadUserSuccess } = props;
+  const { show, signOut } = props;
   const classes = useStyles();
-
-  console.log("Leftbar");
-  console.log(props);
 
   return (
     <div style={{ backgroundColor: "rgb(10,103,30)" }}>
@@ -206,7 +203,6 @@ function LeftBar(props) {
           onClick={() => {
             signOut();
             show("default");
-            loadUserSuccess(null);
           }}
         >
           <ListItemIcon>

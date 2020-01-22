@@ -77,11 +77,6 @@ function View(props) {
 
   const { type } = props.redux.show;
 
-  /*
-  const { user } = props.redux;
-  console.log(user);
-  */
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };

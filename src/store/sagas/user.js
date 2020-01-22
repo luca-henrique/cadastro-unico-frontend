@@ -1,8 +1,6 @@
 //Usuario logado
 
-import { call, put } from "redux-saga/effects";
-
-import { Creators as UsersCreatos } from "../ducks/user";
+import { call } from "redux-saga/effects";
 
 import { toastr } from "react-redux-toastr";
 
@@ -12,7 +10,7 @@ export function* index() {
   try {
     const id = yield call(api.get, "/user/");
     const response = yield call(api.get, `/user/${id.data}`);
-    yield put(UsersCreatos.loadUserSuccess(response.data));
+    localStorage.setItem("user", JSON.stringify(response.data));
   } catch (err) {
     console.log(err);
   }
@@ -20,7 +18,7 @@ export function* index() {
 
 export function* update({ payload }) {
   try {
-    yield call(api.put, `user/${payload.id}`, payload.user);
+    yield call(api.put, "user/0", payload.user);
   } catch (err) {
     yield toastr.error("Falha", "Falha ao atualizar o email");
   }
