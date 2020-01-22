@@ -16,7 +16,6 @@ export default Creators;
 export const INITIAL_STATE = Immutable({
   signedIn: !!localStorage.getItem("@Omni:token"),
   token: localStorage.getItem("@Omni:token") || null,
-  user: {}
 });
 
 /* Reducers */
