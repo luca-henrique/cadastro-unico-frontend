@@ -40,3 +40,14 @@ export function* list() {
     yield toastr.error("Falha", "Falha ao carregar funcionarios");
   }
 }
+
+export function* changerPassword({ payload }) {
+  try {
+    const response = yield call(api.put, "/changer", {
+      password: payload.password
+    });
+    console.log(response);
+  } catch (err) {
+    yield toastr.error("Falha", "Falha ao alterar o password");
+  }
+}

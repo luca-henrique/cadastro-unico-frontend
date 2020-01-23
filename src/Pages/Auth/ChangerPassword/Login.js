@@ -5,11 +5,12 @@ import { connect } from "react-redux";
 
 import { Grid, Typography, Button } from "@material-ui/core/";
 import Modal from "./index";
-import TextField from "../../Components/TextField/";
+import TextField from "../../Components/TextField/index";
 
 import AuthActions from "../../../store/ducks/auth";
 
 import { Creators as UserCreators } from "../../../store/ducks/user";
+import { Creators as LoginCreators } from "../../../store/ducks/login";
 
 function Components(props) {
   const user = JSON.parse(props.redux.user.user);
@@ -50,6 +51,7 @@ function Components(props) {
                 fullWidth
                 required
                 value={email}
+                type="email"
                 onChange={e => setEmail(e.target.value)}
               />
             </div>
@@ -82,6 +84,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AuthActions, ...UserCreators }, dispatch);
+  bindActionCreators(
+    { ...AuthActions, ...UserCreators, ...LoginCreators },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(Components);

@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as LoginCreators } from "../../../store/ducks/login";
+import { Creators as UserCreators } from "../../../store/ducks/user";
 
 import { Typography, Button } from "@material-ui/core/";
 
@@ -21,9 +22,11 @@ function TransitionsModal(props) {
 
   const { visible } = props.redux.login.show;
 
+  console.log(props);
+
   function changePassword(e) {
     e.preventDefault();
-    const { changerPassword } = props;
+    const { changerPasswordRequest } = props;
     if (
       password !== password1 ||
       password === "null" ||
@@ -33,9 +36,8 @@ function TransitionsModal(props) {
     ) {
       alert("Senha não está compativel repita.");
     } else {
-      changerPassword(password);
+      changerPasswordRequest(password);
       hide();
-      console.log(props);
     }
   }
 
@@ -141,11 +143,18 @@ function TransitionsModal(props) {
   );
 }
 
+TextField.defaultProps = {
+  value: ""
+};
+
 const mapStateToProps = state => ({
   redux: state
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AuthActions, ...LoginCreators }, dispatch);
+  bindActionCreators(
+    { ...AuthActions, ...LoginCreators, ...UserCreators },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransitionsModal);

@@ -10,7 +10,8 @@ export const Types = {
   UPDATE_USER_REQUEST: "@user/UPDATE_USER_REQUEST",
   UPDATE_USER_SUCESS: "@user/UPDATE_USER_SUCESS",
 
-  SET_PROFILE: "@user/SET_PROFILE"
+  CHANGER_PASSWORD_REQUEST: "@user/CHANGER_PASSWORD_REQUEST",
+  CHANGER_PASSWORD_SUCESS: "@user/CHANGER_PASSWORD_SUCESS"
 };
 
 const INITIAL_STATE = Immutable({
@@ -19,6 +20,7 @@ const INITIAL_STATE = Immutable({
   address: {},
   contact: {},
   email: {},
+  password: null,
   user: localStorage.getItem("user")
 });
 
@@ -35,17 +37,17 @@ export default function User(state = INITIAL_STATE, action) {
     case Types.LOAD_USER_SUCCESS:
       return { ...state, user: action.payload.user };
 
-    case Types.SET_PROFILE: {
-      return {
-        ...state,
-        profile: { data: action.payload.profile }
-      };
-    }
-
     case Types.UPDATE_USER_REQUEST: {
       return {
         ...state,
         email: action.payload.user
+      };
+    }
+
+    case Types.CHANGER_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        password: action.payload.password
       };
     }
 
@@ -66,13 +68,6 @@ export const Creators = {
     type: Types.HIDE_NEW_VIEW
   }),
 
-  setProfile: profile => ({
-    type: Types.SET_PROFILE,
-    payload: {
-      profile
-    }
-  }),
-
   loadUserRequest: () => ({
     type: Types.LOAD_USER_REQUEST
   }),
@@ -89,5 +84,9 @@ export const Creators = {
   updateUserSucess: user => ({
     type: Types.UPDATE_USER_SUCESS,
     payload: { user }
+  }),
+  changerPasswordRequest: password => ({
+    type: Types.CHANGER_PASSWORD_REQUEST,
+    payload: { password }
   })
 };

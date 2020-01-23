@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import AuthActions from "../../../store/ducks/auth";
-import { Creators as UserCreators } from "../../../store/ducks/user";
+import { Creators as ProfileCreators } from "../../../store/ducks/profile";
 
 import { Grid, Typography, makeStyles } from "@material-ui/core/";
 
 import Field from "../TextField/";
+
+import { cpfMask } from "../TextField/MaskInput";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,21 +24,36 @@ const useStyles = makeStyles(theme => ({
 function Components(props) {
   const classes = useStyles();
 
-  console.log(props);
-
   const [cpf, setCpf] = useState("");
+
   const [cargo, setCargo] = useState("");
   const [nome, setNome] = useState("");
 
+  console.log("Profile");
+  console.log(props);
+
+  const { exist } = props.redux;
+
+  console.log(exist);
+
   function onUpdate() {
-    const { setProfile } = props;
     var profile = {
       cpf,
-      cargo,
-      nome
+      nome,
+      cargo
     };
 
-    setProfile(profile);
+    if (exist === false) {
+      const { createProfileRequest } = props;
+      createProfileRequest(profile);
+    } else {
+      const { updateProfileRequest } = props;
+      updateProfileRequest(profile);
+    }
+  }
+
+  function changeCpf(e) {
+    setCpf(cpfMask(e.target.value, cpf));
   }
 
   return (
@@ -58,8 +74,10 @@ function Components(props) {
                 variant="outlined"
                 size="small"
                 fullWidth
+                required
                 value={cpf}
-                onChange={e => setCpf(e.target.value)}
+                onChange={changeCpf}
+                error={cpf.length > 18 ? true : false}
               />
             </div>
           </Grid>
@@ -71,6 +89,7 @@ function Components(props) {
                 variant="outlined"
                 size="small"
                 fullWidth
+                required
                 value={cargo}
                 onChange={e => setCargo(e.target.value)}
               />
@@ -84,6 +103,7 @@ function Components(props) {
                 variant="outlined"
                 size="small"
                 fullWidth
+                required
                 value={nome}
                 onChange={e => setNome(e.target.value)}
               />
@@ -95,10 +115,14 @@ function Components(props) {
   );
 }
 
+Field.defaultProps = {
+  value: ""
+};
+
 const mapStateToProps = state => ({
-  redux: state.users
+  redux: state.profile
 });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AuthActions, ...UserCreators }, dispatch);
+  bindActionCreators({ ...ProfileCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Components);

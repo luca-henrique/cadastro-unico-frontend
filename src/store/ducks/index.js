@@ -3,6 +3,8 @@ import { connectRouter } from "connected-react-router";
 import { reducer as toastr } from "react-redux-toastr";
 
 import login from "./login";
+import profile from "./profile";
+
 import address from "./address";
 import contact from "./contact";
 import funcionario from "./funcionario";
@@ -25,6 +27,7 @@ export default history =>
     login,
     address,
     user,
+    profile,
     auth,
     router: connectRouter(history)
   });
