@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -11,6 +11,8 @@ import Field from "../TextField/";
 
 import { cpfMask } from "../TextField/MaskInput";
 
+import { toastr } from "react-redux-toastr";
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: "15px",
@@ -22,38 +24,63 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Components(props) {
-  const classes = useStyles();
-
-  const [cpf, setCpf] = useState("");
-
-  const [cargo, setCargo] = useState("");
-  const [nome, setNome] = useState("");
-
   console.log("Profile");
   console.log(props);
 
+  const classes = useStyles();
+
   const { exist } = props.redux;
 
-  console.log(exist);
+  const profile = JSON.parse(localStorage.getItem("profile"));
+
+  const [cpf, setCpf] = useState(profile.cpf);
+  const [cargo, setCargo] = useState(profile.cargo);
+  const [nome, setNome] = useState(profile.nome);
 
   function onUpdate() {
-    var profile = {
-      cpf,
-      nome,
-      cargo
-    };
+    try {
+      var prof = {
+        cpf,
+        nome,
+        cargo
+      };
 
-    if (exist === false) {
-      const { createProfileRequest } = props;
-      createProfileRequest(profile);
-    } else {
-      const { updateProfileRequest } = props;
-      updateProfileRequest(profile);
+      getAtribute(prof);
+
+      if (exist === false) {
+        const { createProfileRequest } = props;
+        createProfileRequest(prof);
+      } else {
+        const { updateProfileRequest } = props;
+        updateProfileRequest(prof);
+      }
+
+      console.log(prof);
+    } catch (error) {
+      toastr.error("Error", "Existe Campos nulos");
     }
   }
 
   function changeCpf(e) {
     setCpf(cpfMask(e.target.value, cpf));
+  }
+
+  function getAtribute(object) {
+    if (
+      object.cpf === null ||
+      object.cpf === "" ||
+      object.nome === null ||
+      object.nome === "" ||
+      object.cargo === null ||
+      object.cargo === ""
+    ) {
+      throw new UserException("Null");
+    }
+  }
+
+  function UserException(message) {
+    this.message = message;
+    this.name = "UserException";
   }
 
   return (
@@ -77,7 +104,6 @@ function Components(props) {
                 required
                 value={cpf}
                 onChange={changeCpf}
-                error={cpf.length > 18 ? true : false}
               />
             </div>
           </Grid>

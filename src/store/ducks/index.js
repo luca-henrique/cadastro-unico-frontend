@@ -16,6 +16,8 @@ import { reducer as auth } from "./auth";
 
 import user from "./user";
 
+import view from "./view";
+
 export default history =>
   combineReducers({
     toastr,
@@ -29,5 +31,6 @@ export default history =>
     user,
     profile,
     auth,
+    view,
     router: connectRouter(history)
   });

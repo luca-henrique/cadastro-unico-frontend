@@ -3,8 +3,7 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import AuthActions from "../../../store/ducks/auth";
-import { Creators as UserCreators } from "../../../store/ducks/user";
+import { Creators as ViewCreators } from "../../../store/ducks/view";
 
 import {
   AppBar,
@@ -75,14 +74,14 @@ function View(props) {
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const { type } = props.redux.show;
+  const { type } = props.redux;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const PAGES = {
-    default: <Perfil />,
+    default: <div></div>,
     perfil: <Perfil />,
     prefeitura: <Prefeitura />,
     funcionario: <Funcionario />,
@@ -156,10 +155,10 @@ function View(props) {
 }
 
 const mapStateToProps = state => ({
-  redux: state.user
+  redux: state.view
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AuthActions, ...UserCreators }, dispatch);
+  bindActionCreators({ ...ViewCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(View);

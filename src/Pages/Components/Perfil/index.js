@@ -67,25 +67,6 @@ const Perfil = () => (
       <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
         <Contact />
       </Grid>
-
-      <Grid
-        container
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-      >
-        <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
-          <div style={{ width: "100%" }}>
-            <Button
-              fullWidth
-              variant="contained"
-              style={{ color: "rgb(2,99,44)" }}
-            >
-              Salvar alterações
-            </Button>
-          </div>
-        </Grid>
-      </Grid>
     </Grid>
   </div>
 );

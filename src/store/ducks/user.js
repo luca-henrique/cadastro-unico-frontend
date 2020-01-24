@@ -15,13 +15,8 @@ export const Types = {
 };
 
 const INITIAL_STATE = Immutable({
-  show: { visible: false, type: "default" },
-  profile: { data: {} },
-  address: {},
-  contact: {},
-  email: {},
   password: null,
-  user: localStorage.getItem("user")
+  user: {}
 });
 
 export default function User(state = INITIAL_STATE, action) {

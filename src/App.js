@@ -2,9 +2,11 @@ import React, { Fragment } from "react";
 import { Provider } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
 
+import { PersistGate } from "redux-persist/integration/react";
+
 import Routes from "./Routes/index";
 
-import store from "./store";
+import { store, persistor } from "./store";
 
 import "./config/ReactotronConfig";
 
@@ -12,12 +14,14 @@ import GlobalStyle from "./Styles/global";
 
 const App = () => (
   <Provider store={store}>
-    <Fragment>
-      <Routes />
-      <GlobalStyle />
+    <PersistGate persistor={persistor}>
+      <Fragment>
+        <Routes />
+        <GlobalStyle />
 
-      <ReduxToastr />
-    </Fragment>
+        <ReduxToastr />
+      </Fragment>
+    </PersistGate>
   </Provider>
 );
 

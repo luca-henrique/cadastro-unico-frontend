@@ -9,10 +9,14 @@ import { index, update, changerPassword } from "./user";
 import { Types as ProfileTypes } from "../ducks/profile";
 import { create, get, updateProfileRequest } from "./profile";
 
+import { teste } from "./teste";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
     takeLatest(AuthTypes.SIGN_OUT, signOut),
+
+    takeLatest("persist/REHYDRATE", teste),
 
     takeLatest(UserTypes.LOAD_USER_REQUEST, index),
     takeLatest(UserTypes.UPDATE_USER_REQUEST, update),
