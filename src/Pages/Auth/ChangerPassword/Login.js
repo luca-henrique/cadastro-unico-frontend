@@ -13,7 +13,7 @@ export default function View() {
   const user = useSelector(state => state.user.user);
   const dispatch = useDispatch();
 
-  const openModalEmail = dispatch(LoginCreators.showModalEmail);
+  const OpenModal = () => dispatch(LoginCreators.showModalEmail());
 
   const [email, setEmail] = useState(user.email);
 
@@ -54,6 +54,7 @@ export default function View() {
           <Grid item xs={12} sm={5} style={{ marginTop: "40px" }}>
             <div style={{ width: "100%" }}>
               <Button
+                onClick={OpenModal}
                 variant="contained"
                 style={{ color: "rgb(2,99,44)", width: "100%" }}
               >

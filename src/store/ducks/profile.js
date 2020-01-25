@@ -15,7 +15,7 @@ export const Types = {
 
 const INITIAL_STATE = Immutable({
   profile: {},
-  exist: null || localStorage.getItem("exist")
+  exist: false
 });
 
 export default function profile(state = INITIAL_STATE, action) {

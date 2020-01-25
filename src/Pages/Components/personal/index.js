@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
 import { Creators as ProfileCreators } from "../../../store/ducks/profile";
 
 import { Grid, Typography, makeStyles } from "@material-ui/core/";
-
 import Field from "../TextField/";
 
 import { cpfMask } from "../TextField/MaskInput";
@@ -23,15 +20,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Components(props) {
-  console.log("Profile");
-  console.log(props);
+export default function Components() {
+  const dispatch = useDispatch();
 
   const classes = useStyles();
 
-  const { exist } = props.redux;
+  const exist = useSelector(state => state.profile.exist);
 
-  const profile = JSON.parse(localStorage.getItem("profile"));
+  const profile = useSelector(state => state.profile.profile);
 
   const [cpf, setCpf] = useState(profile.cpf);
   const [cargo, setCargo] = useState(profile.cargo);
@@ -45,17 +41,17 @@ function Components(props) {
         cargo
       };
 
+      console.log(exist);
+
       getAtribute(prof);
 
-      if (exist === false) {
-        const { createProfileRequest } = props;
-        createProfileRequest(prof);
+      if (exist === true) {
+        console.log("ali");
+        dispatch(ProfileCreators.createProfileRequest(prof));
       } else {
-        const { updateProfileRequest } = props;
-        updateProfileRequest(prof);
+        console.log("Aqui");
+        dispatch(ProfileCreators.createProfileRequest(prof));
       }
-
-      console.log(prof);
     } catch (error) {
       toastr.error("Error", "Existe Campos nulos");
     }
@@ -144,11 +140,3 @@ function Components(props) {
 Field.defaultProps = {
   value: ""
 };
-
-const mapStateToProps = state => ({
-  redux: state.profile
-});
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...ProfileCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Components);

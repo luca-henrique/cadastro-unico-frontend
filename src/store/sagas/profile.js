@@ -8,14 +8,16 @@ export function* create({ payload }) {
   try {
     /**
      * Criar novo profile
-     * LocalStorage (profile) => salva as informações no local storage para ser recuperado
-     * LocalStorage (exist) => se foi salvo vai para true para não executar essa função novamente
      */
 
-    const response = yield call(api.post, "/profile", payload.profile);
+    console.log(payload);
+    const response = yield call(
+      api.post,
+      "/profile",
+      JSON.stringify(payload.profile)
+    );
 
-    localStorage.setItem("profile", JSON.stringify(response.data));
-    localStorage.setItem("exist", true);
+    //yield put(ProfileCreators.loadProfileSucess(response.data));
 
     yield toastr.success("", "Informações atualizadas com sucesso.");
   } catch (err) {
@@ -30,9 +32,7 @@ export function* updateProfileRequest({ payload }) {
   try {
     const response = yield call(api.put, "/profile/0", payload.profile);
 
-    localStorage.setItem("profile", JSON.stringify(response.data));
-    localStorage.setItem("exist", true);
-
+    yield put(ProfileCreators.loadProfileSucess(response.data));
     yield toastr.success("", "Informações atualizadas com sucesso.");
   } catch (err) {
     yield toastr.error("Falha", "Falha ao atualizar as informações pessoais");
@@ -44,12 +44,12 @@ export function* get() {
     const id = yield call(api.get, "/user");
     const response = yield call(api.get, `/profile/${id.data}`);
 
-    localStorage.setItem("profile", JSON.stringify(response.data));
-    localStorage.setItem("exist", true);
+    yield put(ProfileCreators.loadProfileSucess(response.data));
 
+    yield put(ProfileCreators.failLoadProfile(true));
     yield toastr.success("", "Todas as informações do usuario carregadas");
   } catch (err) {
-    localStorage.setItem("profile", null);
+    yield put(ProfileCreators.failLoadProfile(false));
     yield toastr.error("Erro", "Usuario não tem todas as informações");
   }
 }

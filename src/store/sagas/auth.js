@@ -29,6 +29,8 @@ export function* signIn({ email, password }) {
 }
 
 export function* signOut() {
+  yield put(UserCreators.loadUserSuccess({}));
+  yield put(ProfileCreators.loadProfileSucess({}));
   localStorage.removeItem("@Omni:token");
   localStorage.removeItem("@Omni:team");
   yield put(push("/"));
