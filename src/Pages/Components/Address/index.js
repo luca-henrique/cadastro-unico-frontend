@@ -1,38 +1,69 @@
 import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import AuthActions from "../../../store/ducks/auth";
+import { useSelector, useDispatch } from "react-redux";
 import { Creators as AddressCreators } from "../../../store/ducks/address";
 
 import { Grid, Typography } from "@material-ui/core/";
 
 import TextField from "../TextField/";
 
-function Components(props) {
-  const [cep, setCep] = useState("");
-  const [estado, setEstado] = useState("");
-  const [num, setNum] = useState("");
-  const [rua, setRua] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [bairro, setBairro] = useState("");
+import { toastr } from "react-redux-toastr";
+
+export default function Components(props) {
+  const address = useSelector(state => state.address.address);
+  const exist = useSelector(state => state.address.exist);
+  const dispatch = useDispatch();
+
+  const [cep, setCep] = useState(address.cep);
+  const [estado, setEstado] = useState(address.estado);
+  const [num, setNum] = useState(address.num);
+  const [rua, setRua] = useState(address.rua);
+  const [complemento, setComplemento] = useState(address.complemento);
+  const [bairro, setBairro] = useState(address.bairro);
 
   function onUpdate(e) {
     e.preventDefault();
+    try {
+      var addr = {
+        cep,
+        estado,
+        bairro,
+        complemento,
+        rua,
+        num
+      };
+      if (exist === true) {
+        dispatch(AddressCreators.updateAddressRequest(addr));
+      } else {
+        dispatch(AddressCreators.createAddressRequest(addr));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-    const { setAddress } = props;
-    var address = {
-      cep,
-      estado,
-      num,
-      rua,
-      complemento,
-      bairro
-    };
+  function getCep(cep) {
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(response => response.json())
+      .then(data => {
+        setRua(data.logradouro);
+        setBairro(data.bairro);
+        setEstado(data.uf);
+        setComplemento(data.complemento);
+      })
+      .catch(err => {});
+  }
 
-    setAddress(address);
-    console.log(props);
+  function format(d) {
+    d = soNumeros(d);
+    d = d.replace(/^(\d{5})(\d)/, "$1-$2");
+    if (d.length === 9) {
+      getCep(d);
+    }
+    return d;
+  }
+  function soNumeros(d) {
+    return d.replace(/\D/g, "");
   }
 
   return (
@@ -54,7 +85,9 @@ function Components(props) {
                 variant="outlined"
                 size="small"
                 fullWidth
-                onChange={e => setCep(e.target.value)}
+                onChange={e => {
+                  setCep(format(e.target.value));
+                }}
                 value={cep}
               />
             </div>
@@ -141,11 +174,6 @@ function Components(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AddressCreators, AuthActions }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Components);
+TextField.defaultProps = {
+  value: ""
+};

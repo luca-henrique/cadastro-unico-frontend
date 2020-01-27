@@ -45,9 +45,11 @@ export default function Components() {
 
       getAtribute(prof);
 
+      console.log(prof);
+
       if (exist === true) {
         console.log("ali");
-        dispatch(ProfileCreators.createProfileRequest(prof));
+        dispatch(ProfileCreators.updateProfileRequest(prof));
       } else {
         console.log("Aqui");
         dispatch(ProfileCreators.createProfileRequest(prof));

@@ -9,6 +9,9 @@ import { index, update, changerPassword } from "./user";
 import { Types as ProfileTypes } from "../ducks/profile";
 import { create, get, updateProfileRequest } from "./profile";
 
+import { Types as AddressTypes } from "../ducks/address";
+import { createAddress, updateAddress } from "./address";
+
 import { teste } from "./teste";
 
 export default function* rootSaga() {
@@ -24,6 +27,9 @@ export default function* rootSaga() {
 
     takeLatest(ProfileTypes.CREATE_PROFILE_REQUEST, create),
     takeLatest(ProfileTypes.LOAD_PROFILE_REQUEST, get),
-    takeLatest(ProfileTypes.UPDATE_PROFILE_REQUEST, updateProfileRequest)
+    takeLatest(ProfileTypes.UPDATE_PROFILE_REQUEST, updateProfileRequest),
+
+    takeLatest(AddressTypes.CREATE_ADDRESS_REQUEST, createAddress),
+    takeLatest(AddressTypes.UPDATE_ADDRESS_REQUEST, updateAddress)
   ]);
 }

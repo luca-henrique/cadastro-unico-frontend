@@ -1,9 +1,12 @@
 import { call, put } from "redux-saga/effects";
 import api from "../../services/api";
+
+import { push } from "connected-react-router";
+
 import AuthActions from "../ducks/auth";
 import { Creators as UserCreators } from "../ducks/user";
 import { Creators as ProfileCreators } from "../ducks/profile";
-import { push } from "connected-react-router";
+import { Creators as AddressCreators } from "../ducks/address";
 
 import { actions as toastrActions } from "react-redux-toastr";
 
@@ -31,6 +34,7 @@ export function* signIn({ email, password }) {
 export function* signOut() {
   yield put(UserCreators.loadUserSuccess({}));
   yield put(ProfileCreators.loadProfileSucess({}));
+  yield put(AddressCreators.loadAddressSucess({}));
   localStorage.removeItem("@Omni:token");
   localStorage.removeItem("@Omni:team");
   yield put(push("/"));

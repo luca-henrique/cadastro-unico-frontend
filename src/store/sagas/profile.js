@@ -17,7 +17,7 @@ export function* create({ payload }) {
       JSON.stringify(payload.profile)
     );
 
-    //yield put(ProfileCreators.loadProfileSucess(response.data));
+    yield put(ProfileCreators.loadProfileSucess(response.data));
 
     yield toastr.success("", "Informações atualizadas com sucesso.");
   } catch (err) {
@@ -30,7 +30,12 @@ export function* create({ payload }) {
 
 export function* updateProfileRequest({ payload }) {
   try {
-    const response = yield call(api.put, "/profile/0", payload.profile);
+    /**
+     * Ordem dos atributos { nome, cpf, cargo }
+     */
+    const { cpf, nome, cargo } = payload.profile;
+
+    const response = yield call(api.put, "/profile/0", { nome, cpf, cargo });
 
     yield put(ProfileCreators.loadProfileSucess(response.data));
     yield toastr.success("", "Informações atualizadas com sucesso.");
