@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Creators as ViewCreators } from "../../../store/ducks/view";
 import AuthActions from "../../../store/ducks/auth";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import {
   List,

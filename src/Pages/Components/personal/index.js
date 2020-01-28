@@ -41,17 +41,11 @@ export default function Components() {
         cargo
       };
 
-      console.log(exist);
-
-      getAtribute(prof);
-
-      console.log(prof);
+      checkAttributesObj(prof);
 
       if (exist === true) {
-        console.log("ali");
         dispatch(ProfileCreators.updateProfileRequest(prof));
       } else {
-        console.log("Aqui");
         dispatch(ProfileCreators.createProfileRequest(prof));
       }
     } catch (error) {
@@ -61,24 +55,6 @@ export default function Components() {
 
   function changeCpf(e) {
     setCpf(cpfMask(e.target.value, cpf));
-  }
-
-  function getAtribute(object) {
-    if (
-      object.cpf === null ||
-      object.cpf === "" ||
-      object.nome === null ||
-      object.nome === "" ||
-      object.cargo === null ||
-      object.cargo === ""
-    ) {
-      throw new UserException("Null");
-    }
-  }
-
-  function UserException(message) {
-    this.message = message;
-    this.name = "UserException";
   }
 
   return (
@@ -142,3 +118,17 @@ export default function Components() {
 Field.defaultProps = {
   value: ""
 };
+
+function checkAttributesObj(obj) {
+  for (var [key, value] of Object.entries(obj)) {
+    console.log(key);
+    if (typeof value === "undefined" || value === null || value === "") {
+      throw new UserException("Null");
+    }
+  }
+}
+
+function UserException(message) {
+  this.message = message;
+  this.name = "UserException";
+}

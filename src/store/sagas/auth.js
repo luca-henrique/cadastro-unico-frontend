@@ -7,6 +7,7 @@ import AuthActions from "../ducks/auth";
 import { Creators as UserCreators } from "../ducks/user";
 import { Creators as ProfileCreators } from "../ducks/profile";
 import { Creators as AddressCreators } from "../ducks/address";
+import { Creators as ContactCreators } from "../ducks/contact";
 
 import { actions as toastrActions } from "react-redux-toastr";
 
@@ -19,7 +20,9 @@ export function* signIn({ email, password }) {
     yield put(AuthActions.signInSuccess(response.data.token));
     yield put(UserCreators.loadUserRequest());
     yield put(ProfileCreators.loadProfileRequest());
-    yield put(push("/owner"));
+    yield put(AddressCreators.loadAddressRequest());
+    yield put(ContactCreators.loadContactRequest());
+    yield put(push("/"));
   } catch (err) {
     yield put(
       toastrActions.add({
@@ -35,6 +38,7 @@ export function* signOut() {
   yield put(UserCreators.loadUserSuccess({}));
   yield put(ProfileCreators.loadProfileSucess({}));
   yield put(AddressCreators.loadAddressSucess({}));
+  yield put(ContactCreators.loadContactSuccess({}));
   localStorage.removeItem("@Omni:token");
   localStorage.removeItem("@Omni:team");
   yield put(push("/"));

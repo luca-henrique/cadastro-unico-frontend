@@ -1,25 +1,35 @@
 import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import AuthActions from "../../../store/ducks/auth";
+import { useSelector, useDispatch } from "react-redux";
 import { Creators as ContactCreators } from "../../../store/ducks/contact";
 
 import { Grid, Typography } from "@material-ui/core/";
 
 import TextField from "../TextField/";
+import { toastr } from "react-redux-toastr";
 
-function Components(props) {
-  const [contact, setContact] = useState("");
+export default function Components() {
+  const contact = useSelector(state => state.contact.contact);
+  const exist = useSelector(state => state.contact.exist);
+  const dispatch = useDispatch();
+
+  const [number, setNumber] = useState(contact.numero);
 
   function onUpdate() {
-    const { changeContact } = props;
-    var contato = {
-      telefone: contact
-    };
-    changeContact(contato);
-    console.log(props);
+    try {
+      var cont = {
+        numero: number
+      };
+
+      checkAttributesObj(cont);
+      if (exist === true) {
+        dispatch(ContactCreators.updateContactRequest(cont));
+      } else {
+        dispatch(ContactCreators.createContactRequest(cont));
+      }
+    } catch (err) {
+      toastr.error("Verifique o seu numero");
+    }
   }
 
   return (
@@ -41,33 +51,34 @@ function Components(props) {
                 variant="outlined"
                 size="small"
                 fullWidth
-                onChange={e => setContact(e.target.value)}
-                value={contact}
+                onChange={e => setNumber(validatePhone(e.target.value))}
+                value={number}
               />
             </div>
           </Grid>
 
           <Grid item xs={12} sm={2} />
-
-          <Grid item xs={12} sm={5}>
-            <div>
-              <Typography variant="button" style={{ color: "#BDBDBD" }}>
-                Celular
-              </Typography>
-              <TextField variant="outlined" size="small" fullWidth />
-            </div>
-          </Grid>
         </Grid>
       </form>
     </>
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
-});
+function checkAttributesObj(obj) {
+  for (var [key, value] of Object.entries(obj)) {
+    console.log(key);
+    if (typeof value === "undefined" || value === null || value === "") {
+      throw new UserException("Null");
+    }
+  }
+}
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...ContactCreators, ...AuthActions }, dispatch);
+function UserException(message) {
+  this.message = message;
+  this.name = "UserException";
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Components);
+function validatePhone(phone) {
+  var formatted = phone.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+  return formatted;
+}

@@ -8,6 +8,7 @@ import view from "./view";
 import user from "./user";
 import profile from "./profile";
 import address from "./address";
+import contact from "./contact";
 
 import login from "./login";
 
@@ -19,6 +20,7 @@ export default history =>
     profile,
     auth,
     view,
+    contact,
     login,
     router: connectRouter(history)
   });

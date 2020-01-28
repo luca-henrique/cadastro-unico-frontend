@@ -37,8 +37,7 @@ export function* destroy({ payload }) {
 
 export function* list() {
   try {
-    const response = yield call(api.get, "/users");
-    console.log(response);
+    yield call(api.get, "/users");
   } catch (err) {
     yield toastr.error("Falha", "Falha ao carregar funcionarios");
   }
@@ -46,10 +45,10 @@ export function* list() {
 
 export function* changerPassword({ payload }) {
   try {
-    const response = yield call(api.put, "/changer", {
+    yield call(api.put, "/changer", {
       password: payload.password
     });
-    console.log(response);
+    yield toastr.success("Senha alterada.");
   } catch (err) {
     yield toastr.error("Falha", "Falha ao alterar o password");
   }

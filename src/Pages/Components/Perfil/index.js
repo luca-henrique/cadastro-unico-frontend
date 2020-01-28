@@ -3,7 +3,7 @@ import React from "react";
 //import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Grid, Typography, Button } from "@material-ui/core/";
+import { Grid, Typography } from "@material-ui/core/";
 
 // import { Container } from './styles';
 
@@ -54,7 +54,7 @@ const Perfil = () => (
         <Typography variant="h5">Endereço</Typography>
       </Grid>
 
-      <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
+      <Grid item xs={12} sm={12}>
         <Address />
       </Grid>
 
@@ -64,7 +64,7 @@ const Perfil = () => (
         <Typography variant="h5">Contato</Typography>
       </Grid>
 
-      <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
+      <Grid item xs={12} sm={12}>
         <Contact />
       </Grid>
     </Grid>

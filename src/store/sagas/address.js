@@ -10,11 +10,7 @@ export function* createAddress({ payload }) {
      * create new adrdess {cep, estado, bairro, rua, numero}
      **/
 
-    console.log(payload.address);
-
     const response = yield call(api.post, "/address", payload.address);
-
-    console.log(response.data);
 
     yield put(AddressCreators.createAddressSucess(response.data));
 
@@ -29,39 +25,27 @@ export function* createAddress({ payload }) {
 export function* updateAddress({ payload }) {
   try {
     /** 
-     Ordem dos atributos {  }
+     Ordem dos atributos { cep, estado, bairro, complemento, rua, num  }
     **/
 
-    const { cep, estado, bairro, complemento, rua, num } = payload.profile;
-
-    const response = yield call(api.put, "/address/0", {
-      cep,
-      estado,
-      bairro,
-      complemento,
-      rua,
-      num
-    });
+    const response = yield call(api.put, "/address/0", payload.address);
 
     yield put(AddressCreators.loadAddressSucess(response.data));
-    yield toastr.success("", "Informações atualizadas com sucesso.");
+
+    yield toastr.success("Informações atualizadas com sucesso.");
   } catch (err) {
     yield toastr.error("Falha", "Falha ao atualizar as informações pessoais");
   }
 }
-/*
-export function* get() {
+
+export function* getAddress() {
   try {
-    const id = yield call(api.get, "/user");
-    const response = yield call(api.get, `/profile/${id.data}`);
+    const response = yield call(api.get, "/address/0");
 
-    yield put(ProfileCreators.loadProfileSucess(response.data));
+    yield put(AddressCreators.loadAddressSucess(response.data));
 
-    yield put(ProfileCreators.failLoadProfile(true));
-    yield toastr.success("", "Todas as informações do usuario carregadas");
+    yield put(AddressCreators.failLoadAddress(true));
   } catch (err) {
-    yield put(ProfileCreators.failLoadProfile(false));
-    yield toastr.error("Erro", "Usuario não tem todas as informações");
+    yield put(AddressCreators.failLoadAddress(false));
   }
 }
-*/

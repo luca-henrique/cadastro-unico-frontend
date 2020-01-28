@@ -16,7 +16,7 @@ export default function Components(props) {
 
   const [cep, setCep] = useState(address.cep);
   const [estado, setEstado] = useState(address.estado);
-  const [num, setNum] = useState(address.num);
+  const [numero, setNumero] = useState(address.numero);
   const [rua, setRua] = useState(address.rua);
   const [complemento, setComplemento] = useState(address.complemento);
   const [bairro, setBairro] = useState(address.bairro);
@@ -30,15 +30,17 @@ export default function Components(props) {
         bairro,
         complemento,
         rua,
-        num
+        numero
       };
+
+      checkAttributesObj(addr);
       if (exist === true) {
         dispatch(AddressCreators.updateAddressRequest(addr));
       } else {
         dispatch(AddressCreators.createAddressRequest(addr));
       }
     } catch (err) {
-      console.log(err);
+      toastr.error("Preencha todos os campos do endereço");
     }
   }
 
@@ -120,8 +122,8 @@ export default function Components(props) {
                 variant="outlined"
                 size="small"
                 fullWidth
-                onChange={e => setNum(e.target.value)}
-                value={num}
+                onChange={e => setNumero(e.target.value)}
+                value={numero}
               />
             </div>
           </Grid>
@@ -177,3 +179,17 @@ export default function Components(props) {
 TextField.defaultProps = {
   value: ""
 };
+
+function checkAttributesObj(obj) {
+  for (var [key, value] of Object.entries(obj)) {
+    console.log(key);
+    if (typeof value === "undefined" || value === null || value === "") {
+      throw new UserException("Null");
+    }
+  }
+}
+
+function UserException(message) {
+  this.message = message;
+  this.name = "UserException";
+}

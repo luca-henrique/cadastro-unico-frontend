@@ -10,20 +10,14 @@ export function* create({ payload }) {
      * Criar novo profile
      */
 
-    console.log(payload);
-    const response = yield call(
-      api.post,
-      "/profile",
-      JSON.stringify(payload.profile)
-    );
+    const response = yield call(api.post, "/profile", payload.profile);
 
     yield put(ProfileCreators.loadProfileSucess(response.data));
 
-    yield toastr.success("", "Informações atualizadas com sucesso.");
+    yield toastr.success("Informações atualizadas com sucesso.");
   } catch (err) {
     yield toastr.error(
-      "Falha",
-      "Preencha todos os campos para atulizar as informações do usuario"
+      "Existe informações duplicadas que estão gerando conflito"
     );
   }
 }
@@ -52,7 +46,7 @@ export function* get() {
     yield put(ProfileCreators.loadProfileSucess(response.data));
 
     yield put(ProfileCreators.failLoadProfile(true));
-    yield toastr.success("", "Todas as informações do usuario carregadas");
+    yield toastr.success("Todas as informações do usuario carregadas");
   } catch (err) {
     yield put(ProfileCreators.failLoadProfile(false));
     yield toastr.error("Erro", "Usuario não tem todas as informações");

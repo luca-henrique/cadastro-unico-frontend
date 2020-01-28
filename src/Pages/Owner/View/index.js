@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     padding: theme.spacing(3),
-    height: "900px",
+    height: "800px",
     overflowY: "scroll",
     width: "100%"
   }
