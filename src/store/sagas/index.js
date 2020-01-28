@@ -15,6 +15,9 @@ import { createAddress, updateAddress, getAddress } from "./address";
 import { Types as ContactTypes } from "../ducks/contact";
 import { createContact, getContact, updateContact } from "./contact";
 
+import { Types as FunTypes } from "../ducks/funcionario";
+import { getFuncionarios } from "./funcionario";
+
 import { teste } from "./teste";
 
 export default function* rootSaga() {
@@ -38,6 +41,8 @@ export default function* rootSaga() {
 
     takeLatest(ContactTypes.CREATE_CONTACT_REQUEST, createContact),
     takeLatest(ContactTypes.LOAD_CONTACT_REQUEST, getContact),
-    takeLatest(ContactTypes.UPDATE_CONTACT_REQUEST, updateContact)
+    takeLatest(ContactTypes.UPDATE_CONTACT_REQUEST, updateContact),
+
+    takeLatest(FunTypes.LOAD_FUNCIONARIO_REQUEST, getFuncionarios)
   ]);
 }

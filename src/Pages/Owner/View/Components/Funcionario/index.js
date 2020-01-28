@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
 import { Creators as FuncionarioCreators } from "../../../../../store/ducks/funcionario";
 
 import MaterialTable from "material-table";
 
-import Modal from "./Create/";
+//import Modal from "./Create/";
 
-function Funcionario(props) {
+export default function Funcionario() {
   const [state, setState] = useState({
     columns: [
       {
@@ -76,9 +74,9 @@ function Funcionario(props) {
   });
 
   const [selectedRow, setSelectedRow] = useState("");
-  console.log(props);
 
-  const { showModalNewFuncionario } = props;
+  const data = useSelector(state => state.funcionario.funcionarios);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -86,7 +84,7 @@ function Funcionario(props) {
         style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
         title="Funcionarios"
         columns={state.columns}
-        data={state.data}
+        data={data}
         editable={{
           onRowUpdate: (newData, oldData) =>
             new Promise(resolve => {
@@ -129,20 +127,12 @@ function Funcionario(props) {
             icon: "add",
             tooltip: "Add User",
             isFreeAction: true,
-            onClick: event => showModalNewFuncionario()
+            onClick: event =>
+              dispatch(FuncionarioCreators.showModalNewFuncionario())
           }
         ]}
       />
-      <Modal />;
+      {/*<Modal /> */};
     </>
   );
 }
-
-const mapStateToProps = state => ({
-  redux: state
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...FuncionarioCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Funcionario);

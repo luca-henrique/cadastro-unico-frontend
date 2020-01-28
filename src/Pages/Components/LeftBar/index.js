@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import { Creators as ViewCreators } from "../../../store/ducks/view";
 import AuthActions from "../../../store/ducks/auth";
+import { Creators as FunCreators } from "../../../store/ducks/funcionario";
 
 import { useDispatch } from "react-redux";
 
@@ -114,6 +115,7 @@ function LeftBar(props) {
             backgroundColor: "rgba(2,99,44,0.7)"
           }}
           onClick={() => {
+            dispatch(FunCreators.loadFuncionarioRequest());
             changerView("funcionario");
           }}
         >
