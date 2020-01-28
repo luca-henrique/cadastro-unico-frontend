@@ -1,36 +1,71 @@
 import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import AuthActions from "../../../store/ducks/auth";
+import { useSelector, useDispatch } from "react-redux";
 import { Creators as AddressCreators } from "../../../store/ducks/address";
 
-import { TextField, Grid, Typography } from "@material-ui/core/";
+import { Grid, Typography } from "@material-ui/core/";
 
-function Components(props) {
-  const [cep, setCep] = useState("");
-  const [estado, setEstado] = useState("");
-  const [num, setNum] = useState("");
-  const [rua, setRua] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [bairro, setBairro] = useState("");
+import TextField from "../TextField/";
+
+import { toastr } from "react-redux-toastr";
+
+export default function Components(props) {
+  const address = useSelector(state => state.address.address);
+  const exist = useSelector(state => state.address.exist);
+  const dispatch = useDispatch();
+
+  const [cep, setCep] = useState(address.cep);
+  const [estado, setEstado] = useState(address.estado);
+  const [numero, setNumero] = useState(address.numero);
+  const [rua, setRua] = useState(address.rua);
+  const [complemento, setComplemento] = useState(address.complemento);
+  const [bairro, setBairro] = useState(address.bairro);
 
   function onUpdate(e) {
     e.preventDefault();
+    try {
+      var addr = {
+        cep,
+        estado,
+        bairro,
+        complemento,
+        rua,
+        numero
+      };
 
-    const { setAddress } = props;
-    var address = {
-      cep,
-      estado,
-      num,
-      rua,
-      complemento,
-      bairro
-    };
+      checkAttributesObj(addr);
+      if (exist === true) {
+        dispatch(AddressCreators.updateAddressRequest(addr));
+      } else {
+        dispatch(AddressCreators.createAddressRequest(addr));
+      }
+    } catch (err) {
+      toastr.error("Preencha todos os campos do endereço");
+    }
+  }
 
-    setAddress(address);
-    console.log(props);
+  function getCep(cep) {
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(response => response.json())
+      .then(data => {
+        setRua(data.logradouro);
+        setBairro(data.bairro);
+        setEstado(data.uf);
+        setComplemento(data.complemento);
+      })
+      .catch(err => {});
+  }
+
+  function format(d) {
+    d = soNumeros(d);
+    d = d.replace(/^(\d{5})(\d)/, "$1-$2");
+    if (d.length === 9) {
+      getCep(d);
+    }
+    return d;
+  }
+  function soNumeros(d) {
+    return d.replace(/\D/g, "");
   }
 
   return (
@@ -45,12 +80,16 @@ function Components(props) {
         >
           <Grid item xs={12} sm={3}>
             <div>
-              <Typography variant="button">CEP</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                CEP
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
                 fullWidth
-                onChange={e => setCep(e.target.value)}
+                onChange={e => {
+                  setCep(format(e.target.value));
+                }}
                 value={cep}
               />
             </div>
@@ -60,7 +99,9 @@ function Components(props) {
 
           <Grid item xs={12} sm={4}>
             <div>
-              <Typography variant="button">Estado</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Estado
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -74,20 +115,24 @@ function Components(props) {
           <Grid item xs={12} sm={2} />
           <Grid item xs={12} sm={1}>
             <div>
-              <Typography variant="button">Nº</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Nº
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
                 fullWidth
-                onChange={e => setNum(e.target.value)}
-                value={num}
+                onChange={e => setNumero(e.target.value)}
+                value={numero}
               />
             </div>
           </Grid>
 
           <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
             <div>
-              <Typography variant="button">Bairro</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Bairro
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -99,7 +144,9 @@ function Components(props) {
           </Grid>
           <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
             <div>
-              <Typography variant="button">Rua</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Rua
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -111,7 +158,9 @@ function Components(props) {
           </Grid>
           <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
             <div>
-              <Typography variant="button">Complemento</Typography>
+              <Typography variant="button" style={{ color: "#BDBDBD" }}>
+                Complemento
+              </Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -127,11 +176,20 @@ function Components(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
-});
+TextField.defaultProps = {
+  value: ""
+};
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AddressCreators, AuthActions }, dispatch);
+function checkAttributesObj(obj) {
+  for (var [key, value] of Object.entries(obj)) {
+    console.log(key);
+    if (typeof value === "undefined" || value === null || value === "") {
+      throw new UserException("Null");
+    }
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Components);
+function UserException(message) {
+  this.message = message;
+  this.name = "UserException";
+}

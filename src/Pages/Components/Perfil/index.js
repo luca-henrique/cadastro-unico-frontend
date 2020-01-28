@@ -3,14 +3,14 @@ import React from "react";
 //import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Grid, Typography, Button } from "@material-ui/core/";
+import { Grid, Typography } from "@material-ui/core/";
 
 // import { Container } from './styles';
 
-import PersonalInformation from "../../../../Components/personal-information/index";
-import Login from "../../../../Auth/ChangerPassword/Login";
-import Address from "../../../../Components/Address/index";
-import Contact from "../../../../Components/Contact/index";
+import PersonalInformation from "../personal/index";
+import Login from "../../Auth/ChangerPassword/Login";
+import Address from "../Address/index";
+import Contact from "../Contact/index";
 
 const Perfil = () => (
   <div>
@@ -54,7 +54,7 @@ const Perfil = () => (
         <Typography variant="h5">Endereço</Typography>
       </Grid>
 
-      <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
+      <Grid item xs={12} sm={12}>
         <Address />
       </Grid>
 
@@ -64,26 +64,8 @@ const Perfil = () => (
         <Typography variant="h5">Contato</Typography>
       </Grid>
 
-      <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
+      <Grid item xs={12} sm={12}>
         <Contact />
-      </Grid>
-
-      <Grid
-        container
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-      >
-        <Grid item xs={12} sm={12} style={{ marginTop: "20px" }}>
-          <div style={{ width: "100%" }}>
-            <Button
-              variant="contained"
-              style={{ width: "100%", color: "rgb(2,99,44)" }}
-            >
-              Salvar alterações
-            </Button>
-          </div>
-        </Grid>
       </Grid>
     </Grid>
   </div>

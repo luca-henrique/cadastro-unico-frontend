@@ -3,8 +3,10 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Creators as UserCreators } from "../../../../../store/ducks/user";
-import AuthActions from "../../../../../store/ducks/auth";
+import { Creators as ViewCreators } from "../../../store/ducks/view";
+import AuthActions from "../../../store/ducks/auth";
+
+import { useDispatch } from "react-redux";
 
 import {
   List,
@@ -61,11 +63,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function LeftBar(props) {
-  const { show, signOut } = props;
+  const { signOut, changerView } = props;
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
   return (
-    <div>
+    <div style={{ backgroundColor: "rgb(10,103,30)" }}>
       <div
         className={classes.toolbar}
         style={{
@@ -73,14 +77,14 @@ function LeftBar(props) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "rgb(246,238,89)",
+          backgroundColor: "#D8D8D8",
           height: "150px"
         }}
       >
         <Home
           style={{
-            fontSize: 80,
-            color: "rgba(2,99,44,0.7)",
+            fontSize: 100,
+            color: "rgb(2,99,44)",
             margin: "10px"
           }}
         />
@@ -89,9 +93,11 @@ function LeftBar(props) {
       <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
         <ListItem
           button
-          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+          style={{
+            backgroundColor: "rgba(2,99,44,0.7)"
+          }}
           onClick={() => {
-            show("perfil");
+            dispatch(ViewCreators.changerView("perfil"));
           }}
         >
           <ListItemIcon>
@@ -104,9 +110,11 @@ function LeftBar(props) {
 
         <ListItem
           button
-          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+          style={{
+            backgroundColor: "rgba(2,99,44,0.7)"
+          }}
           onClick={() => {
-            show("funcionario");
+            changerView("funcionario");
           }}
         >
           <ListItemIcon>
@@ -121,7 +129,7 @@ function LeftBar(props) {
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
-            show("caixa");
+            changerView("caixa");
           }}
         >
           <ListItemIcon>
@@ -136,7 +144,7 @@ function LeftBar(props) {
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
-            show("pasta");
+            changerView("pasta");
           }}
         >
           <ListItemIcon>
@@ -151,7 +159,7 @@ function LeftBar(props) {
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
-            show("familiar");
+            changerView("familiar");
           }}
         >
           <ListItemIcon>
@@ -165,7 +173,7 @@ function LeftBar(props) {
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
-            show("prefeitura");
+            changerView("prefeitura");
           }}
         >
           <ListItemIcon>
@@ -181,7 +189,7 @@ function LeftBar(props) {
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
-            show("gerar");
+            changerView("gerar");
           }}
         >
           <ListItemIcon>
@@ -195,7 +203,10 @@ function LeftBar(props) {
         <ListItem
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
-          onClick={signOut}
+          onClick={() => {
+            signOut();
+            changerView("default");
+          }}
         >
           <ListItemIcon>
             <ExitToApp style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
@@ -210,10 +221,10 @@ function LeftBar(props) {
 }
 
 const mapStateToProps = state => ({
-  redux: state.users
+  redux: state
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...UserCreators, ...AuthActions }, dispatch);
+  bindActionCreators({ ...AuthActions, ...ViewCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftBar);

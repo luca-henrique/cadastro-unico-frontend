@@ -15,18 +15,16 @@ export default Creators;
 
 export const INITIAL_STATE = Immutable({
   signedIn: !!localStorage.getItem("@Omni:token"),
-  token: localStorage.getItem("@Omni:token") || null,
-  user: {}
+  token: localStorage.getItem("@Omni:token") || null
 });
 
 /* Reducers */
 
 export const success = (state, { token }) => {
-  console.log(token);
-  return state.merge({ signedIn: true, token });
+  return { ...state, signedIn: true, token };
 };
 
-export const logout = state => state.merge({ signedIn: false, token: null });
+export const logout = state => ({ ...state, signedIn: false, token: null });
 
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {

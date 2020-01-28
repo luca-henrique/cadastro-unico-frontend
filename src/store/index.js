@@ -1,3 +1,5 @@
+import { persistStore } from "redux-persist";
+import persistReducers from "./persistReducers";
 import { applyMiddleware, createStore, compose } from "redux";
 import "../config/ReactotronConfig";
 import createSagaMiddleware from "redux-saga";
@@ -15,10 +17,12 @@ const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 const middlewares = [sagaMiddleware, routerMiddleware(history)];
 
 const store = createStore(
-  rootReducer(history),
+  persistReducers(rootReducer(history)),
   compose(applyMiddleware(...middlewares), console.tron.createEnhancer())
 );
 
+const persistor = persistStore(store);
+
 sagaMiddleware.run(rootSaga);
 
-export default store;
+export { store, persistor };

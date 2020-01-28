@@ -9,10 +9,10 @@ import MaterialTable, { MTableToolbar } from "material-table";
 
 import { ArrowBackIos } from "@material-ui/icons/";
 
-import Modal from "./Create/";
+import Modal from "./Create";
 
-import { Creators as UserCreators } from "../../../../../store/ducks/user";
-import { Creators as PasteCreators } from "../../../../../store/ducks/pasta";
+import { Creators as UserCreators } from "../../../store/ducks/user";
+import { Creators as PasteCreators } from "../../../store/ducks/pasta";
 
 const Pasta = props => {
   const [state, setState] = useState({

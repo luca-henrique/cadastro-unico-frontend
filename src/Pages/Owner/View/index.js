@@ -3,8 +3,7 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import AuthActions from "../../../store/ducks/auth";
-import { Creators as UserCreators } from "../../../store/ducks/user";
+import { Creators as ViewCreators } from "../../../store/ducks/view";
 
 import {
   AppBar,
@@ -20,14 +19,16 @@ import {
 
 import { Menu } from "@material-ui/icons/";
 
-import LeftBar from "./Components/LeftBar/index";
+/* Componentes que só o usuario tem */
+import Prefeitura from "./Components/Prefeitura/";
+import Funcionario from "./Components/Funcionario/";
 
-import Perfil from "./Components/Perfil/index";
-import Prefeitura from "./Components/Prefeitura/index";
-import Funcionario from "./Components/Funcionario/index";
-import Caixa from "./Components/Caixas";
-import Pasta from "./Components/Pastas/";
-import Familiar from "./Components/Familiar/";
+import Perfil from "../../Components/Perfil/";
+import LeftBar from "../../Components/LeftBar/";
+
+import Caixa from "../../Components/Caixa";
+import Pasta from "../../Components/Pasta/";
+import Familiar from "../../Components/Familiar/";
 
 const drawerWidth = 240;
 
@@ -55,11 +56,12 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    backgroundColor: "#D8D8D8"
   },
   content: {
     padding: theme.spacing(3),
-    height: "900px",
+    height: "800px",
     overflowY: "scroll",
     width: "100%"
   }
@@ -69,16 +71,17 @@ function View(props) {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const { type } = props.redux.show;
+  const { type } = props.redux;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const PAGES = {
-    default: <h2>Teste</h2>,
+    default: <div></div>,
     perfil: <Perfil />,
     prefeitura: <Prefeitura />,
     funcionario: <Funcionario />,
@@ -93,7 +96,7 @@ function View(props) {
       <AppBar
         position="fixed"
         className={classes.appBar}
-        style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+        style={{ backgroundColor: "rgb(10,103,30)" }}
       >
         <Toolbar>
           <IconButton
@@ -105,7 +108,7 @@ function View(props) {
           >
             <Menu />
           </IconButton>
-          <Typography variant="h6" noWrap style={{ color: "rgb(246,238,89)" }}>
+          <Typography variant="h5" noWrap style={{ color: "rgb(246,238,89)" }}>
             Cadastro único
           </Typography>
         </Toolbar>
@@ -114,6 +117,7 @@ function View(props) {
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
+            style={{ backgroundColor: "#D8D8D8" }}
             container={container}
             variant="temporary"
             anchor={theme.direction === "rtl" ? "right" : "left"}
@@ -136,6 +140,7 @@ function View(props) {
             }}
             variant="permanent"
             open
+            style={{ backgroundColor: "#D8D8D8" }}
           >
             <LeftBar />
           </Drawer>
@@ -150,10 +155,10 @@ function View(props) {
 }
 
 const mapStateToProps = state => ({
-  redux: state.users
+  redux: state.view
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AuthActions, ...UserCreators }, dispatch);
+  bindActionCreators({ ...ViewCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(View);

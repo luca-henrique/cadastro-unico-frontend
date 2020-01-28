@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { Creators as FuncionarioCreators } from "../../../../../../store/ducks/funcionario";
 
-import Personal from "../../../../../Components/personal-information/index";
+import Personal from "../../../../../Components/personal/index";
 import CreateLogin from "../../../../../Auth/Create/";
 import Contact from "../../../../../Components/Contact/";
 
