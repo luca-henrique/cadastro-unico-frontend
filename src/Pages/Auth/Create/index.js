@@ -1,14 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 
-//import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { Creators as FunCreators } from "../../../store/ducks/funcionario";
+import { useSelector, useDispatch } from "react-redux";
 
 import { TextField, Grid, Typography } from "@material-ui/core/";
+import { toastr } from "react-redux-toastr";
 
-const Create = () => {
+export default function Create() {
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function onChange() {
+    try {
+      var funcionario = {
+        email,
+        password
+      };
+
+      dispatch(FunCreators.createFuncRequest(funcionario));
+    } catch (err) {
+      toastr.error(err);
+    }
+  }
+
+  function compare(pass, other) {
+    if (pass !== other) {
+      throw new UserException("Senhas");
+    }
+  }
+
+  function UserException(message) {
+    this.message = message;
+    this.name = "UserException";
+  }
+
   return (
     <>
-      <form style={{ marginTop: "15px" }}>
+      <form style={{ marginTop: "15px" }} onBlur={onChange}>
         <Grid
           container
           direction="row"
@@ -17,30 +47,26 @@ const Create = () => {
         >
           <Grid item xs={12} sm={12}>
             <div>
-              <Typography variant="button">Email</Typography>
-              <TextField variant="outlined" size="small" fullWidth />
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={5} style={{ marginTop: "15px" }}>
-            <div>
-              <Typography variant="button">Senha</Typography>
+              <Typography variant="button">E-mail:</Typography>
               <TextField
                 variant="outlined"
                 size="small"
                 fullWidth
-                type="password"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
               />
             </div>
           </Grid>
-          <Grid item xs={12} sm={2} />
-          <Grid item xs={12} sm={5} style={{ marginTop: "15px" }}>
+          <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
             <div>
-              <Typography variant="button">Repita a senha</Typography>
+              <Typography variant="button">Senha:</Typography>
               <TextField
                 variant="outlined"
                 size="small"
                 fullWidth
                 type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
               />
             </div>
           </Grid>
@@ -48,14 +74,4 @@ const Create = () => {
       </form>
     </>
   );
-};
-
-const mapStateToProps = state => ({});
-
-// const mapDispatchToProps = dispatch =>
-//   bindActionCreators(Actions, dispatch);
-
-export default connect(
-  mapStateToProps
-  // mapDispatchToProps
-)(Create);
+}

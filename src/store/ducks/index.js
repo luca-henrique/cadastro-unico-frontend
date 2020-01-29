@@ -14,6 +14,9 @@ import address from "./address";
 import contact from "./contact";
 import login from "./login";
 
+import paste from "./paste";
+import box from "./box";
+
 export default history =>
   combineReducers({
     toastr,
@@ -25,5 +28,7 @@ export default history =>
     view,
     contact,
     login,
+    paste,
+    box,
     router: connectRouter(history)
   });

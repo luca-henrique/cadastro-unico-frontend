@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Creators as PasteCreators } from "../../../../store/ducks/pasta";
+import { Creators as PasteCreators } from "../../../../store/ducks/paste";
 
 import {
   Typography,

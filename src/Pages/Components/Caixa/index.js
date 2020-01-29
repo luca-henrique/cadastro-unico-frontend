@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import { Creators as UserCreators } from "../../../store/ducks/user";
-import { Creators as BoxCreators } from "../../../store/ducks/caixa";
+import { useSelector, useDispatch } from "react-redux";
+import { Creators as BoxCreators } from "../../../store/ducks/box";
 
 import MaterialTable from "material-table";
 import Modal from "./Create";
 
-const Caixas = props => {
+export default function() {
   const [state, setState] = useState({
     columns: [
       {
@@ -54,8 +51,7 @@ const Caixas = props => {
   });
 
   const [selectedRow, setSelectedRow] = useState("");
-
-  const { show, showModalNewBox } = props;
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -107,28 +103,17 @@ const Caixas = props => {
             tooltip: "Add User",
             isFreeAction: true,
             onClick: (event, rowData) => {
-              showModalNewBox();
+              dispatch(BoxCreators.showModalNewBox());
             }
           },
           {
             icon: "visibility",
             tooltip: "Mostrar pastas",
-            onClick: (event, rowData) => {
-              show("pasta");
-            }
+            onClick: (event, rowData) => {}
           }
         ]}
       />
-      <Modal />
+      {/*<Modal />*/}
     </>
   );
-};
-
-const mapStateToProps = state => ({
-  redux: state
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...UserCreators, ...BoxCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Caixas);
+}

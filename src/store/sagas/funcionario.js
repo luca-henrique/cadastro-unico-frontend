@@ -11,3 +11,19 @@ export function* getFuncionarios() {
     yield put(FuncionarioCreators.loadFuncionarioSuccess(response.data));
   } catch (err) {}
 }
+
+export function* createFuncionario({ payload }) {
+  try {
+    const response = yield call(api.post, "/user/", payload.funcionario);
+    console.log(response);
+  } catch (err) {}
+}
+
+export function* deleteFuncionario({ payload }) {
+  try {
+    const id = JSON.stringify(payload.funcionario.id);
+    yield call(api.delete, `/user/${id}`);
+  } catch (err) {
+    console.log(err);
+  }
+}

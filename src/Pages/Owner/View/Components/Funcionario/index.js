@@ -5,7 +5,7 @@ import { Creators as FuncionarioCreators } from "../../../../../store/ducks/func
 
 import MaterialTable from "material-table";
 
-//import Modal from "./Create/";
+import Modal from "./Create/";
 
 export default function Funcionario() {
   const [state, setState] = useState({
@@ -25,26 +25,20 @@ export default function Funcionario() {
         }
       },
       {
+        title: "Email",
+        field: "email",
+        headerStyle: {
+          color: "rgb(2,90,10)"
+        }
+      },
+      {
         title: "Cargo",
         field: "cargo",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
-      {
-        title: "Cidade",
-        field: "cidade",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "Telefone(fixo)",
-        field: "telefone",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
+
       {
         title: "celular",
         field: "celular",
@@ -52,62 +46,38 @@ export default function Funcionario() {
           color: "rgb(2,90,10)"
         }
       }
-    ],
-    data: [
-      {
-        cpf: "111.111.111-11",
-        nome: "Lucas Henrique Paes de Carvalho",
-        cargo: "administrador",
-        cidade: "São josé do egito",
-        telefone: "87 9 98093765",
-        celular: "87 9998093765"
-      },
-      {
-        cpf: "111.",
-        nome: "Lucas Henrique ",
-        cargo: "admin",
-        cidade: "São josé",
-        telefone: "873765",
-        celular: "87093765"
-      }
     ]
   });
 
   const [selectedRow, setSelectedRow] = useState("");
 
   const data = useSelector(state => state.funcionario.funcionarios);
+
   const dispatch = useDispatch();
+
+  console.log(data);
+
+  console.log(selectedRow);
 
   return (
     <>
       <MaterialTable
         style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
         title="Funcionarios"
-        columns={state.columns}
+        columns={[
+          { title: "CPF", field: "profile.cpf" },
+          { title: "Nome", field: "profile.nome" },
+          { title: "Email", field: "email" },
+          { title: "Cargo", field: "profile.cargo" },
+          { title: "Contato", field: "contact.numero" }
+        ]}
         data={data}
         editable={{
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                if (oldData) {
-                  setState(prevState => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                  });
-                }
-              }, 600);
-            }),
           onRowDelete: oldData =>
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });
+                dispatch(FuncionarioCreators.deleteFuncionarioSuccess(oldData));
               }, 600);
             })
         }}
@@ -132,7 +102,7 @@ export default function Funcionario() {
           }
         ]}
       />
-      {/*<Modal /> */};
+      <Modal />
     </>
   );
 }

@@ -1,9 +1,6 @@
 import React from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import { Creators as BoxCreators } from "../../../../store/ducks/caixa";
+import { Creators as BoxCreators } from "../../../../store/ducks/box";
 
 import {
   Typography,
@@ -15,14 +12,8 @@ import {
   TextField
 } from "@material-ui/core/";
 
-const Create = props => {
-  const { visible } = props.redux;
-
-  function hide() {
-    const { hideModalNewBox } = props;
-
-    hideModalNewBox();
-  }
+export default function Create() {
+  function hide() {}
 
   return (
     <Modal
@@ -33,7 +24,7 @@ const Create = props => {
         alignItems: "center",
         justifyContent: "center"
       }}
-      open={visible}
+      open={true}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -41,7 +32,7 @@ const Create = props => {
       }}
     >
       <form>
-        <Fade in={visible}>
+        <Fade in={true}>
           <div
             style={{
               backgroundColor: "#fff",
@@ -124,13 +115,4 @@ const Create = props => {
       </form>
     </Modal>
   );
-};
-
-const mapStateToProps = state => ({
-  redux: state.box
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...BoxCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+}

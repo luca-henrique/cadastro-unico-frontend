@@ -29,7 +29,9 @@ export function* updateProfileRequest({ payload }) {
      */
     const { cpf, nome, cargo } = payload.profile;
 
-    const response = yield call(api.put, "/profile/0", { nome, cpf, cargo });
+    console.log(payload.profile);
+
+    const response = yield call(api.put, "/profile/0", { cpf, nome, cargo });
 
     yield put(ProfileCreators.loadProfileSucess(response.data));
     yield toastr.success("", "Informações atualizadas com sucesso.");

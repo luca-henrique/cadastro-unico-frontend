@@ -3,9 +3,7 @@ import React from "react";
 import { Creators as FuncionarioCreators } from "../../../../../../store/ducks/funcionario";
 import { useSelector, useDispatch } from "react-redux";
 
-import Personal from "../../../../../Components/personal/index";
 import CreateLogin from "../../../../../Auth/Create/";
-import Contact from "../../../../../Components/Contact/";
 
 import {
   Typography,
@@ -19,10 +17,18 @@ import {
 export default function Create() {
   const dispatch = useDispatch();
 
+  const funcionario = useSelector(state => state.funcionario.funcionario);
+
   const visible = useSelector(state => state.funcionario.visible);
 
   function hide() {
-    hideModalNewFuncionario();
+    dispatch(FuncionarioCreators.hideModalNewFuncionario());
+    dispatch(FuncionarioCreators.createFuncRequest({}));
+  }
+
+  function save() {
+    dispatch(FuncionarioCreators.createFuncSuccess(funcionario));
+    hide();
   }
 
   return (
@@ -70,13 +76,13 @@ export default function Create() {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <Personal />
               <CreateLogin />
-              <Contact />
+
               <div style={{ width: "100%", marginTop: "20px" }}>
                 <Button
                   variant="contained"
                   style={{ color: "rgb(2,99,44)", width: "100%" }}
+                  onClick={save}
                 >
                   Salvar
                 </Button>

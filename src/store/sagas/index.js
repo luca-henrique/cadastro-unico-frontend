@@ -16,7 +16,17 @@ import { Types as ContactTypes } from "../ducks/contact";
 import { createContact, getContact, updateContact } from "./contact";
 
 import { Types as FunTypes } from "../ducks/funcionario";
-import { getFuncionarios } from "./funcionario";
+import {
+  getFuncionarios,
+  createFuncionario,
+  deleteFuncionario
+} from "./funcionario";
+
+import { Types as BoxTypes } from "../ducks/box";
+import { createBox, updateBox, deleteBox, getBoxes } from "./box";
+
+import { Types as PasteTypes } from "../ducks/paste";
+import { createPaste, updatePaste, deletePaste, getPastes } from "./paste";
 
 import { teste } from "./teste";
 
@@ -43,6 +53,18 @@ export default function* rootSaga() {
     takeLatest(ContactTypes.LOAD_CONTACT_REQUEST, getContact),
     takeLatest(ContactTypes.UPDATE_CONTACT_REQUEST, updateContact),
 
-    takeLatest(FunTypes.LOAD_FUNCIONARIO_REQUEST, getFuncionarios)
+    takeLatest(FunTypes.LOAD_FUNCIONARIO_REQUEST, getFuncionarios),
+    takeLatest(FunTypes.CREATE_FUNCTIONARIO_SUCCESS, createFuncionario),
+    takeLatest(FunTypes.DELETE_FUNCIONARIO_SUCCESSS, deleteFuncionario),
+
+    takeLatest(BoxTypes.CREATE_BOX_REQUEST, createBox),
+    takeLatest(BoxTypes.UPDATE_BOX_REQUEST, updateBox),
+    takeLatest(BoxTypes.DELETE_BOX_REQUEST, deleteBox),
+    takeLatest(BoxTypes.LOAD_ALL_BOXES, getBoxes),
+
+    takeLatest(PasteTypes.CREATE_PASTE_REQUEST, createPaste),
+    takeLatest(PasteTypes.UPDATE_PASTE_REQUEST, updatePaste),
+    takeLatest(PasteTypes.DELETE_PASTE_REQUEST, deletePaste),
+    takeLatest(PasteTypes.LOAD_ALL_PASTES, getPastes)
   ]);
 }

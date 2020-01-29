@@ -4,12 +4,18 @@ export const Types = {
   SHOW_MODAL_NEW_FUNCIONARIO: "@funcionario/SHOW_MODAL_NEW_FUNCIONARIO",
   HIDE_MODAL_NEW_FUNCIONARIO: "@funcionario/HIDE_MODAL_NEW_FUNCIONARIO",
 
+  CREATE_FUNCTIONARIO_REQUEST: "@funcionario/CREATE_FUNCIONARIO_REQUEST",
+  CREATE_FUNCTIONARIO_SUCCESS: "@funcionario/CREATE_FUNCIONARIO_SUCCESS",
+
+  DELETE_FUNCIONARIO_SUCCESSS: "@funcionario/DELETE_FUNCIONARIO_SUCCESS",
+
   LOAD_FUNCIONARIO_REQUEST: "@funcionario/LOAD_FUNCIONARIO_REQUEST",
   LOAD_FUNCIONARIO_SUCCESS: "@funcionario/LOAD_FUNCIONARIO_SUCCESS"
 };
 
 const INITIAL_STATE = Immutable({
   funcionarios: {},
+  funcionario: {},
   visible: false
 });
 
@@ -24,6 +30,24 @@ export default function funcionarios(state = INITIAL_STATE, action) {
       return {
         ...state,
         visible: false
+      };
+
+    case Types.CREATE_FUNCTIONARIO_REQUEST:
+      return {
+        ...state,
+        funcionario: action.payload.funcionario
+      };
+
+    case Types.CREATE_FUNCTIONARIO_SUCCESS:
+      return {
+        ...state,
+        funcionario: action.payload.funcionario
+      };
+
+    case Types.DELETE_FUNCIONARIO_SUCCESSS:
+      return {
+        ...state,
+        funcionario: action.payload.funcionario
       };
 
     case Types.LOAD_FUNCIONARIO_SUCCESS:
@@ -43,6 +67,24 @@ export const Creators = {
   }),
   hideModalNewFuncionario: () => ({
     type: Types.HIDE_MODAL_NEW_FUNCIONARIO
+  }),
+  createFuncRequest: funcionario => ({
+    type: Types.CREATE_FUNCTIONARIO_REQUEST,
+    payload: {
+      funcionario
+    }
+  }),
+  createFuncSuccess: funcionario => ({
+    type: Types.CREATE_FUNCTIONARIO_SUCCESS,
+    payload: {
+      funcionario
+    }
+  }),
+  deleteFuncionarioSuccess: funcionario => ({
+    type: Types.DELETE_FUNCIONARIO_SUCCESSS,
+    payload: {
+      funcionario
+    }
   }),
   loadFuncionarioRequest: () => ({
     type: Types.LOAD_FUNCIONARIO_REQUEST
