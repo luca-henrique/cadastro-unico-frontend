@@ -12,4 +12,6 @@ function UserException(message) {
   this.name = "UserException";
 }
 
+
+
 export { checkAttributesObj };

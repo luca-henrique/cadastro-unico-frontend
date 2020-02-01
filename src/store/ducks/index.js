@@ -16,6 +16,7 @@ import login from "./login";
 
 import paste from "./paste";
 import box from "./box";
+import prefecture from "./prefecture";
 
 export default history =>
   combineReducers({
@@ -30,5 +31,6 @@ export default history =>
     login,
     paste,
     box,
+    prefecture,
     router: connectRouter(history)
   });

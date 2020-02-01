@@ -26,7 +26,7 @@ import Funcionario from "./Components/Funcionario/";
 import Perfil from "../../Components/Perfil/";
 import LeftBar from "../../Components/LeftBar/";
 
-import Caixa from "../../Components/Caixa";
+import Caixa from "../../Components/Box";
 import Pasta from "../../Components/Pasta/";
 import Familiar from "../../Components/Familiar/";
 

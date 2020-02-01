@@ -7,13 +7,14 @@ export const Types = {
   CREATE_PASTE_REQUEST: "@paste/CREATE_PASTE_REQUEST",
   CREATE_PASTE_SUCCESS: "@paste/CREATE_PASTE_SUCCESS",
 
+  READ_PASTES_REQUEST: "@pastes/READ_PASTES_REQUEST",
+  READ_PASTES_SUCCESS: "@pastes/READ_PASTES_SUCCESS",
+
   UPDATE_PASTE_REQUEST: "@paste/UPDATE_PASTE_REQUEST",
   UPDATE_PASTE_SUCCESS: "@paste/UPDATE_PASTE_SUCCESS",
 
   DELETE_PASTE_REQUEST: "@paste/DELETE_PASTE_REQUEST",
-  DELETE_PASTE_SUCCESS: "@paste/DELETE_PASTE_SUCCESS",
-
-  LOAD_ALL_PASTES: "@paste/LOAD_ALL_PASTES"
+  DELETE_PASTE_SUCCESS: "@paste/DELETE_PASTE_SUCCESS"
 };
 
 const INITIAL_STATE = Immutable({
@@ -57,11 +58,7 @@ export default function pastes(state = INITIAL_STATE, action) {
       return { ...state, id: action.payload.id };
     }
 
-    case Types.UPDATE_PASTE_SUCCESS: {
-      return { ...state, paste: action.payload.paste };
-    }
-
-    case Types.LOAD_ALL_PASTES: {
+    case Types.DELETE_PASTE_SUCCESS: {
       return { ...state, pastes: action.payload.pastes };
     }
 
@@ -101,8 +98,11 @@ export const Creators = {
     type: Types.DELETE_PASTE_SUCCESS,
     payload: { paste }
   }),
-  loadAllPastes: pastes => ({
-    type: Types.LOAD_ALL_PASTES,
+  loadPastesRequest: () => ({
+    type: Types.LOAD_PASTES_REQUEST
+  }),
+  loadPastesSuccess: pastes => ({
+    type: Types.LOAD_PASTES_SUCCESS,
     payload: { pastes }
   })
 };

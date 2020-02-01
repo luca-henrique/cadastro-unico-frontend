@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 
+import { useSelector, useDispatch } from "react-redux";
 import { Creators as BoxCreators } from "../../../../store/ducks/box";
 
 import {
@@ -13,7 +14,29 @@ import {
 } from "@material-ui/core/";
 
 export default function Create() {
-  function hide() {}
+
+  const visible = useSelector(state => state.box.visible)
+  const dispatch = useDispatch();
+
+  const[numBox,setNumBox] = useState(0)
+  const[numMax, setNumMax] = useState(0);
+
+  function saveBox(e){
+    e.preventDefault()
+    try{
+    var box ={
+      numBox,numMax
+    }
+
+    dispatch(BoxCreators.createBoxRequest(box))
+  }catch(err){
+
+  }
+  }
+
+  function hide() {
+    dispatch(BoxCreators.hideModalNewBox())
+  }
 
   return (
     <Modal
@@ -24,15 +47,15 @@ export default function Create() {
         alignItems: "center",
         justifyContent: "center"
       }}
-      open={true}
+      open={visible}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
         timeout: 500
       }}
     >
-      <form>
-        <Fade in={true}>
+      <form onSubmit={saveBox}>
+        <Fade in={visible}>
           <div
             style={{
               backgroundColor: "#fff",
@@ -68,6 +91,8 @@ export default function Create() {
                     variant="outlined"
                     size="small"
                     fullWidth
+                    value={numBox}
+                    onChange={e=> setNumBox(e.target.value)}
                     type="number"
                   />
                 </div>
@@ -82,6 +107,8 @@ export default function Create() {
                     variant="outlined"
                     size="small"
                     fullWidth
+                    value={numMax}
+                    onChange={e=> setNumMax(e.target.value)}
                     type="number"
                   />
                 </div>
@@ -92,6 +119,7 @@ export default function Create() {
                   <Button
                     variant="contained"
                     style={{ color: "rgb(2,99,44)", width: "100%" }}
+                    type='submit'
                   >
                     Salvar
                   </Button>

@@ -28,6 +28,13 @@ import { createBox, updateBox, deleteBox, getBoxes } from "./box";
 import { Types as PasteTypes } from "../ducks/paste";
 import { createPaste, updatePaste, deletePaste, getPastes } from "./paste";
 
+import { Types as PrefectureTypes } from "../ducks/prefecture";
+import {
+  createPrefecture,
+  updatePrefecture,
+  getPrefecture
+} from "./prefecture";
+
 import { teste } from "./teste";
 
 export default function* rootSaga() {
@@ -52,6 +59,10 @@ export default function* rootSaga() {
     takeLatest(ContactTypes.CREATE_CONTACT_REQUEST, createContact),
     takeLatest(ContactTypes.LOAD_CONTACT_REQUEST, getContact),
     takeLatest(ContactTypes.UPDATE_CONTACT_REQUEST, updateContact),
+
+    takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
+    takeLatest(PrefectureTypes.LOAD_PREFECTURE_REQUEST, getPrefecture),
+    takeLatest(PrefectureTypes.UPDATE_PREFECTURE_REQUEST, updatePrefecture),
 
     takeLatest(FunTypes.LOAD_FUNCIONARIO_REQUEST, getFuncionarios),
     takeLatest(FunTypes.CREATE_FUNCTIONARIO_SUCCESS, createFuncionario),

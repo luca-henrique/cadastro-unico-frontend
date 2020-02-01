@@ -17,13 +17,9 @@ import {
   FormControl
 } from "@material-ui/core/";
 
-const Create = props => {
-  const { visible } = props.redux;
-
+export default function Create() {
   function hide() {
-    const { hideModalNewFamiliar } = props;
-
-    hideModalNewFamiliar();
+    //hideModalNewFamiliar();
   }
 
   return (
@@ -35,7 +31,7 @@ const Create = props => {
         alignItems: "center",
         justifyContent: "center"
       }}
-      open={visible}
+      open={false}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -43,7 +39,7 @@ const Create = props => {
       }}
     >
       <form>
-        <Fade in={visible}>
+        <Fade in={false}>
           <div
             style={{
               backgroundColor: "#fff",
@@ -177,13 +173,4 @@ const Create = props => {
       </form>
     </Modal>
   );
-};
-
-const mapStateToProps = state => ({
-  redux: state.familiar
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...FamiliarCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+}
