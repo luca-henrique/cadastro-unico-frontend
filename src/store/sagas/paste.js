@@ -7,7 +7,9 @@ import { toastr } from "react-redux-toastr";
 
 export function* createPaste({ payload }) {
   try {
+    console.log(payload.paste);
     const response = yield call(api.post, "/paste", payload.paste);
+    console.log(response);
   } catch (err) {}
 }
 

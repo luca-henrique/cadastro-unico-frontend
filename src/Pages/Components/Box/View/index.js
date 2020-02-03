@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { Creators as BoxCreators } from "../../../../store/ducks/box";
@@ -14,21 +14,28 @@ import {
 } from "@material-ui/core/";
 
 export default function Create() {
-  const visible = useSelector(state => state.box.visible);
+  const data = useSelector(state => state.box.updateBox.data);
+  const visible = useSelector(state => state.box.updateBox.visible);
   const dispatch = useDispatch();
 
-  const [numBox, setNumBox] = useState(0);
-  const [numMax, setNumMax] = useState(0);
+  const [numBox, setNumBox] = useState("");
+  const [numMax, setNumMax] = useState("");
+
+  useEffect(() => {
+    setNumBox(data.numBox);
+    setNumMax(data.numMax);
+  }, [data.numBox, data.numMax]);
 
   function saveBox(e) {
     e.preventDefault();
     try {
       var box = {
+        id: data.id,
         numBox,
         numMax
       };
 
-      dispatch(BoxCreators.createBoxRequest(box));
+      dispatch(BoxCreators.updateBoxRequest(box));
       hide();
     } catch (err) {}
   }
@@ -36,7 +43,7 @@ export default function Create() {
   function hide() {
     setNumBox(0);
     setNumMax(0);
-    dispatch(BoxCreators.hideModalNewBox());
+    dispatch(BoxCreators.hideModalUpdateBox());
   }
 
   return (
@@ -94,7 +101,6 @@ export default function Create() {
                     fullWidth
                     value={numBox}
                     onChange={e => setNumBox(e.target.value)}
-                    type="number"
                   />
                 </div>
               </Grid>
@@ -110,7 +116,6 @@ export default function Create() {
                     fullWidth
                     value={numMax}
                     onChange={e => setNumMax(e.target.value)}
-                    type="number"
                   />
                 </div>
               </Grid>

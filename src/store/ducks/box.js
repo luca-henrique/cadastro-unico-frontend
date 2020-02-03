@@ -4,6 +4,9 @@ export const Types = {
   SHOW_MODAL_NEW_BOX: "@box/SHOW_MODAL_NEW_BOX",
   HIDE_MODAL_NEW_BOX: "@box/HIDE_MODAL_NEW_BOX",
 
+  SHOW_MODAL_UPDATE_BOX: "@box/SHOW_MODAL_UPDATE_BOX",
+  HIDE_MODAL_UPDATE_BOX: "@box/HIDE_MODAL_UPDATE_BOX",
+
   CREATE_BOX_REQUEST: "@box/CREATE_BOX_REQUEST",
   CREATE_BOX_SUCCESS: "@box/CREATE_BOX_SUCCESS",
 
@@ -13,13 +16,19 @@ export const Types = {
   DELETE_BOX_REQUEST: "@box/DELETE_BOX_REQUEST",
   DELETE_BOX_SUCCESS: "@box/DELETE_BOX_SUCCESS",
 
-  LOAD_ALL_BOXES: "@box/LOAD_ALL_BOXES"
+  READ_BOXES_REQUEST: "@box/READ_BOXES_REQUEST",
+  READ_BOXES_SUCCESS: "@box/READ_BOXES_SUCCESS",
+
+  READ_PASTES_BOX_REQUEST: "@box/READ_PASTES_BOX_REQUEST",
+  READ_PASTES_BOX_SUCCESS: "@box/READ_PASTES_BOX_SUCCESS"
 };
 
 const INITIAL_STATE = Immutable({
   id: null,
   box: {},
   boxes: {},
+  updateBox: { data: {}, visible: false },
+  pastes: {},
   visible: false
 });
 
@@ -35,6 +44,18 @@ export default function box(state = INITIAL_STATE, action) {
       return {
         ...state,
         visible: false
+      };
+
+    case Types.SHOW_MODAL_UPDATE_BOX:
+      return {
+        ...state,
+        updateBox: { data: action.payload.data, visible: true }
+      };
+
+    case Types.HIDE_MODAL_UPDATE_BOX:
+      return {
+        ...state,
+        updateBox: { data: {}, visible: false }
       };
 
     case Types.CREATE_BOX_REQUEST: {
@@ -57,12 +78,16 @@ export default function box(state = INITIAL_STATE, action) {
       return { ...state, id: action.payload.id };
     }
 
-    case Types.UPDATE_BOX_SUCCESS: {
-      return { ...state, box: action.payload.box };
+    case Types.READ_BOXES_SUCCESS: {
+      return { ...state, boxes: action.payload.boxes };
     }
 
-    case Types.LOAD_ALL_BOXES: {
-      return { ...state, boxes: action.payload.boxes };
+    case Types.READ_PASTES_BOX_REQUEST: {
+      return { ...state, id: action.payload.id };
+    }
+
+    case Types.READ_PASTES_BOX_SUCCESS: {
+      return { ...state, pastes: action.payload.pastes };
     }
 
     default:
@@ -76,6 +101,13 @@ export const Creators = {
   }),
   hideModalNewBox: () => ({
     type: Types.HIDE_MODAL_NEW_BOX
+  }),
+  showModalUpdateBox: data => ({
+    type: Types.SHOW_MODAL_UPDATE_BOX,
+    payload: { data }
+  }),
+  hideModalUpdateBox: () => ({
+    type: Types.HIDE_MODAL_UPDATE_BOX
   }),
   createBoxRequest: box => ({
     type: Types.CREATE_BOX_REQUEST,
@@ -101,8 +133,20 @@ export const Creators = {
     type: Types.DELETE_BOX_SUCCESS,
     payload: { box }
   }),
-  loadAllBoxes: boxes => ({
-    type: Types.LOAD_ALL_BOXES,
+  readBoxesRequest: () => ({
+    type: Types.READ_BOXES_REQUEST
+  }),
+  readBoxesSuccess: boxes => ({
+    type: Types.READ_BOXES_SUCCESS,
     payload: { boxes }
+  }),
+
+  readPastesRequest: id => ({
+    type: Types.READ_PASTES_BOX_REQUEST,
+    payload: { id }
+  }),
+  readPastesSuccess: pastes => ({
+    type: Types.READ_PASTES_BOX_SUCCESS,
+    payload: { pastes }
   })
 };

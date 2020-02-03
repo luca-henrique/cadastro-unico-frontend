@@ -3,7 +3,7 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Creators as FamiliarCreators } from "../../../../store/ducks/familiar";
+import { Creators as FamilyCreators } from "../../../../store/ducks/family";
 
 import {
   Typography,

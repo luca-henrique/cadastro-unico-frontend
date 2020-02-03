@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+
 import { Creators as BoxCreators } from "../../../store/ducks/box";
+import { Creators as ViewCreators } from "../../../store/ducks/view";
 
 import MaterialTable from "material-table";
-import Modal from "./Create";
+
+import ModalCreate from "./Create";
+import ModalUpdate from "./View";
 
 export default function() {
   const [state, setState] = useState({
@@ -17,40 +21,26 @@ export default function() {
         }
       },
       {
-        title: "Quantidade de pastas",
-        field: "qtdPastas",
+        title: "Numero da caixa",
+        field: "numBox",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
         title: "Quantidade maxima de pastas",
-        field: "qtdMax",
+        field: "numMax",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
-      }
-    ],
-    data: [
-      {
-        id: 1,
-        qtdPastas: 30,
-        qtdMax: 30
-      },
-      {
-        id: 1,
-        qtdPastas: 30,
-        qtdMax: 30
-      },
-      {
-        id: 1,
-        qtdPastas: 30,
-        qtdMax: 30
       }
     ]
   });
 
   const [selectedRow, setSelectedRow] = useState("");
+
+  const data = useSelector(state => state.box.boxes);
+  console.log(data);
   const dispatch = useDispatch();
 
   return (
@@ -59,30 +49,13 @@ export default function() {
         style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
         title="Caixas"
         columns={state.columns}
-        data={state.data}
+        data={data}
         editable={{
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                if (oldData) {
-                  setState(prevState => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                  });
-                }
-              }, 600);
-            }),
           onRowDelete: oldData =>
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });
+                dispatch(BoxCreators.deleteBoxRequest(oldData.id));
               }, 600);
             })
         }}
@@ -109,11 +82,25 @@ export default function() {
           {
             icon: "visibility",
             tooltip: "Mostrar pastas",
-            onClick: (event, rowData) => {}
+            onClick: (event, rowData) => {
+              dispatch(ViewCreators.changerView("pastesBox"));
+              dispatch(BoxCreators.readPastesRequest(rowData.id));
+            }
+          },
+          {
+            icon: "edit",
+            tooltip: "Editar caixa",
+            onClick: (event, rowData) => {
+              console.log(rowData);
+              dispatch(BoxCreators.showModalUpdateBox(rowData));
+            }
           }
         ]}
       />
-      <Modal />
+      <>
+        <ModalCreate />
+        <ModalUpdate />
+      </>
     </>
   );
 }

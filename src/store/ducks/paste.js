@@ -46,6 +46,10 @@ export default function pastes(state = INITIAL_STATE, action) {
       return { ...state, paste: action.payload.paste };
     }
 
+    case Types.READ_PASTES_SUCCESS: {
+      return { ...state, pastes: action.payload.pastes };
+    }
+
     case Types.UPDATE_PASTE_REQUEST: {
       return { ...state, paste: action.payload.paste };
     }
@@ -98,11 +102,11 @@ export const Creators = {
     type: Types.DELETE_PASTE_SUCCESS,
     payload: { paste }
   }),
-  loadPastesRequest: () => ({
-    type: Types.LOAD_PASTES_REQUEST
+  ReadPastesRequest: () => ({
+    type: Types.READ_PASTES_REQUEST
   }),
-  loadPastesSuccess: pastes => ({
-    type: Types.LOAD_PASTES_SUCCESS,
+  ReadPastesSuccess: pastes => ({
+    type: Types.READ_PASTES_SUCCESS,
     payload: { pastes }
   })
 };

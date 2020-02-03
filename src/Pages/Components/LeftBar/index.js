@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { Creators as ViewCreators } from "../../../store/ducks/view";
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as FunCreators } from "../../../store/ducks/funcionario";
+import { Creators as BoxCreators } from "../../../store/ducks/box";
 
 import { useDispatch } from "react-redux";
 
@@ -131,7 +132,8 @@ function LeftBar(props) {
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
-            changerView("caixa");
+            dispatch(BoxCreators.readBoxesRequest());
+            changerView("box");
           }}
         >
           <ListItemIcon>
