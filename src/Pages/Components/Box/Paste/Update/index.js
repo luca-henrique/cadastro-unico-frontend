@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as PasteCreators } from "../../../../../store/ducks/paste";
 
+import moment from "moment";
+
 import {
   Typography,
   Button,
@@ -60,7 +62,7 @@ export default function Create() {
     setCodHome(data.codHome);
     setDisctric(data.district);
     setDateInterview(data.dateInterview);
-    setDateVisit(data.dateVisiti);
+    setDateVisit(data.dateVisit);
     setReason(data.reason);
     setNote(data.note);
     setSituation(data.situation);
@@ -71,6 +73,7 @@ export default function Create() {
     data.benefit,
     data.codHome,
     data.dateInterview,
+    data.dateVisit,
     data.dateVisiti,
     data.deficient,
     data.district,
@@ -113,10 +116,10 @@ export default function Create() {
     hide();
   }
 
-  console.log("Teste");
-  console.log(oldMan);
-
-  function createDistrict() {}
+  function formatDate(data) {
+    const date = moment(data).format("YYYY-MM-DD");
+    return date;
+  }
 
   return (
     <Modal
@@ -190,7 +193,7 @@ export default function Create() {
                 </div>
               </Grid>
 
-              <Grid item xs={12} sm={11} style={{ marginTop: "10px" }}>
+              <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
                 <div>
                   <FormControl
                     variant="outlined"
@@ -198,34 +201,18 @@ export default function Create() {
                     size="small"
                     fullWidth
                   >
-                    <Typography variant="button">Bairro:</Typography>
-                    <Select
-                      native
-                      size="small"
-                      fullWidth
-                      value={district}
-                      onChange={e => setDisctric(e.target.value)}
-                      inputProps={{
-                        name: "age",
-                        id: "outlined-age-native-simple"
-                      }}
-                    >
-                      <option value="" />
-                      <option value={10}>Ten</option>
-                      <option value={20}>Twenty</option>
-                      <option value={30}>Thirty</option>
-                    </Select>
+                    <div>
+                      <Typography variant="button">Bairro:</Typography>
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        value={district}
+                        onChange={e => setDisctric(e.target.value)}
+                      />
+                    </div>
                   </FormControl>
                 </div>
-              </Grid>
-
-              <Grid item xs={12} sm={1} style={{ marginTop: "30px" }}>
-                <IconButton
-                  style={{ color: "rgba(2,99,44,0.7)" }}
-                  onClick={createDistrict}
-                >
-                  <Add fontSize="small" />
-                </IconButton>
               </Grid>
 
               <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
@@ -236,7 +223,7 @@ export default function Create() {
                     size="small"
                     fullWidth
                     type="date"
-                    value={dateInterview}
+                    value={formatDate(dateInterview)}
                     onChange={e => setDateInterview(e.target.value)}
                   />
                 </div>
@@ -250,7 +237,7 @@ export default function Create() {
                     size="small"
                     fullWidth
                     type="date"
-                    value={dateVisit}
+                    value={formatDate(dateVisit)}
                     onChange={e => setDateVisit(e.target.value)}
                   />
                 </div>

@@ -86,8 +86,6 @@ export default function Create() {
     hide();
   }
 
-  function createDistrict() {}
-
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -162,7 +160,7 @@ export default function Create() {
                 </div>
               </Grid>
 
-              <Grid item xs={12} sm={11} style={{ marginTop: "10px" }}>
+              <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
                 <div>
                   <FormControl
                     variant="outlined"
@@ -170,34 +168,18 @@ export default function Create() {
                     size="small"
                     fullWidth
                   >
-                    <Typography variant="button">Bairro:</Typography>
-                    <Select
-                      native
-                      size="small"
-                      fullWidth
-                      value={district}
-                      onChange={e => setDisctric(e.target.value)}
-                      inputProps={{
-                        name: "age",
-                        id: "outlined-age-native-simple"
-                      }}
-                    >
-                      <option value="" />
-                      <option value={10}>Ten</option>
-                      <option value={20}>Twenty</option>
-                      <option value={30}>Thirty</option>
-                    </Select>
+                    <div>
+                      <Typography variant="button">Bairro:</Typography>
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        value={district}
+                        onChange={e => setDisctric(e.target.value)}
+                      />
+                    </div>
                   </FormControl>
                 </div>
-              </Grid>
-
-              <Grid item xs={12} sm={1} style={{ marginTop: "30px" }}>
-                <IconButton
-                  style={{ color: "rgba(2,99,44,0.7)" }}
-                  onClick={createDistrict}
-                >
-                  <Add fontSize="small" />
-                </IconButton>
               </Grid>
 
               <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
@@ -209,7 +191,10 @@ export default function Create() {
                     fullWidth
                     type="date"
                     value={dateInterview}
-                    onChange={e => setDateInterview(e.target.value)}
+                    onChange={e => {
+                      setDateInterview(e.target.value);
+                      console.log(dateInterview);
+                    }}
                   />
                 </div>
               </Grid>
