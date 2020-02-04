@@ -4,6 +4,9 @@ export const Types = {
   SHOW_MODAL_NEW_PASTE: "@paste/SHOW_MODAL_NEW_PASTE",
   HIDE_MODAL_NEW_PASTE: "@paste/HIDE_MODAL_NEW_PASTE",
 
+  SHOW_MODAL_UPDATE_PASTE: "@paste/SHOW_MODAL_UPDATE_PASTE",
+  HIDE_MODAL_UPDATE_PASTE: "@paste/HIDE_MODAL_UPDATE_PASTE",
+
   CREATE_PASTE_REQUEST: "@paste/CREATE_PASTE_REQUEST",
   CREATE_PASTE_SUCCESS: "@paste/CREATE_PASTE_SUCCESS",
 
@@ -21,6 +24,7 @@ const INITIAL_STATE = Immutable({
   id: null,
   paste: {},
   pastes: {},
+  updatePaste: { data: {}, visible: false },
   visible: false
 });
 
@@ -37,6 +41,19 @@ export default function pastes(state = INITIAL_STATE, action) {
         ...state,
         visible: false
       };
+
+    case Types.SHOW_MODAL_UPDATE_PASTE:
+      return {
+        ...state,
+        updatePaste: { data: action.payload.data, visible: true }
+      };
+
+    case Types.HIDE_MODAL_UPDATE_PASTE: {
+      return {
+        ...state,
+        updatePaste: { data: {}, visible: false }
+      };
+    }
 
     case Types.CREATE_PASTE_REQUEST: {
       return { ...state, paste: action.payload.paste };
@@ -78,6 +95,15 @@ export const Creators = {
   hideModalNewPaste: () => ({
     type: Types.HIDE_MODAL_NEW_PASTE
   }),
+
+  showModalUpdatePaste: data => ({
+    type: Types.SHOW_MODAL_UPDATE_PASTE,
+    payload: { data }
+  }),
+  hideModalUpdatePaste: () => ({
+    type: Types.HIDE_MODAL_UPDATE_PASTE
+  }),
+
   createPasteRequest: paste => ({
     type: Types.CREATE_PASTE_REQUEST,
     payload: { paste }

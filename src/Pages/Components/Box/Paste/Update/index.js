@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { Creators as PasteCreators } from "../../../../store/ducks/paste";
+import { Creators as PasteCreators } from "../../../../../store/ducks/paste";
 
 import {
   Typography,
@@ -38,7 +37,11 @@ const GreenCheckbox = withStyles({
   checked: {}
 })(props => <Checkbox color="default" {...props} />);
 
-const Create = props => {
+export default function Create() {
+  const data = useSelector(state => state.paste.updatePaste.data);
+  const visible = useSelector(state => state.paste.updatePaste.visible);
+  const dispatch = useDispatch();
+
   const [numberPaste, setNumberPaste] = useState("");
   const [codHome, setCodHome] = useState("");
   const [district, setDisctric] = useState("");
@@ -52,23 +55,51 @@ const Create = props => {
   const [deficient, setDeficient] = useState(false);
   const [benefit, setBenefit] = useState(false);
 
-  const { visible } = props.redux;
+  useEffect(() => {
+    setNumberPaste(data.numberPaste);
+    setCodHome(data.codHome);
+    setDisctric(data.district);
+    setDateInterview(data.dateInterview);
+    setDateVisit(data.dateVisiti);
+    setReason(data.reason);
+    setNote(data.note);
+    setSituation(data.situation);
+    setOldMan(data.oldMan);
+    setDeficient(data.deficient);
+    setBenefit(data.benefit);
+  }, [
+    data.benefit,
+    data.codHome,
+    data.dateInterview,
+    data.dateVisiti,
+    data.deficient,
+    data.district,
+    data.note,
+    data.numberPaste,
+    data.oldMan,
+    data.reason,
+    data.situation
+  ]);
 
   function hide() {
-    const { hideModalNewPaste } = props;
-    hideModalNewPaste();
+    dispatch(PasteCreators.hideModalUpdatePaste());
   }
 
   function create(e) {
     e.preventDefault();
-    //falta o id da caixa
+
     var paste = {
-      //idBox: id,
+      id: data.id,
+      box_id: data.box_id,
+
       numberPaste,
       codHome,
+
       district,
+
       dateInterview,
       dateVisit,
+
       reason,
       note,
 
@@ -78,8 +109,12 @@ const Create = props => {
       benefit
     };
 
-    //dispatch(PasteCreators.createPasteRequest(paste));
+    dispatch(PasteCreators.updatePasteRequest(paste));
+    hide();
   }
+
+  console.log("Teste");
+  console.log(oldMan);
 
   function createDistrict() {}
 
@@ -136,7 +171,6 @@ const Create = props => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    type="number"
                     value={numberPaste}
                     onChange={e => setNumberPaste(e.target.value)}
                   />
@@ -150,7 +184,6 @@ const Create = props => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    type="text"
                     value={codHome}
                     onChange={e => setCodHome(e.target.value)}
                   />
@@ -230,7 +263,6 @@ const Create = props => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    type="text"
                     multiline
                     rows="2"
                     value={reason}
@@ -246,7 +278,6 @@ const Create = props => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    type="text"
                     multiline
                     rows="2"
                     value={note}
@@ -261,16 +292,20 @@ const Create = props => {
                   <FormGroup aria-label="position" column="true">
                     <FormControlLabel
                       style={{ color: "#A4A4A4" }}
-                      value={situation}
-                      onChange={e => setSituation(e.target.checked)}
+                      checked={situation}
+                      onChange={e => {
+                        setSituation(e.target.checked);
+                      }}
                       control={<GreenCheckbox />}
                       label="situação"
                       labelPlacement="start"
                     />
                     <FormControlLabel
                       style={{ color: "#A4A4A4" }}
-                      value={oldMan}
-                      onChange={e => setOldMan(e.target.checked)}
+                      checked={oldMan}
+                      onChange={e => {
+                        setOldMan(e.target.checked);
+                      }}
                       control={<GreenCheckbox />}
                       label="idoso"
                       labelPlacement="start"
@@ -286,18 +321,19 @@ const Create = props => {
                   <FormGroup aria-label="position" column="true">
                     <FormControlLabel
                       style={{ color: "#A4A4A4" }}
-                      value={benefit}
-                      onChange={e => setBenefit(e.target.checked)}
+                      checked={benefit}
+                      onChange={e => {
+                        setBenefit(e.target.checked);
+                      }}
                       control={<GreenCheckbox />}
                       label="BPC(Benefício assistencial ao idoso)"
                       labelPlacement="start"
                     />
                     <FormControlLabel
                       style={{ color: "#A4A4A4" }}
-                      value={deficient}
+                      checked={deficient}
                       onChange={e => {
                         setDeficient(e.target.checked);
-                        console.log(deficient);
                       }}
                       control={<GreenCheckbox />}
                       label="deficiente"
@@ -314,7 +350,7 @@ const Create = props => {
                     style={{ color: "rgb(2,99,44)", width: "100%" }}
                     type="submit"
                   >
-                    Salvar
+                    Atualizar
                   </Button>
                 </div>
               </Grid>
@@ -336,13 +372,4 @@ const Create = props => {
       </form>
     </Modal>
   );
-};
-
-const mapStateToProps = state => ({
-  redux: state.paste
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...PasteCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+}

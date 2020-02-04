@@ -1,53 +1,51 @@
 import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-// import { Container } from './styles';
-
 import MaterialTable, { MTableToolbar } from "material-table";
 
 import { ArrowBackIos } from "@material-ui/icons/";
 
-import Modal from "./Create";
+import Create from "./Create";
+import Update from "./Update";
 
-import { Creators as UserCreators } from "../../../../store/ducks/user";
+import { useSelector, useDispatch } from "react-redux";
+
+import { Creators as ViewCreators } from "../../../../store/ducks/view";
 import { Creators as PasteCreators } from "../../../../store/ducks/paste";
 
-const Pasta = props => {
+export default function View() {
   const [state, setState] = useState({
     columns: [
       {
         title: "Caixa",
-        field: "id",
+        field: "box_id",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
         title: "Pasta",
-        field: "id_pasta",
+        field: "numberPaste",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
         title: "Codigo domiciliar",
-        field: "cod_domiciliar",
+        field: "codHome",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
         title: "Bairro",
-        field: "bairro",
+        field: "district",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
         title: "Data da visita",
-        field: "dt_visita",
+        field: "dateVisit",
         type: "date",
         headerStyle: {
           color: "rgb(2,90,10)"
@@ -55,28 +53,19 @@ const Pasta = props => {
       },
       {
         title: "Data da entrevista",
-        field: "dt_entrevista",
+        field: "dateInterview",
         type: "date",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       }
-    ],
-    data: [
-      {
-        id_caixa: 1,
-        id_pasta: 1,
-        cod_domiciliar: "161.947.937.17",
-        bairro: "Boa vista",
-        dt_visita: "16.01.2020",
-        dt_entrevista: "25.01.2020"
-      }
     ]
   });
 
-  const [selectedRow, setSelectedRow] = useState("");
+  const data = useSelector(state => state.box.pastes);
 
-  const { show, showModalNewPaste } = props;
+  const [selectedRow, setSelectedRow] = useState("");
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -84,30 +73,13 @@ const Pasta = props => {
         style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
         title="Pastas"
         columns={state.columns}
-        data={state.data}
+        data={data}
         editable={{
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                if (oldData) {
-                  setState(prevState => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                  });
-                }
-              }, 600);
-            }),
           onRowDelete: oldData =>
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });
+                dispatch(PasteCreators.deletePasteRequest(oldData.id));
               }, 600);
             })
         }}
@@ -128,14 +100,22 @@ const Pasta = props => {
             tooltip: "Adicionar nova pasta",
             isFreeAction: true,
             onClick: event => {
-              showModalNewPaste();
+              dispatch(PasteCreators.showModalNewPaste());
             }
           },
           {
             icon: "visibility",
             tooltip: "Mostrar grupo familiar",
             onClick: (event, rowData) => {
-              show("familiar");
+              //show("familiar");
+            }
+          },
+          {
+            icon: "edit",
+            tooltip: "Editar pasta",
+            onClick: (event, rowData) => {
+              console.log(rowData);
+              dispatch(PasteCreators.showModalUpdatePaste(rowData));
             }
           }
         ]}
@@ -152,23 +132,15 @@ const Pasta = props => {
               >
                 <ArrowBackIos
                   style={{ fontSize: 30 }}
-                  onClick={() => show("caixa")}
+                  onClick={() => dispatch(ViewCreators.changerView("box"))}
                 />
               </div>
             </div>
           )
         }}
       />
-      <Modal />
+      <Create />
+      <Update />
     </>
   );
-};
-
-const mapStateToProps = state => ({
-  redux: state
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...UserCreators, ...PasteCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Pasta);
+}

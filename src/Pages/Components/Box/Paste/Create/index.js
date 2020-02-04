@@ -59,8 +59,6 @@ export default function Create() {
 
   const dispatch = useDispatch();
 
-  console.log(data);
-
   function hide() {
     dispatch(PasteCreators.hideModalNewPaste());
   }
@@ -69,7 +67,7 @@ export default function Create() {
     e.preventDefault();
 
     var paste = {
-      idBox: id,
+      box_id: id,
       numberPaste,
       codHome,
       district,
@@ -85,6 +83,7 @@ export default function Create() {
     };
 
     dispatch(PasteCreators.createPasteRequest(paste));
+    hide();
   }
 
   function createDistrict() {}

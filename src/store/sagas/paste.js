@@ -20,6 +20,7 @@ export function* updatePaste({ payload }) {
       `/paste/${payload.paste.id}`,
       payload.paste
     );
+    console.log(response);
   } catch (err) {}
 }
 
