@@ -23,7 +23,14 @@ import {
 } from "./funcionario";
 
 import { Types as BoxTypes } from "../ducks/box";
-import { createBox, updateBox, deleteBox, getBoxes, getPastesBox } from "./box";
+import {
+  createBox,
+  updateBox,
+  deleteBox,
+  getBoxes,
+  getPastesBox,
+  getFamilyBox
+} from "./box";
 
 import { Types as PasteTypes } from "../ducks/paste";
 import { createPaste, updatePaste, deletePaste, getPastes } from "./paste";
@@ -34,6 +41,14 @@ import {
   updatePrefecture,
   getPrefecture
 } from "./prefecture";
+
+import { Types as FamilyTypes } from "../ducks/family";
+import {
+  createFamily,
+  deleteFamily,
+  updateFamily,
+  getFamilies
+} from "./family";
 
 import { teste } from "./teste";
 
@@ -73,10 +88,16 @@ export default function* rootSaga() {
     takeLatest(BoxTypes.DELETE_BOX_REQUEST, deleteBox),
     takeLatest(BoxTypes.READ_BOXES_REQUEST, getBoxes),
     takeLatest(BoxTypes.READ_PASTES_BOX_REQUEST, getPastesBox),
+    takeLatest(BoxTypes.READ_FAMILY_BOX_REQUEST, getFamilyBox),
 
     takeLatest(PasteTypes.CREATE_PASTE_REQUEST, createPaste),
     takeLatest(PasteTypes.UPDATE_PASTE_REQUEST, updatePaste),
     takeLatest(PasteTypes.DELETE_PASTE_REQUEST, deletePaste),
-    takeLatest(PasteTypes.READ_PASTES_REQUEST, getPastes)
+    takeLatest(PasteTypes.READ_PASTES_REQUEST, getPastes),
+
+    takeLatest(FamilyTypes.CREATE_FAMILY_REQUEST, createFamily),
+    takeLatest(FamilyTypes.UPDATE_FAMILY_REQUEST, updateFamily),
+    takeLatest(FamilyTypes.DELETE_FAMILY_REQUEST, deleteFamily),
+    takeLatest(FamilyTypes.READ_FAMILY_REQUEST, getFamilies)
   ]);
 }

@@ -34,6 +34,6 @@ export function* getPastes() {
   try {
     const response = yield call(api.get, "/paste/");
 
-    yield put(PasteCreators.loadAllPastes(response.data));
+    yield put(PasteCreators.readPastesSuccess(response.data));
   } catch (err) {}
 }

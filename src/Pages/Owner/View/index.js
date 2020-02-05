@@ -28,6 +28,7 @@ import LeftBar from "../../Components/LeftBar/";
 
 import Box from "../../Components/Box";
 import PastesBox from "../../Components/Box/Paste/";
+import FamilyBox from "../../Components/Box/Family";
 
 import Pasta from "../../Components/Paste/";
 import Familiar from "../../Components/Family/";
@@ -90,6 +91,7 @@ function View(props) {
 
     box: <Box />,
     pastesBox: <PastesBox />,
+    familyBox: <FamilyBox />,
 
     pasta: <Pasta />,
     familiar: <Familiar />

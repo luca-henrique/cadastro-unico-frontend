@@ -17,6 +17,7 @@ import login from "./login";
 import paste from "./paste";
 import box from "./box";
 import prefecture from "./prefecture";
+import family from "./family";
 
 export default history =>
   combineReducers({
@@ -26,6 +27,7 @@ export default history =>
     user,
     profile,
     auth,
+    family,
     view,
     contact,
     login,

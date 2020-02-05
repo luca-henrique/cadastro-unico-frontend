@@ -1,35 +1,41 @@
 import React, { useState } from "react";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Creators as BoxCreators } from "../../../store/ducks/box";
-import { Creators as ViewCreators } from "../../../store/ducks/view";
+import { Creators as FamilyCreators } from "../../../../store/ducks/family";
 
 import MaterialTable from "material-table";
 
-import ModalCreate from "./Create";
-import ModalUpdate from "./View";
+import Create from "./Create/";
+import Update from "./Update";
 
-export default function() {
+export default function View() {
   const [state, setState] = useState({
     columns: [
       {
-        title: "id",
-        field: "id",
+        title: "CPF",
+        field: "cpf",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
-        title: "Numero da caixa",
-        field: "numBox",
+        title: "NIS",
+        field: "nis",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
-        title: "Quantidade maxima de pastas",
-        field: "numMax",
+        title: "Tipo",
+        field: "tipo",
+        headerStyle: {
+          color: "rgb(2,90,10)"
+        }
+      },
+      {
+        title: "Situação",
+        field: "situacao",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
@@ -38,16 +44,16 @@ export default function() {
   });
 
   const [selectedRow, setSelectedRow] = useState("");
-
-  const data = useSelector(state => state.box.boxes);
-  console.log(data);
   const dispatch = useDispatch();
+
+  const data = useSelector(state => state.box.families);
+  console.log(data);
 
   return (
     <>
       <MaterialTable
         style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
-        title="Caixas"
+        title="Grupo Familiar"
         columns={state.columns}
         data={data}
         editable={{
@@ -55,7 +61,7 @@ export default function() {
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                dispatch(BoxCreators.deleteBoxRequest(oldData.id));
+                dispatch(FamilyCreators.deleteFamilyRequest(oldData.id));
               }, 600);
             })
         }}
@@ -76,30 +82,20 @@ export default function() {
             tooltip: "Add User",
             isFreeAction: true,
             onClick: (event, rowData) => {
-              dispatch(BoxCreators.showModalNewBox());
-            }
-          },
-          {
-            icon: "visibility",
-            tooltip: "Mostrar pastas",
-            onClick: (event, rowData) => {
-              dispatch(ViewCreators.changerView("pastesBox"));
-              dispatch(BoxCreators.readPastesRequest(rowData.id));
+              dispatch(FamilyCreators.showModalNewFamiliar());
             }
           },
           {
             icon: "edit",
-            tooltip: "Editar caixa",
+            tooltip: "Editar familiar",
             onClick: (event, rowData) => {
-              dispatch(BoxCreators.showModalUpdateBox(rowData));
+              dispatch(FamilyCreators.showModalUpdateFamily(rowData));
             }
           }
         ]}
       />
-      <>
-        <ModalCreate />
-        <ModalUpdate />
-      </>
+      <Create />
+      <Update />
     </>
   );
 }

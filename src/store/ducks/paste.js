@@ -128,10 +128,10 @@ export const Creators = {
     type: Types.DELETE_PASTE_SUCCESS,
     payload: { paste }
   }),
-  ReadPastesRequest: () => ({
+  readPastesRequest: () => ({
     type: Types.READ_PASTES_REQUEST
   }),
-  ReadPastesSuccess: pastes => ({
+  readPastesSuccess: pastes => ({
     type: Types.READ_PASTES_SUCCESS,
     payload: { pastes }
   })

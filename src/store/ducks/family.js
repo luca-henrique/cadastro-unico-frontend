@@ -4,6 +4,9 @@ export const Types = {
   SHOW_MODAL_NEW_FAMILIAR: "@familiar/SHOW_MODAL_NEW_FAMILIAR",
   HIDE_MODAL_NEW_FAMILIAR: "@familiar/HIDE_MODAL_NEW_FAMILIAR",
 
+  SHOW_MODAL_UPDATE_FAMILY: "@family/SHOW_MODAL_UPDATE_FAMILY",
+  HIDE_MODAL_UPDATE_FAMILY: "@family/HIDE_MODAL_UPDATE_FAMILY",
+
   CREATE_FAMILY_REQUEST: "@familiar/CREATE_FAMILY_REQUEST",
   CREATE_FAMILY_SUCCESS: "@familiar/CREATE_FAMILY_SUCCESS",
 
@@ -20,6 +23,7 @@ export const Types = {
 const INITIAL_STATE = Immutable({
   family: {},
   groupsFamilies: {},
+  updateFamily: { data: {}, visible: false },
   id: null,
   visible: false
 });
@@ -41,6 +45,18 @@ export default function family(state = INITIAL_STATE, action) {
       return {
         ...state,
         family: action.payload.family
+      };
+
+    case Types.SHOW_MODAL_UPDATE_FAMILY:
+      return {
+        ...state,
+        updateFamily: { data: action.payload.data, visible: true }
+      };
+
+    case Types.HIDE_MODAL_UPDATE_FAMILY:
+      return {
+        ...state,
+        updateFamily: { data: {}, visible: false }
       };
 
     case Types.CREATE_FAMILY_SUCCESS:
@@ -97,6 +113,14 @@ export const Creators = {
 
   hideModalNewFamiliar: () => ({
     type: Types.HIDE_MODAL_NEW_FAMILIAR
+  }),
+
+  showModalUpdateFamily: data => ({
+    type: Types.SHOW_MODAL_UPDATE_FAMILY,
+    payload: { data }
+  }),
+  hideModalUpdateFamily: () => ({
+    type: Types.HIDE_MODAL_UPDATE_FAMILY
   }),
 
   createFamilyRequest: family => ({

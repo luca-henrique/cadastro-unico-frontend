@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as ViewCreators } from "../../../../store/ducks/view";
 import { Creators as PasteCreators } from "../../../../store/ducks/paste";
+import { Creators as BoxCreators } from "../../../../store/ducks/box";
 
 export default function View() {
   const [state, setState] = useState({
@@ -107,14 +108,14 @@ export default function View() {
             icon: "visibility",
             tooltip: "Mostrar grupo familiar",
             onClick: (event, rowData) => {
-              //show("familiar");
+              dispatch(ViewCreators.changerView("familyBox"));
+              dispatch(BoxCreators.readFamiliesRequest(rowData.id));
             }
           },
           {
             icon: "edit",
             tooltip: "Editar pasta",
             onClick: (event, rowData) => {
-              console.log(rowData);
               dispatch(PasteCreators.showModalUpdatePaste(rowData));
             }
           }

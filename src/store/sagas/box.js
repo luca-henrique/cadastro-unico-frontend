@@ -48,3 +48,11 @@ export function* getPastesBox({ payload }) {
     yield put(BoxCreators.readPastesSuccess(response.data));
   } catch (err) {}
 }
+
+export function* getFamilyBox({ payload }) {
+  try {
+    const response = yield call(api.get, `/families/${payload.id}`);
+
+    yield put(BoxCreators.readFamiliesSuccess(response.data));
+  } catch (err) {}
+}
