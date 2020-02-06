@@ -10,7 +10,9 @@ export function* createPaste({ payload }) {
     console.log(payload.paste);
     const response = yield call(api.post, "/paste", payload.paste);
     console.log(response);
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export function* updatePaste({ payload }) {
