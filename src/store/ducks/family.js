@@ -65,12 +65,6 @@ export default function family(state = INITIAL_STATE, action) {
         family: action.payload.family
       };
 
-    case Types.READ_FAMILY_REQUEST:
-      return {
-        ...state,
-        groupsFamilies: action.payload.groupsFamilies
-      };
-
     case Types.READ_FAMILY_SUCCESS:
       return {
         ...state,
@@ -137,11 +131,8 @@ export const Creators = {
     }
   }),
 
-  readFamilyRequest: groupsFamilies => ({
-    type: Types.READ_FAMILY_REQUEST,
-    payload: {
-      groupsFamilies
-    }
+  readFamilyRequest: () => ({
+    type: Types.READ_FAMILY_REQUEST
   }),
 
   readFamilySuccess: groupsFamilies => ({

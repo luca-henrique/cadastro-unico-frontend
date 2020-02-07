@@ -16,7 +16,8 @@ export function* createFamily({ payload }) {
 export function* getFamilies() {
   try {
     const response = yield call(api.get, "/family");
-    put(FamilyCreators.readFamilySuccess(response.data));
+    console.log(response);
+    yield put(FamilyCreators.readFamilySuccess(response.data));
   } catch (err) {}
 }
 

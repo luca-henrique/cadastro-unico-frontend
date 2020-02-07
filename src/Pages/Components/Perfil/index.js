@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 
 import { Grid, Typography } from "@material-ui/core/";
 
-// import { Container } from './styles';
-
 import PersonalInformation from "../personal/index";
 import Login from "../../Auth/ChangerPassword/Login";
 import Address from "../Address/index";

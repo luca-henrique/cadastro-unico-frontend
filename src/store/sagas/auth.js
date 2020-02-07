@@ -8,6 +8,7 @@ import { Creators as UserCreators } from "../ducks/user";
 import { Creators as ProfileCreators } from "../ducks/profile";
 import { Creators as AddressCreators } from "../ducks/address";
 import { Creators as ContactCreators } from "../ducks/contact";
+import { Creators as PrefectureCreators } from "../ducks/prefecture";
 
 import { actions as toastrActions } from "react-redux-toastr";
 
@@ -22,6 +23,7 @@ export function* signIn({ email, password }) {
     yield put(ProfileCreators.loadProfileRequest());
     yield put(AddressCreators.loadAddressRequest());
     yield put(ContactCreators.loadContactRequest());
+    yield put(PrefectureCreators.readPrefectureRequest());
     yield put(push("/"));
   } catch (err) {
     yield put(
@@ -39,6 +41,7 @@ export function* signOut() {
   yield put(ProfileCreators.loadProfileSucess({}));
   yield put(AddressCreators.loadAddressSucess({}));
   yield put(ContactCreators.loadContactSuccess({}));
+  yield put(PrefectureCreators.readPrefectureSuccess({}));
   localStorage.removeItem("@Omni:token");
   localStorage.removeItem("@Omni:team");
   yield put(push("/"));

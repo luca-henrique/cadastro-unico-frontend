@@ -13,6 +13,13 @@ export default function View() {
   const [state, setState] = useState({
     columns: [
       {
+        title: "Nome",
+        field: "nome",
+        headerStyle: {
+          color: "rgb(2,90,10)"
+        }
+      },
+      {
         title: "CPF",
         field: "cpf",
         headerStyle: {

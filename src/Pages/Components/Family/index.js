@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { useSelector, useDispatch } from "react-redux";
+
+import { Creators as FamilyCreators } from "../../../store/ducks/family";
 
 import MaterialTable from "material-table";
-import Modal from "./Create/";
+import Update from "../Box/Family/Update";
 
 export default function View() {
   const [state, setState] = useState({
     columns: [
       {
-        title: "id",
-        field: "id",
+        title: "Nome",
+        field: "nome",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
@@ -27,34 +31,33 @@ export default function View() {
           color: "rgb(2,90,10)"
         }
       },
+
       {
-        title: "Tipo",
-        field: "type",
+        title: "Situação",
+        field: "situacao",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       },
       {
-        title: "Situação",
-        field: "situation",
+        title: "Tipo",
+        field: "tipo",
         headerStyle: {
           color: "rgb(2,90,10)"
         }
       }
-    ],
-    data: [
-      {
-        id: 1,
-        cpf: "111.111.111-11",
-        nis: "11111111111",
-        name: "Paes",
-        type: "dependente",
-        situation: "transferido"
-      }
     ]
   });
 
+  useEffect(() => {
+    dispatch(FamilyCreators.readFamilyRequest());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [selectedRow, setSelectedRow] = useState("");
+  const data = useSelector(state => state.family.groupsFamilies);
+  const dispatch = useDispatch();
+  console.log(data);
 
   return (
     <>
@@ -62,30 +65,13 @@ export default function View() {
         style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
         title="Grupo Familiar"
         columns={state.columns}
-        data={state.data}
+        data={data}
         editable={{
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                if (oldData) {
-                  setState(prevState => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                  });
-                }
-              }, 600);
-            }),
           onRowDelete: oldData =>
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });
+                dispatch(FamilyCreators.deleteFamilyRequest(oldData.id));
               }, 600);
             })
         }}
@@ -102,27 +88,15 @@ export default function View() {
         }}
         actions={[
           {
-            icon: "add",
-            tooltip: "Add User",
-            isFreeAction: true,
+            icon: "edit",
+            tooltip: "Editar informações",
             onClick: (event, rowData) => {
-              {
-                /* Abrir o modal para criar a pessoa da familia */
-              }
-            }
-          },
-          {
-            icon: "visibility",
-            tooltip: "Mostrar pastas",
-            onClick: (event, rowData) => {
-              {
-                /* Mudar de rota */
-              }
+              dispatch(FamilyCreators.showModalUpdateFamily(rowData));
             }
           }
         ]}
       />
-      <Modal />
+      <Update />
     </>
   );
 }

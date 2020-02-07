@@ -76,7 +76,7 @@ export default function* rootSaga() {
     takeLatest(ContactTypes.UPDATE_CONTACT_REQUEST, updateContact),
 
     takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
-    takeLatest(PrefectureTypes.LOAD_PREFECTURE_REQUEST, getPrefecture),
+    takeLatest(PrefectureTypes.READ_PREFECTURE_REQUEST, getPrefecture),
     takeLatest(PrefectureTypes.UPDATE_PREFECTURE_REQUEST, updatePrefecture),
 
     takeLatest(FunTypes.LOAD_FUNCIONARIO_REQUEST, getFuncionarios),

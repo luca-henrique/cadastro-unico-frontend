@@ -6,9 +6,10 @@ import { toastr } from "react-redux-toastr";
 
 export function* createPrefecture({ payload }) {
   try {
+    console.log(payload);
     const response = yield call(api.post, "/prefecture", payload.prefecture);
 
-    yield put(PrefectureCreators.createPrefectureSucess(response.data));
+    yield put(PrefectureCreators.createPrefectureSuccess(response.data));
 
     yield put(PrefectureCreators.failLoadPrefecture(true));
   } catch (err) {
@@ -18,13 +19,15 @@ export function* createPrefecture({ payload }) {
 
 export function* updatePrefecture({ payload }) {
   try {
+    console.log("Aqui");
+    console.log(payload.prefecture);
     const response = yield call(
       api.put,
       `/prefecture/${payload.prefecture.id}`,
-      payload.prefecture
+      JSON.stringify(payload.prefecture)
     );
-
-    yield put(PrefectureCreators.loadPrefectureSucess(response.data));
+    console.log(response);
+    yield put(PrefectureCreators.readPrefectureSuccess(response.data));
   } catch (err) {
     yield toastr.error(
       "Falha",
@@ -35,9 +38,9 @@ export function* updatePrefecture({ payload }) {
 
 export function* getPrefecture() {
   try {
-    const response = yield call(api.get, "/prefecture/0");
-
-    yield put(PrefectureCreators.loadPrefectureSucess(response.data));
+    const response = yield call(api.get, "/prefecture/1");
+    console.log(response);
+    yield put(PrefectureCreators.readPrefectureSuccess(response.data));
 
     yield put(PrefectureCreators.failLoadPrefecture(true));
   } catch (err) {

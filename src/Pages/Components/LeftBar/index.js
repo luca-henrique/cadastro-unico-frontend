@@ -8,6 +8,7 @@ import AuthActions from "../../../store/ducks/auth";
 import { Creators as FunCreators } from "../../../store/ducks/funcionario";
 import { Creators as BoxCreators } from "../../../store/ducks/box";
 import { Creators as PasteCreators } from "../../../store/ducks/paste";
+import { Creators as FamilyCreators } from "../../../store/ducks/family";
 
 import { useDispatch } from "react-redux";
 
@@ -93,6 +94,23 @@ function LeftBar(props) {
         />
       </div>
 
+      <ListItem
+        button
+        style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+        onClick={() => {
+          changerView("prefeitura");
+        }}
+      >
+        <ListItemIcon>
+          <HomeWorkOutlined
+            style={{ fontSize: "35", color: "rgb(246,238,89)" }}
+          />
+        </ListItemIcon>
+        <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
+          Prefeitura
+        </ListItemText>
+      </ListItem>
+
       <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
         <ListItem
           button
@@ -165,6 +183,7 @@ function LeftBar(props) {
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
+            dispatch(FamilyCreators.readFamilyRequest());
             changerView("familiar");
           }}
         >
@@ -175,22 +194,7 @@ function LeftBar(props) {
             Grupo Familiar
           </ListItemText>
         </ListItem>
-        <ListItem
-          button
-          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
-          onClick={() => {
-            changerView("prefeitura");
-          }}
-        >
-          <ListItemIcon>
-            <HomeWorkOutlined
-              style={{ fontSize: "35", color: "rgb(246,238,89)" }}
-            />
-          </ListItemIcon>
-          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
-            Prefeitura
-          </ListItemText>
-        </ListItem>
+
         <ListItem
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
