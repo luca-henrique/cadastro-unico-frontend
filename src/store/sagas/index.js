@@ -42,6 +42,13 @@ import {
   getPrefecture
 } from "./prefecture";
 
+import { Types as AddrressPrefectureTypes } from "../ducks/address_prefecture";
+import {
+  createAddressPrefecture,
+  updateAddrressPrefecture,
+  getAddrressPrefecture
+} from "./address_prefecture";
+
 import { Types as FamilyTypes } from "../ducks/family";
 import {
   createFamily,
@@ -78,6 +85,19 @@ export default function* rootSaga() {
     takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
     takeLatest(PrefectureTypes.READ_PREFECTURE_REQUEST, getPrefecture),
     takeLatest(PrefectureTypes.UPDATE_PREFECTURE_REQUEST, updatePrefecture),
+
+    takeLatest(
+      AddrressPrefectureTypes.CREATE_ADDRESS_PREFECTURE_REQUEST,
+      createAddressPrefecture
+    ),
+    takeLatest(
+      AddrressPrefectureTypes.UPDATE_ADDRESS_PREFECTURE_REQUEST,
+      updateAddrressPrefecture
+    ),
+    takeLatest(
+      AddrressPrefectureTypes.READ_ADDRESS_PREFECTURE_REQUEST,
+      getAddrressPrefecture
+    ),
 
     takeLatest(FunTypes.LOAD_FUNCIONARIO_REQUEST, getFuncionarios),
     takeLatest(FunTypes.CREATE_FUNCTIONARIO_SUCCESS, createFuncionario),

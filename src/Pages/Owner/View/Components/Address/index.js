@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Creators as AddressCreators } from "../../../../../store/ducks/address";
+import { Creators as AddressCreators } from "../../../../../store/ducks/address_prefecture";
 
 import { Grid, Typography } from "@material-ui/core/";
 
@@ -9,22 +9,45 @@ import TextField from "../../../../Components/TextField/index";
 
 import { toastr } from "react-redux-toastr";
 
-export default function Components(props) {
-  const address = useSelector(state => state.address.address);
-  const exist = useSelector(state => state.address.exist);
+export default function Components() {
+  const address = useSelector(state => state.prefectureAddrress.address);
+  const exist = useSelector(state => state.prefectureAddrress.exist);
   const dispatch = useDispatch();
 
-  const [cep, setCep] = useState(address.cep);
-  const [estado, setEstado] = useState(address.estado);
-  const [numero, setNumero] = useState(address.numero);
-  const [rua, setRua] = useState(address.rua);
-  const [complemento, setComplemento] = useState(address.complemento);
-  const [bairro, setBairro] = useState(address.bairro);
+  const [cep, setCep] = useState("");
+  const [estado, setEstado] = useState("");
+  const [numero, setNumero] = useState("");
+  const [rua, setRua] = useState("");
+  const [complemento, setComplemento] = useState("");
+  const [bairro, setBairro] = useState();
+
+  useEffect(() => {
+    if (exist) {
+      setCep(address.cep);
+      setEstado(address.estado);
+      setNumero(address.numero);
+      setRua(address.rua);
+      setBairro(address.bairro);
+      setComplemento(address.complemento);
+    }
+  }, [
+    exist,
+    address.cep,
+    address.estado,
+    address.numero,
+    address.rua,
+    address.bairro,
+    address.complemento
+  ]);
+
+  console.log("Endereço");
+  console.log(exist);
+  console.log(address);
 
   function onUpdate(e) {
-    e.preventDefault();
     try {
       var addr = {
+        prefecture_id: 1,
         cep,
         estado,
         bairro,
@@ -35,9 +58,11 @@ export default function Components(props) {
 
       checkAttributesObj(addr);
       if (exist === true) {
-        dispatch(AddressCreators.updateAddressRequest(addr));
+        console.log("AQUI");
+        dispatch(AddressCreators.updateAddressPrefectureRequest(addr));
       } else {
-        dispatch(AddressCreators.createAddressRequest(addr));
+        console.log("criando");
+        dispatch(AddressCreators.createAddressPrefectureRequest(addr));
       }
     } catch (err) {
       toastr.error("Preencha todos os campos do endereço");

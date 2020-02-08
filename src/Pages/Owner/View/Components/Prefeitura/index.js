@@ -17,6 +17,13 @@ export default function Prefeitura() {
   const [cnpj, setCnpj] = useState("");
   const [nome, setNome] = useState("");
 
+  useEffect(() => {
+    if (exist) {
+      setCnpj(prefeitura.cnpj);
+      setNome(prefeitura.nome);
+    }
+  }, [exist, prefeitura.cnpj, prefeitura.nome]);
+
   console.log(exist);
 
   function prefecture() {

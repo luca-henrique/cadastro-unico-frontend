@@ -9,6 +9,7 @@ import { Creators as FunCreators } from "../../../store/ducks/funcionario";
 import { Creators as BoxCreators } from "../../../store/ducks/box";
 import { Creators as PasteCreators } from "../../../store/ducks/paste";
 import { Creators as FamilyCreators } from "../../../store/ducks/family";
+import { Creators as AddrressPrefecture } from "../../../store/ducks/address_prefecture";
 
 import { useDispatch } from "react-redux";
 
@@ -98,6 +99,7 @@ function LeftBar(props) {
         button
         style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
         onClick={() => {
+          dispatch(AddrressPrefecture.readAddressPrefectureRequest());
           changerView("prefeitura");
         }}
       >
