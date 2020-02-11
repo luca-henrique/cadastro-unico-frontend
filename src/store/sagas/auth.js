@@ -9,6 +9,7 @@ import { Creators as ProfileCreators } from "../ducks/profile";
 import { Creators as AddressCreators } from "../ducks/address";
 import { Creators as ContactCreators } from "../ducks/contact";
 import { Creators as PrefectureCreators } from "../ducks/prefecture";
+import { Creators as PrefectureContactCreators } from "../ducks/contact_prefecture";
 
 import { actions as toastrActions } from "react-redux-toastr";
 
@@ -42,6 +43,7 @@ export function* signOut() {
   yield put(AddressCreators.loadAddressSucess({}));
   yield put(ContactCreators.loadContactSuccess({}));
   yield put(PrefectureCreators.readPrefectureSuccess({}));
+  yield put(PrefectureContactCreators.readPrefectureContactSuccess({}));
   localStorage.removeItem("@Omni:token");
   localStorage.removeItem("@Omni:team");
   yield put(push("/"));

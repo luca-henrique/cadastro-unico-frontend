@@ -1,44 +1,58 @@
 import { call, put } from "redux-saga/effects";
 import api from "../../services/api";
-import { Creators as ContactCreators } from "../ducks/contact";
+import { Creators as ContactCreators } from "../ducks/contact_prefecture";
 
 import { toastr } from "react-redux-toastr";
 
-export function* createContact({ payload }) {
+export function* createContactPrefecture({ payload }) {
   try {
     /**
      * create new adrdess {cep, estado, bairro, rua, numero}
      **/
+    console.log("Aqui");
+    console.log(payload);
+    const response = yield call(
+      api.post,
+      "/contactprefecture",
+      payload.contact
+    );
 
-    const response = yield call(api.post, "/contact", payload.contact);
+    yield put(ContactCreators.createPrefectureContactSuccess(response.data));
 
-    yield put(ContactCreators.createContactSuccess(response.data));
+    yield put(ContactCreators.failLoadPrefectureContact(true));
 
-    yield put(ContactCreators.failLoadContact(true));
+    console.log(response.data);
 
     yield toastr.success("Contato atualizado com sucesso.");
   } catch (err) {
+    yield put(ContactCreators.failLoadPrefectureContact(false));
     yield toastr.error("Falha", "Preencha o campo");
   }
 }
 
-export function* getContact() {
+export function* readContactPrefecture() {
   try {
-    const response = yield call(api.get, "/contact/0");
+    const response = yield call(api.get, "/contactprefecture/1");
+    console.log("AQUI");
+    console.log(response);
 
-    yield put(ContactCreators.loadContactSuccess(response.data));
+    yield put(ContactCreators.readPrefectureContactSuccess(response.data));
 
-    yield put(ContactCreators.failLoadContact(true));
+    yield put(ContactCreators.failLoadPrefectureContact(true));
   } catch (err) {
-    yield put(ContactCreators.failLoadContact(false));
+    yield put(ContactCreators.failLoadPrefectureContact(false));
   }
 }
 
-export function* updateContact({ payload }) {
+export function* updateContactPrefecture({ payload }) {
   try {
-    const response = yield call(api.put, "/contact/0", payload.contact);
+    const response = yield call(
+      api.put,
+      "/contactprefecture/1",
+      JSON.stringify(payload.contact)
+    );
 
-    yield put(ContactCreators.loadContactSuccess(response.data));
+    yield put(ContactCreators.readPrefectureContactSuccess(response.data));
 
     yield toastr.success("Informações atualizadas com sucesso.");
   } catch (err) {

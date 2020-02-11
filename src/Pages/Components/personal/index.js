@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { Creators as ProfileCreators } from "../../../store/ducks/profile";
@@ -29,9 +29,17 @@ export default function Components() {
 
   const profile = useSelector(state => state.profile.profile);
 
-  const [cpf, setCpf] = useState(profile.cpf);
-  const [cargo, setCargo] = useState(profile.cargo);
-  const [nome, setNome] = useState(profile.nome);
+  const [cpf, setCpf] = useState("");
+  const [cargo, setCargo] = useState("");
+  const [nome, setNome] = useState("");
+
+  useEffect(() => {
+    if (exist) {
+      setCpf(profile.cpf);
+      setCargo(profile.cargo);
+      setNome(profile.nome);
+    }
+  }, [exist, profile.cargo, profile.cpf, profile.nome]);
 
   function onUpdate() {
     try {

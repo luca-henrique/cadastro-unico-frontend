@@ -33,6 +33,8 @@ import FamilyBox from "../../Components/Box/Family";
 import Pasta from "../../Components/Paste/";
 import Familiar from "../../Components/Family/";
 
+import Gerar from "./Components/Log/";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -88,7 +90,7 @@ function View(props) {
     perfil: <Perfil />,
     prefeitura: <Prefeitura />,
     funcionario: <Funcionario />,
-
+    gerar: <Gerar />,
     box: <Box />,
     pastesBox: <PastesBox />,
     familyBox: <FamilyBox />,

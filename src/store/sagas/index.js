@@ -49,6 +49,13 @@ import {
   getAddrressPrefecture
 } from "./address_prefecture";
 
+import { Types as ContactPrefectureTypes } from "../ducks/contact_prefecture";
+import {
+  createContactPrefecture,
+  readContactPrefecture,
+  updateContactPrefecture
+} from "./contact_prefecture";
+
 import { Types as FamilyTypes } from "../ducks/family";
 import {
   createFamily,
@@ -56,6 +63,9 @@ import {
   updateFamily,
   getFamilies
 } from "./family";
+
+import { Types as LogTypes } from "../ducks/log";
+import { getLogs } from "./log";
 
 import { teste } from "./teste";
 
@@ -65,6 +75,8 @@ export default function* rootSaga() {
     takeLatest(AuthTypes.SIGN_OUT, signOut),
 
     takeLatest("persist/REHYDRATE", teste),
+
+    takeLatest(LogTypes.READ_LOG_REQUEST, getLogs),
 
     takeLatest(UserTypes.LOAD_USER_REQUEST, index),
     takeLatest(UserTypes.UPDATE_USER_REQUEST, update),
@@ -97,6 +109,19 @@ export default function* rootSaga() {
     takeLatest(
       AddrressPrefectureTypes.READ_ADDRESS_PREFECTURE_REQUEST,
       getAddrressPrefecture
+    ),
+
+    takeLatest(
+      ContactPrefectureTypes.CREATE_CONTACT_PREFECTURE_REQUEST,
+      createContactPrefecture
+    ),
+    takeLatest(
+      ContactPrefectureTypes.UPDATE_CONTACT_PREFECTURE_REQUEST,
+      updateContactPrefecture
+    ),
+    takeLatest(
+      ContactPrefectureTypes.READ_CONTACT_PREFECTURE_REQUEST,
+      readContactPrefecture
     ),
 
     takeLatest(FunTypes.LOAD_FUNCIONARIO_REQUEST, getFuncionarios),

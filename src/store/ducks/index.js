@@ -21,7 +21,10 @@ import family from "./family";
 
 import prefecture from "./prefecture";
 import prefectureAddrress from "./address_prefecture";
+
 import prefectureContact from "./contact_prefecture";
+
+import log from "./log";
 
 export default history =>
   combineReducers({
@@ -35,6 +38,7 @@ export default history =>
     view,
     contact,
     login,
+    log,
     paste,
     box,
     prefecture,

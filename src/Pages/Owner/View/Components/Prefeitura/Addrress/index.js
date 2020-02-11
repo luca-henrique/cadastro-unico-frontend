@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Creators as AddressCreators } from "../../../../../store/ducks/address_prefecture";
+import { Creators as AddressCreators } from "../../../../../../store/ducks/address_prefecture";
 
 import { Grid, Typography } from "@material-ui/core/";
 
-import TextField from "../../../../Components/TextField/index";
+import TextField from "../../../../../Components/TextField/index";
 
 import { toastr } from "react-redux-toastr";
 
@@ -40,10 +40,6 @@ export default function Components() {
     address.complemento
   ]);
 
-  console.log("Endereço");
-  console.log(exist);
-  console.log(address);
-
   function onUpdate(e) {
     try {
       var addr = {
@@ -58,10 +54,8 @@ export default function Components() {
 
       checkAttributesObj(addr);
       if (exist === true) {
-        console.log("AQUI");
         dispatch(AddressCreators.updateAddressPrefectureRequest(addr));
       } else {
-        console.log("criando");
         dispatch(AddressCreators.createAddressPrefectureRequest(addr));
       }
     } catch (err) {

@@ -10,6 +10,8 @@ import { Creators as BoxCreators } from "../../../store/ducks/box";
 import { Creators as PasteCreators } from "../../../store/ducks/paste";
 import { Creators as FamilyCreators } from "../../../store/ducks/family";
 import { Creators as AddrressPrefecture } from "../../../store/ducks/address_prefecture";
+import { Creators as ContactPrefecture } from "../../../store/ducks/contact_prefecture";
+import { Creators as LogCreators } from "../../../store/ducks/log";
 
 import { useDispatch } from "react-redux";
 
@@ -99,6 +101,8 @@ function LeftBar(props) {
         button
         style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
         onClick={() => {
+          dispatch(ContactPrefecture.failLoadPrefectureContact(false));
+          dispatch(ContactPrefecture.readPrefectureContactRequest());
           dispatch(AddrressPrefecture.readAddressPrefectureRequest());
           changerView("prefeitura");
         }}
@@ -201,6 +205,7 @@ function LeftBar(props) {
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
+            dispatch(LogCreators.readLogRequest());
             changerView("gerar");
           }}
         >

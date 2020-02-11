@@ -1,31 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Creators as ContactCreators } from "../../../../../store/ducks/contact";
+import { Creators as ContactCreators } from "../../../../../../store/ducks/contact_prefecture";
 
 import { Grid, Typography } from "@material-ui/core/";
 
-import TextField from "../../../../Components/TextField/index";
+import TextField from "../../../../../Components/TextField/index";
 import { toastr } from "react-redux-toastr";
 
 export default function Components() {
-  const contact = useSelector(state => state.contact.contact);
-  const exist = useSelector(state => state.contact.exist);
+  const contact = useSelector(state => state.prefectureContact.contact);
+  const exist = useSelector(state => state.prefectureContact.exist);
+
   const dispatch = useDispatch();
 
-  const [number, setNumber] = useState(contact.numero);
+  const [number, setNumber] = useState("");
+
+  useEffect(() => {
+    if (exist) {
+      setNumber(contact.numero);
+    }
+  }, [contact.numero, exist]);
 
   function onUpdate() {
     try {
       var cont = {
+        prefecture_id: 1,
         numero: number
       };
 
       checkAttributesObj(cont);
+
       if (exist === true) {
-        dispatch(ContactCreators.updateContactRequest(cont));
+        console.log("Não está indo o id");
+        console.log(cont);
+        dispatch(ContactCreators.updatePrefectureContactRequest(cont));
       } else {
-        dispatch(ContactCreators.createContactRequest(cont));
+        console.log("Não está indo o id");
+        console.log(cont);
+        dispatch(ContactCreators.createPrefectureContactRequest(cont));
       }
     } catch (err) {
       toastr.error("Verifique o seu numero");

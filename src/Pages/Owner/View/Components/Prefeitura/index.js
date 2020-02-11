@@ -6,8 +6,8 @@ import { Creators as PrefectureCreators } from "../../../../../store/ducks/prefe
 import { Grid, Typography } from "@material-ui/core/";
 
 import TextField from "../../../../Components/TextField/index";
-import Address from "../Address/";
-import Contact from "../Contact/";
+import Address from "./Addrress/index";
+import Contact from "./Contact/index";
 
 export default function Prefeitura() {
   const prefeitura = useSelector(state => state.prefecture.prefecture);
@@ -24,8 +24,6 @@ export default function Prefeitura() {
     }
   }, [exist, prefeitura.cnpj, prefeitura.nome]);
 
-  console.log(exist);
-
   function prefecture() {
     try {
       var pref = {
@@ -35,12 +33,13 @@ export default function Prefeitura() {
       };
 
       checkAttributesObj(pref);
-      console.log(exist);
       if (exist === true) {
-        console.log("exist");
+        console.log("Atulizar Prefeitura");
+        console.log(pref);
         dispatch(PrefectureCreators.updatePrefectureRequest(pref));
       } else {
-        console.log("ali");
+        console.log("Criar Prefeitura");
+        console.log(pref);
         dispatch(PrefectureCreators.createPrefectureRequest(pref));
       }
     } catch (err) {

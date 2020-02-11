@@ -43,6 +43,7 @@ export function* updateProfileRequest({ payload }) {
 export function* get() {
   try {
     const id = yield call(api.get, "/user");
+    console.log(id);
     const response = yield call(api.get, `/profile/${id.data}`);
 
     yield put(ProfileCreators.loadProfileSucess(response.data));

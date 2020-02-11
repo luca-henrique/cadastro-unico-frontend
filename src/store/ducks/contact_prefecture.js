@@ -67,32 +67,32 @@ export default function contactPrefecture(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
-  createContactRequest: contact => ({
+  createPrefectureContactRequest: contact => ({
     type: Types.CREATE_CONTACT_PREFECTURE_REQUEST,
     payload: { contact }
   }),
-  createContactSuccess: contact => ({
+  createPrefectureContactSuccess: contact => ({
     type: Types.CREATE_CONTACT_PREFECTURE_SUCCESS,
     payload: { contact }
   }),
-  updateContactRequest: contact => ({
+  updatePrefectureContactRequest: contact => ({
     type: Types.UPDATE_CONTACT_PREFECTURE_REQUEST,
     payload: { contact }
   }),
-  updateContactSuccess: contact => ({
+  updatePrefectureContactSuccess: contact => ({
     type: Types.UPDATE_CONTACT_PREFECTURE_SUCCESS,
     payload: { contact }
   }),
-  loadContactRequest: () => ({
+  readPrefectureContactRequest: () => ({
     type: Types.READ_CONTACT_PREFECTURE_REQUEST
   }),
-  loadContactSuccess: contact => ({
+  readPrefectureContactSuccess: contact => ({
     type: Types.READ_CONTACT_PREFECTURE_SUCCESS,
     payload: {
       contact
     }
   }),
-  failLoadContact: exist => ({
+  failLoadPrefectureContact: exist => ({
     type: Types.FAIL_LOAD_CONTACT_PREFECTURE,
     payload: {
       exist
