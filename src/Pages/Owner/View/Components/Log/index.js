@@ -1,16 +1,31 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 
-import { Creators as LogCreators } from "../../../../../store/ducks/log";
+//import { Creators as LogCreators } from "../../../../../store/ducks/log";
 
-import MaterialTable, { MTableToolbar } from "material-table";
+import MaterialTable from "material-table";
 
 export default function Pasta() {
+  const data = useSelector(state => state.log.log);
+
+  function changer(array) {
+    const log = [];
+    for (var i in array) {
+      if (i < array.length - 1) {
+        var json = JSON.parse(array[i].trim());
+
+        log.push(json);
+      }
+    }
+    return log;
+  }
+
   return (
     <>
       <MaterialTable
         style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
         title="Log"
+        data={changer(data)}
         columns={[
           {
             title: "Url",
@@ -18,20 +33,20 @@ export default function Pasta() {
           },
           {
             title: "Method",
-            field: "url"
+            field: "method"
           },
           {
             title: "Usuario",
-            field: "url"
+            field: "user_modified.email"
           },
 
           {
             title: "Data da modificação",
-            field: "url"
+            field: "data_modified"
           },
           {
             title: "Horario da modificação",
-            field: "url"
+            field: "hour_modified"
           }
         ]}
       />

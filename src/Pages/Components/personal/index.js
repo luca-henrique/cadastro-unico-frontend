@@ -61,7 +61,7 @@ export default function Components() {
     }
   }
 
-  function changeCpf(e) {
+  function changerCpf(e) {
     setCpf(cpfMask(e.target.value, cpf));
   }
 
@@ -85,7 +85,7 @@ export default function Components() {
                 fullWidth
                 required
                 value={cpf}
-                onChange={changeCpf}
+                onChange={changerCpf}
               />
             </div>
           </Grid>

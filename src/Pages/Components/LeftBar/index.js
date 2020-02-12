@@ -1,10 +1,13 @@
 import React from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Creators as ViewCreators } from "../../../store/ducks/view";
 import AuthActions from "../../../store/ducks/auth";
+
+/**
+ * Creators
+ */
+import { Creators as ViewCreators } from "../../../store/ducks/view";
 import { Creators as FunCreators } from "../../../store/ducks/funcionario";
 import { Creators as BoxCreators } from "../../../store/ducks/box";
 import { Creators as PasteCreators } from "../../../store/ducks/paste";
@@ -12,8 +15,6 @@ import { Creators as FamilyCreators } from "../../../store/ducks/family";
 import { Creators as AddrressPrefecture } from "../../../store/ducks/address_prefecture";
 import { Creators as ContactPrefecture } from "../../../store/ducks/contact_prefecture";
 import { Creators as LogCreators } from "../../../store/ducks/log";
-
-import { useDispatch } from "react-redux";
 
 import {
   List,
@@ -69,11 +70,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function LeftBar(props) {
-  const { signOut, changerView } = props;
+export default function LeftBar() {
   const classes = useStyles();
 
   const dispatch = useDispatch();
+
+  const user = useSelector(state => state.user.user.admin);
 
   return (
     <div style={{ backgroundColor: "rgb(10,103,30)" }}>
@@ -97,25 +99,71 @@ function LeftBar(props) {
         />
       </div>
 
-      <ListItem
-        button
-        style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
-        onClick={() => {
-          dispatch(ContactPrefecture.failLoadPrefectureContact(false));
-          dispatch(ContactPrefecture.readPrefectureContactRequest());
-          dispatch(AddrressPrefecture.readAddressPrefectureRequest());
-          changerView("prefeitura");
-        }}
-      >
-        <ListItemIcon>
-          <HomeWorkOutlined
-            style={{ fontSize: "35", color: "rgb(246,238,89)" }}
-          />
-        </ListItemIcon>
-        <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
-          Prefeitura
-        </ListItemText>
-      </ListItem>
+      {user === true ? (
+        <>
+          <ListItem
+            button
+            style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+            onClick={() => {
+              dispatch(ContactPrefecture.failLoadPrefectureContact(false));
+              dispatch(ContactPrefecture.readPrefectureContactRequest());
+              dispatch(AddrressPrefecture.readAddressPrefectureRequest());
+              dispatch(ViewCreators.changerView("prefeitura"));
+            }}
+          >
+            <ListItemIcon>
+              <HomeWorkOutlined
+                style={{ fontSize: "35", color: "rgb(246,238,89)" }}
+              />
+            </ListItemIcon>
+            <ListItemText
+              style={{ color: "rgb(246,238,89)", fontSize: "10px" }}
+            >
+              Prefeitura
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            style={{
+              backgroundColor: "rgba(2,99,44,0.7)"
+            }}
+            onClick={() => {
+              dispatch(FunCreators.loadFuncionarioRequest());
+              dispatch(ViewCreators.changerView("funcionario"));
+            }}
+          >
+            <ListItemIcon>
+              <Group style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
+            </ListItemIcon>
+            <ListItemText
+              style={{ color: "rgb(246,238,89)", fontSize: "10px" }}
+            >
+              Funcionario
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
+            onClick={() => {
+              dispatch(LogCreators.readLogRequest());
+              dispatch(ViewCreators.changerView("gerar"));
+            }}
+          >
+            <ListItemIcon>
+              <Description
+                style={{ fontSize: "35", color: "rgb(246,238,89)" }}
+              />
+            </ListItemIcon>
+            <ListItemText
+              style={{ color: "rgb(246,238,89)", fontSize: "10px" }}
+            >
+              Log
+            </ListItemText>
+          </ListItem>
+        </>
+      ) : (
+        <></>
+      )}
 
       <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
         <ListItem
@@ -137,28 +185,10 @@ function LeftBar(props) {
 
         <ListItem
           button
-          style={{
-            backgroundColor: "rgba(2,99,44,0.7)"
-          }}
-          onClick={() => {
-            dispatch(FunCreators.loadFuncionarioRequest());
-            changerView("funcionario");
-          }}
-        >
-          <ListItemIcon>
-            <Group style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
-          </ListItemIcon>
-          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
-            Funcionario
-          </ListItemText>
-        </ListItem>
-
-        <ListItem
-          button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
             dispatch(BoxCreators.readBoxesRequest());
-            changerView("box");
+            dispatch(ViewCreators.changerView("box"));
           }}
         >
           <ListItemIcon>
@@ -174,7 +204,7 @@ function LeftBar(props) {
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
             dispatch(PasteCreators.readPastesRequest());
-            changerView("pasta");
+            dispatch(ViewCreators.changerView("pasta"));
           }}
         >
           <ListItemIcon>
@@ -190,7 +220,7 @@ function LeftBar(props) {
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
             dispatch(FamilyCreators.readFamilyRequest());
-            changerView("familiar");
+            dispatch(ViewCreators.changerView("familiar"));
           }}
         >
           <ListItemIcon>
@@ -205,24 +235,8 @@ function LeftBar(props) {
           button
           style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
           onClick={() => {
-            dispatch(LogCreators.readLogRequest());
-            changerView("gerar");
-          }}
-        >
-          <ListItemIcon>
-            <Description style={{ fontSize: "35", color: "rgb(246,238,89)" }} />
-          </ListItemIcon>
-          <ListItemText style={{ color: "rgb(246,238,89)", fontSize: "10px" }}>
-            Log
-          </ListItemText>
-        </ListItem>
-
-        <ListItem
-          button
-          style={{ backgroundColor: "rgba(2,99,44,0.7)" }}
-          onClick={() => {
-            signOut();
-            changerView("default");
+            dispatch(AuthActions.signOut());
+            dispatch(ViewCreators.changerView("default"));
           }}
         >
           <ListItemIcon>
@@ -236,12 +250,3 @@ function LeftBar(props) {
     </div>
   );
 }
-
-const mapStateToProps = state => ({
-  redux: state
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AuthActions, ...ViewCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(LeftBar);

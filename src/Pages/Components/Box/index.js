@@ -40,7 +40,7 @@ export default function() {
   const [selectedRow, setSelectedRow] = useState("");
 
   const data = useSelector(state => state.box.boxes);
-  console.log(data);
+
   const dispatch = useDispatch();
 
   return (

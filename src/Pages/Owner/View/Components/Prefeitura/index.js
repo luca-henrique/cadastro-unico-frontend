@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Creators as PrefectureCreators } from "../../../../../store/ducks/prefecture";
 
 import { Grid, Typography } from "@material-ui/core/";
+import { cnpjMask } from "../../../../Components/TextField/MaskCnpj";
 
 import TextField from "../../../../Components/TextField/index";
 import Address from "./Addrress/index";
@@ -34,17 +35,17 @@ export default function Prefeitura() {
 
       checkAttributesObj(pref);
       if (exist === true) {
-        console.log("Atulizar Prefeitura");
-        console.log(pref);
         dispatch(PrefectureCreators.updatePrefectureRequest(pref));
       } else {
-        console.log("Criar Prefeitura");
-        console.log(pref);
         dispatch(PrefectureCreators.createPrefectureRequest(pref));
       }
     } catch (err) {
       console.log(err);
     }
+  }
+
+  function changerCnpj(e) {
+    setCnpj(cnpjMask(e.target.value, cnpj));
   }
 
   return (
@@ -79,11 +80,12 @@ export default function Prefeitura() {
                 <div>
                   <Typography variant="button">CNPJ</Typography>
                   <TextField
+                    required
                     variant="outlined"
                     size="small"
                     fullWidth
                     value={cnpj}
-                    onChange={e => setCnpj(e.target.value)}
+                    onChange={changerCnpj}
                   />
                 </div>
               </Grid>
@@ -92,9 +94,11 @@ export default function Prefeitura() {
                 <div>
                   <Typography variant="button">Razão(Nome)</Typography>
                   <TextField
+                    required
                     variant="outlined"
                     size="small"
                     fullWidth
+                    type="text"
                     value={nome}
                     onChange={e => setNome(e.target.value)}
                   />

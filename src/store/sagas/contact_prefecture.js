@@ -6,11 +6,6 @@ import { toastr } from "react-redux-toastr";
 
 export function* createContactPrefecture({ payload }) {
   try {
-    /**
-     * create new adrdess {cep, estado, bairro, rua, numero}
-     **/
-    console.log("Aqui");
-    console.log(payload);
     const response = yield call(
       api.post,
       "/contactprefecture",
@@ -21,9 +16,7 @@ export function* createContactPrefecture({ payload }) {
 
     yield put(ContactCreators.failLoadPrefectureContact(true));
 
-    console.log(response.data);
-
-    yield toastr.success("Contato atualizado com sucesso.");
+    yield toastr.success("Contato da prefeitura atualizado com sucesso.");
   } catch (err) {
     yield put(ContactCreators.failLoadPrefectureContact(false));
     yield toastr.error("Falha", "Preencha o campo");
@@ -33,8 +26,6 @@ export function* createContactPrefecture({ payload }) {
 export function* readContactPrefecture() {
   try {
     const response = yield call(api.get, "/contactprefecture/1");
-    console.log("AQUI");
-    console.log(response);
 
     yield put(ContactCreators.readPrefectureContactSuccess(response.data));
 
