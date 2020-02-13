@@ -11,6 +11,8 @@ import AuthActions from "../../../store/ducks/auth";
 import { Creators as LoginCreators } from "../../../store/ducks/login";
 import { Creators as UserCreators } from "../../../store/ducks/user";
 
+import { toastr } from "react-redux-toastr";
+
 import { Typography, Button } from "@material-ui/core/";
 
 import TextField from "../../Components/TextField/";
@@ -22,8 +24,6 @@ function TransitionsModal(props) {
 
   const { visible } = props.redux.login.show;
 
-  console.log(props);
-
   function changePassword(e) {
     e.preventDefault();
     const { changerPasswordRequest } = props;
@@ -34,7 +34,7 @@ function TransitionsModal(props) {
       password1 === "null" ||
       password1 === ""
     ) {
-      alert("Senha não está compativel repita.");
+      toastr.error("Password invalido ou nulo");
     } else {
       changerPasswordRequest(password);
       hide();
@@ -158,3 +158,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransitionsModal);
+
+function UserException(message) {
+  this.message = message;
+  this.name = "UserException";
+}

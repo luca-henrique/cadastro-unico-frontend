@@ -54,55 +54,73 @@ export default function View() {
   const dispatch = useDispatch();
 
   const data = useSelector(state => state.box.families);
-  console.log(data);
+
+  function load(data) {
+    if (Array.isArray(data)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <>
-      <MaterialTable
-        style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
-        title="Grupo Familiar"
-        columns={state.columns}
-        data={data}
-        editable={{
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                dispatch(FamilyCreators.deleteFamilyRequest(oldData.id));
-              }, 600);
-            })
-        }}
-        onRowClick={(evt, selectedRow) => {
-          setSelectedRow(selectedRow);
-        }}
-        options={{
-          rowStyle: rowData => ({
-            backgroundColor:
-              selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#F3F781"
-                : "#FFF"
-          })
-        }}
-        actions={[
-          {
-            icon: "add",
-            tooltip: "Add User",
-            isFreeAction: true,
-            onClick: (event, rowData) => {
-              dispatch(FamilyCreators.showModalNewFamiliar());
-            }
-          },
-          {
-            icon: "edit",
-            tooltip: "Editar familiar",
-            onClick: (event, rowData) => {
-              dispatch(FamilyCreators.showModalUpdateFamily(rowData));
-            }
-          }
-        ]}
-      />
-      <Create />
-      <Update />
+      {load(data) === true ? (
+        <>
+          <MaterialTable
+            style={{
+              height: "700px",
+              boxShadow: "none",
+              color: "rgb(2,99,44)"
+            }}
+            title="Grupo Familiar"
+            columns={state.columns}
+            data={data}
+            editable={{
+              onRowDelete: oldData =>
+                new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve();
+                    dispatch(FamilyCreators.deleteFamilyRequest(oldData.id));
+                  }, 600);
+                })
+            }}
+            onRowClick={(evt, selectedRow) => {
+              setSelectedRow(selectedRow);
+            }}
+            options={{
+              rowStyle: rowData => ({
+                backgroundColor:
+                  selectedRow &&
+                  selectedRow.tableData.id === rowData.tableData.id
+                    ? "#F3F781"
+                    : "#FFF"
+              })
+            }}
+            actions={[
+              {
+                icon: "add",
+                tooltip: "Add User",
+                isFreeAction: true,
+                onClick: (event, rowData) => {
+                  dispatch(FamilyCreators.showModalNewFamiliar());
+                }
+              },
+              {
+                icon: "edit",
+                tooltip: "Editar familiar",
+                onClick: (event, rowData) => {
+                  dispatch(FamilyCreators.showModalUpdateFamily(rowData));
+                }
+              }
+            ]}
+          />
+          <Create />
+          <Update />
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

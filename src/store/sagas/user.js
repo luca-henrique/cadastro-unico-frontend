@@ -23,6 +23,7 @@ export function* update({ payload }) {
     const response = yield call(api.put, "user/0", payload.user);
     yield put(UserCreators.loadUserSuccess(response.data));
   } catch (err) {
+    console.log(err);
     yield toastr.error("Falha", "Falha ao atualizar o email");
   }
 }

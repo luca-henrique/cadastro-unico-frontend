@@ -57,46 +57,64 @@ export default function View() {
   const [selectedRow, setSelectedRow] = useState("");
   const data = useSelector(state => state.family.groupsFamilies);
   const dispatch = useDispatch();
-  console.log(data);
+
+  function load(data) {
+    if (Array.isArray(data)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <>
-      <MaterialTable
-        style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
-        title="Grupo Familiar"
-        columns={state.columns}
-        data={data}
-        editable={{
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                dispatch(FamilyCreators.deleteFamilyRequest(oldData.id));
-              }, 600);
-            })
-        }}
-        onRowClick={(evt, selectedRow) => {
-          setSelectedRow(selectedRow);
-        }}
-        options={{
-          rowStyle: rowData => ({
-            backgroundColor:
-              selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#F3F781"
-                : "#FFF"
-          })
-        }}
-        actions={[
-          {
-            icon: "edit",
-            tooltip: "Editar informações",
-            onClick: (event, rowData) => {
-              dispatch(FamilyCreators.showModalUpdateFamily(rowData));
-            }
-          }
-        ]}
-      />
-      <Update />
+      {load(data) === true ? (
+        <>
+          <MaterialTable
+            style={{
+              height: "700px",
+              boxShadow: "none",
+              color: "rgb(2,99,44)"
+            }}
+            title="Grupo Familiar"
+            columns={state.columns}
+            data={data}
+            editable={{
+              onRowDelete: oldData =>
+                new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve();
+                    dispatch(FamilyCreators.deleteFamilyRequest(oldData.id));
+                  }, 600);
+                })
+            }}
+            onRowClick={(evt, selectedRow) => {
+              setSelectedRow(selectedRow);
+            }}
+            options={{
+              rowStyle: rowData => ({
+                backgroundColor:
+                  selectedRow &&
+                  selectedRow.tableData.id === rowData.tableData.id
+                    ? "#F3F781"
+                    : "#FFF"
+              })
+            }}
+            actions={[
+              {
+                icon: "edit",
+                tooltip: "Editar informações",
+                onClick: (event, rowData) => {
+                  dispatch(FamilyCreators.showModalUpdateFamily(rowData));
+                }
+              }
+            ]}
+          />
+          <Update />
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

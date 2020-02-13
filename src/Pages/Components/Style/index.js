@@ -22,4 +22,12 @@ export const Form = styled.form`
   padding: 30px;
 
   background: rgba(254, 254, 254, 0.9);
+
+  @media (max-width: 991px) {
+    width: 100%;
+    border-radius: 0px;
+  }
+  @media (min-width: 991px) {
+    width: 500px;
+  }
 `;

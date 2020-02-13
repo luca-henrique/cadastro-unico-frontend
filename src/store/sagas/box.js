@@ -8,26 +8,21 @@ import { toastr } from "react-redux-toastr";
 export function* createBox({ payload }) {
   try {
     const response = yield call(api.post, "/box", payload.box);
-    console.log(response);
     toastr.success("Caixa criada");
   } catch (err) {}
 }
 
 export function* updateBox({ payload }) {
   try {
-    const response = yield call(
-      api.put,
-      `/box/${payload.box.id}`,
-      JSON.stringify(payload.box)
-    );
-    console.log(response);
+    const response = yield call(api.put, `/box/${payload.box.id}`, payload.box);
+    toastr.success("Atualização feita");
   } catch (err) {}
 }
 
 export function* deleteBox({ payload }) {
   try {
     const response = yield call(api.delete, `/box/${payload.id}`);
-    console.log(response);
+    toastr.success("Caixa excluida.");
   } catch (err) {
     console.log(err);
   }
@@ -36,7 +31,7 @@ export function* deleteBox({ payload }) {
 export function* getBoxes() {
   try {
     const response = yield call(api.get, "/box/");
-    console.log(response);
+
     yield put(BoxCreators.readBoxesSuccess(response.data));
   } catch (err) {}
 }

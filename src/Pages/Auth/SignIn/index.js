@@ -24,7 +24,15 @@ const useStyles = makeStyles(theme => ({
   img: {
     width: "450px",
     height: "200",
-    marginTop: "40px"
+    marginTop: "40px",
+
+    [theme.breakpoints.down("sm")]: {
+      width: "300px"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "500px"
+    },
+    [theme.breakpoints.up("lg")]: {}
   },
   title: {
     marginBottom: "30px"

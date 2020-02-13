@@ -68,80 +68,99 @@ export default function View() {
   const [selectedRow, setSelectedRow] = useState("");
   const dispatch = useDispatch();
 
+  function load(data) {
+    if (Array.isArray(data)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <>
-      <MaterialTable
-        style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
-        title="Pastas"
-        columns={state.columns}
-        data={data}
-        editable={{
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                dispatch(PasteCreators.deletePasteRequest(oldData.id));
-              }, 600);
-            })
-        }}
-        onRowClick={(evt, selectedRow) => {
-          setSelectedRow(selectedRow);
-        }}
-        options={{
-          rowStyle: rowData => ({
-            backgroundColor:
-              selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#F3F781"
-                : "#FFF"
-          })
-        }}
-        actions={[
-          {
-            icon: "add",
-            tooltip: "Adicionar nova pasta",
-            isFreeAction: true,
-            onClick: event => {
-              dispatch(PasteCreators.showModalNewPaste());
-            }
-          },
-          {
-            icon: "visibility",
-            tooltip: "Mostrar grupo familiar",
-            onClick: (event, rowData) => {
-              dispatch(ViewCreators.changerView("familyBox"));
-              dispatch(BoxCreators.readFamiliesRequest(rowData.id));
-            }
-          },
-          {
-            icon: "edit",
-            tooltip: "Editar pasta",
-            onClick: (event, rowData) => {
-              dispatch(PasteCreators.showModalUpdatePaste(rowData));
-            }
-          }
-        ]}
-        components={{
-          Toolbar: props => (
-            <div>
-              <MTableToolbar {...props} />
-              <div
-                style={{
-                  marginLeft: "25px",
-                  marginTop: "5px",
-                  marginBottom: "5px"
-                }}
-              >
-                <ArrowBackIos
-                  style={{ fontSize: 30 }}
-                  onClick={() => dispatch(ViewCreators.changerView("box"))}
-                />
-              </div>
-            </div>
-          )
-        }}
-      />
-      <Create />
-      <Update />
+      {load(data) === true ? (
+        <>
+          <MaterialTable
+            style={{
+              height: "700px",
+              boxShadow: "none",
+              color: "rgb(2,99,44)"
+            }}
+            title="Pastas"
+            columns={state.columns}
+            data={data}
+            editable={{
+              onRowDelete: oldData =>
+                new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve();
+                    dispatch(PasteCreators.deletePasteRequest(oldData.id));
+                  }, 600);
+                })
+            }}
+            onRowClick={(evt, selectedRow) => {
+              setSelectedRow(selectedRow);
+            }}
+            options={{
+              rowStyle: rowData => ({
+                backgroundColor:
+                  selectedRow &&
+                  selectedRow.tableData.id === rowData.tableData.id
+                    ? "#F3F781"
+                    : "#FFF"
+              })
+            }}
+            actions={[
+              {
+                icon: "add",
+                tooltip: "Adicionar nova pasta",
+                isFreeAction: true,
+                onClick: event => {
+                  dispatch(PasteCreators.showModalNewPaste());
+                }
+              },
+              {
+                icon: "visibility",
+                tooltip: "Mostrar grupo familiar",
+                onClick: (event, rowData) => {
+                  dispatch(ViewCreators.changerView("familyBox"));
+                  dispatch(BoxCreators.readFamiliesRequest(rowData.id));
+                }
+              },
+              {
+                icon: "edit",
+                tooltip: "Editar pasta",
+                onClick: (event, rowData) => {
+                  dispatch(PasteCreators.showModalUpdatePaste(rowData));
+                }
+              }
+            ]}
+            components={{
+              Toolbar: props => (
+                <div>
+                  <MTableToolbar {...props} />
+                  <div
+                    style={{
+                      marginLeft: "25px",
+                      marginTop: "5px",
+                      marginBottom: "5px"
+                    }}
+                  >
+                    <ArrowBackIos
+                      style={{ fontSize: 30 }}
+                      onClick={() => dispatch(ViewCreators.changerView("box"))}
+                    />
+                  </div>
+                </div>
+              )
+            }}
+          />
+          <Create />
+          <Update />
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

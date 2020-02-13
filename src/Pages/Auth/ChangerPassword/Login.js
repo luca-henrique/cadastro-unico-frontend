@@ -22,7 +22,9 @@ export default function View() {
       id: user.id,
       email
     };
-    dispatch(UserCreators.updateUserRequest(updateUser));
+    if (user.email !== email) {
+      dispatch(UserCreators.updateUserRequest(updateUser));
+    }
   }
 
   return (
@@ -72,16 +74,3 @@ export default function View() {
 TextField.defaultProps = {
   value: ""
 };
-/*
-const mapStateToProps = state => ({
-  redux: state
-});
-{/*onClick={showModalEmail}
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { ...AuthActions, ...UserCreators, ...LoginCreators },
-    dispatch
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(View);
-*/
