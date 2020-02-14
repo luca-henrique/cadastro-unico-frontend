@@ -12,18 +12,15 @@ export function* index() {
   try {
     const id = yield call(api.get, "/user/");
     const response = yield call(api.get, `/user/${id.data}`);
-    yield put(UserCreators.loadUserSuccess(response.data));
-  } catch (err) {
-    console.log(err);
-  }
+    yield put(UserCreators.readUserSuccess(response.data));
+  } catch (err) {}
 }
 
 export function* update({ payload }) {
   try {
     const response = yield call(api.put, "user/0", payload.user);
-    yield put(UserCreators.loadUserSuccess(response.data));
+    yield put(UserCreators.readUserSuccess(response.data));
   } catch (err) {
-    console.log(err);
     yield toastr.error("Falha", "Falha ao atualizar o email");
   }
 }

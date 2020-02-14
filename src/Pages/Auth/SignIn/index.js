@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 
-import { Form, Container } from "../../Components/Style/";
-
-import Logo from "../../../Assets/Images/cadunico.png";
-
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import AuthActions from "../../../store/ducks/auth";
-import { Creators as UserCreators } from "../../../store/ducks/user";
+import { useDispatch } from "react-redux";
 
 import { Typography, Link, TextField, Button } from "@material-ui/core/";
-
 import { withStyles, makeStyles } from "@material-ui/core/styles";
+
+import { Form, Container } from "../../Components/Style/";
+import Logo from "../../../Assets/Images/cadunico.png";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -82,7 +78,9 @@ function Copyright() {
   );
 }
 
-function SignUp(props) {
+export default function SignUp(props) {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -90,9 +88,7 @@ function SignUp(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const { signInRequest } = props;
-
-    signInRequest(email, password);
+    dispatch(AuthActions.signInRequest(email, password));
   }
 
   return (
@@ -149,8 +145,3 @@ function SignUp(props) {
     </Container>
   );
 }
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AuthActions, ...UserCreators }, dispatch);
-
-export default connect(null, mapDispatchToProps)(SignUp);

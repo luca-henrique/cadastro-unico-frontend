@@ -12,7 +12,6 @@ import user from "./user";
 import profile from "./profile";
 import address from "./address";
 import contact from "./contact";
-import login from "./login";
 
 import paste from "./paste";
 import box from "./box";
@@ -37,7 +36,6 @@ export default history =>
     family,
     view,
     contact,
-    login,
     log,
     paste,
     box,

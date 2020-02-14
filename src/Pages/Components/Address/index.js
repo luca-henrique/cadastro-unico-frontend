@@ -33,7 +33,6 @@ export default function Components(props) {
         numero
       };
 
-      checkAttributesObj(addr);
       if (exist === true) {
         dispatch(AddressCreators.updateAddressRequest(addr));
       } else {

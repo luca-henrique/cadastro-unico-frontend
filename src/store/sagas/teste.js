@@ -16,7 +16,7 @@ export function teste({ payload }) {
   const { prefecture } = payload.prefecture;
 
   if (user) {
-    put(UserCreators.loadUserSuccess(user));
+    put(UserCreators.readUserSuccess(user));
   }
 
   if (profile) {

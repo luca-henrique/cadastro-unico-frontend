@@ -78,7 +78,7 @@ export default function* rootSaga() {
 
     takeLatest(LogTypes.READ_LOG_REQUEST, getLogs),
 
-    takeLatest(UserTypes.LOAD_USER_REQUEST, index),
+    takeLatest(UserTypes.READ_USER_REQUEST, index),
     takeLatest(UserTypes.UPDATE_USER_REQUEST, update),
     takeLatest(UserTypes.CHANGER_PASSWORD_REQUEST, changerPassword),
 
