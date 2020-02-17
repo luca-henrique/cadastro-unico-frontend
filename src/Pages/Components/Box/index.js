@@ -43,6 +43,18 @@ export default function() {
 
   const dispatch = useDispatch();
 
+  const update = () => dispatch(BoxCreators.readBoxesRequest());
+
+  async function edit(data) {
+    await dispatch(BoxCreators.showModalUpdateBox(data));
+    await update();
+  }
+
+  async function remove(data) {
+    await dispatch(BoxCreators.deleteBoxRequest(data.id));
+    await update();
+  }
+
   function load(data) {
     if (Array.isArray(data)) {
       return true;
@@ -64,15 +76,6 @@ export default function() {
             title="Caixas"
             columns={state.columns}
             data={data}
-            editable={{
-              onRowDelete: oldData =>
-                new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve();
-                    dispatch(BoxCreators.deleteBoxRequest(oldData.id));
-                  }, 600);
-                })
-            }}
             onRowClick={(evt, selectedRow) => {
               setSelectedRow(selectedRow);
             }}
@@ -103,10 +106,17 @@ export default function() {
                 }
               },
               {
+                icon: "delete",
+                tooltip: "Deletar caixa",
+                onClick: (event, rowData) => {
+                  remove(rowData);
+                }
+              },
+              {
                 icon: "edit",
                 tooltip: "Editar caixa",
                 onClick: (event, rowData) => {
-                  dispatch(BoxCreators.showModalUpdateBox(rowData));
+                  edit(rowData);
                 }
               }
             ]}

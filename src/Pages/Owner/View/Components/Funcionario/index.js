@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { Creators as FuncionarioCreators } from "../../../../../store/ducks/funcionario";
@@ -15,6 +15,21 @@ export default function Funcionario() {
   const data = useSelector(state => state.funcionario.funcionarios);
 
   const dispatch = useDispatch();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const update = useCallback(() =>
+    dispatch(FuncionarioCreators.loadFuncionarioRequest())
+  );
+
+  useEffect(() => {
+    update();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function removeFun(data) {
+    await dispatch(FuncionarioCreators.deleteFuncionarioSuccess(data));
+    await update();
+  }
 
   function load(data) {
     if (Array.isArray(data)) {
@@ -73,17 +88,6 @@ export default function Funcionario() {
               }
             ]}
             data={data}
-            editable={{
-              onRowDelete: oldData =>
-                new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve();
-                    dispatch(
-                      FuncionarioCreators.deleteFuncionarioSuccess(oldData)
-                    );
-                  }, 600);
-                })
-            }}
             onRowClick={(evt, selectedRow) => {
               setSelectedRow(selectedRow);
             }}
@@ -101,8 +105,18 @@ export default function Funcionario() {
                 icon: "add",
                 tooltip: "Add User",
                 isFreeAction: true,
-                onClick: event =>
-                  dispatch(FuncionarioCreators.showModalNewFuncionario())
+                onClick: event => {
+                  dispatch(FuncionarioCreators.showModalNewFuncionario());
+                  update();
+                }
+              },
+              {
+                icon: "delete",
+                tooltip: "Deletar funcionario",
+                onClick: (event, rowData) => {
+                  removeFun(rowData);
+                  update();
+                }
               }
             ]}
           />

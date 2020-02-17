@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as PasteCreators } from "../../../../../store/ducks/paste";
+import { Creators as BoxCreators } from "../../../../../store/ducks/box";
 
 import {
   Typography,
@@ -12,12 +13,8 @@ import {
   Fade,
   Grid,
   TextField,
-  withStyles,
-  Select,
-  IconButton
+  withStyles
 } from "@material-ui/core/";
-
-import { Add } from "@material-ui/icons/";
 
 import { green } from "@material-ui/core/colors";
 
@@ -53,21 +50,31 @@ export default function Create() {
 
   const visible = useSelector(state => state.paste.visible);
 
-  const id = useSelector(state => state.box.id);
-
-  const data = useSelector(state => state.box.pastes);
+  const idBox = useSelector(state => state.box.id);
+  const update = () => dispatch(BoxCreators.readPastesRequest(idBox));
 
   const dispatch = useDispatch();
 
   function hide() {
     dispatch(PasteCreators.hideModalNewPaste());
+    setNumberPaste("");
+    setCodHome("");
+    setDateInterview("");
+    setDateVisit("");
+    setDisctric("");
+    setReason("");
+    setNote("");
+
+    setSituation(false);
+    setOldMan(false);
+    setDeficient(false);
+    setBenefit(false);
   }
 
-  function create(e) {
+  async function create(e) {
     e.preventDefault();
-
     var paste = {
-      box_id: id,
+      box_id: idBox,
       numberPaste,
       codHome,
       district,
@@ -81,9 +88,10 @@ export default function Create() {
       oldMan,
       benefit
     };
+    await dispatch(PasteCreators.createPasteRequest(paste));
+    await update();
 
-    dispatch(PasteCreators.createPasteRequest(paste));
-    hide();
+    await hide();
   }
 
   return (
@@ -193,7 +201,6 @@ export default function Create() {
                     value={dateInterview}
                     onChange={e => {
                       setDateInterview(e.target.value);
-                      console.log(dateInterview);
                     }}
                   />
                 </div>

@@ -18,6 +18,8 @@ export default function Create() {
   const visible = useSelector(state => state.box.updateBox.visible);
   const dispatch = useDispatch();
 
+  const update = () => dispatch(BoxCreators.readBoxesRequest());
+
   const [numBox, setNumBox] = useState("");
   const [numMax, setNumMax] = useState("");
 
@@ -26,7 +28,7 @@ export default function Create() {
     setNumMax(data.numMax);
   }, [data.numBox, data.numMax]);
 
-  function saveBox(e) {
+  async function saveBox(e) {
     e.preventDefault();
     try {
       var box = {
@@ -35,7 +37,8 @@ export default function Create() {
         numMax
       };
 
-      dispatch(BoxCreators.updateBoxRequest(box));
+      await dispatch(BoxCreators.updateBoxRequest(box));
+      await update();
       hide();
     } catch (err) {}
   }

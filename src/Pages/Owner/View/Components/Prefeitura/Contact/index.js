@@ -32,12 +32,8 @@ export default function Components() {
       checkAttributesObj(cont);
 
       if (exist === true) {
-        console.log("Não está indo o id");
-        console.log(cont);
         dispatch(ContactCreators.updatePrefectureContactRequest(cont));
       } else {
-        console.log("Não está indo o id");
-        console.log(cont);
         dispatch(ContactCreators.createPrefectureContactRequest(cont));
       }
     } catch (err) {

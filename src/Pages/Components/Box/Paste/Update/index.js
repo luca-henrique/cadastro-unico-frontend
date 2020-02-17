@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as PasteCreators } from "../../../../../store/ducks/paste";
+import { Creators as BoxCreators } from "../../../../../store/ducks/box";
 
 import moment from "moment";
 
@@ -14,12 +15,8 @@ import {
   Fade,
   Grid,
   TextField,
-  withStyles,
-  Select,
-  IconButton
+  withStyles
 } from "@material-ui/core/";
-
-import { Add } from "@material-ui/icons/";
 
 import { green } from "@material-ui/core/colors";
 
@@ -57,6 +54,10 @@ export default function Create() {
   const [deficient, setDeficient] = useState(false);
   const [benefit, setBenefit] = useState(false);
 
+  const id = useSelector(state => state.box.box.id);
+
+  const update = () => dispatch(BoxCreators.readPastesRequest(id));
+
   useEffect(() => {
     setNumberPaste(data.numberPaste);
     setCodHome(data.codHome);
@@ -88,7 +89,7 @@ export default function Create() {
     dispatch(PasteCreators.hideModalUpdatePaste());
   }
 
-  function create(e) {
+  async function create(e) {
     e.preventDefault();
 
     var paste = {
@@ -112,8 +113,9 @@ export default function Create() {
       benefit
     };
 
-    dispatch(PasteCreators.updatePasteRequest(paste));
-    hide();
+    await dispatch(PasteCreators.updatePasteRequest(paste));
+    await update();
+    await hide();
   }
 
   function formatDate(data) {

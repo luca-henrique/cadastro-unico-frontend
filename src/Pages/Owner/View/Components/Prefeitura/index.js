@@ -39,9 +39,7 @@ export default function Prefeitura() {
       } else {
         dispatch(PrefectureCreators.createPrefectureRequest(pref));
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   }
 
   function changerCnpj(e) {

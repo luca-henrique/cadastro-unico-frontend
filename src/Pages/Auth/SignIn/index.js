@@ -9,6 +9,8 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { Form, Container } from "../../Components/Style/";
 import Logo from "../../../Assets/Images/cadunico.png";
 
+import Error from "../ErrorLicense/index";
+
 const useStyles = makeStyles(theme => ({
   container: {
     backgroundColor: "#F4D03F",
@@ -84,6 +86,8 @@ export default function SignUp(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [erro, setErro] = useState(true);
+
   const classes = useStyles();
 
   function handleSubmit(e) {
@@ -92,56 +96,64 @@ export default function SignUp(props) {
   }
 
   return (
-    <Container className={classes.container}>
-      <div className={classes.img}>
-        <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
-      </div>
-      <Form onSubmit={handleSubmit}>
-        <div className={classes.title}>
-          <Typography variant="h3" className={classes.typography}>
-            Entrar
-          </Typography>
-        </div>
-        <div className={classes.button}>
-          <Typography variant="button" className={classes.typography}>
-            Email
-          </Typography>
-          <ValidationTextField
-            variant="outlined"
-            size="small"
-            fullWidth
-            type="text"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </div>
-        <div className={classes.button}>
-          <Typography variant="button" className={classes.typography}>
-            Senha
-          </Typography>
-          <ValidationTextField
-            variant="outlined"
-            size="small"
-            fullWidth
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-        </div>
-        <div className={classes.signIn}>
-          <Button
-            variant="contained"
-            fullWidth
-            className={classes.title}
-            type="submit"
-          >
-            Entrar
-          </Button>
-        </div>
-      </Form>
-      <div>
-        <Copyright />
-      </div>
-    </Container>
+    <>
+      {erro === true ? (
+        <Error />
+      ) : (
+        <>
+          <Container className={classes.container}>
+            <div className={classes.img}>
+              <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
+            </div>
+            <Form onSubmit={handleSubmit}>
+              <div className={classes.title}>
+                <Typography variant="h3" className={classes.typography}>
+                  Entrar
+                </Typography>
+              </div>
+              <div className={classes.button}>
+                <Typography variant="button" className={classes.typography}>
+                  Email
+                </Typography>
+                <ValidationTextField
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  type="text"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                />
+              </div>
+              <div className={classes.button}>
+                <Typography variant="button" className={classes.typography}>
+                  Senha
+                </Typography>
+                <ValidationTextField
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                />
+              </div>
+              <div className={classes.signIn}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  className={classes.title}
+                  type="submit"
+                >
+                  Entrar
+                </Button>
+              </div>
+            </Form>
+            <div>
+              <Copyright />
+            </div>
+          </Container>
+        </>
+      )}
+    </>
   );
 }

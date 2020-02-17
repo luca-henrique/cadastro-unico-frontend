@@ -297,7 +297,6 @@ const Create = props => {
                       value={deficient}
                       onChange={e => {
                         setDeficient(e.target.checked);
-                        console.log(deficient);
                       }}
                       control={<GreenCheckbox />}
                       label="deficiente"

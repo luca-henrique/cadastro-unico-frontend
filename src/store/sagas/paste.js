@@ -17,6 +17,7 @@ export function* createPaste({ payload }) {
 
 export function* updatePaste({ payload }) {
   try {
+    console.log(payload.paste);
     const response = yield call(
       api.put,
       `/paste/${payload.paste.id}`,

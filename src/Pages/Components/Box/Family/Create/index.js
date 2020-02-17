@@ -2,6 +2,9 @@ import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as FamilyCreators } from "../../../../../store/ducks/family";
+import { Creators as BoxCreators } from "../../../../../store/ducks/box";
+
+import { cpfMask } from "../../../TextField/MaskInput";
 
 import {
   Typography,
@@ -21,7 +24,7 @@ export default function Create() {
   const visible = useSelector(state => state.family.visible);
   const id = useSelector(state => state.box.id);
 
-  console.log(id);
+  const update = () => dispatch(BoxCreators.readFamiliesRequest(id));
 
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -29,25 +32,33 @@ export default function Create() {
   const [tipo, setTipo] = useState("");
   const [situacao, setSituacao] = useState("");
 
-  function create(e) {
+  function changerCpf(e) {
+    setCpf(cpfMask(e.target.value, cpf));
+  }
+
+  async function create(e) {
     e.preventDefault();
 
-    try {
-      var family = {
-        paste_id: id,
-        cpf,
-        nis,
-        nome,
-        situacao,
-        tipo
-      };
-      dispatch(FamilyCreators.createFamilyRequest(family));
-      hide();
-    } catch (err) {}
+    var family = {
+      paste_id: id,
+      cpf,
+      nis,
+      nome,
+      situacao,
+      tipo
+    };
+    await dispatch(FamilyCreators.createFamilyRequest(family));
+    await update();
+    await hide();
   }
 
   function hide() {
     dispatch(FamilyCreators.hideModalNewFamiliar());
+    setNome("");
+    setCpf("");
+    setNis("");
+    setTipo("");
+    setSituacao("");
   }
 
   return (
@@ -119,7 +130,7 @@ export default function Create() {
                     fullWidth
                     type="text"
                     value={cpf}
-                    onChange={e => setCpf(e.target.value)}
+                    onChange={changerCpf}
                   />
                 </div>
               </Grid>

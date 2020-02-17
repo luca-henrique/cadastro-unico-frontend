@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Creators as FamilyCreators } from "../../../../store/ducks/family";
+import { Creators as BoxCreators } from "../../../../store/ducks/box";
 
 import MaterialTable from "material-table";
 
@@ -55,6 +56,15 @@ export default function View() {
 
   const data = useSelector(state => state.box.families);
 
+  const idBox = useSelector(state => state.box.id);
+
+  const update = () => dispatch(BoxCreators.readFamiliesRequest(idBox));
+
+  async function remove(data) {
+    await dispatch(FamilyCreators.deleteFamilyRequest(data.id));
+    await update();
+  }
+
   function load(data) {
     if (Array.isArray(data)) {
       return true;
@@ -76,15 +86,6 @@ export default function View() {
             title="Grupo Familiar"
             columns={state.columns}
             data={data}
-            editable={{
-              onRowDelete: oldData =>
-                new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve();
-                    dispatch(FamilyCreators.deleteFamilyRequest(oldData.id));
-                  }, 600);
-                })
-            }}
             onRowClick={(evt, selectedRow) => {
               setSelectedRow(selectedRow);
             }}
@@ -111,6 +112,13 @@ export default function View() {
                 tooltip: "Editar familiar",
                 onClick: (event, rowData) => {
                   dispatch(FamilyCreators.showModalUpdateFamily(rowData));
+                }
+              },
+              {
+                icon: "delete",
+                tooltip: "Remover familiar",
+                onClick: (event, rowData) => {
+                  remove(rowData);
                 }
               }
             ]}

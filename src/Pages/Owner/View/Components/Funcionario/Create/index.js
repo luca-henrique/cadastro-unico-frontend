@@ -23,11 +23,11 @@ export default function Create() {
 
   function hide() {
     dispatch(FuncionarioCreators.hideModalNewFuncionario());
-    dispatch(FuncionarioCreators.createFuncRequest({}));
   }
 
-  function save() {
-    dispatch(FuncionarioCreators.createFuncSuccess(funcionario));
+  async function save() {
+    await dispatch(FuncionarioCreators.createFuncSuccess(funcionario));
+    await dispatch(FuncionarioCreators.loadFuncionarioRequest());
     hide();
   }
 

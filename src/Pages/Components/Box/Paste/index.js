@@ -63,10 +63,18 @@ export default function View() {
     ]
   });
 
-  const data = useSelector(state => state.box.pastes);
-
   const [selectedRow, setSelectedRow] = useState("");
   const dispatch = useDispatch();
+
+  const idBox = useSelector(state => state.box.id);
+  const update = () => dispatch(BoxCreators.readPastesRequest(idBox));
+
+  const data = useSelector(state => state.box.pastes);
+
+  async function remove(data) {
+    await dispatch(PasteCreators.deletePasteRequest(data.id));
+    await update();
+  }
 
   function load(data) {
     if (Array.isArray(data)) {
@@ -89,15 +97,6 @@ export default function View() {
             title="Pastas"
             columns={state.columns}
             data={data}
-            editable={{
-              onRowDelete: oldData =>
-                new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve();
-                    dispatch(PasteCreators.deletePasteRequest(oldData.id));
-                  }, 600);
-                })
-            }}
             onRowClick={(evt, selectedRow) => {
               setSelectedRow(selectedRow);
             }}
@@ -117,6 +116,14 @@ export default function View() {
                 isFreeAction: true,
                 onClick: event => {
                   dispatch(PasteCreators.showModalNewPaste());
+                }
+              },
+              {
+                icon: "delete",
+                tooltip: "Remover pasta",
+
+                onClick: (event, rowData) => {
+                  remove(rowData);
                 }
               },
               {

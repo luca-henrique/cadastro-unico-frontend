@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as FamilyCreators } from "../../../../../store/ducks/family";
+import { Creators as BoxCreators } from "../../../../../store/ducks/box";
+
+import { cpfMask } from "../../../TextField/MaskInput";
 
 import {
   Typography,
@@ -22,6 +25,8 @@ export default function Create() {
 
   const data = useSelector(state => state.family.updateFamily.data);
 
+  const update = () => dispatch(BoxCreators.readFamiliesRequest(data.paste_id));
+
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [nis, setNis] = useState("");
@@ -36,21 +41,24 @@ export default function Create() {
     setSituacao(data.situacao);
   }, [data.nome, data.cpf, data.nis, data.tipo, data.situacao]);
 
-  function create(e) {
+  function changerCpf(e) {
+    setCpf(cpfMask(e.target.value, cpf));
+  }
+
+  async function create(e) {
     e.preventDefault();
 
-    try {
-      var family = {
-        id: data.id,
-        cpf,
-        nis,
-        nome,
-        situacao,
-        tipo
-      };
-      dispatch(FamilyCreators.updateFamilyRequest(family));
-      hide();
-    } catch (err) {}
+    var family = {
+      id: data.id,
+      cpf,
+      nis,
+      nome,
+      situacao,
+      tipo
+    };
+    await dispatch(FamilyCreators.updateFamilyRequest(family));
+    await update();
+    await hide();
   }
 
   function hide() {
@@ -126,7 +134,7 @@ export default function Create() {
                     fullWidth
                     type="text"
                     value={cpf}
-                    onChange={e => setCpf(e.target.value)}
+                    onChange={changerCpf}
                   />
                 </div>
               </Grid>
