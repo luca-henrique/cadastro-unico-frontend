@@ -5,6 +5,8 @@ import { reducer as toastr } from "react-redux-toastr";
 
 import { reducer as auth } from "./auth";
 
+import license from "./license";
+
 import funcionario from "./funcionario";
 
 import view from "./view";
@@ -28,6 +30,7 @@ import log from "./log";
 export default history =>
   combineReducers({
     toastr,
+    license,
     funcionario,
     address,
     user,

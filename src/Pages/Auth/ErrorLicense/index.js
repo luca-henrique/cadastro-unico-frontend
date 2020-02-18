@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Typography, Link } from "@material-ui/core/";
+import { Typography, Link, Button, TextField } from "@material-ui/core/";
+import { withStyles } from "@material-ui/core/styles";
+import Logo from "../../../Assets/Images/empresalogo.png";
+
+import { Creators as LicenseCreators } from "../../../store/ducks/license";
+
+import { useSelector, useDispatch } from "react-redux";
 
 function Copyright() {
   return (
@@ -15,16 +21,41 @@ function Copyright() {
   );
 }
 
+const ValidationTextField = withStyles({
+  root: {
+    "& input:valid + fieldset": {
+      borderColor: "#A4A4A4",
+      borderWidth: 1
+    },
+    "& input:invalid + fieldset": {
+      borderColor: "red",
+      borderWidth: 2
+    },
+    "& input:valid:focus + fieldset": {
+      borderColor: "#088A85",
+      padding: "4px !important" // override inline-style
+    }
+  }
+})(TextField);
+
 export default function() {
+  const [token, setToken] = useState("");
+
+  const dispatch = useDispatch();
+
+  function verification(e) {
+    e.preventDefault();
+    dispatch(LicenseCreators.verificationToken(token));
+  }
+
   return (
     <div
       style={{
         flex: 1,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "space-around",
         alignItems: "center",
-
         width: "100%",
         height: "100%"
       }}
@@ -34,14 +65,47 @@ export default function() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          height: "300px",
+          width: "400px"
         }}
+        onSubmit={verification}
       >
-        <label>Informe o token</label>
-        <input></input>
-        <button>Enviar</button>
-        {Copyright()}
+        <div style={{ width: "250px", height: "200px", marginBottom: "30px" }}>
+          <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
+        </div>
+        <Typography
+          variant="h4"
+          color="textSecondary"
+          align="center"
+          style={{ paddingBottom: "20px" }}
+        >
+          Chave de acesso
+        </Typography>
+        <ValidationTextField
+          variant="outlined"
+          size="small"
+          fullWidth
+          type="text"
+          style={{ margin: "5px" }}
+          value={token}
+          onChange={e => setToken(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          type="submit"
+          style={{
+            width: "60%",
+            marginTop: "10px",
+            marginBottom: "15px",
+            backgroundColor: "#04B4AE",
+            color: "#BDBDBD"
+          }}
+        >
+          Enviar
+        </Button>
       </form>
+      {Copyright()}
     </div>
   );
 }

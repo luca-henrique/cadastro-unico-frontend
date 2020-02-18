@@ -3,6 +3,9 @@ import { all, takeLatest } from "redux-saga/effects";
 import { AuthTypes } from "../ducks/auth";
 import { signIn, signOut } from "./auth";
 
+import { Types as LicenseTypes } from "../ducks/license";
+import { verification } from "./license";
+
 import { Types as UserTypes } from "../ducks/user";
 import { index, update, changerPassword } from "./user";
 
@@ -75,6 +78,8 @@ export default function* rootSaga() {
     takeLatest(AuthTypes.SIGN_OUT, signOut),
 
     takeLatest("persist/REHYDRATE", teste),
+
+    takeLatest(LicenseTypes.LICENSE_VERIFICATION_TOKEN_REQUEST, verification),
 
     takeLatest(LogTypes.READ_LOG_REQUEST, getLogs),
 

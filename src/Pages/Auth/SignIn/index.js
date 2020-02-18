@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import AuthActions from "../../../store/ducks/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Typography, Link, TextField, Button } from "@material-ui/core/";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
@@ -87,6 +87,8 @@ export default function SignUp(props) {
   const [password, setPassword] = useState("");
 
   const [erro, setErro] = useState(true);
+
+  const al = useSelector(state => state.license);
 
   const classes = useStyles();
 
