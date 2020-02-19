@@ -18,8 +18,25 @@ import {
   FormControl
 } from "@material-ui/core/";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      width: "300px",
+      height: "500px",
+      overflowY: "scroll"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "600px"
+    }
+  }
+}));
+
 export default function Create() {
   const dispatch = useDispatch();
+
+  const classes = useStyles();
 
   const visible = useSelector(state => state.family.updateFamily.visible);
 
@@ -88,9 +105,9 @@ export default function Create() {
               backgroundColor: "#fff",
               padding: "20px",
               border: "1px solid #D8D8D8",
-              borderRadius: "5px",
-              width: "550px"
+              borderRadius: "5px"
             }}
+            className={classes.modal}
           >
             <Grid
               container

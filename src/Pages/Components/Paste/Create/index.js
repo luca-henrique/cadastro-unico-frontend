@@ -28,6 +28,19 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      width: "300px"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "600px"
+    }
+  }
+}));
+
 const GreenCheckbox = withStyles({
   root: {
     color: green[200],
@@ -53,6 +66,7 @@ const Create = props => {
   const [benefit, setBenefit] = useState(false);
 
   const { visible } = props.redux;
+  const classes = useStyles();
 
   function hide() {
     const { hideModalNewPaste } = props;
@@ -106,9 +120,9 @@ const Create = props => {
               backgroundColor: "#fff",
               padding: "20px",
               border: "1px solid #D8D8D8",
-              borderRadius: "5px",
-              width: "600px"
+              borderRadius: "5px"
             }}
+            className={classes.modal}
           >
             <Grid
               container

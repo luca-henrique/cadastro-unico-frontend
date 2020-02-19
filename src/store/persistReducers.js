@@ -6,7 +6,7 @@ export default reducers => {
     {
       key: "cadastro",
       storage,
-      whiteList: ["auth", "user", "profile", "address", "contact"]
+      whiteList: ["auth", "user", "profile", "address", "contact", "license"]
     },
     reducers
   );

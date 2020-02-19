@@ -18,6 +18,8 @@ import {
   withStyles
 } from "@material-ui/core/";
 
+import { makeStyles } from "@material-ui/core/styles";
+
 import { green } from "@material-ui/core/colors";
 
 import Checkbox from "@material-ui/core/Checkbox";
@@ -25,6 +27,19 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+
+const useStyles = makeStyles(theme => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      width: "300px",
+      height: "500px",
+      overflowY: "scroll"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "600px"
+    }
+  }
+}));
 
 const GreenCheckbox = withStyles({
   root: {
@@ -55,6 +70,8 @@ export default function Create() {
   const [benefit, setBenefit] = useState(false);
 
   const id = useSelector(state => state.box.box.id);
+
+  const classes = useStyles();
 
   const update = () => dispatch(BoxCreators.readPastesRequest(id));
 
@@ -146,9 +163,9 @@ export default function Create() {
               backgroundColor: "#fff",
               padding: "20px",
               border: "1px solid #D8D8D8",
-              borderRadius: "5px",
-              width: "600px"
+              borderRadius: "5px"
             }}
+            className={classes.modal}
           >
             <Grid
               container

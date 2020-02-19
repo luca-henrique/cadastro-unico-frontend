@@ -43,8 +43,13 @@ export default function() {
 
   const dispatch = useDispatch();
 
+  const license = useSelector(state => state.license.token);
+
+  console.log(license);
+
   function verification(e) {
     e.preventDefault();
+
     dispatch(LicenseCreators.verificationToken(token));
   }
 

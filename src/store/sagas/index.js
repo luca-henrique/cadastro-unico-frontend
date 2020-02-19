@@ -4,7 +4,7 @@ import { AuthTypes } from "../ducks/auth";
 import { signIn, signOut } from "./auth";
 
 import { Types as LicenseTypes } from "../ducks/license";
-import { verification } from "./license";
+import { verification, requestToken } from "./license";
 
 import { Types as UserTypes } from "../ducks/user";
 import { index, update, changerPassword } from "./user";
@@ -80,6 +80,7 @@ export default function* rootSaga() {
     takeLatest("persist/REHYDRATE", teste),
 
     takeLatest(LicenseTypes.LICENSE_VERIFICATION_TOKEN_REQUEST, verification),
+    takeLatest(LicenseTypes.LICENSE_ACCESS_TOKEN_REQUEST, requestToken),
 
     takeLatest(LogTypes.READ_LOG_REQUEST, getLogs),
 
