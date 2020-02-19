@@ -86,9 +86,11 @@ export default function SignUp(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [erro, setErro] = useState(true);
+  
 
-  const al = useSelector(state => state.license);
+  const license = useSelector(state => state.license.key.license);
+
+  
 
   const classes = useStyles();
 
@@ -99,7 +101,7 @@ export default function SignUp(props) {
 
   return (
     <>
-      {erro === true ? (
+      {license === false ? (
         <Error />
       ) : (
         <>

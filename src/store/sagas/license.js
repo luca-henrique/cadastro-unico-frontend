@@ -5,7 +5,7 @@ import api from "../../services/api";
 
 export function* verification({ payload }) {
   try {
-    const response = yield call(api.put, "/token", JSON.parse(payload));
+    const response = yield call(api.put, "/token", payload);
 
     console.log(response);
 
