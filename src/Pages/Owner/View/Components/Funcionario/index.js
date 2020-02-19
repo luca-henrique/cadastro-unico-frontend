@@ -1,148 +1,134 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
 import { Creators as FuncionarioCreators } from "../../../../../store/ducks/funcionario";
 
 import MaterialTable from "material-table";
 
 import Modal from "./Create/";
 
-function Funcionario(props) {
-  const [state, setState] = useState({
-    columns: [
-      {
-        title: "CPF",
-        field: "cpf",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "Nome",
-        field: "nome",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "Cargo",
-        field: "cargo",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "Cidade",
-        field: "cidade",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "Telefone(fixo)",
-        field: "telefone",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      },
-      {
-        title: "celular",
-        field: "celular",
-        headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      }
-    ],
-    data: [
-      {
-        cpf: "111.111.111-11",
-        nome: "Lucas Henrique Paes de Carvalho",
-        cargo: "administrador",
-        cidade: "São josé do egito",
-        telefone: "87 9 98093765",
-        celular: "87 9998093765"
-      },
-      {
-        cpf: "111.",
-        nome: "Lucas Henrique ",
-        cargo: "admin",
-        cidade: "São josé",
-        telefone: "873765",
-        celular: "87093765"
-      }
-    ]
-  });
+import PropTypes from "prop-types";
 
+export default function Funcionario() {
   const [selectedRow, setSelectedRow] = useState("");
-  console.log(props);
 
-  const { showModalNewFuncionario } = props;
+  const data = useSelector(state => state.funcionario.funcionarios);
+
+  const dispatch = useDispatch();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const update = useCallback(() =>
+    dispatch(FuncionarioCreators.loadFuncionarioRequest())
+  );
+
+  useEffect(() => {
+    update();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function removeFun(data) {
+    await dispatch(FuncionarioCreators.deleteFuncionarioSuccess(data));
+    await update();
+  }
+
+  function load(data) {
+    if (Array.isArray(data)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <>
-      <MaterialTable
-        style={{ height: "700px", boxShadow: "none", color: "rgb(2,99,44)" }}
-        title="Funcionarios"
-        columns={state.columns}
-        data={state.data}
-        editable={{
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                if (oldData) {
-                  setState(prevState => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                  });
+      {load(data) === true ? (
+        <>
+          <MaterialTable
+            style={{
+              height: "700px",
+              boxShadow: "none",
+              color: "rgb(2,99,44)"
+            }}
+            title="Funcionarios"
+            columns={[
+              {
+                title: "CPF",
+                field: "profile.cpf",
+                headerStyle: {
+                  color: "rgb(2,90,10)"
                 }
-              }, 600);
-            }),
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });
-              }, 600);
-            })
-        }}
-        onRowClick={(evt, selectedRow) => {
-          setSelectedRow(selectedRow);
-        }}
-        options={{
-          rowStyle: rowData => ({
-            backgroundColor:
-              selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                ? "#F4FA58"
-                : "#FFF"
-          })
-        }}
-        actions={[
-          {
-            icon: "add",
-            tooltip: "Add User",
-            isFreeAction: true,
-            onClick: event => showModalNewFuncionario()
-          }
-        ]}
-      />
-      <Modal />;
+              },
+              {
+                title: "Nome",
+                field: "profile.nome",
+                headerStyle: {
+                  color: "rgb(2,90,10)"
+                }
+              },
+              {
+                title: "Email",
+                field: "email",
+                headerStyle: {
+                  color: "rgb(2,90,10)"
+                }
+              },
+              {
+                title: "Cargo",
+                field: "profile.cargo",
+                headerStyle: {
+                  color: "rgb(2,90,10)"
+                }
+              },
+              {
+                title: "Contato",
+                field: "contact.numero",
+                headerStyle: {
+                  color: "rgb(2,90,10)"
+                }
+              }
+            ]}
+            data={data}
+            onRowClick={(evt, selectedRow) => {
+              setSelectedRow(selectedRow);
+            }}
+            options={{
+              rowStyle: rowData => ({
+                backgroundColor:
+                  selectedRow &&
+                  selectedRow.tableData.id === rowData.tableData.id
+                    ? "#F4FA58"
+                    : "#FFF"
+              })
+            }}
+            actions={[
+              {
+                icon: "add",
+                tooltip: "Add User",
+                isFreeAction: true,
+                onClick: event => {
+                  dispatch(FuncionarioCreators.showModalNewFuncionario());
+                  update();
+                }
+              },
+              {
+                icon: "delete",
+                tooltip: "Deletar funcionario",
+                onClick: (event, rowData) => {
+                  removeFun(rowData);
+                  update();
+                }
+              }
+            ]}
+          />
+          <Modal />
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...FuncionarioCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Funcionario);
+Funcionario.propTypes = {
+  data: PropTypes.array
+};

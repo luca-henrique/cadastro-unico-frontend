@@ -4,6 +4,7 @@ import { Creators as UserCreators } from "../ducks/user";
 import { Creators as ProfileCreators } from "../ducks/profile";
 import { Creators as AddressCreators } from "../ducks/address";
 import { Creators as ContactCreators } from "../ducks/contact";
+import { Creators as PrefectureCreators } from "../ducks/prefecture";
 
 export function teste({ payload }) {
   if (!payload) return;
@@ -12,9 +13,10 @@ export function teste({ payload }) {
   const { profile } = payload.profile;
   const { address } = payload.profile;
   const { contact } = payload.contact;
+  const { prefecture } = payload.prefecture;
 
   if (user) {
-    put(UserCreators.loadUserSuccess(user));
+    put(UserCreators.readUserSuccess(user));
   }
 
   if (profile) {
@@ -26,5 +28,8 @@ export function teste({ payload }) {
   }
   if (contact) {
     put(ContactCreators.loadContactSuccess(contact));
+  }
+  if (prefecture) {
+    put(PrefectureCreators.readPrefectureSuccess(prefecture));
   }
 }

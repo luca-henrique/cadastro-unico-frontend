@@ -1,32 +1,26 @@
 import React, { useState } from "react";
 
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import AuthActions from "../../../store/ducks/auth";
-import { Creators as LoginCreators } from "../../../store/ducks/login";
 import { Creators as UserCreators } from "../../../store/ducks/user";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Typography, Button } from "@material-ui/core/";
+import { toastr } from "react-redux-toastr";
+
+import { Modal, Backdrop, Fade, Typography, Button } from "@material-ui/core/";
 
 import TextField from "../../Components/TextField/";
 
-function TransitionsModal(props) {
+export default function ChangerPassword() {
+  const visible = useSelector(state => state.user.visible);
+
+  const dispatch = useDispatch();
+
   const [password, setPassword] = useState("");
 
   const [password1, setPassword1] = useState("");
 
-  const { visible } = props.redux.login.show;
-
-  console.log(props);
-
   function changePassword(e) {
     e.preventDefault();
-    const { changerPasswordRequest } = props;
+
     if (
       password !== password1 ||
       password === "null" ||
@@ -34,16 +28,15 @@ function TransitionsModal(props) {
       password1 === "null" ||
       password1 === ""
     ) {
-      alert("Senha não está compativel repita.");
+      toastr.error("Password invalido ou nulo");
     } else {
-      changerPasswordRequest(password);
+      dispatch(UserCreators.changerPasswordRequest(password));
       hide();
     }
   }
 
   function hide() {
-    const { hideModalEmail } = props;
-    hideModalEmail();
+    dispatch(UserCreators.hideModalChangerPassword());
     setPassword("");
     setPassword1("");
   }
@@ -146,15 +139,3 @@ function TransitionsModal(props) {
 TextField.defaultProps = {
   value: ""
 };
-
-const mapStateToProps = state => ({
-  redux: state
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { ...AuthActions, ...LoginCreators, ...UserCreators },
-    dispatch
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(TransitionsModal);

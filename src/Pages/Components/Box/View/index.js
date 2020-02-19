@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import { Creators as BoxCreators } from "../../../../store/ducks/caixa";
+import { useSelector, useDispatch } from "react-redux";
+import { Creators as BoxCreators } from "../../../../store/ducks/box";
 
 import {
   Typography,
@@ -15,13 +13,40 @@ import {
   TextField
 } from "@material-ui/core/";
 
-const Create = props => {
-  const { visible } = props.redux;
+export default function Create() {
+  const data = useSelector(state => state.box.updateBox.data);
+  const visible = useSelector(state => state.box.updateBox.visible);
+  const dispatch = useDispatch();
+
+  const update = () => dispatch(BoxCreators.readBoxesRequest());
+
+  const [numBox, setNumBox] = useState("");
+  const [numMax, setNumMax] = useState("");
+
+  useEffect(() => {
+    setNumBox(data.numBox);
+    setNumMax(data.numMax);
+  }, [data.numBox, data.numMax]);
+
+  async function saveBox(e) {
+    e.preventDefault();
+    try {
+      var box = {
+        id: data.id,
+        numBox,
+        numMax
+      };
+
+      await dispatch(BoxCreators.updateBoxRequest(box));
+      await update();
+      hide();
+    } catch (err) {}
+  }
 
   function hide() {
-    const { hideModalNewBox } = props;
-
-    hideModalNewBox();
+    setNumBox(0);
+    setNumMax(0);
+    dispatch(BoxCreators.hideModalUpdateBox());
   }
 
   return (
@@ -40,7 +65,7 @@ const Create = props => {
         timeout: 500
       }}
     >
-      <form>
+      <form onSubmit={saveBox}>
         <Fade in={visible}>
           <div
             style={{
@@ -77,7 +102,8 @@ const Create = props => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    type="number"
+                    value={numBox}
+                    onChange={e => setNumBox(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -91,7 +117,8 @@ const Create = props => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    type="number"
+                    value={numMax}
+                    onChange={e => setNumMax(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -101,6 +128,7 @@ const Create = props => {
                   <Button
                     variant="contained"
                     style={{ color: "rgb(2,99,44)", width: "100%" }}
+                    type="submit"
                   >
                     Salvar
                   </Button>
@@ -124,13 +152,4 @@ const Create = props => {
       </form>
     </Modal>
   );
-};
-
-const mapStateToProps = state => ({
-  redux: state.box
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...BoxCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+}

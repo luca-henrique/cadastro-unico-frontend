@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { Creators as PasteCreators } from "../../../../store/ducks/pasta";
+import { Creators as PasteCreators } from "../../../../../store/ducks/paste";
+import { Creators as BoxCreators } from "../../../../../store/ducks/box";
 
 import {
   Typography,
@@ -13,12 +13,8 @@ import {
   Fade,
   Grid,
   TextField,
-  withStyles,
-  Select,
-  IconButton
+  withStyles
 } from "@material-ui/core/";
-
-import { Add } from "@material-ui/icons/";
 
 import { green } from "@material-ui/core/colors";
 
@@ -38,7 +34,7 @@ const GreenCheckbox = withStyles({
   checked: {}
 })(props => <Checkbox color="default" {...props} />);
 
-const Create = props => {
+export default function Create() {
   const [numberPaste, setNumberPaste] = useState("");
   const [codHome, setCodHome] = useState("");
   const [district, setDisctric] = useState("");
@@ -52,17 +48,33 @@ const Create = props => {
   const [deficient, setDeficient] = useState(false);
   const [benefit, setBenefit] = useState(false);
 
-  const { visible } = props.redux;
+  const visible = useSelector(state => state.paste.visible);
+
+  const idBox = useSelector(state => state.box.id);
+  const update = () => dispatch(BoxCreators.readPastesRequest(idBox));
+
+  const dispatch = useDispatch();
 
   function hide() {
-    const { hideModalNewPaste } = props;
-    hideModalNewPaste();
+    dispatch(PasteCreators.hideModalNewPaste());
+    setNumberPaste("");
+    setCodHome("");
+    setDateInterview("");
+    setDateVisit("");
+    setDisctric("");
+    setReason("");
+    setNote("");
+
+    setSituation(false);
+    setOldMan(false);
+    setDeficient(false);
+    setBenefit(false);
   }
 
-  function create(e) {
+  async function create(e) {
     e.preventDefault();
-    //falta o id da caixa
     var paste = {
+      box_id: idBox,
       numberPaste,
       codHome,
       district,
@@ -76,11 +88,11 @@ const Create = props => {
       oldMan,
       benefit
     };
+    await dispatch(PasteCreators.createPasteRequest(paste));
+    await update();
 
-    console.log(paste);
+    await hide();
   }
-
-  function createDistrict() {}
 
   return (
     <Modal
@@ -156,7 +168,7 @@ const Create = props => {
                 </div>
               </Grid>
 
-              <Grid item xs={12} sm={11} style={{ marginTop: "10px" }}>
+              <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
                 <div>
                   <FormControl
                     variant="outlined"
@@ -164,34 +176,18 @@ const Create = props => {
                     size="small"
                     fullWidth
                   >
-                    <Typography variant="button">Bairro:</Typography>
-                    <Select
-                      native
-                      size="small"
-                      fullWidth
-                      value={district}
-                      onChange={e => setDisctric(e.target.value)}
-                      inputProps={{
-                        name: "age",
-                        id: "outlined-age-native-simple"
-                      }}
-                    >
-                      <option value="" />
-                      <option value={10}>Ten</option>
-                      <option value={20}>Twenty</option>
-                      <option value={30}>Thirty</option>
-                    </Select>
+                    <div>
+                      <Typography variant="button">Bairro:</Typography>
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        value={district}
+                        onChange={e => setDisctric(e.target.value)}
+                      />
+                    </div>
                   </FormControl>
                 </div>
-              </Grid>
-
-              <Grid item xs={12} sm={1} style={{ marginTop: "30px" }}>
-                <IconButton
-                  style={{ color: "rgba(2,99,44,0.7)" }}
-                  onClick={createDistrict}
-                >
-                  <Add fontSize="small" />
-                </IconButton>
               </Grid>
 
               <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
@@ -203,7 +199,9 @@ const Create = props => {
                     fullWidth
                     type="date"
                     value={dateInterview}
-                    onChange={e => setDateInterview(e.target.value)}
+                    onChange={e => {
+                      setDateInterview(e.target.value);
+                    }}
                   />
                 </div>
               </Grid>
@@ -296,7 +294,6 @@ const Create = props => {
                       value={deficient}
                       onChange={e => {
                         setDeficient(e.target.checked);
-                        console.log(deficient);
                       }}
                       control={<GreenCheckbox />}
                       label="deficiente"
@@ -335,13 +332,4 @@ const Create = props => {
       </form>
     </Modal>
   );
-};
-
-const mapStateToProps = state => ({
-  redux: state.paste
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...PasteCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+}

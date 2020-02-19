@@ -26,9 +26,14 @@ import Funcionario from "./Components/Funcionario/";
 import Perfil from "../../Components/Perfil/";
 import LeftBar from "../../Components/LeftBar/";
 
-import Caixa from "../../Components/Caixa";
-import Pasta from "../../Components/Pasta/";
-import Familiar from "../../Components/Familiar/";
+import Box from "../../Components/Box";
+import PastesBox from "../../Components/Box/Paste/";
+import FamilyBox from "../../Components/Box/Family";
+
+import Pasta from "../../Components/Paste/";
+import Familiar from "../../Components/Family/";
+
+import Gerar from "./Components/Log/";
 
 const drawerWidth = 240;
 
@@ -85,7 +90,11 @@ function View(props) {
     perfil: <Perfil />,
     prefeitura: <Prefeitura />,
     funcionario: <Funcionario />,
-    caixa: <Caixa />,
+    gerar: <Gerar />,
+    box: <Box />,
+    pastesBox: <PastesBox />,
+    familyBox: <FamilyBox />,
+
     pasta: <Pasta />,
     familiar: <Familiar />
   };

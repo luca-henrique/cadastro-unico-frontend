@@ -6,6 +6,7 @@ const rootImport = [
     rootPathPrefix: "~",
     rootPathSuffix: "src"
   }
+  
 ];
 
 module.exports = config => injectBabelPlugin(rootImport, config);

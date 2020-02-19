@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 
+import { Creators as UserCreators } from "../../../store/ducks/user";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Grid, Typography, Button } from "@material-ui/core/";
-import Modal from "./index";
-import TextField from "../../Components/TextField/index";
 
-import { Creators as UserCreators } from "../../../store/ducks/user";
-import { Creators as LoginCreators } from "../../../store/ducks/login";
+import TextField from "../../Components/TextField/index";
+import Modal from "./index";
 
 export default function View() {
   const user = useSelector(state => state.user.user);
-  const dispatch = useDispatch();
 
-  const OpenModal = () => dispatch(LoginCreators.showModalEmail());
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState(user.email);
 
@@ -22,7 +20,9 @@ export default function View() {
       id: user.id,
       email
     };
-    dispatch(UserCreators.updateUserRequest(updateUser));
+    if (user.email !== email) {
+      dispatch(UserCreators.updateUserRequest(updateUser));
+    }
   }
 
   return (
@@ -54,7 +54,9 @@ export default function View() {
           <Grid item xs={12} sm={5} style={{ marginTop: "40px" }}>
             <div style={{ width: "100%" }}>
               <Button
-                onClick={OpenModal}
+                onClick={e => {
+                  dispatch(UserCreators.showModalChangerPassword());
+                }}
                 variant="contained"
                 style={{ color: "rgb(2,99,44)", width: "100%" }}
               >
@@ -72,16 +74,3 @@ export default function View() {
 TextField.defaultProps = {
   value: ""
 };
-/*
-const mapStateToProps = state => ({
-  redux: state
-});
-{/*onClick={showModalEmail}
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { ...AuthActions, ...UserCreators, ...LoginCreators },
-    dispatch
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(View);
-*/

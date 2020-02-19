@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Creators as FamilyCreators } from "../../../../../store/ducks/family";
+import { Creators as BoxCreators } from "../../../../../store/ducks/box";
 
-import { Creators as FamiliarCreators } from "../../../../store/ducks/familiar";
+import { cpfMask } from "../../../TextField/MaskInput";
 
 import {
   Typography,
@@ -17,13 +18,47 @@ import {
   FormControl
 } from "@material-ui/core/";
 
-const Create = props => {
-  const { visible } = props.redux;
+export default function Create() {
+  const dispatch = useDispatch();
+
+  const visible = useSelector(state => state.family.visible);
+  const id = useSelector(state => state.box.id);
+
+  const update = () => dispatch(BoxCreators.readFamiliesRequest(id));
+
+  const [nome, setNome] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [nis, setNis] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [situacao, setSituacao] = useState("");
+
+  function changerCpf(e) {
+    setCpf(cpfMask(e.target.value, cpf));
+  }
+
+  async function create(e) {
+    e.preventDefault();
+
+    var family = {
+      paste_id: id,
+      cpf,
+      nis,
+      nome,
+      situacao,
+      tipo
+    };
+    await dispatch(FamilyCreators.createFamilyRequest(family));
+    await update();
+    await hide();
+  }
 
   function hide() {
-    const { hideModalNewFamiliar } = props;
-
-    hideModalNewFamiliar();
+    dispatch(FamilyCreators.hideModalNewFamiliar());
+    setNome("");
+    setCpf("");
+    setNis("");
+    setTipo("");
+    setSituacao("");
   }
 
   return (
@@ -42,7 +77,7 @@ const Create = props => {
         timeout: 500
       }}
     >
-      <form>
+      <form onSubmit={create}>
         <Fade in={visible}>
           <div
             style={{
@@ -80,6 +115,8 @@ const Create = props => {
                     size="small"
                     fullWidth
                     type="text"
+                    value={nome}
+                    onChange={e => setNome(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -92,6 +129,8 @@ const Create = props => {
                     size="small"
                     fullWidth
                     type="text"
+                    value={cpf}
+                    onChange={changerCpf}
                   />
                 </div>
               </Grid>
@@ -104,12 +143,14 @@ const Create = props => {
                     style={{ width: "100%" }}
                     size="small"
                     fullWidth
+                    value={tipo}
+                    onChange={e => setTipo(e.target.value)}
                   >
                     <Typography variant="button">Tipo:</Typography>
                     <Select native size="small" fullWidth>
                       <option value="" />
-                      <option value={10}>Dependente</option>
-                      <option value={20}>Responsavel</option>
+                      <option value={"dependente"}>Dependente</option>
+                      <option value={"reponsavel"}>Responsavel</option>
                     </Select>
                   </FormControl>
                 </div>
@@ -123,6 +164,8 @@ const Create = props => {
                     size="small"
                     fullWidth
                     type="text"
+                    value={nis}
+                    onChange={e => setNis(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -136,14 +179,16 @@ const Create = props => {
                     style={{ width: "100%" }}
                     size="small"
                     fullWidth
+                    value={situacao}
+                    onChange={e => setSituacao(e.target.value)}
                   >
                     <Typography variant="button">Situação:</Typography>
                     <Select native size="small" fullWidth>
                       <option value="" />
-                      <option value={10}>Ativo</option>
-                      <option value={20}>Transferido</option>
-                      <option value={20}>Excluido</option>
-                      <option value={20}>Obito</option>
+                      <option value={"ativo"}>Ativo</option>
+                      <option value={"transferido"}>Transferido</option>
+                      <option value={"excluido"}>Excluido</option>
+                      <option value={"obito"}>Obito</option>
                     </Select>
                   </FormControl>
                 </div>
@@ -152,6 +197,7 @@ const Create = props => {
               <Grid item xs={12} sm={12}>
                 <div style={{ width: "100%", marginTop: "15px" }}>
                   <Button
+                    type="submit"
                     variant="contained"
                     style={{ color: "rgb(2,99,44)", width: "100%" }}
                   >
@@ -177,13 +223,4 @@ const Create = props => {
       </form>
     </Modal>
   );
-};
-
-const mapStateToProps = state => ({
-  redux: state.familiar
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...FamiliarCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+}

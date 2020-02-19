@@ -1,13 +1,9 @@
 import React from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
 import { Creators as FuncionarioCreators } from "../../../../../../store/ducks/funcionario";
+import { useSelector, useDispatch } from "react-redux";
 
-import Personal from "../../../../../Components/personal/index";
 import CreateLogin from "../../../../../Auth/Create/";
-import Contact from "../../../../../Components/Contact/";
 
 import {
   Typography,
@@ -18,12 +14,21 @@ import {
   Grid
 } from "@material-ui/core/";
 
-const Create = props => {
-  const { visible } = props.redux;
-  const { hideModalNewFuncionario } = props;
+export default function Create() {
+  const dispatch = useDispatch();
+
+  const funcionario = useSelector(state => state.funcionario.funcionario);
+
+  const visible = useSelector(state => state.funcionario.visible);
 
   function hide() {
-    hideModalNewFuncionario();
+    dispatch(FuncionarioCreators.hideModalNewFuncionario());
+  }
+
+  async function save() {
+    await dispatch(FuncionarioCreators.createFuncSuccess(funcionario));
+    await dispatch(FuncionarioCreators.loadFuncionarioRequest());
+    hide();
   }
 
   return (
@@ -71,13 +76,13 @@ const Create = props => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <Personal />
               <CreateLogin />
-              <Contact />
+
               <div style={{ width: "100%", marginTop: "20px" }}>
                 <Button
                   variant="contained"
                   style={{ color: "rgb(2,99,44)", width: "100%" }}
+                  onClick={save}
                 >
                   Salvar
                 </Button>
@@ -102,13 +107,4 @@ const Create = props => {
       </Fade>
     </Modal>
   );
-};
-
-const mapStateToProps = state => ({
-  redux: state.funcionario
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...FuncionarioCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+}

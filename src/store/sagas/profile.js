@@ -13,7 +13,7 @@ export function* create({ payload }) {
     const response = yield call(api.post, "/profile", payload.profile);
 
     yield put(ProfileCreators.loadProfileSucess(response.data));
-
+    yield put(ProfileCreators.failLoadProfile(true));
     yield toastr.success("Informações atualizadas com sucesso.");
   } catch (err) {
     yield toastr.error(
@@ -29,8 +29,10 @@ export function* updateProfileRequest({ payload }) {
      */
     const { cpf, nome, cargo } = payload.profile;
 
-    const response = yield call(api.put, "/profile/0", { nome, cpf, cargo });
+    console.log(payload.profile);
 
+    const response = yield call(api.put, "/profile/0", { cpf, nome, cargo });
+    yield put(ProfileCreators.failLoadProfile(true));
     yield put(ProfileCreators.loadProfileSucess(response.data));
     yield toastr.success("", "Informações atualizadas com sucesso.");
   } catch (err) {
@@ -41,6 +43,7 @@ export function* updateProfileRequest({ payload }) {
 export function* get() {
   try {
     const id = yield call(api.get, "/user");
+
     const response = yield call(api.get, `/profile/${id.data}`);
 
     yield put(ProfileCreators.loadProfileSucess(response.data));
