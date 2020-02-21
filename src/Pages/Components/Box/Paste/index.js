@@ -7,6 +7,10 @@ import { ArrowBackIos } from "@material-ui/icons/";
 import Create from "./Create";
 import Update from "./Update";
 
+import { toastr } from "react-redux-toastr";
+
+import WarningIcon from "@material-ui/icons/Warning";
+
 import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as ViewCreators } from "../../../../store/ducks/view";
@@ -59,6 +63,23 @@ export default function View() {
         headerStyle: {
           color: "rgb(2,90,10)"
         }
+      },
+      {
+        title: "Local",
+        render: rowData => (
+          <>
+            {console.log(rowData)}
+            <WarningIcon
+              style={
+                rowData.local === true
+                  ? { color: "#088A08" }
+                  : { color: "#DF0101" }
+              }
+            />
+          </>
+        ),
+
+        lookup: { true: "Está", false: "Não está" }
       }
     ]
   });
@@ -71,9 +92,19 @@ export default function View() {
 
   const data = useSelector(state => state.box.pastes);
 
+  const box = useSelector(state => state.box.selected_box.numMax);
+
   async function remove(data) {
     await dispatch(PasteCreators.deletePasteRequest(data.id));
     await update();
+  }
+
+  function add() {
+    if (box > data.length) {
+      dispatch(PasteCreators.showModalNewPaste());
+    } else {
+      toastr.error("Não pode mais adicionar pastas a essa caixa.");
+    }
   }
 
   function load(data) {
@@ -101,6 +132,7 @@ export default function View() {
               setSelectedRow(selectedRow);
             }}
             options={{
+              filtering: true,
               rowStyle: rowData => ({
                 backgroundColor:
                   selectedRow &&
@@ -115,7 +147,7 @@ export default function View() {
                 tooltip: "Adicionar nova pasta",
                 isFreeAction: true,
                 onClick: event => {
-                  dispatch(PasteCreators.showModalNewPaste());
+                  add();
                 }
               },
               {

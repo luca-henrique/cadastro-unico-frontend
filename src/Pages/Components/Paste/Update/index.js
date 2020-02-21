@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { Creators as PasteCreators } from "../../../../../store/ducks/paste";
-import { Creators as BoxCreators } from "../../../../../store/ducks/box";
+import { Creators as PasteCreators } from "../../../../store/ducks/paste";
+import { Creators as BoxCreators } from "../../../../store/ducks/box";
 
 import moment from "moment";
 
@@ -75,7 +75,7 @@ export default function Create() {
 
   const classes = useStyles();
 
-  const update = () => dispatch(BoxCreators.readPastesRequest(id));
+  const update = () => dispatch(PasteCreators.readPastesRequest());
 
   useEffect(() => {
     setNumberPaste(data.numberPaste);
@@ -333,6 +333,7 @@ export default function Create() {
                           style={{ color: "#A4A4A4" }}
                           checked={local}
                           onChange={e => {
+                            console.log(local);
                             setLocal(e.target.checked);
                           }}
                           control={<GreenCheckbox />}

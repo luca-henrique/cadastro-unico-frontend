@@ -5,12 +5,14 @@ import { Creators as PasteCreators } from "../../../store/ducks/paste";
 import { Creators as ViewCreators } from "../../../store/ducks/view";
 import { Creators as BoxCreators } from "../../../store/ducks/box";
 
+import WarningIcon from "@material-ui/icons/Warning";
+
 import MaterialTable, { MTableToolbar } from "material-table";
 
 import { ArrowBackIos } from "@material-ui/icons/";
 
 import Create from "./Create";
-import Update from "../Box/Paste/Update/";
+import Update from "./Update/";
 
 export default function Pasta() {
   const [state, setState] = useState({
@@ -58,6 +60,23 @@ export default function Pasta() {
         headerStyle: {
           color: "rgb(2,90,10)"
         }
+      },
+      {
+        title: "Local",
+        field: "local",
+        render: rowData => (
+          <>
+            {console.log(rowData)}
+            <WarningIcon
+              style={
+                rowData.local === true
+                  ? { color: "#088A08" }
+                  : { color: "#DF0101" }
+              }
+            />
+          </>
+        ),
+        lookup: { true: "Está", false: "Não está" }
       }
     ]
   });
@@ -102,6 +121,7 @@ export default function Pasta() {
               setSelectedRow(selectedRow);
             }}
             options={{
+              filtering: true,
               rowStyle: rowData => ({
                 backgroundColor:
                   selectedRow &&

@@ -48,8 +48,6 @@ export default function() {
   console.log(license);
 
   function verification(e) {
-    e.preventDefault();
-
     dispatch(LicenseCreators.verificationToken(token));
   }
 

@@ -63,6 +63,8 @@ export default function Create() {
   const [deficient, setDeficient] = useState(false);
   const [benefit, setBenefit] = useState(false);
 
+  const [local, setLocal] = useState(false);
+
   const visible = useSelector(state => state.paste.visible);
   const classes = useStyles();
 
@@ -85,6 +87,7 @@ export default function Create() {
     setOldMan(false);
     setDeficient(false);
     setBenefit(false);
+    setLocal(false);
   }
 
   async function create(e) {
@@ -102,7 +105,9 @@ export default function Create() {
       situation,
       deficient,
       oldMan,
-      benefit
+      benefit,
+
+      local
     };
     await dispatch(PasteCreators.createPasteRequest(paste));
     await update();
@@ -287,6 +292,16 @@ export default function Create() {
                       onChange={e => setOldMan(e.target.checked)}
                       control={<GreenCheckbox />}
                       label="idoso"
+                      labelPlacement="start"
+                    />
+                    <FormControlLabel
+                      style={{ color: "#A4A4A4" }}
+                      value={local}
+                      onChange={e => {
+                        setLocal(e.target.checked);
+                      }}
+                      control={<GreenCheckbox />}
+                      label="Local"
                       labelPlacement="start"
                     />
                   </FormGroup>

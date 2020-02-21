@@ -1,6 +1,8 @@
 import { call, put } from "redux-saga/effects";
 import { Creators as LicenseCreators } from "../ducks/license";
 
+import { toastr } from "react-redux-toastr";
+
 import api from "../../services/api";
 
 export function* verification({ payload }) {
@@ -12,7 +14,7 @@ export function* verification({ payload }) {
 
     yield put(LicenseCreators.tokenAccess(response.data));
   } catch (err) {
-    console.log(err);
+    yield toastr.error("Falha", "chave de acesso não existe.");
   }
 }
 

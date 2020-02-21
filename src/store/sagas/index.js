@@ -30,6 +30,7 @@ import {
   createBox,
   updateBox,
   deleteBox,
+  getBox,
   getBoxes,
   getPastesBox,
   getFamilyBox
@@ -137,6 +138,7 @@ export default function* rootSaga() {
     takeLatest(BoxTypes.CREATE_BOX_REQUEST, createBox),
     takeLatest(BoxTypes.UPDATE_BOX_REQUEST, updateBox),
     takeLatest(BoxTypes.DELETE_BOX_REQUEST, deleteBox),
+    takeLatest(BoxTypes.SELECTED_BOX_REQUEST, getBox),
     takeLatest(BoxTypes.READ_BOXES_REQUEST, getBoxes),
     takeLatest(BoxTypes.READ_PASTES_BOX_REQUEST, getPastesBox),
     takeLatest(BoxTypes.READ_FAMILY_BOX_REQUEST, getFamilyBox),

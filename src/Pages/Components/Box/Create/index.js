@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { toastr } from "react-redux-toastr";
 import { useSelector, useDispatch } from "react-redux";
 import { Creators as BoxCreators } from "../../../../store/ducks/box";
 
@@ -29,10 +30,14 @@ export default function Create() {
         numBox,
         numMax
       };
-
-      await dispatch(BoxCreators.createBoxRequest(box));
-      await update();
-      hide();
+      if (numBox <= 0 || numMax <= 0) {
+        dispatch(toastr.error("Caixa não pode ser criada"));
+        throw new Error();
+      } else {
+        await dispatch(BoxCreators.createBoxRequest(box));
+        await update();
+        hide();
+      }
     } catch (err) {}
   }
 

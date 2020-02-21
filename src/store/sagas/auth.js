@@ -22,6 +22,7 @@ export function* signIn({ email, password }) {
     localStorage.setItem("@Omni:token", response.data.token);
     yield put(AuthActions.signInSuccess(response.data.token));
     yield put(UserCreators.readUserRequest());
+
     yield put(ProfileCreators.loadProfileRequest());
     yield put(AddressCreators.loadAddressRequest());
     yield put(ContactCreators.loadContactRequest());
