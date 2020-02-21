@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "../store/index";
 
 const api = axios.create({
-  baseURL: "http://192.168.0.110:3333"
+  baseURL: process.env.REACT_APP_API_URL
 });
 
 api.interceptors.request.use(config => {
