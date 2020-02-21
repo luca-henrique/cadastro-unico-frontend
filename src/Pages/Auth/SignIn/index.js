@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import AuthActions from "../../../store/ducks/auth";
+import { Creators as LicenseCreators } from "../../../store/ducks/license";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { Typography, Link, TextField, Button } from "@material-ui/core/";
@@ -86,9 +88,16 @@ export default function SignUp(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [erro, setErro] = useState(true);
+  const license = useSelector(state => state.license.key.license);
 
-  const al = useSelector(state => state.license);
+  const key = useSelector(state => state.license.key.id);
+
+  console.log(key);
+
+  useEffect(() => {
+    dispatch(LicenseCreators.recoveryAccessToken(1));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const classes = useStyles();
 
@@ -99,7 +108,7 @@ export default function SignUp(props) {
 
   return (
     <>
-      {erro === true ? (
+      {license === false ? (
         <Error />
       ) : (
         <>

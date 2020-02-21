@@ -24,6 +24,21 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      width: "300px",
+      height: "500px",
+      overflowY: "scroll"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "600px"
+    }
+  }
+}));
+
 const GreenCheckbox = withStyles({
   root: {
     color: green[200],
@@ -48,7 +63,10 @@ export default function Create() {
   const [deficient, setDeficient] = useState(false);
   const [benefit, setBenefit] = useState(false);
 
+  const [local, setLocal] = useState(false);
+
   const visible = useSelector(state => state.paste.visible);
+  const classes = useStyles();
 
   const idBox = useSelector(state => state.box.id);
   const update = () => dispatch(BoxCreators.readPastesRequest(idBox));
@@ -69,6 +87,7 @@ export default function Create() {
     setOldMan(false);
     setDeficient(false);
     setBenefit(false);
+    setLocal(false);
   }
 
   async function create(e) {
@@ -86,7 +105,9 @@ export default function Create() {
       situation,
       deficient,
       oldMan,
-      benefit
+      benefit,
+
+      local
     };
     await dispatch(PasteCreators.createPasteRequest(paste));
     await update();
@@ -101,7 +122,8 @@ export default function Create() {
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        overflowY: "scroll"
       }}
       open={visible}
       closeAfterTransition
@@ -117,9 +139,9 @@ export default function Create() {
               backgroundColor: "#fff",
               padding: "20px",
               border: "1px solid #D8D8D8",
-              borderRadius: "5px",
-              width: "600px"
+              borderRadius: "5px"
             }}
+            className={classes.modal}
           >
             <Grid
               container
@@ -270,6 +292,16 @@ export default function Create() {
                       onChange={e => setOldMan(e.target.checked)}
                       control={<GreenCheckbox />}
                       label="idoso"
+                      labelPlacement="start"
+                    />
+                    <FormControlLabel
+                      style={{ color: "#A4A4A4" }}
+                      value={local}
+                      onChange={e => {
+                        setLocal(e.target.checked);
+                      }}
+                      control={<GreenCheckbox />}
+                      label="Local"
                       labelPlacement="start"
                     />
                   </FormGroup>

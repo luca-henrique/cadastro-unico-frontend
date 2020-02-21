@@ -42,6 +42,8 @@ export function* getAddress() {
   try {
     const response = yield call(api.get, "/address/0");
 
+    console.log(response);
+
     yield put(AddressCreators.loadAddressSucess(response.data));
 
     yield put(AddressCreators.failLoadAddress(true));

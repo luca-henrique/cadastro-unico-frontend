@@ -103,6 +103,7 @@ export default function() {
                 onClick: (event, rowData) => {
                   dispatch(ViewCreators.changerView("pastesBox"));
                   dispatch(BoxCreators.readPastesRequest(rowData.id));
+                  dispatch(BoxCreators.boxSelectedRequest(rowData.id));
                 }
               },
               {

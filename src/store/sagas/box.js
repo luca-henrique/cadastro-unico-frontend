@@ -1,26 +1,39 @@
-import { call, put } from "redux-saga/effects";
-import { Creators as BoxCreators } from "../ducks/box";
-
 import api from "../../services/api";
 
+import { call, put } from "redux-saga/effects";
 import { toastr } from "react-redux-toastr";
+
+import { Creators as BoxCreators } from "../ducks/box";
 
 export function* createBox({ payload }) {
   try {
+    // eslint-disable-next-line no-unused-vars
     const response = yield call(api.post, "/box", payload.box);
-    toastr.success("Caixa criada");
-  } catch (err) {}
+    toastr.success("Caixa criada com sucesso");
+  } catch (err) {
+    toastr.error("Erro ao criar a caixa.");
+  }
 }
 
 export function* updateBox({ payload }) {
   try {
+    // eslint-disable-next-line no-unused-vars
     const response = yield call(api.put, `/box/${payload.box.id}`, payload.box);
     toastr.success("Atualização feita");
   } catch (err) {}
 }
 
+export function* getBox({ payload }) {
+  try {
+    console.log(payload.id);
+    const response = yield call(api.get, `/box/${payload.id}`);
+    yield put(BoxCreators.boxSelectedSuccess(response.data));
+  } catch (err) {}
+}
+
 export function* deleteBox({ payload }) {
   try {
+    // eslint-disable-next-line no-unused-vars
     const response = yield call(api.delete, `/box/${payload.id}`);
     toastr.success("Caixa excluida.");
   } catch (err) {

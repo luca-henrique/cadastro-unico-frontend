@@ -4,7 +4,7 @@ import { AuthTypes } from "../ducks/auth";
 import { signIn, signOut } from "./auth";
 
 import { Types as LicenseTypes } from "../ducks/license";
-import { verification } from "./license";
+import { verification, requestToken } from "./license";
 
 import { Types as UserTypes } from "../ducks/user";
 import { index, update, changerPassword } from "./user";
@@ -30,6 +30,7 @@ import {
   createBox,
   updateBox,
   deleteBox,
+  getBox,
   getBoxes,
   getPastesBox,
   getFamilyBox
@@ -80,6 +81,7 @@ export default function* rootSaga() {
     takeLatest("persist/REHYDRATE", teste),
 
     takeLatest(LicenseTypes.LICENSE_VERIFICATION_TOKEN_REQUEST, verification),
+    takeLatest(LicenseTypes.LICENSE_ACCESS_TOKEN_REQUEST, requestToken),
 
     takeLatest(LogTypes.READ_LOG_REQUEST, getLogs),
 
@@ -136,6 +138,7 @@ export default function* rootSaga() {
     takeLatest(BoxTypes.CREATE_BOX_REQUEST, createBox),
     takeLatest(BoxTypes.UPDATE_BOX_REQUEST, updateBox),
     takeLatest(BoxTypes.DELETE_BOX_REQUEST, deleteBox),
+    takeLatest(BoxTypes.SELECTED_BOX_REQUEST, getBox),
     takeLatest(BoxTypes.READ_BOXES_REQUEST, getBoxes),
     takeLatest(BoxTypes.READ_PASTES_BOX_REQUEST, getPastesBox),
     takeLatest(BoxTypes.READ_FAMILY_BOX_REQUEST, getFamilyBox),

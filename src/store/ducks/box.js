@@ -23,12 +23,16 @@ export const Types = {
   READ_PASTES_BOX_SUCCESS: "@box/READ_PASTES_BOX_SUCCESS",
 
   READ_FAMILY_BOX_REQUEST: "@box/READ_FAMILY_BOX_REQUEST",
-  READ_FAMILY_BOX_SUCCESS: "@box/READ_FAMILY_BOX_SUCCESS"
+  READ_FAMILY_BOX_SUCCESS: "@box/READ_FAMILY_BOX_SUCCESS",
+
+  SELECTED_BOX_REQUEST: "@box/SELECTED_BOX_REQUEST",
+  SELECTED_BOX_SUCCESS: "@box/SELECTED_BOX_SUCCESS"
 };
 
 const INITIAL_STATE = Immutable({
   id: null,
   box: {},
+  selected_box: {},
   boxes: {},
   updateBox: { data: {}, visible: false },
   pastes: {},
@@ -102,6 +106,14 @@ export default function box(state = INITIAL_STATE, action) {
       return { ...state, families: action.payload.families };
     }
 
+    case Types.SELECTED_BOX_REQUEST: {
+      return { ...state, id: action.payload.id };
+    }
+
+    case Types.SELECTED_BOX_SUCCESS: {
+      return { ...state, selected_box: action.payload.box };
+    }
+
     default:
       return state;
   }
@@ -170,5 +182,15 @@ export const Creators = {
   readFamiliesSuccess: families => ({
     type: Types.READ_FAMILY_BOX_SUCCESS,
     payload: { families }
+  }),
+
+  boxSelectedRequest: id => ({
+    type: Types.SELECTED_BOX_REQUEST,
+    payload: { id }
+  }),
+
+  boxSelectedSuccess: box => ({
+    type: Types.SELECTED_BOX_SUCCESS,
+    payload: { box }
   })
 };

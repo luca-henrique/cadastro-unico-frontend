@@ -35,7 +35,7 @@ import Familiar from "../../Components/Family/";
 
 import Gerar from "./Components/Log/";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const useStyles = makeStyles(theme => ({
   root: {
