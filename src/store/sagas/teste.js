@@ -1,35 +1,17 @@
 import { put } from "redux-saga/effects";
 
 import { Creators as UserCreators } from "../ducks/user";
-import { Creators as ProfileCreators } from "../ducks/profile";
-import { Creators as AddressCreators } from "../ducks/address";
-import { Creators as ContactCreators } from "../ducks/contact";
-import { Creators as PrefectureCreators } from "../ducks/prefecture";
+import { Creators as BoxCreators } from "../ducks/box";
 
 export function teste({ payload }) {
   if (!payload) return;
 
+  //console.log("Teste");
+  //console.log(payload);
+
   const { user } = payload.user;
-  const { profile } = payload.profile;
-  const { address } = payload.profile;
-  const { contact } = payload.contact;
-  const { prefecture } = payload.prefecture;
 
   if (user) {
     put(UserCreators.readUserSuccess(user));
-  }
-
-  if (profile) {
-    put(ProfileCreators.loadProfileSucess(profile));
-  }
-
-  if (address) {
-    put(AddressCreators.loadAddressSucess(address));
-  }
-  if (contact) {
-    put(ContactCreators.loadContactSuccess(contact));
-  }
-  if (prefecture) {
-    put(PrefectureCreators.readPrefectureSuccess(prefecture));
   }
 }

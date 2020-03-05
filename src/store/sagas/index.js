@@ -9,6 +9,7 @@ import { verification, requestToken } from "./license";
 import { Types as UserTypes } from "../ducks/user";
 import { index, update, changerPassword } from "./user";
 
+/*
 import { Types as ProfileTypes } from "../ducks/profile";
 import { create, get, updateProfileRequest } from "./profile";
 
@@ -18,6 +19,7 @@ import { createAddress, updateAddress, getAddress } from "./address";
 import { Types as ContactTypes } from "../ducks/contact";
 import { createContact, getContact, updateContact } from "./contact";
 
+*/
 import { Types as FunTypes } from "../ducks/funcionario";
 import {
   getFuncionarios,
@@ -26,16 +28,8 @@ import {
 } from "./funcionario";
 
 import { Types as BoxTypes } from "../ducks/box";
-import {
-  createBox,
-  updateBox,
-  deleteBox,
-  getBox,
-  getBoxes,
-  getPastesBox,
-  getFamilyBox
-} from "./box";
-
+import { createBox, updateBox, deleteBox, getBoxes, getFamilyBox } from "./box";
+/*
 import { Types as PasteTypes } from "../ducks/paste";
 import { createPaste, updatePaste, deletePaste, getPastes } from "./paste";
 
@@ -59,6 +53,8 @@ import {
   readContactPrefecture,
   updateContactPrefecture
 } from "./contact_prefecture";
+
+*/
 
 import { Types as FamilyTypes } from "../ducks/family";
 import {
@@ -89,6 +85,7 @@ export default function* rootSaga() {
     takeLatest(UserTypes.UPDATE_USER_REQUEST, update),
     takeLatest(UserTypes.CHANGER_PASSWORD_REQUEST, changerPassword),
 
+    /*
     takeLatest(ProfileTypes.CREATE_PROFILE_REQUEST, create),
     takeLatest(ProfileTypes.LOAD_PROFILE_REQUEST, get),
     takeLatest(ProfileTypes.UPDATE_PROFILE_REQUEST, updateProfileRequest),
@@ -101,6 +98,8 @@ export default function* rootSaga() {
     takeLatest(ContactTypes.LOAD_CONTACT_REQUEST, getContact),
     takeLatest(ContactTypes.UPDATE_CONTACT_REQUEST, updateContact),
 
+
+    
     takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
     takeLatest(PrefectureTypes.READ_PREFECTURE_REQUEST, getPrefecture),
     takeLatest(PrefectureTypes.UPDATE_PREFECTURE_REQUEST, updatePrefecture),
@@ -131,6 +130,8 @@ export default function* rootSaga() {
       readContactPrefecture
     ),
 
+    */
+
     takeLatest(FunTypes.LOAD_FUNCIONARIO_REQUEST, getFuncionarios),
     takeLatest(FunTypes.CREATE_FUNCTIONARIO_SUCCESS, createFuncionario),
     takeLatest(FunTypes.DELETE_FUNCIONARIO_SUCCESSS, deleteFuncionario),
@@ -138,15 +139,15 @@ export default function* rootSaga() {
     takeLatest(BoxTypes.CREATE_BOX_REQUEST, createBox),
     takeLatest(BoxTypes.UPDATE_BOX_REQUEST, updateBox),
     takeLatest(BoxTypes.DELETE_BOX_REQUEST, deleteBox),
-    takeLatest(BoxTypes.SELECTED_BOX_REQUEST, getBox),
     takeLatest(BoxTypes.READ_BOXES_REQUEST, getBoxes),
-    takeLatest(BoxTypes.READ_PASTES_BOX_REQUEST, getPastesBox),
     takeLatest(BoxTypes.READ_FAMILY_BOX_REQUEST, getFamilyBox),
 
+    /*
     takeLatest(PasteTypes.CREATE_PASTE_REQUEST, createPaste),
     takeLatest(PasteTypes.UPDATE_PASTE_REQUEST, updatePaste),
     takeLatest(PasteTypes.DELETE_PASTE_REQUEST, deletePaste),
     takeLatest(PasteTypes.READ_PASTES_REQUEST, getPastes),
+    */
 
     takeLatest(FamilyTypes.CREATE_FAMILY_REQUEST, createFamily),
     takeLatest(FamilyTypes.UPDATE_FAMILY_REQUEST, updateFamily),

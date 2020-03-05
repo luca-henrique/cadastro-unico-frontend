@@ -30,20 +30,18 @@ import log from "./log";
 export default history =>
   combineReducers({
     toastr,
+
     license,
-    funcionario,
-    address,
+
     user,
-    profile,
     auth,
-    family,
-    view,
-    contact,
-    log,
-    paste,
+
     box,
-    prefecture,
-    prefectureAddrress,
-    prefectureContact,
+    family,
+
+    funcionario,
+
+    log,
+
     router: connectRouter(history)
   });

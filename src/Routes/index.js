@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch } from "react-router-dom";
 import SignIn from "../Pages/Auth/SignIn/index";
-import OwnerView from "../Pages/Owner/View/index";
+import OwnerView from "../Pages/Owner/index";
 import history from "./history";
 import Private from "./private";
 import Guest from "./guest";

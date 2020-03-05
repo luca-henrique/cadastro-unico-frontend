@@ -3,53 +3,17 @@ import React, { useState, useEffect } from "react";
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as LicenseCreators } from "../../../store/ducks/license";
 
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { Typography, Link, TextField, Button } from "@material-ui/core/";
+import { Typography, TextField, Button } from "@material-ui/core/";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import { Form, Container } from "../../Components/Style/";
 import Logo from "../../../Assets/Images/cadunico.png";
 
-import Error from "../ErrorLicense/index";
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    backgroundColor: "#F4D03F",
-    backgroundImage: "linear-gradient(132deg, #F4D03F 10%, #02632c 100%)",
-    width: "100%",
-    height: "100%"
-  },
-
-  img: {
-    width: "450px",
-    height: "200",
-    marginTop: "40px",
-
-    [theme.breakpoints.down("sm")]: {
-      width: "300px"
-    },
-    [theme.breakpoints.up("md")]: {
-      width: "500px"
-    },
-    [theme.breakpoints.up("lg")]: {}
-  },
-  title: {
-    marginBottom: "30px"
-  },
-  typography: {
-    color: "rgba(2,99,44,0.7)"
-  },
-  button: {
-    marginTop: "10px",
-    marginBottom: "10px",
-    width: "100%"
-  },
-  signIn: {
-    width: "100%",
-    marginTop: "15px"
-  }
-}));
+import Copyright from "../../Copyright/";
+import Lisence from "../Lisence/index";
 
 const ValidationTextField = withStyles({
   root: {
@@ -69,33 +33,24 @@ const ValidationTextField = withStyles({
   }
 })(TextField);
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://ctmconsultoria.com/index.html">
-        CTM consultoria
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-export default function SignUp(props) {
-  const dispatch = useDispatch();
-
+function SignUp(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const license = useSelector(state => state.license.key.license);
+  const [license, setLicense] = useState(false);
 
-  const key = useSelector(state => state.license.key.id);
+  const { key } = props.redux.license;
 
   console.log(key);
+  console.log(license);
 
   useEffect(() => {
-    dispatch(LicenseCreators.recoveryAccessToken(1));
+    const { recoveryAccessToken } = props;
+    recoveryAccessToken(1);
+    if (typeof key === "undefined") {
+    } else {
+      setLicense(key.license);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -103,13 +58,15 @@ export default function SignUp(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(AuthActions.signInRequest(email, password));
+    const { signInRequest } = props;
+    signInRequest(email, password);
   }
 
   return (
     <>
+      {typeof key === "undefined" ? <Lisence /> : <></>}
       {license === false ? (
-        <Error />
+        <Lisence />
       ) : (
         <>
           <Container className={classes.container}>
@@ -168,3 +125,51 @@ export default function SignUp(props) {
     </>
   );
 }
+
+const mapStateToProps = state => ({
+  redux: state
+});
+
+// Ações
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ ...LicenseCreators, ...AuthActions }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    backgroundColor: "#F4D03F",
+    backgroundImage: "linear-gradient(132deg, #F4D03F 10%, #02632c 100%)",
+    width: "100%",
+    height: "100%"
+  },
+
+  img: {
+    width: "450px",
+    height: "200",
+    marginTop: "40px",
+
+    [theme.breakpoints.down("sm")]: {
+      width: "300px"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "500px"
+    },
+    [theme.breakpoints.up("lg")]: {}
+  },
+  title: {
+    marginBottom: "30px"
+  },
+  typography: {
+    color: "rgba(2,99,44,0.7)"
+  },
+  button: {
+    marginTop: "10px",
+    marginBottom: "10px",
+    width: "100%"
+  },
+  signIn: {
+    width: "100%",
+    marginTop: "15px"
+  }
+}));

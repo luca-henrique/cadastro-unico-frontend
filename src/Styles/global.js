@@ -12,7 +12,6 @@ export default createGlobalStyle`
   }
 
   body{
-   
     overflow:hidden;
     font-family: 'Roboto', sans-serif;
     text-rendering: optimizeLegibility !important;

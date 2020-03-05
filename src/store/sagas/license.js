@@ -7,12 +7,11 @@ import api from "../../services/api";
 
 export function* verification({ payload }) {
   try {
-    console.log(payload);
     const response = yield call(api.put, "/token", payload);
 
-    console.log(response);
-
     yield put(LicenseCreators.tokenAccess(response.data));
+
+    yield toastr.success("Acesso liberado.");
   } catch (err) {
     yield toastr.error("Falha", "chave de acesso não existe.");
   }
@@ -21,11 +20,7 @@ export function* verification({ payload }) {
 export function* requestToken({ payload }) {
   try {
     const tokens = yield call(api.get, "/tokens");
-
     var size = tokens.data.length - 1;
-
     yield put(LicenseCreators.tokenAccess(tokens.data[size]));
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 }

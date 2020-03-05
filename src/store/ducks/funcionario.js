@@ -1,6 +1,9 @@
 import Immutable from "seamless-immutable";
 
 export const Types = {
+  SHOW_MODAL_FUNCIONARIO: "@funcionario/SHOW_MODAL_FUNCIONARIO",
+  HIDE_MODAL_FUNCIONARIO: "@funcionario/HIDE_MODAL_FUNCIONARIO",
+
   SHOW_MODAL_NEW_FUNCIONARIO: "@funcionario/SHOW_MODAL_NEW_FUNCIONARIO",
   HIDE_MODAL_NEW_FUNCIONARIO: "@funcionario/HIDE_MODAL_NEW_FUNCIONARIO",
 
@@ -14,13 +17,24 @@ export const Types = {
 };
 
 const INITIAL_STATE = Immutable({
+  open: false,
+  visible: false,
   funcionarios: {},
-  funcionario: {},
-  visible: false
+  funcionario: {}
 });
 
 export default function funcionarios(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.SHOW_MODAL_FUNCIONARIO:
+      return {
+        ...state,
+        open: true
+      };
+    case Types.HIDE_MODAL_FUNCIONARIO:
+      return {
+        ...state,
+        open: false
+      };
     case Types.SHOW_MODAL_NEW_FUNCIONARIO:
       return {
         ...state,
@@ -62,6 +76,13 @@ export default function funcionarios(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
+  showModalFuncionario: () => ({
+    type: Types.SHOW_MODAL_FUNCIONARIO
+  }),
+  hideModalFuncionario: () => ({
+    type: Types.HIDE_MODAL_FUNCIONARIO
+  }),
+
   showModalNewFuncionario: () => ({
     type: Types.SHOW_MODAL_NEW_FUNCIONARIO
   }),
