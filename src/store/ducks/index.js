@@ -22,7 +22,6 @@ import family from "./family";
 
 import prefecture from "./prefecture";
 import prefectureAddrress from "./address_prefecture";
-
 import prefectureContact from "./contact_prefecture";
 
 import log from "./log";
@@ -30,18 +29,17 @@ import log from "./log";
 export default history =>
   combineReducers({
     toastr,
-
     license,
-
     user,
     auth,
-
     box,
     family,
-
     funcionario,
-
     log,
+
+    prefecture,
+    prefectureAddrress,
+    prefectureContact,
 
     router: connectRouter(history)
   });

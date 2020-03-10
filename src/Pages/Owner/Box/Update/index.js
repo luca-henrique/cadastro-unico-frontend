@@ -200,7 +200,7 @@ function Update(props) {
 
               <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
                 <div>
-                  <Typography variant="button">Numero da caixa:</Typography>
+                  <Typography variant="button">Numero da pasta:</Typography>
                   <TextField
                     variant="outlined"
                     size="small"

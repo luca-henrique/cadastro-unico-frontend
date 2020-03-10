@@ -7,6 +7,8 @@ import AuthActions from "../ducks/auth";
 
 import { Creators as UserCreators } from "../ducks/user";
 import { Creators as BoxCreators } from "../ducks/box";
+import { Creators as LogCreators } from "../ducks/log";
+import { Creators as PrefeituraCreators } from "../ducks/prefecture";
 
 import { actions as toastrActions } from "react-redux-toastr";
 
@@ -16,6 +18,8 @@ export function* signIn({ email, password }) {
     localStorage.setItem("@Omni:token", response.data.token);
     yield put(AuthActions.signInSuccess(response.data.token));
     yield put(UserCreators.readUserRequest());
+    yield put(PrefeituraCreators.readPrefectureRequest());
+    yield put(LogCreators.readLogRequest());
     yield put(BoxCreators.readBoxesRequest());
 
     yield put(push("/"));

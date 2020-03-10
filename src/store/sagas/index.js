@@ -32,6 +32,7 @@ import { createBox, updateBox, deleteBox, getBoxes, getFamilyBox } from "./box";
 /*
 import { Types as PasteTypes } from "../ducks/paste";
 import { createPaste, updatePaste, deletePaste, getPastes } from "./paste";
+*/
 
 import { Types as PrefectureTypes } from "../ducks/prefecture";
 import {
@@ -53,8 +54,6 @@ import {
   readContactPrefecture,
   updateContactPrefecture
 } from "./contact_prefecture";
-
-*/
 
 import { Types as FamilyTypes } from "../ducks/family";
 import {
@@ -97,9 +96,8 @@ export default function* rootSaga() {
     takeLatest(ContactTypes.CREATE_CONTACT_REQUEST, createContact),
     takeLatest(ContactTypes.LOAD_CONTACT_REQUEST, getContact),
     takeLatest(ContactTypes.UPDATE_CONTACT_REQUEST, updateContact),
+*/
 
-
-    
     takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
     takeLatest(PrefectureTypes.READ_PREFECTURE_REQUEST, getPrefecture),
     takeLatest(PrefectureTypes.UPDATE_PREFECTURE_REQUEST, updatePrefecture),
@@ -129,8 +127,6 @@ export default function* rootSaga() {
       ContactPrefectureTypes.READ_CONTACT_PREFECTURE_REQUEST,
       readContactPrefecture
     ),
-
-    */
 
     takeLatest(FunTypes.LOAD_FUNCIONARIO_REQUEST, getFuncionarios),
     takeLatest(FunTypes.CREATE_FUNCTIONARIO_SUCCESS, createFuncionario),

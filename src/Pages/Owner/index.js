@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { CssBaseline, makeStyles } from "@material-ui/core/";
-import { Container, Button, Link } from "react-floating-action-button";
+import { Container, Button } from "react-floating-action-button";
 
 import { Creators as FuncionarioCreators } from "../../store/ducks/funcionario";
+import { Creators as LogCreators } from "../../store/ducks/log";
+import { Creators as PrefeituraCreators } from "../../store/ducks/prefecture";
+
+import { Creators as PrefeituraAddrressCreators } from "../../store/ducks/address_prefecture";
+import { Creators as PrefeituraContactCreators } from "../../store/ducks/contact_prefecture";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -11,9 +16,18 @@ import { bindActionCreators } from "redux";
 import Main from "./Components/Table/";
 import TopBar from "./Components/TopBar/";
 
-import { Add, Person } from "@material-ui/icons/";
+import {
+  Add,
+  Person,
+  HomeWorkOutlined,
+  Description
+} from "@material-ui/icons/";
 
 import Funcionario from "./Funcionario/";
+import CreatePrefecture from "./Prefeitura/Create/";
+import UpdatePrefecture from "./Prefeitura/Update/";
+
+import Log from "./Log/";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,7 +48,21 @@ const useStyles = makeStyles(theme => ({
 function View(props) {
   const classes = useStyles();
 
-  const { showModalFuncionario, loadFuncionarioRequest } = props;
+  const {
+    showModalFuncionario,
+    loadFuncionarioRequest,
+    showModalLog,
+    readLogRequest,
+    showModalUpdatePrefecture,
+    readAddressPrefectureRequest,
+    readPrefectureContactRequest,
+    readPrefectureRequest
+  } = props;
+
+  useEffect(() => {
+    readPrefectureRequest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -46,9 +74,9 @@ function View(props) {
           bottom: "5px"
         }}
       >
-        <Link
+        <Button
           href="#"
-          tooltip="Funcionarios"
+          tooltip="Funcionario"
           styles={{
             backgroundColor: "rgb(10,103,30)",
             color: "rgb(246,238,89)"
@@ -60,15 +88,39 @@ function View(props) {
               loadFuncionarioRequest();
             }}
           />
-        </Link>
+        </Button>
         <Button
-          href="#"
-          tooltip="Add user link"
+          tooltip="Prefeitura"
           styles={{
             backgroundColor: "rgb(10,103,30)",
             color: "rgb(246,238,89)"
           }}
-        />
+        >
+          <HomeWorkOutlined
+            style={{ color: "rgb(246,238,89)" }}
+            onClick={() => {
+              showModalUpdatePrefecture();
+              readAddressPrefectureRequest();
+              readPrefectureContactRequest();
+            }}
+          />
+        </Button>
+
+        <Button
+          href="#"
+          tooltip="Log"
+          styles={{
+            backgroundColor: "rgb(10,103,30)",
+            color: "rgb(246,238,89)"
+          }}
+        >
+          <Description
+            onClick={() => {
+              readLogRequest();
+              showModalLog();
+            }}
+          />
+        </Button>
 
         <Button
           tooltip="Menu"
@@ -85,6 +137,9 @@ function View(props) {
         <div style={{ width: "80%" }}>
           <Main />
           <Funcionario />
+          <CreatePrefecture />
+          <UpdatePrefecture />
+          <Log />
         </div>
       </main>
     </div>
@@ -96,6 +151,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...FuncionarioCreators }, dispatch);
+  bindActionCreators(
+    {
+      ...FuncionarioCreators,
+      ...LogCreators,
+      ...PrefeituraCreators,
+      ...PrefeituraAddrressCreators,
+      ...PrefeituraContactCreators
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(View);
