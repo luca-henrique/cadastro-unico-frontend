@@ -15,8 +15,6 @@ import Family from "../../Family/index";
 export default function Table() {
   const data = useSelector(state => state.box.boxes);
 
-  const [ref, setRef] = useState();
-
   const tableRef = React.createRef();
 
   const [selectedRow, setSelectedRow] = useState("");
@@ -54,7 +52,27 @@ export default function Table() {
             onRowClick={(evt, selectedRow) => {
               setSelectedRow(selectedRow);
             }}
+            localization={{
+              header: {
+                actions: "Ações"
+              },
+
+              body: {
+                emptyDataSourceMessage: "Não existe",
+                filterRow: {
+                  filterTooltip: "Procurar"
+                }
+              },
+              toolbar: {
+                searchTooltip: "Procurar",
+                searchPlaceholder: "Procurar"
+              }
+            }}
             options={{
+              headerStyle: {
+                color: "rgb(2,90,10)"
+              },
+              actionsCellStyle: { color: "#848484" },
               rowStyle: rowData => ({
                 backgroundColor:
                   selectedRow &&
@@ -71,6 +89,12 @@ export default function Table() {
                 onClick: (event, rowData) => {
                   dispatch(CreatorsBox.showModalNewBox());
                 }
+              },
+              {
+                icon: "printer",
+                tooltip: "Gerar PDF",
+                isFreeAction: true,
+                onClick: (event, rowData) => {}
               },
               {
                 icon: "visibility",
@@ -96,7 +120,7 @@ export default function Table() {
               },
               {
                 icon: "refresh",
-                tooltip: "Refresh Data",
+                tooltip: "Atualizar informações",
                 isFreeAction: true,
                 onClick: () => dispatch(CreatorsBox.readBoxesRequest())
               }
@@ -105,54 +129,34 @@ export default function Table() {
             columns={[
               {
                 title: "Codigo",
-                field: "id",
-                headerStyle: {
-                  color: "rgb(2,90,10)"
-                }
+                field: "id"
               },
               {
                 title: "Caixa",
-                field: "numBox",
-                headerStyle: {
-                  color: "rgb(2,90,10)"
-                }
+                field: "numBox"
               },
               {
                 title: "Pasta",
-                field: "numPaste",
-                headerStyle: {
-                  color: "rgb(2,90,10)"
-                }
+                field: "numPaste"
               },
               {
                 title: "Codigo domiciliar",
-                field: "codHome",
-                headerStyle: {
-                  color: "rgb(2,90,10)"
-                }
+                field: "codHome"
               },
               {
                 title: "Data visita",
                 type: "date",
-                field: "dateInterview",
-                headerStyle: {
-                  color: "rgb(2,90,10)"
-                }
+                field: "dateInterview"
               },
               {
                 title: "Data entrevista",
                 type: "date",
-                field: "dateVisit",
-                headerStyle: {
-                  color: "rgb(2,90,10)"
-                }
+                field: "dateVisit"
               },
               {
                 title: "Local",
                 field: "local",
-                headerStyle: {
-                  color: "rgb(2,90,10)"
-                },
+
                 render: rowData => (
                   <>
                     <WarningIcon

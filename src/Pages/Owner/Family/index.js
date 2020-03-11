@@ -13,6 +13,29 @@ import Update from "./Update/";
 
 import MaterialTable from "material-table";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  main: {
+    height: "auto",
+    boxShadow: "none",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      height: "400px"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "80%"
+    }
+  },
+  teste: {
+    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      height: "100%",
+      display: "inline-block"
+    }
+  }
+}));
+
 function View(props) {
   const [state] = useState({
     columns: [
@@ -68,6 +91,8 @@ function View(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const classes = useStyles();
+
   const [selectedRow, setSelectedRow] = useState("");
   const data = props.redux.box.families;
 
@@ -87,7 +112,9 @@ function View(props) {
       style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        overflowX: "visible",
+        overflowY: "scroll"
       }}
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -101,8 +128,7 @@ function View(props) {
               style={{
                 width: "80%",
                 height: "auto",
-                boxShadow: "none",
-                color: "rgb(2,99,44)"
+                boxShadow: "none"
               }}
               title="Grupo Familiar"
               columns={state.columns}
@@ -111,6 +137,10 @@ function View(props) {
                 setSelectedRow(selectedRow);
               }}
               options={{
+                headerStyle: {
+                  color: "rgb(2,90,10)"
+                },
+                actionsCellStyle: { color: "#848484" },
                 rowStyle: rowData => ({
                   backgroundColor:
                     selectedRow &&
@@ -118,6 +148,22 @@ function View(props) {
                       ? "#F3F781"
                       : "#FFF"
                 })
+              }}
+              localization={{
+                header: {
+                  actions: "Ações"
+                },
+
+                body: {
+                  emptyDataSourceMessage: "Não existe",
+                  filterRow: {
+                    filterTooltip: "Procurar"
+                  }
+                },
+                toolbar: {
+                  searchTooltip: "Procurar",
+                  searchPlaceholder: "Procurar"
+                }
               }}
               actions={[
                 {

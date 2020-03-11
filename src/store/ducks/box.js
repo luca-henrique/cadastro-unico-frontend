@@ -23,7 +23,10 @@ export const Types = {
   READ_FAMILY_BOX_SUCCESS: "@box/READ_FAMILY_BOX_SUCCESS",
 
   SELECTED_BOX_REQUEST: "@box/SELECTED_BOX_REQUEST",
-  SELECTED_BOX_SUCCESS: "@box/SELECTED_BOX_SUCCESS"
+  SELECTED_BOX_SUCCESS: "@box/SELECTED_BOX_SUCCESS",
+
+  SIZE_BOX_REQUEST: "@box/SIZE_BOX_REQUEST",
+  SIZE_BOX_SUCCESS: "@box/SIZE_BOX_SUCCESS"
 };
 
 const INITIAL_STATE = Immutable({
@@ -35,6 +38,8 @@ const INITIAL_STATE = Immutable({
   createBox: {},
   updateBox: {},
   idDeleteBox: null,
+
+  boxSize: { id: null, total: null },
 
   boxes: {}
 });
@@ -95,6 +100,14 @@ export default function box(state = INITIAL_STATE, action) {
 
     case Types.READ_FAMILY_BOX_SUCCESS: {
       return { ...state, families: action.payload.families };
+    }
+
+    case Types.SIZE_BOX_REQUEST: {
+      return { ...state, boxSize: { id: action.payload.id } };
+    }
+
+    case Types.SIZE_BOX_SUCCESS: {
+      return { ...state, boxSize: { total: action.payload.size } };
     }
 
     default:
@@ -175,5 +188,14 @@ export const Creators = {
   boxSelectedSuccess: box => ({
     type: Types.SELECTED_BOX_SUCCESS,
     payload: { box }
+  }),
+
+  boxSizeRequest: id => ({
+    type: Types.SIZE_BOX_REQUEST,
+    payload: { id }
+  }),
+  boxSizeSuccess: size => ({
+    type: Types.SIZE_BOX_SUCCESS,
+    payload: { size }
   })
 };

@@ -28,7 +28,14 @@ import {
 } from "./funcionario";
 
 import { Types as BoxTypes } from "../ducks/box";
-import { createBox, updateBox, deleteBox, getBoxes, getFamilyBox } from "./box";
+import {
+  createBox,
+  updateBox,
+  deleteBox,
+  getBoxes,
+  getFamilyBox,
+  getBoxSize
+} from "./box";
 /*
 import { Types as PasteTypes } from "../ducks/paste";
 import { createPaste, updatePaste, deletePaste, getPastes } from "./paste";
@@ -137,6 +144,8 @@ export default function* rootSaga() {
     takeLatest(BoxTypes.DELETE_BOX_REQUEST, deleteBox),
     takeLatest(BoxTypes.READ_BOXES_REQUEST, getBoxes),
     takeLatest(BoxTypes.READ_FAMILY_BOX_REQUEST, getFamilyBox),
+
+    takeLatest(BoxTypes.SIZE_BOX_REQUEST, getBoxSize),
 
     /*
     takeLatest(PasteTypes.CREATE_PASTE_REQUEST, createPaste),

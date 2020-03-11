@@ -23,8 +23,8 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(theme => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
-      width: "300px",
-      height: "500px",
+      width: "100%",
+      height: "100%",
       overflowY: "scroll"
     },
     [theme.breakpoints.up("md")]: {

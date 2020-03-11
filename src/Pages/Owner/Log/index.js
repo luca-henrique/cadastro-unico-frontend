@@ -68,6 +68,22 @@ function View(props) {
               ]}
               title="Log"
               data={changer(data)}
+              localization={{
+                header: {
+                  actions: "Ações"
+                },
+
+                body: {
+                  emptyDataSourceMessage: "Não existe",
+                  filterRow: {
+                    filterTooltip: "Procurar"
+                  }
+                },
+                toolbar: {
+                  searchTooltip: "Procurar",
+                  searchPlaceholder: "Procurar"
+                }
+              }}
               columns={[
                 {
                   title: "Url",

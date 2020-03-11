@@ -11,6 +11,21 @@ import { Lock, LockOpenOutlined } from "@material-ui/icons/";
 
 import Create from "./Create/";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      height: "100%",
+      overflowY: "scroll"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "400px"
+    }
+  }
+}));
+
 function View(props) {
   const [selectedRow, setSelectedRow] = useState("");
 
@@ -24,6 +39,8 @@ function View(props) {
     const { hideModalFuncionario } = props;
     hideModalFuncionario();
   }
+
+  const classes = useStyles();
 
   function load(data) {
     if (Array.isArray(data)) {
@@ -52,7 +69,7 @@ function View(props) {
             <MaterialTable
               data={data}
               style={{
-                width: "60%",
+                width: "80%",
                 height: "auto",
                 boxShadow: "none",
                 color: "rgb(2,99,44)",
@@ -93,6 +110,10 @@ function View(props) {
                 setSelectedRow(selectedRow);
               }}
               options={{
+                headerStyle: {
+                  color: "rgb(2,90,10)"
+                },
+                actionsCellStyle: { color: "#848484" },
                 rowStyle: rowData => ({
                   backgroundColor:
                     selectedRow &&
@@ -100,6 +121,22 @@ function View(props) {
                       ? "#F4FA58"
                       : "#FFF"
                 })
+              }}
+              localization={{
+                header: {
+                  actions: "Ações"
+                },
+
+                body: {
+                  emptyDataSourceMessage: "Não existe",
+                  filterRow: {
+                    filterTooltip: "Procurar"
+                  }
+                },
+                toolbar: {
+                  searchTooltip: "Procurar",
+                  searchPlaceholder: "Procurar"
+                }
               }}
               actions={[
                 {

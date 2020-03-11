@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 
 import { Creators as BoxCreators } from "../../../../store/ducks/box";
-import { useDispatch, useSelector } from "react-redux";
+import { Creators as PrefeituraCreators } from "../../../../store/ducks/prefecture";
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { toastr } from "react-redux-toastr";
 
 import {
   Typography,
@@ -22,9 +27,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
-import { makeStyles } from "@material-ui/core/styles";
-
 import { nisMask } from "../../../Components/TextField/MaskNIS";
+
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -57,9 +62,9 @@ const GreenCheckbox = withStyles({
 
 const Create = props => {
   const [numPaste, setNumPaste] = useState("");
-
   const [numBox, setNumBox] = useState("");
   const [codHome, setCodHome] = useState("");
+
   const [district, setDisctric] = useState("");
   const [dateInterview, setDateInterview] = useState("");
   const [dateVisit, setDateVisit] = useState("");
@@ -72,8 +77,7 @@ const Create = props => {
   const [benefit, setBenefit] = useState(false);
   const [local, setLocal] = useState(false);
 
-  const visible = useSelector(state => state.box.visible);
-  const dispatch = useDispatch();
+  const visible = props.redux.box.visible;
 
   const classes = useStyles();
 
@@ -97,9 +101,11 @@ const Create = props => {
       local
     };
 
-    await dispatch(BoxCreators.readBoxesRequest());
-    await dispatch(BoxCreators.createBoxRequest(box));
-    hide();
+    const { readBoxesRequest, createBoxRequest } = props;
+
+    await readBoxesRequest();
+    await createBoxRequest(box);
+    await hide();
   }
 
   function changerCod(e) {
@@ -121,8 +127,8 @@ const Create = props => {
     setOldMan(false);
     setBenefit(false);
     setLocal(false);
-
-    dispatch(BoxCreators.hideModalNewBox());
+    const { hideModalNewBox } = props;
+    hideModalNewBox();
   }
 
   return (
@@ -376,4 +382,11 @@ const Create = props => {
   );
 };
 
-export default Create;
+const mapStateToProps = state => ({
+  redux: state
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ ...BoxCreators, ...PrefeituraCreators }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Create);

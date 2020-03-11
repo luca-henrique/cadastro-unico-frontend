@@ -21,6 +21,7 @@ export function* signIn({ email, password }) {
     yield put(PrefeituraCreators.readPrefectureRequest());
     yield put(LogCreators.readLogRequest());
     yield put(BoxCreators.readBoxesRequest());
+    yield put(BoxCreators.boxSizeRequest());
 
     yield put(push("/"));
   } catch (err) {

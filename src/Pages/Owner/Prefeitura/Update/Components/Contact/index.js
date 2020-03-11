@@ -19,8 +19,7 @@ export default function Components() {
   useEffect(() => {
     setNumber(contact.numero);
     setEmail(contact.email);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [contact.email, contact.numero]);
 
   function onUpdate(e) {
     e.preventDefault();

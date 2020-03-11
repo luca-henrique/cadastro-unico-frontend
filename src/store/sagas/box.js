@@ -12,6 +12,7 @@ export function* createBox({ payload }) {
     const response = yield call(api.post, "/box", payload.box);
     toastr.success("Caixa criada com sucesso");
   } catch (err) {
+    console.log(err);
     toastr.error("Erro ao criar a caixa.");
   }
 }
@@ -62,5 +63,13 @@ export function* getFamilyBox({ payload }) {
     const response = yield call(api.get, `/families/${payload.id}`);
 
     yield put(BoxCreators.readFamiliesSuccess(response.data));
+  } catch (err) {}
+}
+
+export function* getBoxSize({ payload }) {
+  try {
+    const response = yield call(api.get, `/boxes/${payload.id}`);
+
+    yield put(BoxCreators.boxSizeSuccess(response.data));
   } catch (err) {}
 }
