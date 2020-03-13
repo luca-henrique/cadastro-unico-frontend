@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import { Link } from "@material-ui/core/";
+
 import { Creators as CreatorsBox } from "../../../../store/ducks/box";
 import { Creators as CreatorsFamily } from "../../../../store/ducks/family";
 
@@ -9,7 +11,6 @@ import MaterialTable from "material-table";
 
 import Create from "../../Box/Create";
 import Update from "../../Box/Update";
-
 import Family from "../../Family/index";
 
 export default function Table() {
@@ -36,6 +37,10 @@ export default function Table() {
   async function remove(id) {
     await dispatch(CreatorsBox.deleteBoxRequest(id));
     await dispatch(CreatorsBox.readBoxesRequest());
+  }
+
+  function openTab() {
+    window.open("/pdf");
   }
 
   return (
@@ -94,7 +99,7 @@ export default function Table() {
                 icon: "printer",
                 tooltip: "Gerar PDF",
                 isFreeAction: true,
-                onClick: (event, rowData) => {}
+                onClick: (event, rowData) => openTab()
               },
               {
                 icon: "visibility",
