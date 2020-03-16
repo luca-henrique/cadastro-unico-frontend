@@ -22,9 +22,7 @@ const Header = styled.View`
 
 const Heading = styled.View`
   font-size: 16px;
-  width: 60px;
-  justify-content: center;
-  text-align: center;
+  width: 50%;
 `;
 
 const Data = styled.Text`
@@ -44,20 +42,18 @@ const SubText = styled.Text`
 
 const Container = styled.View`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
+
   width: 160px;
   padding: 2px;
 `;
 
 const ContainerBox = styled.View`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+
   width: 20%;
   padding: 2px;
 `;
@@ -90,8 +86,8 @@ const Atributes = styled.Text`
 `;
 
 const Result = styled.Text`
+  margin-top: 3px;
   font-size: 10px;
-  margin-left: 2px;
 `;
 
 /* Tabela grupo familiar */
@@ -312,6 +308,21 @@ const PDF = props => {
               </Table>
             </View>
           ))}
+          <View
+            style={{
+              position: "fixed",
+              bottom: "0px",
+              width: "100%",
+              textAlign: "center"
+            }}
+          >
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <SubTitle>
+                Desenvolvidor por CTM consultoria - CNPJ - 08.156.009/0001-04 R:
+                José Lins de Siqueira Brito, Nº 186, Arcoverde-PE, 56506-510
+              </SubTitle>
+            </View>
+          </View>
         </Page>
       </Document>
     </PDFViewer>

@@ -5,14 +5,19 @@ export const Types = {
   HIDE_MODAL_REPORT: "@report/HIDE_MODAL_REPORT_REQUEST",
 
   UPDATE_ADDRESS_REQUEST: "@address/UPDATE_ADDRESS_REQUEST",
-  UPDATE_ADDRESS_SUCESS: "@address/UPDATE_ADDRESS_SUCESS",
-
-  
+  UPDATE_ADDRESS_SUCESS: "@address/UPDATE_ADDRESS_SUCESS"
 };
 
 const INITIAL_STATE = Immutable({
-  address: {},
-  exist: false
+  open: false,
+  filter: {
+    idoso: true,
+    bpc: true,
+    deficiente: true,
+    todos: true,
+    dateVisit: {},
+    dateInterview: {}
+  }
 });
 
 export default function address(state = INITIAL_STATE, action) {
@@ -40,8 +45,6 @@ export default function address(state = INITIAL_STATE, action) {
         address: action.payload.address
       };
 
-   
-
     default:
       return state;
   }
@@ -63,6 +66,5 @@ export const Creators = {
   updateAddressSucess: address => ({
     type: Types.UPDATE_ADDRESS_SUCESS,
     payload: { address }
-  }),
- 
+  })
 };

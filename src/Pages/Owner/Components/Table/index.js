@@ -95,6 +95,7 @@ export default function Table() {
                   dispatch(CreatorsBox.showModalNewBox());
                 }
               },
+
               {
                 icon: "printer",
                 tooltip: "Gerar PDF",
@@ -136,6 +137,7 @@ export default function Table() {
                 title: "Codigo",
                 field: "id"
               },
+
               {
                 title: "Caixa",
                 field: "numBox"
