@@ -1,6 +1,9 @@
 import Immutable from "seamless-immutable";
 
 export const Types = {
+  SHOW_MODAL_UPDATE_PREFECTURE: "@prefecture/SHOW_MODAL_UPDATE_PREFECTURE",
+  HIDE_MODAL_UPDATE_PREFECTURE: "@prefecure/HIDE_MODAL_UPDATE_PREFECTURE",
+
   CREATE_PREFECTURE_REQUEST: "@prefecture/CREATE_PREFECTURE_REQUEST",
   CREATE_PREFECTURE_SUCCESS: "@prefecture/CREATE_PREFECTURE_SUCCESS",
 
@@ -15,11 +18,23 @@ export const Types = {
 
 const INITIAL_STATE = Immutable({
   prefecture: {},
+  open: false,
   exist: false
 });
 
 export default function prefecture(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.SHOW_MODAL_UPDATE_PREFECTURE:
+      return {
+        ...state,
+        open: true
+      };
+
+    case Types.HIDE_MODAL_UPDATE_PREFECTURE:
+      return {
+        ...state,
+        open: false
+      };
     case Types.CREATE_PREFECTURE_REQUEST:
       return {
         ...state,
@@ -31,6 +46,7 @@ export default function prefecture(state = INITIAL_STATE, action) {
         ...state,
         prefecture: action.payload.prefecture
       };
+
     case Types.UPDATE_PREFECTURE_REQUEST:
       return {
         ...state,
@@ -60,6 +76,12 @@ export default function prefecture(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
+  showModalUpdatePrefecture: () => ({
+    type: Types.SHOW_MODAL_UPDATE_PREFECTURE
+  }),
+  hideModalUpdatePrefecture: () => ({
+    type: Types.HIDE_MODAL_UPDATE_PREFECTURE
+  }),
   createPrefectureRequest: prefecture => ({
     type: Types.CREATE_PREFECTURE_REQUEST,
     payload: { prefecture }

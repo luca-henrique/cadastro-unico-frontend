@@ -13,8 +13,6 @@ export function* createPrefecture({ payload }) {
     yield put(PrefectureCreators.createPrefectureSuccess(response.data));
 
     yield toastr.success("Informações da prefeitura atualizadas com sucesso.");
-
-    yield put(PrefectureCreators.failLoadPrefecture(true));
   } catch (err) {
     yield toastr.error("Falha", "Preencha os campos");
   }
@@ -22,16 +20,8 @@ export function* createPrefecture({ payload }) {
 
 export function* updatePrefecture({ payload }) {
   try {
-    const response = yield call(
-      api.put,
-      `/prefecture/${payload.prefecture.id}`,
-      payload.prefecture
-    );
-
-    yield put(PrefectureCreators.failLoadPrefecture(true));
-
+    const response = yield call(api.put, `/prefecture/1`, payload.prefecture);
     yield toastr.success("Informações da prefeitura atualizadas com sucesso.");
-
     yield put(PrefectureCreators.readPrefectureSuccess(response.data));
   } catch (err) {
     yield toastr.error("Falha", "Falha ao atualizar as informações.");

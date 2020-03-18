@@ -1,6 +1,9 @@
 import Immutable from "seamless-immutable";
 
 export const Types = {
+  SHOW_MODAL_FAMILY: "@family/SHOW_MODAL_FAMILY",
+  HIDE_MODAL_FAMILY: "@family/HIDE_MODAL_FAMILY",
+
   SHOW_MODAL_NEW_FAMILIAR: "@familiar/SHOW_MODAL_NEW_FAMILIAR",
   HIDE_MODAL_NEW_FAMILIAR: "@familiar/HIDE_MODAL_NEW_FAMILIAR",
 
@@ -21,15 +24,26 @@ export const Types = {
 };
 
 const INITIAL_STATE = Immutable({
+  id: null,
+  open: false,
+  visible: false,
   family: {},
   groupsFamilies: {},
-  updateFamily: { data: {}, visible: false },
-  id: null,
-  visible: false
+  updateFamily: { data: {}, visible: false }
 });
 
 export default function family(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.SHOW_MODAL_FAMILY:
+      return {
+        ...state,
+        open: true
+      };
+    case Types.HIDE_MODAL_FAMILY:
+      return {
+        ...state,
+        open: false
+      };
     case Types.SHOW_MODAL_NEW_FAMILIAR:
       return {
         ...state,
@@ -101,6 +115,13 @@ export default function family(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
+  showModalFamily: () => ({
+    type: Types.SHOW_MODAL_FAMILY
+  }),
+
+  hideModalFamily: () => ({
+    type: Types.HIDE_MODAL_FAMILY
+  }),
   showModalNewFamiliar: () => ({
     type: Types.SHOW_MODAL_NEW_FAMILIAR
   }),

@@ -40,7 +40,7 @@ export function* updateContactPrefecture({ payload }) {
     const response = yield call(
       api.put,
       "/contactprefecture/1",
-      JSON.stringify(payload.contact)
+      payload.contact
     );
 
     yield put(ContactCreators.readPrefectureContactSuccess(response.data));

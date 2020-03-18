@@ -19,25 +19,29 @@ export const Types = {
   READ_BOXES_REQUEST: "@box/READ_BOXES_REQUEST",
   READ_BOXES_SUCCESS: "@box/READ_BOXES_SUCCESS",
 
-  READ_PASTES_BOX_REQUEST: "@box/READ_PASTES_BOX_REQUEST",
-  READ_PASTES_BOX_SUCCESS: "@box/READ_PASTES_BOX_SUCCESS",
-
   READ_FAMILY_BOX_REQUEST: "@box/READ_FAMILY_BOX_REQUEST",
   READ_FAMILY_BOX_SUCCESS: "@box/READ_FAMILY_BOX_SUCCESS",
 
   SELECTED_BOX_REQUEST: "@box/SELECTED_BOX_REQUEST",
-  SELECTED_BOX_SUCCESS: "@box/SELECTED_BOX_SUCCESS"
+  SELECTED_BOX_SUCCESS: "@box/SELECTED_BOX_SUCCESS",
+
+  SIZE_BOX_REQUEST: "@box/SIZE_BOX_REQUEST",
+  SIZE_BOX_SUCCESS: "@box/SIZE_BOX_SUCCESS"
 };
 
 const INITIAL_STATE = Immutable({
   id: null,
+  visible: false,
+
   box: {},
-  selected_box: {},
-  boxes: {},
-  updateBox: { data: {}, visible: false },
-  pastes: {},
-  families: {},
-  visible: false
+
+  createBox: {},
+  updateBox: {},
+  idDeleteBox: null,
+
+  boxSize: { id: null, total: null },
+
+  boxes: {}
 });
 
 export default function box(state = INITIAL_STATE, action) {
@@ -75,11 +79,11 @@ export default function box(state = INITIAL_STATE, action) {
     }
 
     case Types.UPDATE_BOX_REQUEST: {
-      return { ...state, box: action.payload.box };
+      return { ...state, update: action.payload.box };
     }
 
     case Types.UPDATE_BOX_SUCCESS: {
-      return { ...state, box: action.payload.box };
+      return { ...state, update: action.payload.box };
     }
 
     case Types.DELETE_BOX_REQUEST: {
@@ -90,14 +94,6 @@ export default function box(state = INITIAL_STATE, action) {
       return { ...state, boxes: action.payload.boxes };
     }
 
-    case Types.READ_PASTES_BOX_REQUEST: {
-      return { ...state, id: action.payload.id };
-    }
-
-    case Types.READ_PASTES_BOX_SUCCESS: {
-      return { ...state, pastes: action.payload.pastes };
-    }
-
     case Types.READ_FAMILY_BOX_REQUEST: {
       return { ...state, id: action.payload.id };
     }
@@ -106,12 +102,12 @@ export default function box(state = INITIAL_STATE, action) {
       return { ...state, families: action.payload.families };
     }
 
-    case Types.SELECTED_BOX_REQUEST: {
-      return { ...state, id: action.payload.id };
+    case Types.SIZE_BOX_REQUEST: {
+      return { ...state, boxSize: { id: action.payload.id } };
     }
 
-    case Types.SELECTED_BOX_SUCCESS: {
-      return { ...state, selected_box: action.payload.box };
+    case Types.SIZE_BOX_SUCCESS: {
+      return { ...state, boxSize: { total: action.payload.size } };
     }
 
     default:
@@ -192,5 +188,14 @@ export const Creators = {
   boxSelectedSuccess: box => ({
     type: Types.SELECTED_BOX_SUCCESS,
     payload: { box }
+  }),
+
+  boxSizeRequest: id => ({
+    type: Types.SIZE_BOX_REQUEST,
+    payload: { id }
+  }),
+  boxSizeSuccess: size => ({
+    type: Types.SIZE_BOX_SUCCESS,
+    payload: { size }
   })
 };

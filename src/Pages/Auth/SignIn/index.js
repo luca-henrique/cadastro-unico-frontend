@@ -3,15 +3,119 @@ import React, { useState, useEffect } from "react";
 import AuthActions from "../../../store/ducks/auth";
 import { Creators as LicenseCreators } from "../../../store/ducks/license";
 
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { Typography, Link, TextField, Button } from "@material-ui/core/";
+import { Typography, TextField, Button } from "@material-ui/core/";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import { Form, Container } from "../../Components/Style/";
 import Logo from "../../../Assets/Images/cadunico.png";
 
-import Error from "../ErrorLicense/index";
+import Copyright from "../../Copyright/";
+
+const ValidationTextField = withStyles({
+  root: {
+    "& input:valid + fieldset": {
+      borderColor: "#A4A4A4",
+      borderWidth: 1
+    },
+    "& input:invalid + fieldset": {
+      borderColor: "red",
+      borderWidth: 2
+    },
+    "& input:valid:focus + fieldset": {
+      borderColor: "#02632c",
+      borderLeftWidth: 6,
+      padding: "4px !important" // override inline-style
+    }
+  }
+})(TextField);
+
+function SignUp(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const classes = useStyles();
+
+  useEffect(() => {
+    const { requestToken } = props;
+    requestToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const { signInRequest } = props;
+    signInRequest(email, password);
+  }
+
+  return (
+    <>
+      <Container className={classes.container}>
+        <div className={classes.img}>
+          <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
+        </div>
+        <Form onSubmit={handleSubmit}>
+          <div className={classes.title}>
+            <Typography variant="h3" className={classes.typography}>
+              Entrar
+            </Typography>
+          </div>
+          <div className={classes.button}>
+            <Typography variant="button" className={classes.typography}>
+              Email
+            </Typography>
+            <ValidationTextField
+              variant="outlined"
+              size="small"
+              fullWidth
+              type="text"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </div>
+          <div className={classes.button}>
+            <Typography variant="button" className={classes.typography}>
+              Senha
+            </Typography>
+            <ValidationTextField
+              variant="outlined"
+              size="small"
+              fullWidth
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </div>
+          <div className={classes.signIn}>
+            <Button
+              variant="contained"
+              fullWidth
+              className={classes.title}
+              type="submit"
+            >
+              Entrar
+            </Button>
+          </div>
+        </Form>
+        <div>
+          <Copyright />
+        </div>
+      </Container>
+    </>
+  );
+}
+
+const mapStateToProps = state => ({
+  redux: state
+});
+
+// Ações
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ ...LicenseCreators, ...AuthActions }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -50,121 +154,3 @@ const useStyles = makeStyles(theme => ({
     marginTop: "15px"
   }
 }));
-
-const ValidationTextField = withStyles({
-  root: {
-    "& input:valid + fieldset": {
-      borderColor: "#A4A4A4",
-      borderWidth: 1
-    },
-    "& input:invalid + fieldset": {
-      borderColor: "red",
-      borderWidth: 2
-    },
-    "& input:valid:focus + fieldset": {
-      borderColor: "#02632c",
-      borderLeftWidth: 6,
-      padding: "4px !important" // override inline-style
-    }
-  }
-})(TextField);
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://ctmconsultoria.com/index.html">
-        CTM consultoria
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-export default function SignUp(props) {
-  const dispatch = useDispatch();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const license = useSelector(state => state.license.key.license);
-
-  const key = useSelector(state => state.license.key.id);
-
-  console.log(key);
-
-  useEffect(() => {
-    dispatch(LicenseCreators.recoveryAccessToken(1));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const classes = useStyles();
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(AuthActions.signInRequest(email, password));
-  }
-
-  return (
-    <>
-      {license === false ? (
-        <Error />
-      ) : (
-        <>
-          <Container className={classes.container}>
-            <div className={classes.img}>
-              <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
-            </div>
-            <Form onSubmit={handleSubmit}>
-              <div className={classes.title}>
-                <Typography variant="h3" className={classes.typography}>
-                  Entrar
-                </Typography>
-              </div>
-              <div className={classes.button}>
-                <Typography variant="button" className={classes.typography}>
-                  Email
-                </Typography>
-                <ValidationTextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  type="text"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                />
-              </div>
-              <div className={classes.button}>
-                <Typography variant="button" className={classes.typography}>
-                  Senha
-                </Typography>
-                <ValidationTextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  type="password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                />
-              </div>
-              <div className={classes.signIn}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  className={classes.title}
-                  type="submit"
-                >
-                  Entrar
-                </Button>
-              </div>
-            </Form>
-            <div>
-              <Copyright />
-            </div>
-          </Container>
-        </>
-      )}
-    </>
-  );
-}

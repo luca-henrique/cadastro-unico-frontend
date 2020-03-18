@@ -9,41 +9,44 @@ import license from "./license";
 
 import funcionario from "./funcionario";
 
-import view from "./view";
-import user from "./user";
-import profile from "./profile";
-import address from "./address";
-import contact from "./contact";
+import district from "./district";
 
-import paste from "./paste";
+import user from "./user";
+
 import box from "./box";
 
 import family from "./family";
 
 import prefecture from "./prefecture";
 import prefectureAddrress from "./address_prefecture";
-
 import prefectureContact from "./contact_prefecture";
 
 import log from "./log";
+
+/*
+import profile from "./profile";
+import address from "./address";
+import contact from "./contact";
+import view from "./view";
+import paste from "./paste";
+*/
 
 export default history =>
   combineReducers({
     toastr,
     license,
-    funcionario,
-    address,
     user,
-    profile,
     auth,
-    family,
-    view,
-    contact,
-    log,
-    paste,
     box,
+    family,
+    funcionario,
+    log,
+
     prefecture,
     prefectureAddrress,
     prefectureContact,
+
+    district,
+
     router: connectRouter(history)
   });

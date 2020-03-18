@@ -3,29 +3,37 @@ import { Creators as LicenseCreators } from "../ducks/license";
 
 import { toastr } from "react-redux-toastr";
 
+import { push } from "connected-react-router";
+
 import api from "../../services/api";
 
-export function* verification({ payload }) {
+export function* checkToken({ payload }) {
   try {
-    console.log(payload);
+    // eslint-disable-next-line no-unused-vars
     const response = yield call(api.put, "/token", payload);
 
-    console.log(response);
+    yield put(push("/login"));
 
-    yield put(LicenseCreators.tokenAccess(response.data));
+    yield toastr.success("Acesso liberado.");
   } catch (err) {
     yield toastr.error("Falha", "chave de acesso não existe.");
   }
 }
 
-export function* requestToken({ payload }) {
+export function* requestToken() {
   try {
     const tokens = yield call(api.get, "/tokens");
 
     var size = tokens.data.length - 1;
 
-    yield put(LicenseCreators.tokenAccess(tokens.data[size]));
-  } catch (err) {
-    console.log(err);
-  }
+    if (size >= 0) {
+      yield put(LicenseCreators.tokenRedirect(tokens.data[size].license));
+      yield call(api.get, `/token/${tokens.data[size].id}`);
+    }
+    if (size < 0 || tokens.data[size].license === false) {
+      yield put(push("/"));
+    } else {
+      yield put(push("/login"));
+    }
+  } catch (err) {}
 }

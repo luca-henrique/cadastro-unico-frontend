@@ -16,7 +16,7 @@ export function* createAddressPrefecture({ payload }) {
 
     yield put(AddressCreators.readAddressPrefectureSuccess(response.data));
     yield put(AddressCreators.failLoadAddressPrefecture(true));
-    yield toastr.success("Endereço da prefeitura atualizado.");
+    yield toastr.success("O endereço da prefeitura foi adicionado.");
   } catch (err) {
     yield toastr.error("Falha", "Preencha os campos");
   }
