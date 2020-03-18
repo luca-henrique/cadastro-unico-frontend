@@ -6,6 +6,7 @@ import { Container, Button } from "react-floating-action-button";
 import { Creators as FuncionarioCreators } from "../../store/ducks/funcionario";
 import { Creators as LogCreators } from "../../store/ducks/log";
 import { Creators as PrefeituraCreators } from "../../store/ducks/prefecture";
+import { Creators as DistrictsCreators } from "../../store/ducks/district";
 
 import { Creators as PrefeituraAddrressCreators } from "../../store/ducks/address_prefecture";
 import { Creators as PrefeituraContactCreators } from "../../store/ducks/contact_prefecture";
@@ -20,7 +21,8 @@ import {
   Add,
   Person,
   HomeWorkOutlined,
-  Description
+  Description,
+  EditLocation
 } from "@material-ui/icons/";
 
 import Funcionario from "./Funcionario/";
@@ -28,6 +30,8 @@ import CreatePrefecture from "./Prefeitura/Create/";
 import UpdatePrefecture from "./Prefeitura/Update/";
 
 import Log from "./Log/";
+
+import District from "./District/index";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,23 +44,35 @@ const useStyles = makeStyles(theme => ({
       overflowY: "scroll"
     },
     [theme.breakpoints.up("md")]: {
-      width: "100%"
+      width: "100%",
+      overflowX: "visible",
+      overflowY: "scroll"
     }
   },
   content: {
-    paddingTop: theme.spacing(20),
     width: "100%",
     height: "100%",
     display: "flex",
     justifyContent: "center",
-    backgroundColor: "#F2F2F2"
-  },
-  button: {
+    backgroundColor: "#F2F2F2",
+
     [theme.breakpoints.down("sm")]: {
-      position: "absolute !important"
+      paddingTop: theme.spacing(7),
+      width: "100%",
+      height: "100%"
     },
     [theme.breakpoints.up("md")]: {
-      position: "fixed"
+      paddingTop: theme.spacing(20),
+      width: "100%"
+    }
+  },
+
+  center: {
+    width: "80%",
+
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      height: "100%"
     }
   }
 }));
@@ -72,8 +88,12 @@ function View(props) {
     showModalUpdatePrefecture,
     readAddressPrefectureRequest,
     readPrefectureContactRequest,
-    readPrefectureRequest
+    readPrefectureRequest,
+    showModalDistrict,
+    readDistrictRequest
   } = props;
+
+  //const isAdmin = props.redux.user.user.admin;
 
   useEffect(() => {
     readPrefectureRequest();
@@ -84,85 +104,185 @@ function View(props) {
     <div className={classes.root}>
       <CssBaseline />
       <TopBar />
-      <Container
-        className={classes.button}
-        styles={{
-          position: "fixed",
-          bottom: "2px",
-          right: "5px"
-        }}
-      >
-        <Button
-          href="#"
-          tooltip="Funcionario"
-          styles={{
-            backgroundColor: "rgb(10,103,30)",
-            color: "rgb(246,238,89)"
-          }}
-        >
-          <Person
-            onClick={() => {
-              showModalFuncionario();
-              loadFuncionarioRequest();
-            }}
-          />
-        </Button>
-        <Button
-          tooltip="Prefeitura"
-          styles={{
-            backgroundColor: "rgb(10,103,30)",
-            color: "rgb(246,238,89)"
-          }}
-        >
-          <HomeWorkOutlined
-            style={{ color: "rgb(246,238,89)" }}
-            onClick={() => {
-              showModalUpdatePrefecture();
-              readAddressPrefectureRequest();
-              readPrefectureContactRequest();
-            }}
-          />
-        </Button>
-
-        <Button
-          href="#"
-          tooltip="Log"
-          styles={{
-            backgroundColor: "rgb(10,103,30)",
-            color: "rgb(246,238,89)"
-          }}
-        >
-          <Description
-            onClick={() => {
-              readLogRequest();
-              showModalLog();
-            }}
-          />
-        </Button>
-
-        <Button
-          tooltip="Menu"
-          styles={{
-            backgroundColor: "rgb(10,103,30)",
-            color: "rgb(246,238,89)"
-          }}
-        >
-          <Add />
-        </Button>
-      </Container>
 
       <main className={classes.content}>
-        <div style={{ width: "80%" }}>
+        <div className={classes.center}>
           <Main />
+
+          <District />
           <Funcionario />
           <CreatePrefecture />
           <UpdatePrefecture />
           <Log />
+
+          <Container
+            styles={{
+              position: "fixed",
+              bottom: "2px",
+              right: "5px"
+            }}
+          >
+            <Button
+              tooltip="Funcionario"
+              styles={{
+                backgroundColor: "rgb(10,103,30)",
+                color: "rgb(246,238,89)"
+              }}
+            >
+              <Person
+                onClick={() => {
+                  showModalFuncionario();
+                  loadFuncionarioRequest();
+                }}
+              />
+            </Button>
+            <Button
+              tooltip="Prefeitura"
+              styles={{
+                backgroundColor: "rgb(10,103,30)",
+                color: "rgb(246,238,89)"
+              }}
+            >
+              <HomeWorkOutlined
+                style={{ color: "rgb(246,238,89)" }}
+                onClick={() => {
+                  showModalUpdatePrefecture();
+                  readAddressPrefectureRequest();
+                  readPrefectureContactRequest();
+                }}
+              />
+            </Button>
+
+            <Button
+              tooltip="Bairro"
+              styles={{
+                backgroundColor: "rgb(10,103,30)",
+                color: "rgb(246,238,89)"
+              }}
+            >
+              <EditLocation
+                onClick={() => {
+                  showModalDistrict();
+                  readDistrictRequest();
+                }}
+              />
+            </Button>
+
+            <Button
+              tooltip="Log"
+              styles={{
+                backgroundColor: "rgb(10,103,30)",
+                color: "rgb(246,238,89)"
+              }}
+            >
+              <Description
+                onClick={() => {
+                  readLogRequest();
+                  showModalLog();
+                }}
+              />
+            </Button>
+
+            <Button
+              tooltip="Menu"
+              styles={{
+                backgroundColor: "rgb(10,103,30)",
+                color: "rgb(246,238,89)"
+              }}
+            >
+              <Add />
+            </Button>
+          </Container>
         </div>
       </main>
     </div>
   );
 }
+
+/*
+const FloatingButton = (props) =>{
+  return (<><Container
+    styles={{
+      position: "fixed",
+      bottom: "2px",
+      right: "5px"
+    }}
+  >
+    <Button
+      href="#"
+      tooltip="Funcionario"
+      styles={{
+        backgroundColor: "rgb(10,103,30)",
+        color: "rgb(246,238,89)"
+      }}
+    >
+      <Person
+        onClick={() => {
+          showModalFuncionario();
+          loadFuncionarioRequest();
+        }}
+      />
+    </Button>
+    <Button
+      tooltip="Prefeitura"
+      styles={{
+        backgroundColor: "rgb(10,103,30)",
+        color: "rgb(246,238,89)"
+      }}
+    >
+      <HomeWorkOutlined
+        style={{ color: "rgb(246,238,89)" }}
+        onClick={() => {
+          showModalUpdatePrefecture();
+          readAddressPrefectureRequest();
+          readPrefectureContactRequest();
+        }}
+      />
+    </Button>
+
+    <Button
+      tooltip="Bairro"
+      styles={{
+        backgroundColor: "rgb(10,103,30)",
+        color: "rgb(246,238,89)"
+      }}
+    >
+      <EditLocation
+        onClick={() => {
+          showModalDistrict();
+          readDistrictRequest();
+        }}
+      />
+    </Button>
+
+    <Button
+      tooltip="Log"
+      styles={{
+        backgroundColor: "rgb(10,103,30)",
+        color: "rgb(246,238,89)"
+      }}
+    >
+      <Description
+        onClick={() => {
+          readLogRequest();
+          showModalLog();
+        }}
+      />
+    </Button>
+
+    <Button
+      disabled
+      tooltip="Menu"
+      styles={{
+        backgroundColor: "rgb(10,103,30)",
+        color: "rgb(246,238,89)"
+      }}
+    >
+      <Add />
+    </Button>
+  </Container></>);
+}
+*/
 
 const mapStateToProps = state => ({
   redux: state
@@ -175,7 +295,8 @@ const mapDispatchToProps = dispatch =>
       ...LogCreators,
       ...PrefeituraCreators,
       ...PrefeituraAddrressCreators,
-      ...PrefeituraContactCreators
+      ...PrefeituraContactCreators,
+      ...DistrictsCreators
     },
     dispatch
   );

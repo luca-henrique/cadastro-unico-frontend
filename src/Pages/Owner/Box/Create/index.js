@@ -6,8 +6,6 @@ import { Creators as PrefeituraCreators } from "../../../../store/ducks/prefectu
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { toastr } from "react-redux-toastr";
-
 import {
   Typography,
   Button,
@@ -26,6 +24,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import Select from "@material-ui/core/Select";
 
 import { nisMask } from "../../../Components/TextField/MaskNIS";
 
@@ -65,7 +64,7 @@ const Create = props => {
   const [numBox, setNumBox] = useState("");
   const [codHome, setCodHome] = useState("");
 
-  const [district, setDisctric] = useState("");
+  const [district, setDisctrict] = useState("");
   const [dateInterview, setDateInterview] = useState("");
   const [dateVisit, setDateVisit] = useState("");
   const [reason, setReason] = useState("");
@@ -76,6 +75,8 @@ const Create = props => {
   const [deficient, setDeficient] = useState(false);
   const [benefit, setBenefit] = useState(false);
   const [local, setLocal] = useState(false);
+
+  const { districts } = props.redux.district;
 
   const visible = props.redux.box.visible;
 
@@ -117,7 +118,7 @@ const Create = props => {
     setNumPaste("");
 
     setCodHome("");
-    setDisctric("");
+    setDisctrict("");
 
     setReason("");
     setNote("");
@@ -218,15 +219,24 @@ const Create = props => {
               </Grid>
               <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
                 <div>
-                  <Typography variant="button">Bairro:</Typography>
-                  <TextField
+                  <FormControl
                     variant="outlined"
+                    style={{ width: "100%" }}
                     size="small"
                     fullWidth
-                    type="text"
                     value={district}
-                    onChange={e => setDisctric(e.target.value)}
-                  />
+                    onChange={e => setDisctrict(e.target.value)}
+                  >
+                    <Typography variant="button">Bairro:</Typography>
+                    <Select native size="small" fullWidth>
+                      <option value="" />
+                      {districts.map(teste => (
+                        <option key={teste.id} value={teste.nome}>
+                          {teste.nome}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
               </Grid>
               <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>

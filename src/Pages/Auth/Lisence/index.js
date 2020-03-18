@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Creators as LicenseCreators } from "../../../store/ducks/license";
 
 import { Typography, Button, TextField } from "@material-ui/core/";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 import Logo from "../../../Assets/Images/empresalogo.png";
 import Copyright from "../../Copyright/index";
@@ -21,13 +21,29 @@ const ValidationTextField = withStyles({
     },
     "& input:valid:focus + fieldset": {
       borderColor: "#088A85",
-      padding: "4px !important" // override inline-style
+      padding: "4px !important"
     }
   }
 })(TextField);
 
+const useStyles = makeStyles(theme => ({
+  main: {
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: theme.spacing(5),
+      width: "90%",
+      height: "80%"
+    },
+    [theme.breakpoints.up("md")]: {
+      height: "300px",
+      width: "400px"
+    }
+  }
+}));
+
 export default function() {
   const [token, setToken] = useState("");
+
+  const classes = useStyles();
 
   const dispatch = useDispatch();
 
@@ -37,6 +53,13 @@ export default function() {
   }, []);
 
   function verification(e) {
+    e.preventDefault();
+    if (token === "") {
+      console.log("espaço");
+    }
+
+    console.log(token.trim());
+
     dispatch(LicenseCreators.verificationToken(token));
   }
 
@@ -57,10 +80,9 @@ export default function() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center",
-          height: "300px",
-          width: "400px"
+          alignItems: "center"
         }}
+        className={classes.main}
         onSubmit={verification}
       >
         <div style={{ width: "250px", height: "200px", marginBottom: "30px" }}>
@@ -76,6 +98,7 @@ export default function() {
         </Typography>
         <ValidationTextField
           variant="outlined"
+          required
           size="small"
           fullWidth
           type="text"
@@ -94,7 +117,7 @@ export default function() {
             color: "#BDBDBD"
           }}
         >
-          Enviar
+          Verificar
         </Button>
       </form>
       <Copyright />

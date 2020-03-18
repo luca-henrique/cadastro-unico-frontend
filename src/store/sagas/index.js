@@ -9,17 +9,6 @@ import { verification, requestToken } from "./license";
 import { Types as UserTypes } from "../ducks/user";
 import { index, update, changerPassword } from "./user";
 
-/*
-import { Types as ProfileTypes } from "../ducks/profile";
-import { create, get, updateProfileRequest } from "./profile";
-
-import { Types as AddressTypes } from "../ducks/address";
-import { createAddress, updateAddress, getAddress } from "./address";
-
-import { Types as ContactTypes } from "../ducks/contact";
-import { createContact, getContact, updateContact } from "./contact";
-
-*/
 import { Types as FunTypes } from "../ducks/funcionario";
 import {
   getFuncionarios,
@@ -36,10 +25,6 @@ import {
   getFamilyBox,
   getBoxSize
 } from "./box";
-/*
-import { Types as PasteTypes } from "../ducks/paste";
-import { createPaste, updatePaste, deletePaste, getPastes } from "./paste";
-*/
 
 import { Types as PrefectureTypes } from "../ducks/prefecture";
 import {
@@ -75,6 +60,14 @@ import { getLogs } from "./log";
 
 import { teste } from "./teste";
 
+import { Types as DistrictTypes } from "../ducks/district";
+import {
+  createDistrict,
+  getDistricts,
+  updateDistrict,
+  deleteDistrict
+} from "./district";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
@@ -90,20 +83,6 @@ export default function* rootSaga() {
     takeLatest(UserTypes.READ_USER_REQUEST, index),
     takeLatest(UserTypes.UPDATE_USER_REQUEST, update),
     takeLatest(UserTypes.CHANGER_PASSWORD_REQUEST, changerPassword),
-
-    /*
-    takeLatest(ProfileTypes.CREATE_PROFILE_REQUEST, create),
-    takeLatest(ProfileTypes.LOAD_PROFILE_REQUEST, get),
-    takeLatest(ProfileTypes.UPDATE_PROFILE_REQUEST, updateProfileRequest),
-
-    takeLatest(AddressTypes.CREATE_ADDRESS_REQUEST, createAddress),
-    takeLatest(AddressTypes.LOAD_ADDRESS_REQUEST, getAddress),
-    takeLatest(AddressTypes.UPDATE_ADDRESS_REQUEST, updateAddress),
-
-    takeLatest(ContactTypes.CREATE_CONTACT_REQUEST, createContact),
-    takeLatest(ContactTypes.LOAD_CONTACT_REQUEST, getContact),
-    takeLatest(ContactTypes.UPDATE_CONTACT_REQUEST, updateContact),
-*/
 
     takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
     takeLatest(PrefectureTypes.READ_PREFECTURE_REQUEST, getPrefecture),
@@ -147,16 +126,14 @@ export default function* rootSaga() {
 
     takeLatest(BoxTypes.SIZE_BOX_REQUEST, getBoxSize),
 
-    /*
-    takeLatest(PasteTypes.CREATE_PASTE_REQUEST, createPaste),
-    takeLatest(PasteTypes.UPDATE_PASTE_REQUEST, updatePaste),
-    takeLatest(PasteTypes.DELETE_PASTE_REQUEST, deletePaste),
-    takeLatest(PasteTypes.READ_PASTES_REQUEST, getPastes),
-    */
-
     takeLatest(FamilyTypes.CREATE_FAMILY_REQUEST, createFamily),
     takeLatest(FamilyTypes.UPDATE_FAMILY_REQUEST, updateFamily),
     takeLatest(FamilyTypes.DELETE_FAMILY_REQUEST, deleteFamily),
-    takeLatest(FamilyTypes.READ_FAMILY_REQUEST, getFamilies)
+    takeLatest(FamilyTypes.READ_FAMILY_REQUEST, getFamilies),
+
+    takeLatest(DistrictTypes.CREATE_DISTRICT_REQUEST, createDistrict),
+    takeLatest(DistrictTypes.UPDATE_DISTRICT_REQUEST, updateDistrict),
+    takeLatest(DistrictTypes.DELETE_DISTRICT_REQUEST, deleteDistrict),
+    takeLatest(DistrictTypes.READ_DISTRICT_REQUEST, getDistricts)
   ]);
 }

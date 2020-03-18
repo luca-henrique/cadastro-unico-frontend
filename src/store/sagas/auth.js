@@ -9,6 +9,7 @@ import { Creators as UserCreators } from "../ducks/user";
 import { Creators as BoxCreators } from "../ducks/box";
 import { Creators as LogCreators } from "../ducks/log";
 import { Creators as PrefeituraCreators } from "../ducks/prefecture";
+import { Creators as DistrictCreators } from "../ducks/district";
 
 import { actions as toastrActions } from "react-redux-toastr";
 
@@ -22,6 +23,7 @@ export function* signIn({ email, password }) {
     yield put(LogCreators.readLogRequest());
     yield put(BoxCreators.readBoxesRequest());
     yield put(BoxCreators.boxSizeRequest());
+    yield put(DistrictCreators.readDistrictRequest());
 
     yield put(push("/"));
   } catch (err) {

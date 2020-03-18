@@ -8,11 +8,29 @@ import { Creators as LogCreators } from "../../../store/ducks/log";
 import MaterialTable from "material-table";
 import { Modal, Backdrop } from "@material-ui/core/";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: theme.spacing(5),
+      width: "100%",
+      height: "80%",
+      overflowY: "scroll"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "40%"
+    }
+  }
+}));
+
 function View(props) {
   const data = props.redux.log.log;
   const { open } = props.redux.log;
 
   const { hideModalLog } = props;
+
+  const classes = useStyles();
 
   function changer(array) {
     const log = [];
@@ -49,7 +67,7 @@ function View(props) {
         }}
       >
         {load(data) === true ? (
-          <>
+          <div className={classes.modal}>
             <MaterialTable
               style={{
                 height: "auto",
@@ -108,7 +126,7 @@ function View(props) {
                 }
               ]}
             />
-          </>
+          </div>
         ) : (
           <></>
         )}

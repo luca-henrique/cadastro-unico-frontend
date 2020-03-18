@@ -16,22 +16,15 @@ import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
-  main: {
-    height: "auto",
-    boxShadow: "none",
+  modal: {
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
-      height: "400px"
+      paddingTop: theme.spacing(5),
+      width: "100% ",
+      height: "100%",
+      overflowY: "scroll"
     },
     [theme.breakpoints.up("md")]: {
-      width: "80%"
-    }
-  },
-  teste: {
-    display: "flex",
-    [theme.breakpoints.down("sm")]: {
-      height: "100%",
-      display: "inline-block"
+      width: "400px"
     }
   }
 }));
@@ -116,102 +109,91 @@ function View(props) {
         overflowX: "visible",
         overflowY: "scroll"
       }}
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500
-      }}
     >
-      <Fade in={typeof visible !== "undefined" ? false : visible}>
-        {load(data) === true ? (
-          <>
-            <MaterialTable
-              style={{
-                width: "80%",
-                height: "auto",
-                boxShadow: "none"
-              }}
-              title="Grupo Familiar"
-              columns={state.columns}
-              data={data}
-              onRowClick={(evt, selectedRow) => {
-                setSelectedRow(selectedRow);
-              }}
-              options={{
-                headerStyle: {
-                  color: "rgb(2,90,10)"
-                },
-                actionsCellStyle: { color: "#848484" },
-                rowStyle: rowData => ({
-                  backgroundColor:
-                    selectedRow &&
-                    selectedRow.tableData.id === rowData.tableData.id
-                      ? "#F3F781"
-                      : "#FFF"
-                })
-              }}
-              localization={{
-                header: {
-                  actions: "Ações"
-                },
+      {load(data) === true ? (
+        <div className={classes.modal}>
+          <MaterialTable
+            title="Grupo Familiar"
+            columns={state.columns}
+            data={data}
+            onRowClick={(evt, selectedRow) => {
+              setSelectedRow(selectedRow);
+            }}
+            options={{
+              headerStyle: {
+                color: "rgb(2,90,10)"
+              },
+              actionsCellStyle: { color: "#848484" },
+              rowStyle: rowData => ({
+                backgroundColor:
+                  selectedRow &&
+                  selectedRow.tableData.id === rowData.tableData.id
+                    ? "#F3F781"
+                    : "#FFF"
+              })
+            }}
+            localization={{
+              header: {
+                actions: "Ações"
+              },
 
-                body: {
-                  emptyDataSourceMessage: "Não existe",
-                  filterRow: {
-                    filterTooltip: "Procurar"
-                  }
-                },
-                toolbar: {
-                  searchTooltip: "Procurar",
-                  searchPlaceholder: "Procurar"
+              body: {
+                emptyDataSourceMessage: "Não existe",
+                filterRow: {
+                  filterTooltip: "Procurar"
                 }
-              }}
-              actions={[
-                {
-                  icon: "add",
-                  tooltip: "Adicionar",
-                  isFreeAction: true,
-                  onClick: (event, rowData) => {
-                    showModalNewFamiliar();
-                  }
-                },
-                {
-                  icon: "printer",
-                  tooltip: "Gerar PDF",
-                  isFreeAction: true,
-                  onClick: (event, rowData) => {}
-                },
-                {
-                  icon: "close",
-                  tooltip: "Fechar",
-                  isFreeAction: true,
-                  onClick: (event, rowData) => {
-                    hideModalFamily();
-                  }
-                },
+              },
+              toolbar: {
+                searchTooltip: "Procurar",
+                searchPlaceholder: "Procurar"
+              }
+            }}
+            actions={[
+              {
+                icon: "add",
+                tooltip: "Adicionar",
+                isFreeAction: true,
+                onClick: (event, rowData) => {
+                  showModalNewFamiliar();
+                }
+              },
+              {
+                icon: "printer",
+                tooltip: "Gerar PDF",
+                isFreeAction: true,
+                onClick: (event, rowData) => {}
+              },
+              {
+                icon: "close",
+                tooltip: "Fechar",
+                isFreeAction: true,
+                onClick: (event, rowData) => {
+                  hideModalFamily();
+                }
+              },
 
-                {
-                  icon: "delete",
-                  tooltip: "Excluir",
-                  onClick: (event, rowData) => {
-                    deleteFamilyRequest(rowData.id);
-                  }
-                },
-                {
-                  icon: "edit",
-                  tooltip: "Editar",
-                  onClick: (event, rowData) => {
-                    showModalUpdateFamily(rowData);
-                  }
+              {
+                icon: "delete",
+                tooltip: "Excluir",
+                onClick: (event, rowData) => {
+                  deleteFamilyRequest(rowData.id);
                 }
-              ]}
-            />
-            <Create />
-            <Update />
-          </>
-        ) : (
-          <></>
-        )}
-      </Fade>
+              },
+              {
+                icon: "edit",
+                tooltip: "Editar",
+                onClick: (event, rowData) => {
+                  showModalUpdateFamily(rowData);
+                }
+              }
+            ]}
+          />
+          <Create />
+          <Update />
+        </div>
+      ) : (
+        <></>
+      )}
     </Modal>
   );
 }

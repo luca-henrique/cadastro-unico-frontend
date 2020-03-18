@@ -25,8 +25,8 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(theme => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
-      width: "300px",
-      height: "500px",
+      width: "100%",
+      height: "100%",
       overflowY: "scroll"
     },
     [theme.breakpoints.up("md")]: {
@@ -39,10 +39,6 @@ function Update(props) {
   const classes = useStyles();
 
   const { hideModalUpdateFamily, updateFamilyRequest } = props;
-
-  //const [visible, setVisible] = useState(false);
-
-  //const [data, setData] = useState("");
 
   const { data, visible } = props.redux.family.updateFamily;
 

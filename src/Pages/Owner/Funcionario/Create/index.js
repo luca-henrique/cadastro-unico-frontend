@@ -14,12 +14,30 @@ import {
   Grid
 } from "@material-ui/core/";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  modal: {
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: theme.spacing(5),
+      width: "100%",
+      height: "80%",
+      overflowY: "scroll"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "20%"
+    }
+  }
+}));
+
 export default function Create() {
   const dispatch = useDispatch();
 
   const funcionario = useSelector(state => state.funcionario.funcionario);
 
   const visible = useSelector(state => state.funcionario.visible);
+
+  const classes = useStyles();
 
   function hide() {
     dispatch(FuncionarioCreators.hideModalNewFuncionario());
@@ -53,9 +71,9 @@ export default function Create() {
             backgroundColor: "#fff",
             padding: "20px",
             border: "1px solid #D8D8D8",
-            borderRadius: "5px",
-            width: "400px"
+            borderRadius: "5px"
           }}
+          className={classes.modal}
         >
           <Grid
             container
@@ -65,7 +83,7 @@ export default function Create() {
           >
             <Grid item xs={12} sm={12}>
               <Typography
-                variant="h4"
+                variant="h5"
                 style={{
                   color: "rgba(2,99,44,0.7)",
                   textAlign: "center",

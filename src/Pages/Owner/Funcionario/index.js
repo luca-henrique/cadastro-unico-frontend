@@ -16,12 +16,13 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(theme => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
+      paddingTop: theme.spacing(5),
       width: "100%",
       height: "100%",
       overflowY: "scroll"
     },
     [theme.breakpoints.up("md")]: {
-      width: "400px"
+      width: "45%"
     }
   }
 }));
@@ -29,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 function View(props) {
   const [selectedRow, setSelectedRow] = useState("");
 
-  const { loadFuncionarioRequest, showModalNewFuncionario } = props;
+  const { showModalNewFuncionario } = props;
 
   const { open } = props.redux.funcionario;
 
@@ -65,16 +66,9 @@ function View(props) {
         }}
       >
         {load(data) === true ? (
-          <>
+          <div className={classes.modal}>
             <MaterialTable
               data={data}
-              style={{
-                width: "80%",
-                height: "auto",
-                boxShadow: "none",
-                color: "rgb(2,99,44)",
-                padding: "20px"
-              }}
               title="Funcionarios"
               columns={[
                 {
@@ -166,7 +160,7 @@ function View(props) {
               ]}
             />
             <Create />
-          </>
+          </div>
         ) : (
           <></>
         )}
