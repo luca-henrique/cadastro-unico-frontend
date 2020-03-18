@@ -93,7 +93,9 @@ function View(props) {
     readDistrictRequest
   } = props;
 
-  //const isAdmin = props.redux.user.user.admin;
+  const isAdmin = props.redux.user.user.admin;
+
+  console.log(isAdmin);
 
   useEffect(() => {
     readPrefectureRequest();
@@ -122,36 +124,57 @@ function View(props) {
               right: "5px"
             }}
           >
-            <Button
-              tooltip="Funcionario"
-              styles={{
-                backgroundColor: "rgb(10,103,30)",
-                color: "rgb(246,238,89)"
-              }}
-            >
-              <Person
-                onClick={() => {
-                  showModalFuncionario();
-                  loadFuncionarioRequest();
-                }}
-              />
-            </Button>
-            <Button
-              tooltip="Prefeitura"
-              styles={{
-                backgroundColor: "rgb(10,103,30)",
-                color: "rgb(246,238,89)"
-              }}
-            >
-              <HomeWorkOutlined
-                style={{ color: "rgb(246,238,89)" }}
-                onClick={() => {
-                  showModalUpdatePrefecture();
-                  readAddressPrefectureRequest();
-                  readPrefectureContactRequest();
-                }}
-              />
-            </Button>
+            {isAdmin === true ? (
+              <>
+                <Button
+                  tooltip="Funcionario"
+                  styles={{
+                    backgroundColor: "rgb(10,103,30)",
+                    color: "rgb(246,238,89)"
+                  }}
+                >
+                  <Person
+                    onClick={() => {
+                      showModalFuncionario();
+                      loadFuncionarioRequest();
+                    }}
+                  />
+                </Button>
+                <Button
+                  tooltip="Prefeitura"
+                  styles={{
+                    backgroundColor: "rgb(10,103,30)",
+                    color: "rgb(246,238,89)"
+                  }}
+                >
+                  <HomeWorkOutlined
+                    style={{ color: "rgb(246,238,89)" }}
+                    onClick={() => {
+                      showModalUpdatePrefecture();
+                      readAddressPrefectureRequest();
+                      readPrefectureContactRequest();
+                    }}
+                  />
+                </Button>
+
+                <Button
+                  tooltip="Log"
+                  styles={{
+                    backgroundColor: "rgb(10,103,30)",
+                    color: "rgb(246,238,89)"
+                  }}
+                >
+                  <Description
+                    onClick={() => {
+                      readLogRequest();
+                      showModalLog();
+                    }}
+                  />
+                </Button>
+              </>
+            ) : (
+              <></>
+            )}
 
             <Button
               tooltip="Bairro"
@@ -164,21 +187,6 @@ function View(props) {
                 onClick={() => {
                   showModalDistrict();
                   readDistrictRequest();
-                }}
-              />
-            </Button>
-
-            <Button
-              tooltip="Log"
-              styles={{
-                backgroundColor: "rgb(10,103,30)",
-                color: "rgb(246,238,89)"
-              }}
-            >
-              <Description
-                onClick={() => {
-                  readLogRequest();
-                  showModalLog();
                 }}
               />
             </Button>

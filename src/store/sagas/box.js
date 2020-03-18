@@ -13,7 +13,6 @@ export function* createBox({ payload }) {
     yield put(BoxCreators.readBoxesRequest());
     toastr.success("Caixa criada com sucesso");
   } catch (err) {
-    console.log(err);
     toastr.error("Erro ao criar a caixa.");
   }
 }
@@ -40,9 +39,7 @@ export function* deleteBox({ payload }) {
     const response = yield call(api.delete, `/box/${payload.id}`);
     yield put(BoxCreators.readBoxesRequest());
     toastr.success("Caixa excluida.");
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 }
 
 export function* getBoxes() {

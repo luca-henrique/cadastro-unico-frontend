@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Creators as FunCreators } from "../../../store/ducks/funcionario";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import {
   TextField,
@@ -35,17 +35,6 @@ export default function Create() {
     } catch (err) {
       toastr.error(err);
     }
-  }
-
-  function compare(pass, other) {
-    if (pass !== other) {
-      throw new UserException("Senhas");
-    }
-  }
-
-  function UserException(message) {
-    this.message = message;
-    this.name = "UserException";
   }
 
   return (

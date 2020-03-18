@@ -3,11 +3,10 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import { Page, Text, View, Document } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
 
 import { Creators as BoxCreators } from "../../../store/ducks/box";
-import { Creators as PrefeituraCreators } from "../../../store/ducks/prefecture";
 
 import styled from "@react-pdf/styled-components";
 import moment from "moment";

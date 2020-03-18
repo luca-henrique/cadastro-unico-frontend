@@ -13,7 +13,6 @@ import { Form, Container } from "../../Components/Style/";
 import Logo from "../../../Assets/Images/cadunico.png";
 
 import Copyright from "../../Copyright/";
-import Lisence from "../Lisence/index";
 
 const ValidationTextField = withStyles({
   root: {
@@ -37,24 +36,13 @@ function SignUp(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [license, setLicense] = useState(false);
-
-  const { key } = props.redux.license;
-
-  console.log(key);
-  console.log(license);
+  const classes = useStyles();
 
   useEffect(() => {
-    const { recoveryAccessToken } = props;
-    recoveryAccessToken(1);
-    if (typeof key === "undefined") {
-    } else {
-      setLicense(key.license);
-    }
+    const { requestToken } = props;
+    requestToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const classes = useStyles();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -64,64 +52,57 @@ function SignUp(props) {
 
   return (
     <>
-      {typeof key === "undefined" ? <Lisence /> : <></>}
-      {license === false ? (
-        <Lisence />
-      ) : (
-        <>
-          <Container className={classes.container}>
-            <div className={classes.img}>
-              <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
-            </div>
-            <Form onSubmit={handleSubmit}>
-              <div className={classes.title}>
-                <Typography variant="h3" className={classes.typography}>
-                  Entrar
-                </Typography>
-              </div>
-              <div className={classes.button}>
-                <Typography variant="button" className={classes.typography}>
-                  Email
-                </Typography>
-                <ValidationTextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  type="text"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                />
-              </div>
-              <div className={classes.button}>
-                <Typography variant="button" className={classes.typography}>
-                  Senha
-                </Typography>
-                <ValidationTextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  type="password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                />
-              </div>
-              <div className={classes.signIn}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  className={classes.title}
-                  type="submit"
-                >
-                  Entrar
-                </Button>
-              </div>
-            </Form>
-            <div>
-              <Copyright />
-            </div>
-          </Container>
-        </>
-      )}
+      <Container className={classes.container}>
+        <div className={classes.img}>
+          <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
+        </div>
+        <Form onSubmit={handleSubmit}>
+          <div className={classes.title}>
+            <Typography variant="h3" className={classes.typography}>
+              Entrar
+            </Typography>
+          </div>
+          <div className={classes.button}>
+            <Typography variant="button" className={classes.typography}>
+              Email
+            </Typography>
+            <ValidationTextField
+              variant="outlined"
+              size="small"
+              fullWidth
+              type="text"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </div>
+          <div className={classes.button}>
+            <Typography variant="button" className={classes.typography}>
+              Senha
+            </Typography>
+            <ValidationTextField
+              variant="outlined"
+              size="small"
+              fullWidth
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </div>
+          <div className={classes.signIn}>
+            <Button
+              variant="contained"
+              fullWidth
+              className={classes.title}
+              type="submit"
+            >
+              Entrar
+            </Button>
+          </div>
+        </Form>
+        <div>
+          <Copyright />
+        </div>
+      </Container>
     </>
   );
 }

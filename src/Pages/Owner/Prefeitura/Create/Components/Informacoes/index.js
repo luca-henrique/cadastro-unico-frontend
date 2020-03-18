@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -40,6 +40,7 @@ const Informacoes = props => {
   }
 
   function checkAttributesObj(obj) {
+    // eslint-disable-next-line no-unused-vars
     for (var [key, value] of Object.entries(obj)) {
       if (typeof value === "undefined" || value === null || value === "") {
         throw new UserException("Null");

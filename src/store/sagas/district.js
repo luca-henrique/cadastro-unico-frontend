@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { call, put } from "redux-saga/effects";
 import api from "../../services/api";
 import { Creators as DistrictCreators } from "../ducks/district";
@@ -22,15 +23,13 @@ export function* getDistricts() {
   try {
     const response = yield call(api.get, "/district");
 
-    console.log(response);
-
     yield put(DistrictCreators.readDistrictSuccess(response.data));
   } catch (err) {}
 }
 
 export function* updateDistrict({ payload }) {
   try {
-    console.log(payload);
+    // eslint-disable-next-line no-unused-vars
     const response = yield call(
       api.put,
       `/district/${payload.district.id}`,

@@ -25,7 +25,7 @@ export function* signIn({ email, password }) {
     yield put(BoxCreators.boxSizeRequest());
     yield put(DistrictCreators.readDistrictRequest());
 
-    yield put(push("/"));
+    yield put(push("/owner"));
   } catch (err) {
     yield put(
       toastrActions.add({

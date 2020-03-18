@@ -48,19 +48,14 @@ export default function() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(LicenseCreators.recoveryAccessToken(1));
+    dispatch(LicenseCreators.requestToken());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function verification(e) {
     e.preventDefault();
-    if (token === "") {
-      console.log("espaço");
-    }
 
-    console.log(token.trim());
-
-    dispatch(LicenseCreators.verificationToken(token));
+    dispatch(LicenseCreators.checkTokenAccess(token));
   }
 
   return (

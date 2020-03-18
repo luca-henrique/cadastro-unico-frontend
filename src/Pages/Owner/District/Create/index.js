@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { toastr } from "react-redux-toastr";
 import { useSelector, useDispatch } from "react-redux";
 import { Creators as DistrictCreators } from "../../../../store/ducks/district";
 

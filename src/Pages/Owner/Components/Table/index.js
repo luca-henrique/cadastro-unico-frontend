@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Link } from "@material-ui/core/";
-
 import { Creators as CreatorsBox } from "../../../../store/ducks/box";
 import { Creators as CreatorsFamily } from "../../../../store/ducks/family";
 

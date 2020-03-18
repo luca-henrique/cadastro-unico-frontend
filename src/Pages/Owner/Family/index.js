@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { Creators as FamilyCreators } from "../../../store/ducks/family";
 import { Creators as BoxCreators } from "../../../store/ducks/box";
 
-import { Modal, Backdrop, Fade } from "@material-ui/core/";
+import { Modal } from "@material-ui/core/";
 
 import Create from "./Create/";
 import Update from "./Update/";
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
       overflowY: "scroll"
     },
     [theme.breakpoints.up("md")]: {
-      width: "400px"
+      width: "50%"
     }
   }
 }));
@@ -157,12 +157,7 @@ function View(props) {
                   showModalNewFamiliar();
                 }
               },
-              {
-                icon: "printer",
-                tooltip: "Gerar PDF",
-                isFreeAction: true,
-                onClick: (event, rowData) => {}
-              },
+
               {
                 icon: "close",
                 tooltip: "Fechar",

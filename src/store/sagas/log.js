@@ -8,7 +8,5 @@ export function* getLogs() {
     const response = yield call(api.get, "/log");
 
     yield put(LogCreators.readLogSuccess(response.data));
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 }
