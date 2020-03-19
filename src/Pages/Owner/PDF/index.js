@@ -251,7 +251,7 @@ const PDF = props => {
                   <Result>{box.reason}</Result>
                 </TextArea>
                 <TextArea>
-                  <Atributes>situação:</Atributes>
+                  <Atributes>motivo:</Atributes>
                   <Result>{box.note}</Result>
                 </TextArea>
               </Area>
