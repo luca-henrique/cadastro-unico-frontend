@@ -100,7 +100,7 @@ function Update(props) {
     hideModalUpdateBox();
   }
 
-  async function create(e) {
+  function create(e) {
     e.preventDefault();
 
     var box = {
@@ -126,8 +126,8 @@ function Update(props) {
     };
 
     const { updateBoxRequest } = props;
-    await updateBoxRequest(box);
-    await hide();
+    updateBoxRequest(box);
+    hide();
   }
 
   function formatDate(data) {

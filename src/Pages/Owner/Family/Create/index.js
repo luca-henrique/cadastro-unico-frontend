@@ -179,7 +179,7 @@ export default function Create() {
                     <Select native size="small" fullWidth>
                       <option value="" />
                       <option value={"dependente"}>Dependente</option>
-                      <option value={"reponsavel"}>Responsavel</option>
+                      <option value={"responsavel"}>Responsavel</option>
                     </Select>
                   </FormControl>
                 </div>

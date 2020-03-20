@@ -38,9 +38,17 @@ const useStyles = makeStyles(theme => ({
 function Update(props) {
   const classes = useStyles();
 
-  const { hideModalUpdateFamily, updateFamilyRequest } = props;
+  const {
+    hideModalUpdateFamily,
+    updateFamilyRequest,
+    readFamiliesRequest
+  } = props;
 
   const { data, visible } = props.redux.family.updateFamily;
+
+  const { id } = props.redux.box;
+
+  const update = () => readFamiliesRequest(id);
 
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -73,7 +81,7 @@ function Update(props) {
     };
 
     await updateFamilyRequest(family);
-
+    await update();
     await hideModalUpdateFamily();
   }
 
@@ -184,7 +192,7 @@ function Update(props) {
                         >
                           <option value="" />
                           <option value={"dependente"}>Dependente</option>
-                          <option value={"reponsavel"}>Responsavel</option>
+                          <option value={"responsavel"}>Responsavel</option>
                         </Select>
                       </FormControl>
                     </div>

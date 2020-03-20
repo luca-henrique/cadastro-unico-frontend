@@ -1,4 +1,5 @@
 import { call, put } from "redux-saga/effects";
+
 import { Creators as FamilyCreators } from "../ducks/family";
 
 import api from "../../services/api";
@@ -10,7 +11,7 @@ export function* createFamily({ payload }) {
     // eslint-disable-next-line no-unused-vars
     const response = yield call(api.post, "/family/", payload.family);
     // eslint-disable-next-line no-unused-vars
-    const update = yield call(FamilyCreators.readFamilyRequest());
+
     toastr.success("Familiar criado.");
   } catch (err) {
     toastr.error("Erro ao criar um familiar.");
@@ -34,7 +35,7 @@ export function* updateFamily({ payload }) {
       payload.family
     );
     // eslint-disable-next-line no-unused-vars
-    const update = yield call(FamilyCreators.readFamilyRequest());
+
     toastr.success("Familiar atualizado.");
   } catch (err) {
     toastr.error("Erro ao atualizar um familiar.");
@@ -48,7 +49,7 @@ export function* deleteFamily({ payload }) {
       api.delete,
       `/family/${JSON.stringify(payload.id)}`
     );
+
     // eslint-disable-next-line no-unused-vars
-    const update = yield call(FamilyCreators.readFamilyRequest());
   } catch (err) {}
 }

@@ -309,15 +309,15 @@ const PDF = props => {
           ))}
           <View
             style={{
-              position: "fixed",
-              bottom: "0px",
+              position: "absolute",
+              bottom: "3px",
               width: "100%",
               textAlign: "center"
             }}
           >
             <View style={{ display: "flex", flexDirection: "row" }}>
               <SubTitle>
-                Desenvolvidor por CTM consultoria - CNPJ - 08.156.009/0001-04 R:
+                Desenvolvidor por CTM consultoria - CNPJ - 26.742.864/0001-72 R:
                 José Lins de Siqueira Brito, Nº 186, Arcoverde-PE, 56506-510
               </SubTitle>
             </View>
