@@ -16,13 +16,21 @@ import { actions as toastrActions } from "react-redux-toastr";
 export function* signIn({ email, password }) {
   try {
     const response = yield call(api.post, "authenticate", { email, password });
+    if (response.status === 204) {
+      throw new Error("Não veio jwt");
+    }
     localStorage.setItem("@Omni:token", response.data.token);
+
     yield put(AuthActions.signInSuccess(response.data.token));
+
     yield put(UserCreators.readUserRequest());
+
+    yield put(BoxCreators.readBoxesRequest()); //Recuperar todas as caixas
+
     yield put(PrefeituraCreators.readPrefectureRequest());
+
     yield put(LogCreators.readLogRequest());
-    yield put(BoxCreators.readBoxesRequest());
-    yield put(BoxCreators.boxSizeRequest());
+
     yield put(DistrictCreators.readDistrictRequest());
 
     yield put(push("/owner"));

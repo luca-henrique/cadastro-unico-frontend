@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
       overflowY: "scroll"
     },
     [theme.breakpoints.up("md")]: {
-      width: "50%"
+      width: "60%"
     }
   }
 }));
@@ -72,17 +72,28 @@ function View(props) {
   });
 
   const {
-    readFamilyRequest,
+    readFamiliesRequest,
     showModalNewFamiliar,
     hideModalFamily,
     deleteFamilyRequest,
     showModalUpdateFamily
   } = props;
 
+  const { id } = props.redux.box;
+
   useEffect(() => {
-    readFamilyRequest();
+    readFamiliesRequest(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  async function deleteFamiliar(row) {
+    await deleteFamilyRequest(row.id);
+    await readFamiliesRequest(id);
+  }
+
+  function openTab() {
+    window.open("/specific");
+  }
 
   const classes = useStyles();
 
@@ -159,6 +170,13 @@ function View(props) {
               },
 
               {
+                icon: "printer",
+                tooltip: "Gerar PDF",
+                isFreeAction: true,
+                onClick: (event, rowData) => openTab()
+              },
+
+              {
                 icon: "close",
                 tooltip: "Fechar",
                 isFreeAction: true,
@@ -171,7 +189,7 @@ function View(props) {
                 icon: "delete",
                 tooltip: "Excluir",
                 onClick: (event, rowData) => {
-                  deleteFamilyRequest(rowData.id);
+                  deleteFamiliar(rowData);
                 }
               },
               {

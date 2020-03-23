@@ -6,7 +6,8 @@ import OwnerView from "../Pages/Owner/index";
 import history from "./history";
 import Private from "./private";
 
-import Pdf from "../Pages/Owner/PDF/";
+import Pdf from "../Pages/Owner/PDF/index";
+import Specific from "../Pages/Owner/PDF/specific";
 
 import { Route } from "react-router-dom";
 
@@ -19,6 +20,9 @@ const Routes = () => (
       <Route path="/login" exact component={SignIn} />
 
       <Route path="/pdf" exact component={Pdf} />
+
+      <Route path="/specific" exact component={Specific} />
+
       <Private path="/owner" component={OwnerView} />
     </Switch>
   </ConnectedRouter>

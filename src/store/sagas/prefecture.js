@@ -34,7 +34,12 @@ export function* getPrefecture() {
 
     yield put(PrefectureCreators.readPrefectureSuccess(response.data));
 
-    yield put(PrefectureCreators.failLoadPrefecture(true));
+    if (response.status === 204) {
+      throw new Error("Não tem prefeitura");
+    }
+    if (response.status === 200) {
+      yield put(PrefectureCreators.failLoadPrefecture(true));
+    }
   } catch (err) {
     yield put(PrefectureCreators.failLoadPrefecture(false));
   }

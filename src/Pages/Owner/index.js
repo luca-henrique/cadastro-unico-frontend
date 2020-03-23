@@ -95,8 +95,6 @@ function View(props) {
 
   const isAdmin = props.redux.user.user.admin;
 
-  console.log(isAdmin);
-
   useEffect(() => {
     readPrefectureRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps

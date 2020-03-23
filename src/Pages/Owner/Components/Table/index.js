@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable array-callback-return */
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as CreatorsBox } from "../../../../store/ducks/box";
@@ -14,15 +15,8 @@ import Family from "../../Family/index";
 export default function Table() {
   const data = useSelector(state => state.box.boxes);
 
-  const tableRef = React.createRef();
-
   const [selectedRow, setSelectedRow] = useState("");
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(CreatorsBox.readBoxesRequest());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   function load(data) {
     if (Array.isArray(data)) {
@@ -32,9 +26,8 @@ export default function Table() {
     }
   }
 
-  async function remove(id) {
-    await dispatch(CreatorsBox.deleteBoxRequest(id));
-    await dispatch(CreatorsBox.readBoxesRequest());
+  function remove(id) {
+    dispatch(CreatorsBox.deleteBoxRequest(id));
   }
 
   function openTab() {
@@ -49,7 +42,6 @@ export default function Table() {
             style={{
               boxShadow: "none"
             }}
-            tableRef={tableRef}
             title={null}
             data={data}
             onRowClick={(evt, selectedRow) => {
@@ -148,6 +140,30 @@ export default function Table() {
                 title: "Codigo domiciliar",
                 field: "codHome"
               },
+
+              {
+                title: "Responsavel",
+
+                render: rowData => (
+                  <h6
+                    style={{
+                      fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+                      fontSize: "0.875rem",
+                      fontWeight: "400",
+                      lineHeight: "1.43",
+                      letterSpacing: "0.01071em",
+                      verticalAlign: "inherit"
+                    }}
+                  >
+                    {rowData.family.map(familiar => {
+                      if (familiar.tipo === "responsavel") {
+                        return familiar.nome;
+                      }
+                    })}
+                  </h6>
+                )
+              },
+
               {
                 title: "Data visita",
                 type: "date",
@@ -161,7 +177,6 @@ export default function Table() {
               {
                 title: "Local",
                 field: "local",
-
                 render: rowData => (
                   <>
                     <WarningIcon

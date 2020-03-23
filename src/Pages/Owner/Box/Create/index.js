@@ -82,7 +82,7 @@ const Create = props => {
 
   const classes = useStyles();
 
-  async function create(e) {
+  function create(e) {
     e.preventDefault();
 
     var box = {
@@ -102,11 +102,10 @@ const Create = props => {
       local
     };
 
-    const { readBoxesRequest, createBoxRequest } = props;
+    const { createBoxRequest } = props;
 
-    await readBoxesRequest();
-    await createBoxRequest(box);
-    await hide();
+    createBoxRequest(box);
+    hide();
   }
 
   function changerCod(e) {

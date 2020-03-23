@@ -23,14 +23,6 @@ import prefectureContact from "./contact_prefecture";
 
 import log from "./log";
 
-/*
-import profile from "./profile";
-import address from "./address";
-import contact from "./contact";
-import view from "./view";
-import paste from "./paste";
-*/
-
 export default history =>
   combineReducers({
     toastr,
