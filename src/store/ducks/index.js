@@ -23,6 +23,8 @@ import prefectureContact from "./contact_prefecture";
 
 import log from "./log";
 
+import generator from "./generator";
+
 export default history =>
   combineReducers({
     toastr,
@@ -33,6 +35,7 @@ export default history =>
     family,
     funcionario,
     log,
+    generator,
 
     prefecture,
     prefectureAddrress,

@@ -44,7 +44,7 @@ export function* deleteBox({ payload }) {
 
 export function* getBoxes() {
   try {
-    const response = yield call(api.get, "/box/");
+    const response = yield call(api.get, "/responsavel/");
 
     yield put(BoxCreators.readBoxesSuccess(response.data));
   } catch (err) {}

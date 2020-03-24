@@ -139,11 +139,9 @@ const SubTitle = styled.Text`
 `;
 
 const PDF = props => {
-  const { boxes } = props.redux.box;
+  const { todos } = props.redux.generator;
 
   const { prefecture } = props.redux.prefecture;
-
-  console.log(boxes);
 
   const date = dataAtualFormatada();
 
@@ -181,7 +179,7 @@ const PDF = props => {
               </TextInformation>
             </View>
           </Header>
-          {boxes.map(box => (
+          {todos.map(box => (
             <View key={box.id}>
               <List
                 style={{

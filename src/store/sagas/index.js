@@ -58,6 +58,9 @@ import {
 import { Types as LogTypes } from "../ducks/log";
 import { getLogs } from "./log";
 
+import { Types as GeneratorTypes } from "../ducks/generator";
+import { etiquetas, descartes, listBoxesFamilies } from "./generator";
+
 import { teste } from "./teste";
 
 import { Types as DistrictTypes } from "../ducks/district";
@@ -79,6 +82,10 @@ export default function* rootSaga() {
     takeLatest(LicenseTypes.CHECK_ACCESS_TOKEN, checkToken),
 
     takeLatest(LogTypes.READ_LOG_REQUEST, getLogs),
+
+    takeLatest(GeneratorTypes.GENERATOR_PDF_TODOS_REQUEST, listBoxesFamilies),
+    takeLatest(GeneratorTypes.GENERATOR_PDF_ETIQUETA_REQUEST, etiquetas),
+    takeLatest(GeneratorTypes.GENERATOR_PDF_DESCARTES_REQUEST, descartes),
 
     takeLatest(UserTypes.READ_USER_REQUEST, index),
     takeLatest(UserTypes.UPDATE_USER_REQUEST, update),
