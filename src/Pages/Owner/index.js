@@ -7,6 +7,7 @@ import { Creators as FuncionarioCreators } from "../../store/ducks/funcionario";
 import { Creators as LogCreators } from "../../store/ducks/log";
 import { Creators as PrefeituraCreators } from "../../store/ducks/prefecture";
 import { Creators as DistrictsCreators } from "../../store/ducks/district";
+import { Creators as GeneratortsCreators } from "../../store/ducks/generator";
 
 import { Creators as PrefeituraAddrressCreators } from "../../store/ducks/address_prefecture";
 import { Creators as PrefeituraContactCreators } from "../../store/ducks/contact_prefecture";
@@ -22,12 +23,15 @@ import {
   Person,
   HomeWorkOutlined,
   Description,
-  EditLocation
+  EditLocation,
+  PictureAsPdf
 } from "@material-ui/icons/";
 
 import Funcionario from "./Funcionario/";
 import CreatePrefecture from "./Prefeitura/Create/";
 import UpdatePrefecture from "./Prefeitura/Update/";
+
+import GeneratorPdf from "./PDF/modal";
 
 import Log from "./Log/";
 
@@ -90,7 +94,8 @@ function View(props) {
     readPrefectureContactRequest,
     readPrefectureRequest,
     showModalDistrict,
-    readDistrictRequest
+    readDistrictRequest,
+    showModalGeneratorPdf
   } = props;
 
   const isAdmin = props.redux.user.user.admin;
@@ -114,6 +119,7 @@ function View(props) {
           <CreatePrefecture />
           <UpdatePrefecture />
           <Log />
+          <GeneratorPdf />
 
           <Container
             styles={{
@@ -190,6 +196,20 @@ function View(props) {
             </Button>
 
             <Button
+              tooltip="PDF"
+              styles={{
+                backgroundColor: "rgb(10,103,30)",
+                color: "rgb(246,238,89)"
+              }}
+            >
+              <PictureAsPdf
+                onClick={() => {
+                  showModalGeneratorPdf();
+                }}
+              />
+            </Button>
+
+            <Button
               tooltip="Menu"
               styles={{
                 backgroundColor: "rgb(10,103,30)",
@@ -205,91 +225,6 @@ function View(props) {
   );
 }
 
-/*
-const FloatingButton = (props) =>{
-  return (<><Container
-    styles={{
-      position: "fixed",
-      bottom: "2px",
-      right: "5px"
-    }}
-  >
-    <Button
-      href="#"
-      tooltip="Funcionario"
-      styles={{
-        backgroundColor: "rgb(10,103,30)",
-        color: "rgb(246,238,89)"
-      }}
-    >
-      <Person
-        onClick={() => {
-          showModalFuncionario();
-          loadFuncionarioRequest();
-        }}
-      />
-    </Button>
-    <Button
-      tooltip="Prefeitura"
-      styles={{
-        backgroundColor: "rgb(10,103,30)",
-        color: "rgb(246,238,89)"
-      }}
-    >
-      <HomeWorkOutlined
-        style={{ color: "rgb(246,238,89)" }}
-        onClick={() => {
-          showModalUpdatePrefecture();
-          readAddressPrefectureRequest();
-          readPrefectureContactRequest();
-        }}
-      />
-    </Button>
-
-    <Button
-      tooltip="Bairro"
-      styles={{
-        backgroundColor: "rgb(10,103,30)",
-        color: "rgb(246,238,89)"
-      }}
-    >
-      <EditLocation
-        onClick={() => {
-          showModalDistrict();
-          readDistrictRequest();
-        }}
-      />
-    </Button>
-
-    <Button
-      tooltip="Log"
-      styles={{
-        backgroundColor: "rgb(10,103,30)",
-        color: "rgb(246,238,89)"
-      }}
-    >
-      <Description
-        onClick={() => {
-          readLogRequest();
-          showModalLog();
-        }}
-      />
-    </Button>
-
-    <Button
-      disabled
-      tooltip="Menu"
-      styles={{
-        backgroundColor: "rgb(10,103,30)",
-        color: "rgb(246,238,89)"
-      }}
-    >
-      <Add />
-    </Button>
-  </Container></>);
-}
-*/
-
 const mapStateToProps = state => ({
   redux: state
 });
@@ -302,7 +237,8 @@ const mapDispatchToProps = dispatch =>
       ...PrefeituraCreators,
       ...PrefeituraAddrressCreators,
       ...PrefeituraContactCreators,
-      ...DistrictsCreators
+      ...DistrictsCreators,
+      ...GeneratortsCreators
     },
     dispatch
   );

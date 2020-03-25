@@ -9,6 +9,12 @@ import Private from "./private";
 import Pdf from "../Pages/Owner/PDF/index";
 import Specific from "../Pages/Owner/PDF/specific";
 
+import Etiquetas from "../Pages/Owner/PDF/etiquetas";
+
+import Sintetico from "../Pages/Owner/PDF/sintetico";
+
+import Descartes from "../Pages/Owner/PDF/descartes";
+
 import { Route } from "react-router-dom";
 
 import { ConnectedRouter } from "connected-react-router";
@@ -20,6 +26,12 @@ const Routes = () => (
       <Route path="/login" exact component={SignIn} />
 
       <Route path="/pdf" exact component={Pdf} />
+
+      <Route path="/etiquetas" exact component={Etiquetas} />
+
+      <Route path="/sintetico" exact component={Sintetico} />
+
+      <Route path="/descartes" exact component={Descartes} />
 
       <Route path="/specific" exact component={Specific} />
 

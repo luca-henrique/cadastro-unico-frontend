@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Creators as CreatorsBox } from "../../../../store/ducks/box";
 import { Creators as CreatorsFamily } from "../../../../store/ducks/family";
 
+import { Creators as GeneratorCreators } from "../../../../store/ducks/generator";
+
 import WarningIcon from "@material-ui/icons/Warning";
 import MaterialTable from "material-table";
 
@@ -31,6 +33,7 @@ export default function Table() {
   }
 
   function openTab() {
+    dispatch(GeneratorCreators.generatorPdfTodosRequest());
     window.open("/pdf");
   }
 
@@ -143,25 +146,7 @@ export default function Table() {
 
               {
                 title: "Responsavel",
-
-                render: rowData => (
-                  <h6
-                    style={{
-                      fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-                      fontSize: "0.875rem",
-                      fontWeight: "400",
-                      lineHeight: "1.43",
-                      letterSpacing: "0.01071em",
-                      verticalAlign: "inherit"
-                    }}
-                  >
-                    {rowData.family.map(familiar => {
-                      if (familiar.tipo === "responsavel") {
-                        return familiar.nome;
-                      }
-                    })}
-                  </h6>
-                )
+                field: "nome"
               },
 
               {

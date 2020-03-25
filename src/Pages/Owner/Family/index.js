@@ -76,7 +76,8 @@ function View(props) {
     showModalNewFamiliar,
     hideModalFamily,
     deleteFamilyRequest,
-    showModalUpdateFamily
+    showModalUpdateFamily,
+    readBoxesRequest
   } = props;
 
   const { id } = props.redux.box;
@@ -181,6 +182,7 @@ function View(props) {
                 tooltip: "Fechar",
                 isFreeAction: true,
                 onClick: (event, rowData) => {
+                  readBoxesRequest();
                   hideModalFamily();
                 }
               },
