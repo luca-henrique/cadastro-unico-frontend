@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as GeneratorCreators } from "../../../store/ducks/generator";
@@ -10,15 +10,10 @@ import {
   Backdrop,
   Fade,
   Grid,
-  TextField,
-  Select,
-  FormControl,
   Checkbox,
   withStyles
 } from "@material-ui/core/";
 
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { green } from "@material-ui/core/colors";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -36,6 +31,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// eslint-disable-next-line no-unused-vars
 const GreenCheckbox = withStyles({
   root: {
     color: green[200],

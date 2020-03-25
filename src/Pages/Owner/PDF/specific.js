@@ -7,7 +7,6 @@ import { Page, Text, View, Document } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
 
 import { Creators as BoxCreators } from "../../../store/ducks/box";
-import { Creators as FamilyCreators } from "../../../store/ducks/family";
 
 import styled from "@react-pdf/styled-components";
 import moment from "moment";

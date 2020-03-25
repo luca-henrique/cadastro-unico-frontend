@@ -12,13 +12,6 @@ import Logo from "../../../Assets/Images/ctm-logo.png";
 
 import moment from "moment";
 
-import styled from "@react-pdf/styled-components";
-import { BorderTop } from "@material-ui/icons";
-
-const Column = styled.View`
-  justify-content: center;
-`;
-
 const PDF = props => {
   const { descartes } = props.redux.generator;
 
