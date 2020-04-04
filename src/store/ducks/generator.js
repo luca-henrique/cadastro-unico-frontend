@@ -4,6 +4,12 @@ export const Types = {
   SHOW_MODAL_GENERATOR_PDF: "@pdf/SHOW_MODAL_GENERATOR_PDF",
   HIDE_MODAL_GENERATOR_PDF: "@pdf/HIDE_MODAL_GENERATOR_PDF",
 
+  GENERATOR_PDF_RELATIONSHIP_BOX_FAMILY_REQUEST:
+    "@pdf/GENERATOR_PDF_RELATIONSHIP_BOX_FAMILY_REQUEST",
+
+  GENERATOR_PDF_RELATIONSHIP_BOX_FAMILY_SUCCESS:
+    "@pdf/GENERATOR_PDF_RELATIONSHIP_BOX_FAMILY_SUCCESS",
+
   GENERATOR_PDF_TODOS_REQUEST: " @pdf/GENERATOR_PDF_TODOS_REQUEST",
   GENERATOR_PDF_TODOS_SUCCESS: "@pdf/GENERATOR_PDF_TODOS_SUCCESS",
 
@@ -16,6 +22,8 @@ export const Types = {
 
 const INITIAL_STATE = Immutable({
   open: false,
+  relationBoxFamily: {},
+
   todos: {},
   etiqueta: {},
   descartes: {}
@@ -38,6 +46,12 @@ export default function generator(state = INITIAL_STATE, action) {
       return {
         ...state,
         todos: action.payload.todos
+      };
+
+    case Types.GENERATOR_PDF_RELATIONSHIP_BOX_FAMILY_SUCCESS:
+      return {
+        ...state,
+        relationBoxFamily: action.payload.relationBoxFamily
       };
 
     case Types.GENERATOR_PDF_ETIQUETA_SUCCESS:
@@ -63,6 +77,15 @@ export const Creators = {
   }),
   hideModalGeneratorPdf: () => ({
     type: Types.HIDE_MODAL_GENERATOR_PDF
+  }),
+
+  generateRelationshipBoxFamiliesRequest: () => ({
+    type: Types.GENERATOR_PDF_RELATIONSHIP_BOX_FAMILY_REQUEST
+  }),
+
+  generateRelationshipBoxFamiliesSuccess: relationBoxFamily => ({
+    type: Types.GENERATOR_PDF_RELATIONSHIP_BOX_FAMILY_SUCCESS,
+    payload: { relationBoxFamily }
   }),
 
   generatorPdfTodosRequest: () => ({

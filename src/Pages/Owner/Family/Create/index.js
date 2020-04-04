@@ -178,8 +178,8 @@ export default function Create() {
                     <Typography variant="button">Tipo:</Typography>
                     <Select native size="small" fullWidth>
                       <option value="" />
-                      <option value={"dependente"}>Dependente</option>
-                      <option value={"responsavel"}>Responsavel</option>
+                      <option value={"DEPENDENTE"}>Dependente</option>
+                      <option value={"RESPONSAVEL"}>Responsavel</option>
                     </Select>
                   </FormControl>
                 </div>

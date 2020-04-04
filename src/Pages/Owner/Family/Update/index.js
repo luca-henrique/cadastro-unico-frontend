@@ -191,8 +191,8 @@ function Update(props) {
                           onChange={e => setTipo(e.target.value)}
                         >
                           <option value="" />
-                          <option value={"dependente"}>Dependente</option>
-                          <option value={"responsavel"}>Responsavel</option>
+                          <option value={"DEPENDETE"}>Dependente</option>
+                          <option value={"RESPONSAVEL"}>Responsavel</option>
                         </Select>
                       </FormControl>
                     </div>
