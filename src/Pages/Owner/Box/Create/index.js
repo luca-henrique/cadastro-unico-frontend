@@ -14,7 +14,7 @@ import {
   Fade,
   Grid,
   TextField,
-  withStyles
+  withStyles,
 } from "@material-ui/core/";
 
 import { green } from "@material-ui/core/colors";
@@ -30,36 +30,36 @@ import { nisMask } from "../../../Components/TextField/MaskNIS";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      height: "100%"
+      height: "100%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "600px"
-    }
+      width: "600px",
+    },
   },
   main: {
     display: "flex",
     [theme.breakpoints.down("sm")]: {
       height: "100%",
-      display: "inline-block"
-    }
-  }
+      display: "inline-block",
+    },
+  },
 }));
 
 const GreenCheckbox = withStyles({
   root: {
     color: green[200],
     "&$checked": {
-      color: green[300]
-    }
+      color: green[300],
+    },
   },
-  checked: {}
-})(props => <Checkbox color="default" {...props} />);
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
-const Create = props => {
+const Create = (props) => {
   const [numPaste, setNumPaste] = useState("");
   const [numBox, setNumBox] = useState("");
   const [codHome, setCodHome] = useState("");
@@ -86,20 +86,24 @@ const Create = props => {
     e.preventDefault();
 
     var box = {
-      numBox,
-      numPaste,
-      codHome,
+      num_box: numBox,
+      num_paste: numPaste,
+      cod_home: codHome,
+
       district,
-      dateInterview,
-      dateVisit,
+
+      date_interview: dateInterview,
+      date_visit: dateVisit,
+
       reason,
       note,
 
       situation,
       deficient,
-      oldMan,
+      old_man: oldMan,
       benefit,
-      local
+
+      local,
     };
 
     const { createBoxRequest } = props;
@@ -139,13 +143,13 @@ const Create = props => {
         overflowX: "visible",
         overflowY: "scroll",
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
       }}
       className={classes.main}
       open={visible}
       BackdropComponent={Backdrop}
       BackdropProps={{
-        timeout: 500
+        timeout: 500,
       }}
     >
       <form onSubmit={create}>
@@ -155,7 +159,7 @@ const Create = props => {
               backgroundColor: "#fff",
               padding: "20px",
               border: "1px solid #D8D8D8",
-              borderRadius: "5px"
+              borderRadius: "5px",
             }}
             className={classes.modal}
           >
@@ -171,7 +175,7 @@ const Create = props => {
                   style={{
                     color: "rgba(2,99,44,0.7)",
                     textAlign: "center",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
                   }}
                 >
                   Cadastrar
@@ -185,7 +189,7 @@ const Create = props => {
                     size="small"
                     fullWidth
                     value={numBox}
-                    onChange={e => setNumBox(e.target.value)}
+                    onChange={(e) => setNumBox(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -198,7 +202,7 @@ const Create = props => {
                     size="small"
                     fullWidth
                     value={numPaste}
-                    onChange={e => setNumPaste(e.target.value)}
+                    onChange={(e) => setNumPaste(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -224,12 +228,12 @@ const Create = props => {
                     size="small"
                     fullWidth
                     value={district}
-                    onChange={e => setDisctrict(e.target.value)}
+                    onChange={(e) => setDisctrict(e.target.value)}
                   >
                     <Typography variant="button">Bairro:</Typography>
                     <Select native size="small" fullWidth>
                       <option value="" />
-                      {districts.map(teste => (
+                      {districts.map((teste) => (
                         <option key={teste.id} value={teste.nome}>
                           {teste.nome}
                         </option>
@@ -247,7 +251,7 @@ const Create = props => {
                     fullWidth
                     type="date"
                     value={dateInterview}
-                    onChange={e => setDateInterview(e.target.value)}
+                    onChange={(e) => setDateInterview(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -260,7 +264,7 @@ const Create = props => {
                     fullWidth
                     type="date"
                     value={dateVisit}
-                    onChange={e => setDateVisit(e.target.value)}
+                    onChange={(e) => setDateVisit(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -275,7 +279,7 @@ const Create = props => {
                     multiline
                     rows="2"
                     value={reason}
-                    onChange={e => setReason(e.target.value)}
+                    onChange={(e) => setReason(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -290,7 +294,7 @@ const Create = props => {
                     multiline
                     rows="2"
                     value={note}
-                    onChange={e => setNote(e.target.value)}
+                    onChange={(e) => setNote(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -313,7 +317,7 @@ const Create = props => {
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
                           value={local}
-                          onChange={e => setLocal(e.target.checked)}
+                          onChange={(e) => setLocal(e.target.checked)}
                           control={<GreenCheckbox />}
                           label="Local"
                           labelPlacement="end"
@@ -322,7 +326,7 @@ const Create = props => {
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
                           value={situation}
-                          onChange={e => setSituation(e.target.checked)}
+                          onChange={(e) => setSituation(e.target.checked)}
                           control={<GreenCheckbox />}
                           label="situação"
                           labelPlacement="end"
@@ -330,7 +334,7 @@ const Create = props => {
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
                           value={oldMan}
-                          onChange={e => setOldMan(e.target.checked)}
+                          onChange={(e) => setOldMan(e.target.checked)}
                           control={<GreenCheckbox />}
                           label="idoso"
                           labelPlacement="end"
@@ -339,7 +343,7 @@ const Create = props => {
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
                           value={benefit}
-                          onChange={e => setBenefit(e.target.checked)}
+                          onChange={(e) => setBenefit(e.target.checked)}
                           control={<GreenCheckbox />}
                           label="BPC"
                           labelPlacement="end"
@@ -347,7 +351,7 @@ const Create = props => {
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
                           value={deficient}
-                          onChange={e => {
+                          onChange={(e) => {
                             setDeficient(e.target.checked);
                           }}
                           control={<GreenCheckbox />}
@@ -391,11 +395,11 @@ const Create = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...BoxCreators, ...PrefeituraCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);

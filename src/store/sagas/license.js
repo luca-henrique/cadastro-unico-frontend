@@ -22,7 +22,7 @@ export function* checkToken({ payload }) {
 
 export function* requestToken() {
   try {
-    const tokens = yield call(api.get, "/tokens");
+    const tokens = yield call(api.get, "/token");
 
     var size = tokens.data.length - 1;
 

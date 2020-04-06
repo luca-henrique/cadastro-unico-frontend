@@ -181,20 +181,7 @@ const PDF = props => {
       <Document title="Relatorio geral">
         <Page size="A4" wrap>
           <View>
-            <Header>
-              <Heading>
-                <Text>{prefecture.nome}</Text>
-              </Heading>
-
-              <View style={{ display: "flex", flexDirection: "column" }}>
-                <Data>
-                  <Text>{date}</Text>
-                </Data>
-                <TextInformation>
-                  <Text>Relatorio geral</Text>
-                </TextInformation>
-              </View>
-            </Header>
+            
             {load(relationBoxFamily) === false ? (
               <Text>Carregando</Text>
             ) : (

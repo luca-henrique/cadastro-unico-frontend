@@ -27,27 +27,58 @@ export default function Table() {
     window.open("/pdf");
   }
 
+  function search(query) {
+    new Promise((resolve, reject) => {
+      var per_page = query.pageSize;
+      var page = query.page + 1;
+      api
+        .post("/search/", { per_page, page })
+        .then((response) => {
+          resolve({
+            data: response.data.data || [],
+            page: response.data.page - 1,
+            totalCount: parseInt(response.data.total),
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .then((result) => {});
+    });
+  }
+
+  function teste(query) {
+    var per_page = query.pageSize;
+    var page = query.page + 1;
+    api
+      .post("/search/", { per_page, page })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   return (
     <>
       <MaterialTable
         style={{
-          boxShadow: "none"
+          boxShadow: "none",
         }}
         title={null}
-        data={query =>
+        data={(query) =>
           new Promise((resolve, reject) => {
             var per_page = query.pageSize;
             var page = query.page + 1;
-            api
-              .post("/search/", { per_page, page })
-              .then(response => {
-                resolve({
-                  data: response.data.data,
-                  page: response.data.page - 1,
-                  totalCount: parseInt(response.data.total)
-                });
-              })
-              .then(result => {});
+            api.post("/search/", { per_page, page }).then((response) => {
+              console.log(response);
+              resolve({
+                data: response.data.data,
+                page: response.data.page - 1,
+                totalCount: parseInt(response.data.total),
+              });
+            });
           })
         }
         onRowClick={(evt, selectedRow) => {
@@ -55,31 +86,31 @@ export default function Table() {
         }}
         localization={{
           header: {
-            actions: "Ações"
+            actions: "Ações",
           },
 
           body: {
             emptyDataSourceMessage: "Não existe",
             filterRow: {
-              filterTooltip: "Procurar"
-            }
+              filterTooltip: "Procurar",
+            },
           },
           toolbar: {
             searchTooltip: "Procurar",
-            searchPlaceholder: "Procurar"
-          }
+            searchPlaceholder: "Procurar",
+          },
         }}
         options={{
           headerStyle: {
-            color: "rgb(2,90,10)"
+            color: "rgb(2,90,10)",
           },
           actionsCellStyle: { color: "#848484" },
-          rowStyle: rowData => ({
+          rowStyle: (rowData) => ({
             backgroundColor:
               selectedRow && selectedRow.tableData.id === rowData.tableData.id
                 ? "#F3F781"
-                : "#FFF"
-          })
+                : "#FFF",
+          }),
         }}
         actions={[
           {
@@ -88,14 +119,14 @@ export default function Table() {
             isFreeAction: true,
             onClick: (event, rowData) => {
               dispatch(CreatorsBox.showModalNewBox());
-            }
+            },
           },
 
           {
             icon: "printer",
             tooltip: "Gerar PDF",
             isFreeAction: true,
-            onClick: (event, rowData) => openTab()
+            onClick: (event, rowData) => openTab(),
           },
           {
             icon: "visibility",
@@ -103,68 +134,69 @@ export default function Table() {
             onClick: (event, rowData) => {
               dispatch(CreatorsBox.readFamiliesRequest(rowData.id));
               dispatch(CreatorsFamily.showModalFamily());
-            }
+            },
           },
           {
             icon: "delete",
             tooltip: "Excluir",
             onClick: (event, rowData) => {
               remove(rowData.id);
-            }
+            },
           },
           {
             icon: "edit",
             tooltip: "Editar",
             onClick: (event, rowData) => {
               dispatch(CreatorsBox.showModalUpdateBox(rowData));
-            }
+            },
           },
           {
             icon: "refresh",
             tooltip: "Atualizar informações",
             isFreeAction: true,
-            onClick: () => dispatch(CreatorsBox.readBoxesRequest())
-          }
+            onClick: () =>
+              this.tableRef.current && this.tableRef.current.onQueryChange(),
+          },
         ]}
         // eslint-disable-next-line react/jsx-no-duplicate-props
         columns={[
           {
             title: "Codigo",
-            field: "id"
+            field: "id",
           },
 
           {
             title: "Caixa",
-            field: "numBox"
+            field: "num_box",
           },
           {
             title: "Pasta",
-            field: "numPaste"
+            field: "num_paste",
           },
           {
             title: "Codigo domiciliar",
-            field: "codHome"
+            field: "cod_home",
           },
 
           {
             title: "Responsavel",
-            field: "nome"
+            field: "nome",
           },
 
           {
             title: "Data visita",
             type: "date",
-            field: "dateInterview"
+            field: "date_interview",
           },
           {
             title: "Data entrevista",
             type: "date",
-            field: "dateVisit"
+            field: "date_visit",
           },
           {
             title: "Local",
             field: "local",
-            render: rowData => (
+            render: (rowData) => (
               <>
                 <WarningIcon
                   style={
@@ -175,8 +207,7 @@ export default function Table() {
                 />
               </>
             ),
-            lookup: { true: "Está", false: "Não está" }
-          }
+          },
         ]}
       />
 
