@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as CreatorsBox } from "../../../../store/ducks/box";
@@ -12,9 +12,7 @@ import Create from "../../Box/Create";
 import Update from "../../Box/Update";
 import Family from "../../Family/index";
 
-import api from "../../../../services/api";
-
-export default function Table() {
+function Table() {
   const [selectedRow, setSelectedRow] = useState("");
 
   const dispatch = useDispatch();
@@ -27,38 +25,7 @@ export default function Table() {
     window.open("/pdf");
   }
 
-  function search(query) {
-    new Promise((resolve, reject) => {
-      var per_page = query.pageSize;
-      var page = query.page + 1;
-      api
-        .post("/search/", { per_page, page })
-        .then((response) => {
-          resolve({
-            data: response.data.data || [],
-            page: response.data.page - 1,
-            totalCount: parseInt(response.data.total),
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
-        .then((result) => {});
-    });
-  }
-
-  function teste(query) {
-    var per_page = query.pageSize;
-    var page = query.page + 1;
-    api
-      .post("/search/", { per_page, page })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+  const data = useSelector((state) => state.box.boxes);
 
   return (
     <>
@@ -67,20 +34,7 @@ export default function Table() {
           boxShadow: "none",
         }}
         title={null}
-        data={(query) =>
-          new Promise((resolve, reject) => {
-            var per_page = query.pageSize;
-            var page = query.page + 1;
-            api.post("/search/", { per_page, page }).then((response) => {
-              console.log(response);
-              resolve({
-                data: response.data.data,
-                page: response.data.page - 1,
-                totalCount: parseInt(response.data.total),
-              });
-            });
-          })
-        }
+        data={data}
         onRowClick={(evt, selectedRow) => {
           setSelectedRow(selectedRow);
         }}
@@ -105,7 +59,7 @@ export default function Table() {
             color: "rgb(2,90,10)",
           },
           actionsCellStyle: { color: "#848484" },
-          rowStyle: (rowData) => ({
+          rowStyle: (event, rowData) => ({
             backgroundColor:
               selectedRow && selectedRow.tableData.id === rowData.tableData.id
                 ? "#F3F781"
@@ -117,7 +71,7 @@ export default function Table() {
             icon: "add",
             tooltip: "Adicionar",
             isFreeAction: true,
-            onClick: (event, rowData) => {
+            onClick: () => {
               dispatch(CreatorsBox.showModalNewBox());
             },
           },
@@ -154,8 +108,7 @@ export default function Table() {
             icon: "refresh",
             tooltip: "Atualizar informações",
             isFreeAction: true,
-            onClick: () =>
-              this.tableRef.current && this.tableRef.current.onQueryChange(),
+            onClick: () => dispatch(CreatorsBox.readBoxesRequest()),
           },
         ]}
         // eslint-disable-next-line react/jsx-no-duplicate-props
@@ -219,3 +172,5 @@ export default function Table() {
     </>
   );
 }
+
+export default memo(Table);
