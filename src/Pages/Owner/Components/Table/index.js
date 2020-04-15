@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as CreatorsBox } from "../../../../store/ducks/box";
 import { Creators as CreatorsFamily } from "../../../../store/ducks/family";
+import { Creators as CreatorsGenerete } from "../../../../store/ducks/generator";
 
 import WarningIcon from "@material-ui/icons/Warning";
 import MaterialTable from "material-table";
@@ -19,10 +20,6 @@ function Table() {
 
   function remove(id) {
     dispatch(CreatorsBox.deleteBoxRequest(id));
-  }
-
-  function openTab() {
-    window.open("/pdf");
   }
 
   const data = useSelector((state) => state.box.boxes);
@@ -80,7 +77,11 @@ function Table() {
             icon: "printer",
             tooltip: "Gerar PDF",
             isFreeAction: true,
-            onClick: (event, rowData) => openTab(),
+            onClick: (event, rowData) => {
+              dispatch(
+                CreatorsGenerete.generateRelationshipBoxFamiliesRequest()
+              );
+            },
           },
           {
             icon: "visibility",

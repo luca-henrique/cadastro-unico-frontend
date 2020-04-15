@@ -13,7 +13,7 @@ import { Types as FunTypes } from "../ducks/funcionario";
 import {
   getFuncionarios,
   createFuncionario,
-  deleteFuncionario
+  deleteFuncionario,
 } from "./funcionario";
 
 import { Types as BoxTypes } from "../ducks/box";
@@ -23,28 +23,28 @@ import {
   deleteBox,
   getBoxes,
   getFamilyBox,
-  getBoxSize
+  getBoxSize,
 } from "./box";
 
 import { Types as PrefectureTypes } from "../ducks/prefecture";
 import {
   createPrefecture,
   updatePrefecture,
-  getPrefecture
+  getPrefecture,
 } from "./prefecture";
 
 import { Types as AddrressPrefectureTypes } from "../ducks/address_prefecture";
 import {
   createAddressPrefecture,
   updateAddrressPrefecture,
-  getAddrressPrefecture
+  getAddrressPrefecture,
 } from "./address_prefecture";
 
 import { Types as ContactPrefectureTypes } from "../ducks/contact_prefecture";
 import {
   createContactPrefecture,
   readContactPrefecture,
-  updateContactPrefecture
+  updateContactPrefecture,
 } from "./contact_prefecture";
 
 import { Types as FamilyTypes } from "../ducks/family";
@@ -52,7 +52,7 @@ import {
   createFamily,
   deleteFamily,
   updateFamily,
-  getFamilies
+  getFamilies,
 } from "./family";
 
 import { Types as LogTypes } from "../ducks/log";
@@ -60,10 +60,9 @@ import { getLogs } from "./log";
 
 import { Types as GeneratorTypes } from "../ducks/generator";
 import {
-  etiquetas,
-  descartes,
-  listBoxesFamilies,
-  relationshipBoxFamilies
+  generatePdfRelationShipBoxFamilies,
+  generatePdfHangTags,
+  generatePdfSintetico,
 } from "./generator";
 
 import { teste } from "./teste";
@@ -73,7 +72,7 @@ import {
   createDistrict,
   getDistricts,
   updateDistrict,
-  deleteDistrict
+  deleteDistrict,
 } from "./district";
 
 export default function* rootSaga() {
@@ -87,14 +86,6 @@ export default function* rootSaga() {
     takeLatest(LicenseTypes.CHECK_ACCESS_TOKEN, checkToken),
 
     takeLatest(LogTypes.READ_LOG_REQUEST, getLogs),
-
-    takeLatest(GeneratorTypes.GENERATOR_PDF_TODOS_REQUEST, listBoxesFamilies),
-    takeLatest(GeneratorTypes.GENERATOR_PDF_ETIQUETA_REQUEST, etiquetas),
-    takeLatest(GeneratorTypes.GENERATOR_PDF_DESCARTES_REQUEST, descartes),
-    takeLatest(
-      GeneratorTypes.GENERATOR_PDF_RELATIONSHIP_BOX_FAMILY_REQUEST,
-      relationshipBoxFamilies
-    ),
 
     takeLatest(UserTypes.READ_USER_REQUEST, index),
     takeLatest(UserTypes.UPDATE_USER_REQUEST, update),
@@ -150,6 +141,21 @@ export default function* rootSaga() {
     takeLatest(DistrictTypes.CREATE_DISTRICT_REQUEST, createDistrict),
     takeLatest(DistrictTypes.UPDATE_DISTRICT_REQUEST, updateDistrict),
     takeLatest(DistrictTypes.DELETE_DISTRICT_REQUEST, deleteDistrict),
-    takeLatest(DistrictTypes.READ_DISTRICT_REQUEST, getDistricts)
+    takeLatest(DistrictTypes.READ_DISTRICT_REQUEST, getDistricts),
+
+    takeLatest(
+      GeneratorTypes.GENERATE_PDF_RELATIONSHIP_BOX_FAMILIES_REQUEST,
+      generatePdfRelationShipBoxFamilies
+    ),
+
+    takeLatest(
+      GeneratorTypes.GENERATE_PDF_HANG_TAGS_REQUEST,
+      generatePdfHangTags
+    ),
+
+    takeLatest(
+      GeneratorTypes.GENERATE_PDF_SINTETICO_REQUEST,
+      generatePdfSintetico
+    ),
   ]);
 }

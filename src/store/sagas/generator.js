@@ -1,40 +1,72 @@
 import { call, put } from "redux-saga/effects";
 import { Creators as GeneratorCreators } from "../ducks/generator";
 
+import { saveAs } from "file-saver";
+
 import api from "../../services/api";
 
-export function* relationshipBoxFamilies() {
+/**
+ * Gera o pdf das caixas e familiares [tudo]
+ */
+export function* generatePdfRelationShipBoxFamilies() {
   try {
-    const response = yield call(api.get, "/relationship_box_family");
-
-    console.log(response.data);
-
-    yield put(
-      GeneratorCreators.generateRelationshipBoxFamiliesSuccess(response.data)
+    const response = yield call(
+      api.get,
+      "/generate_pdf_relationship_box_family"
     );
+    var file = new Blob([response.data], { type: "application/pdf" });
+
+    saveAs(file);
   } catch (err) {}
 }
 
-export function* etiquetas() {
+/**
+ * Gera o pdf das etiquetas
+ */
+export function* generatePdfHangTags() {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const response = yield call(api.get, "/etiquetas");
+    const response = yield call(api.get, "/generate_pdf_hang_tags");
+    var file = new Blob([response.data], { type: "application/pdf" });
 
-    yield put(GeneratorCreators.generatorPdfEtiquetasSuccess(response.data));
+    saveAs(file);
   } catch (err) {}
 }
 
-export function* descartes() {
+/**
+ * Gera o pdf das sintetico
+ */
+export function* generatePdfSintetico() {
   try {
-    const response = yield call(api.get, "/descartes");
-    yield put(GeneratorCreators.generatorPdfDescartesSuccess(response.data));
+    const response = yield call(api.get, "/generate_pdf_boxes_responsible");
+    var file = new Blob([response.data], { type: "application/pdf" });
+
+    saveAs(file);
   } catch (err) {}
 }
 
-export function* listBoxesFamilies() {
+/**
+ * Gera o pdf descartes
+ */
+export function* generatePdfDiscard() {
   try {
-    const response = yield call(api.get, "/responsavel");
+    const response = yield call(api.get, "/generate_pdf_discard");
+  } catch (err) {}
+}
 
-    yield put(GeneratorCreators.generatorPdfTodosSuccess(response.data));
+/**
+ * Gera o pdf districts
+ */
+export function* generatePdfDistricts() {
+  try {
+    const response = yield call(api.get, "/generate_pdf_districts");
+  } catch (err) {}
+}
+
+/**
+ * Gera o pdf de uma caixa especifica com os familiares
+ */
+export function* generatePdfUniqueBoxFamilies() {
+  try {
+    const response = yield call(api.get, "/generate_pdf_unique_box_families");
   } catch (err) {}
 }
