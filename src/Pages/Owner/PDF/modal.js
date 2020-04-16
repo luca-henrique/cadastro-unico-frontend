@@ -70,22 +70,10 @@ export default function Create() {
   const [district, setDisctrict] = useState("");
   */
 
-  function etiquetas() {
-    dispatch(GeneratorCreators.generatorPdfEtiquetasRequest());
-    dispatch(GeneratorCreators.hideModalGeneratorPdf());
-    openTabEtiquetas();
-  }
-
   function descartes() {
-    dispatch(GeneratorCreators.generatorPdfDescartesRequest());
+    dispatch(GeneratorCreators.generatePdfDiscardRequest());
     dispatch(GeneratorCreators.hideModalGeneratorPdf());
     openTabDescartes();
-  }
-
-  function sintetico() {
-    dispatch(GeneratorCreators.generatorPdfTodosRequest());
-    dispatch(GeneratorCreators.hideModalGeneratorPdf());
-    openTabSintetico();
   }
 
   function hide() {
@@ -378,6 +366,7 @@ export default function Create() {
                   <Button
                     variant="contained"
                     style={{ color: "rgb(2,99,44)", width: "100%" }}
+                    onClick={descartes}
                   >
                     Descarte
                   </Button>

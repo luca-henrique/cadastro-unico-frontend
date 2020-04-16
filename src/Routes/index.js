@@ -9,7 +9,9 @@ import Private from "./private";
 import Pdf from "../Pages/Owner/PDF/index";
 import Specific from "../Pages/Owner/PDF/specific";
 
-import Descartes from "../Pages/Owner/PDF/descartes";
+import districts from "../Pages/Owner/PDF/districts";
+
+import discard from "../Pages/Owner/PDF/descartes";
 
 import { Route } from "react-router-dom";
 
@@ -23,7 +25,9 @@ const Routes = () => (
 
       <Route path="/pdf" exact component={Pdf} />
 
-      <Route path="/descartes" exact component={Descartes} />
+      <Route path="/district" exact component={districts} />
+
+      <Route path="/descartes" exact component={discard} />
 
       <Route path="/specific" exact component={Specific} />
 

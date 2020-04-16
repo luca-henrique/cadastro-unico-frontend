@@ -63,6 +63,8 @@ import {
   generatePdfRelationShipBoxFamilies,
   generatePdfHangTags,
   generatePdfSintetico,
+  generatePdfUniqueBoxFamilies,
+  generatePdfDiscard,
 } from "./generator";
 
 import { teste } from "./teste";
@@ -157,5 +159,10 @@ export default function* rootSaga() {
       GeneratorTypes.GENERATE_PDF_SINTETICO_REQUEST,
       generatePdfSintetico
     ),
+    takeLatest(
+      GeneratorTypes.GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST,
+      generatePdfUniqueBoxFamilies
+    ),
+    takeLatest(GeneratorTypes.GENERATE_PDF_DISCARD_REQUEST, generatePdfDiscard),
   ]);
 }

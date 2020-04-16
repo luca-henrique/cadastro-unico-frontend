@@ -50,6 +50,7 @@ export function* generatePdfSintetico() {
 export function* generatePdfDiscard() {
   try {
     const response = yield call(api.get, "/generate_pdf_discard");
+    yield put(GeneratorCreators.generatePdfDiscardSuccess(response.data));
   } catch (err) {}
 }
 
@@ -65,8 +66,15 @@ export function* generatePdfDistricts() {
 /**
  * Gera o pdf de uma caixa especifica com os familiares
  */
-export function* generatePdfUniqueBoxFamilies() {
+export function* generatePdfUniqueBoxFamilies({ payload }) {
   try {
-    const response = yield call(api.get, "/generate_pdf_unique_box_families");
+    console.log(payload);
+    const response = yield call(
+      api.get,
+      `/generate_pdf_unique_box_families/${payload.box_id}`
+    );
+    yield put(
+      GeneratorCreators.GeneratePdfUniqueBoxFamiliesSuccess(response.data[0])
+    );
   } catch (err) {}
 }

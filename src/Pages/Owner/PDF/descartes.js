@@ -12,19 +12,14 @@ import Logo from "../../../Assets/Images/ctm-logo.png";
 
 import moment from "moment";
 
-const PDF = props => {
-  const { descartes } = props.redux.generator;
+const PDF = (props) => {
+  const { discard } = props.redux.generator;
 
   const { prefecture } = props.redux.prefecture;
 
-  console.log(descartes);
-
   function dataAtualFormatada() {
     var data = new Date(),
-      dia = data
-        .getDate()
-        .toString()
-        .padStart(2, "0"),
+      dia = data.getDate().toString().padStart(2, "0"),
       mes = (data.getMonth() + 1).toString().padStart(2, "0"), //+1 pois no getMonth Janeiro começa com zero.
       ano = data.getFullYear();
     return dia + "/" + mes + "/" + ano;
@@ -47,21 +42,21 @@ const PDF = props => {
               flexDirection: "column",
               flexWrap: "wrap",
               width: "100%",
-              height: "100%"
+              height: "100%",
             }}
           >
             <View
               style={{
                 display: "flex",
                 flexDirection: "row",
-                margin: "5px"
+                margin: "5px",
               }}
             >
               <View
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  width: "70%"
+                  width: "70%",
                 }}
               >
                 <View>
@@ -76,7 +71,7 @@ const PDF = props => {
                   display: "flex",
                   flexDirection: "column",
 
-                  width: "30%"
+                  width: "30%",
                 }}
               >
                 <View>
@@ -92,7 +87,7 @@ const PDF = props => {
                 display: "flex",
                 flexDirection: "row",
                 marginTop: "20px",
-                justifyContent: "space-around"
+                justifyContent: "space-around",
               }}
             >
               <View style={{ width: " 10%" }}>
@@ -117,10 +112,10 @@ const PDF = props => {
                 display: "flex",
                 flexDirection: "row",
                 marginTop: "20px",
-                justifyContent: "space-around"
+                justifyContent: "space-around",
               }}
             >
-              {descartes.map(descarte => (
+              {discard.map((descarte) => (
                 <>
                   <View style={{ width: " 10%" }}>
                     <Text>{descarte.numPaste}</Text>
@@ -170,11 +165,11 @@ const PDF = props => {
   </View>} state 
  */
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...GeneratorCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PDF);

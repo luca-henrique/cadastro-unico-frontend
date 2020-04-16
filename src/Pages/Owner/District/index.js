@@ -13,18 +13,18 @@ import MaterialTable from "material-table";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       width: "100%",
       height: "80%",
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     [theme.breakpoints.up("md")]: {
-      width: "35%"
-    }
-  }
+      width: "35%",
+    },
+  },
 }));
 
 function View(props) {
@@ -40,8 +40,12 @@ function View(props) {
     showModalNewDistrict,
     hideModalDistrict,
     deleteDistrictRequest,
-    showModalUpdateDistrict
+    showModalUpdateDistrict,
   } = props;
+
+  function openTab() {
+    window.open("/district");
+  }
 
   return (
     <Modal
@@ -51,7 +55,7 @@ function View(props) {
         justifyContent: "center",
         alignItems: "center",
         overflowX: "visible",
-        overflowY: "scroll"
+        overflowY: "scroll",
       }}
     >
       <div className={classes.modal}>
@@ -62,33 +66,33 @@ function View(props) {
               title: "Código",
               field: "id",
               headerStyle: {
-                color: "rgb(2,90,10)"
-              }
+                color: "rgb(2,90,10)",
+              },
             },
             {
               title: "Bairro",
               field: "nome",
               headerStyle: {
-                color: "rgb(2,90,10)"
-              }
-            }
+                color: "rgb(2,90,10)",
+              },
+            },
           ]}
           data={districts}
           localization={{
             header: {
-              actions: "Ações"
+              actions: "Ações",
             },
 
             body: {
               emptyDataSourceMessage: "Não existe",
               filterRow: {
-                filterTooltip: "Procurar"
-              }
+                filterTooltip: "Procurar",
+              },
             },
             toolbar: {
               searchTooltip: "Procurar",
-              searchPlaceholder: "Procurar"
-            }
+              searchPlaceholder: "Procurar",
+            },
           }}
           actions={[
             {
@@ -97,13 +101,15 @@ function View(props) {
               isFreeAction: true,
               onClick: (event, rowData) => {
                 showModalNewDistrict();
-              }
+              },
             },
             {
               icon: "printer",
               tooltip: "Gerar PDF",
               isFreeAction: true,
-              onClick: (event, rowData) => {}
+              onClick: (event, rowData) => {
+                openTab();
+              },
             },
             {
               icon: "close",
@@ -111,7 +117,7 @@ function View(props) {
               isFreeAction: true,
               onClick: (event, rowData) => {
                 hideModalDistrict();
-              }
+              },
             },
 
             {
@@ -119,27 +125,27 @@ function View(props) {
               tooltip: "Excluir",
               onClick: (event, rowData) => {
                 deleteDistrictRequest(rowData.id);
-              }
+              },
             },
             {
               icon: "edit",
               tooltip: "Editar",
               onClick: (event, rowData) => {
                 showModalUpdateDistrict(rowData);
-              }
-            }
+              },
+            },
           ]}
           options={{
             headerStyle: {
-              color: "rgb(2,90,10)"
+              color: "rgb(2,90,10)",
             },
             actionsCellStyle: { color: "#848484" },
-            rowStyle: rowData => ({
+            rowStyle: (rowData) => ({
               backgroundColor:
                 selectedRow && selectedRow.tableData.id === rowData.tableData.id
                   ? "#F3F781"
-                  : "#FFF"
-            })
+                  : "#FFF",
+            }),
           }}
         />
         <Create />
@@ -149,11 +155,11 @@ function View(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...DistrictCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(View);

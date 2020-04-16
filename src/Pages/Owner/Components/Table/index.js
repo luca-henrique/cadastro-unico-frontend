@@ -87,6 +87,9 @@ function Table() {
             icon: "visibility",
             tooltip: "Mostrar Familiares",
             onClick: (event, rowData) => {
+              dispatch(
+                CreatorsGenerete.GeneratePdfUniqueBoxFamiliesRequest(rowData.id)
+              );
               dispatch(CreatorsBox.readFamiliesRequest(rowData.id));
               dispatch(CreatorsFamily.showModalFamily());
             },
