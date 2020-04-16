@@ -3,14 +3,7 @@ import React, { useEffect } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import {
-  Page,
-  Text,
-  View,
-  Document,
-  pdfGenerator,
-  PDFViewer
-} from "@react-pdf/renderer";
+import { Page, Text, View, Document, PDFViewer } from "@react-pdf/renderer";
 
 import { Creators as BoxCreators } from "../../../store/ducks/box";
 import { Creators as GeneratorCreators } from "../../../store/ducks/generator";
@@ -76,54 +69,12 @@ const Result = styled.Text`
 
 /* Tabela grupo familiar */
 
-const Table = styled.View`
-  display: flex;
-
-  width: auto;
-  margin: 5px;
-  padding: 5px;
-`;
-
-const ColumnAlign = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const ColumnName = styled.View`
-  width: 160px;
-  text-align: center;
-  margin-top: 2px;
-  border-width: 1px;
-  border-style: solid;
-`;
-
-const ResultName = styled.View`
-  width: 160px;
-  border-width: 1px;
-  border-style: solid;
-  margin-top: 2px;
-`;
-
-const OthersColumns = styled.View`
-  width: 100px;
-  text-align: center;
-  margin-top: 2px;
-  margin-left: 2px;
-  border-width: 1px;
-  border-style: solid;
-`;
-
-const Title = styled.Text`
-  font-size: 12px;
-`;
-
 const SubTitle = styled.Text`
   font-size: 10px;
   margin-left: 2px;
 `;
 
-const PDF = props => {
+const PDF = (props) => {
   useEffect(() => {
     const { generateRelationshipBoxFamiliesRequest } = props;
     generateRelationshipBoxFamiliesRequest();
@@ -134,25 +85,12 @@ const PDF = props => {
 
   const { relationBoxFamily } = props.redux.generator;
 
-  const date = dataAtualFormatada();
-
   function load(data) {
     if (Array.isArray(data)) {
       return true;
     } else {
       return false;
     }
-  }
-
-  function dataAtualFormatada() {
-    var data = new Date(),
-      dia = data
-        .getDate()
-        .toString()
-        .padStart(2, "0"),
-      mes = (data.getMonth() + 1).toString().padStart(2, "0"), //+1 pois no getMonth Janeiro começa com zero.
-      ano = data.getFullYear();
-    return dia + "/" + mes + "/" + ano;
   }
 
   return (
@@ -165,7 +103,7 @@ const PDF = props => {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              alignContent: "center"
+              alignContent: "center",
             }}
           >
             Carregando
@@ -177,7 +115,7 @@ const PDF = props => {
             <Document title="Relatorio geral">
               <Top prefecture={prefecture} />
 
-              {relationBoxFamily.map(box => (
+              {relationBoxFamily.map((box) => (
                 <Page>
                   <Text
                     render={({ pageNumber, totalPages }) =>
@@ -197,11 +135,11 @@ const PDF = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...BoxCreators, ...GeneratorCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PDF);
@@ -251,10 +189,7 @@ const TextInformation = styled.Text`
 
 function getToday() {
   var data = new Date(),
-    dia = data
-      .getDate()
-      .toString()
-      .padStart(2, "0"),
+    dia = data.getDate().toString().padStart(2, "0"),
     mes = (data.getMonth() + 1).toString().padStart(2, "0"), //+1 pois no getMonth Janeiro começa com zero.
     ano = data.getFullYear();
   return dia + "/" + mes + "/" + ano;
@@ -422,7 +357,7 @@ const Footer = () => {
         position: "absolute",
         bottom: "1px",
         width: "100%",
-        textAlign: "center"
+        textAlign: "center",
       }}
     >
       <View style={{ display: "flex", flexDirection: "row" }}>
@@ -442,7 +377,7 @@ const Paste = ({ box }) => {
         style={{
           borderWidth: 1,
           borderColor: "#999",
-          borderStyle: "solid"
+          borderStyle: "solid",
         }}
       >
         <SubText>Informações da pasta</SubText>

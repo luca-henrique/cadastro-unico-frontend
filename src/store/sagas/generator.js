@@ -59,7 +59,7 @@ export function* generatePdfDiscard() {
  */
 export function* generatePdfDistricts() {
   try {
-    const response = yield call(api.get, "/generate_pdf_districts");
+    yield call(api.get, "/generate_pdf_districts");
   } catch (err) {}
 }
 
@@ -68,7 +68,6 @@ export function* generatePdfDistricts() {
  */
 export function* generatePdfUniqueBoxFamilies({ payload }) {
   try {
-    console.log(payload);
     const response = yield call(
       api.get,
       `/generate_pdf_unique_box_families/${payload.box_id}`

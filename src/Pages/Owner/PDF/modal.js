@@ -80,16 +80,8 @@ export default function Create() {
     dispatch(GeneratorCreators.hideModalGeneratorPdf());
   }
 
-  function openTabEtiquetas() {
-    window.open("/etiquetas");
-  }
-
   function openTabDescartes() {
     window.open("/descartes");
-  }
-
-  function openTabSintetico() {
-    window.open("/sintetico");
   }
 
   return (

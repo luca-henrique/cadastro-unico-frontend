@@ -9,7 +9,6 @@ import { PDFViewer } from "@react-pdf/renderer";
 import { Creators as BoxCreators } from "../../../store/ducks/box";
 
 import styled from "@react-pdf/styled-components";
-import moment from "moment";
 
 const Header = styled.View`
   display: flex;
@@ -31,102 +30,6 @@ const Data = styled.Text`
 const TextInformation = styled.Text`
   margin-top: 5px;
   font-size: 10px;
-`;
-
-const SubText = styled.Text`
-  font-size: 14px;
-`;
-
-/* Informações da pasta */
-
-const Container = styled.View`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  width: 160px;
-  padding: 2px;
-`;
-
-const ContainerBox = styled.View`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  width: 20%;
-  padding: 2px;
-`;
-
-const List = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  margin: 5px;
-  padding: 5px;
-`;
-
-const Area = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  margin: 5px;
-  padding: 5px;
-`;
-
-const TextArea = styled.View`
-  width: 160px;
-  height: auto;
-`;
-
-const Atributes = styled.Text`
-  font-size: 12px;
-`;
-
-const Result = styled.Text`
-  margin-top: 3px;
-  font-size: 10px;
-`;
-
-/* Tabela grupo familiar */
-
-const Table = styled.View`
-  display: flex;
-
-  width: auto;
-  margin: 5px;
-  padding: 5px;
-`;
-
-const ColumnAlign = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const ColumnName = styled.View`
-  width: 160px;
-  text-align: center;
-  margin-top: 2px;
-  border-width: 1px;
-  border-style: solid;
-`;
-
-const ResultName = styled.View`
-  width: 160px;
-  border-width: 1px;
-  border-style: solid;
-  margin-top: 2px;
-`;
-
-const OthersColumns = styled.View`
-  width: 100px;
-  text-align: center;
-  margin-top: 2px;
-  margin-left: 2px;
-  border-width: 1px;
-  border-style: solid;
 `;
 
 const Title = styled.Text`
@@ -151,11 +54,6 @@ const PDF = (props) => {
       mes = (data.getMonth() + 1).toString().padStart(2, "0"), //+1 pois no getMonth Janeiro começa com zero.
       ano = data.getFullYear();
     return dia + "/" + mes + "/" + ano;
-  }
-
-  function formatDate(data) {
-    const date = moment(data).format("DD/MM/YYYY");
-    return date;
   }
 
   return (
@@ -184,21 +82,60 @@ const PDF = (props) => {
               alignItems: "center",
             }}
           >
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                backgroundColor: "#999",
+              }}
+            >
+              <View
+                style={{
+                  widht: "50%",
+                  marginRight: "20px",
+                  paddingLeft: "10px",
+                }}
+              >
+                <Title>código</Title>
+              </View>
+
+              <View
+                style={{
+                  widht: "50%",
+                  marginRight: "20px",
+                  paddingLeft: "10px",
+                }}
+              >
+                <Title>descrição</Title>
+              </View>
+            </View>
             {districts.map((district) => (
               <View
                 style={{
                   display: "flex",
                   flexDirection: "row",
+                  width: "100%",
                 }}
                 key={district.id}
               >
-                <View style={{ display: "flex", flexDirection: "row" }}>
-                  <Title>ID:</Title>
+                <View
+                  style={{
+                    widht: "50%",
+                    marginRight: "20px",
+                    paddingLeft: "10px",
+                  }}
+                >
                   <SubTitle>{district.id}</SubTitle>
                 </View>
 
-                <View style={{ display: "flex", flexDirection: "row" }}>
-                  <Title>Nome:</Title>
+                <View
+                  style={{
+                    widht: "50%",
+                    marginRight: "20px",
+                    paddingLeft: "10px",
+                  }}
+                >
                   <SubTitle>{district.nome}</SubTitle>
                 </View>
               </View>
