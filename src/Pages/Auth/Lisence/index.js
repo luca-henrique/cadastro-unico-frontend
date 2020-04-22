@@ -13,34 +13,56 @@ const ValidationTextField = withStyles({
   root: {
     "& input:valid + fieldset": {
       borderColor: "#A4A4A4",
-      borderWidth: 1
+      borderWidth: 1,
     },
     "& input:invalid + fieldset": {
-      borderColor: "red",
-      borderWidth: 2
+      borderColor: "#A4A4A4",
+      borderWidth: 2,
     },
     "& input:valid:focus + fieldset": {
-      borderColor: "#088A85",
-      padding: "4px !important"
-    }
-  }
+      borderColor: "#A4A4A4",
+      padding: "4px !important",
+    },
+  },
 })(TextField);
 
-const useStyles = makeStyles(theme => ({
-  main: {
+const useStyles = makeStyles((theme) => ({
+  img: {
     [theme.breakpoints.down("sm")]: {
-      paddingTop: theme.spacing(5),
-      width: "90%",
-      height: "80%"
+      width: "250px",
+      height: "200px",
+      marginTop: "5%",
     },
     [theme.breakpoints.up("md")]: {
+      marginTop: "5%",
+      width: "350px",
       height: "300px",
-      width: "400px"
-    }
-  }
+    },
+  },
+
+  subTitle: {
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "40px",
+    },
+    [theme.breakpoints.up("md")]: {
+      marginTop: "5%",
+    },
+  },
+
+  form: {
+    [theme.breakpoints.down("sm")]: {
+      width: "90%",
+      height: "20%",
+    },
+    [theme.breakpoints.up("md")]: {
+      marginTop: "20px",
+      zheight: "300px",
+      width: "400px",
+    },
+  },
 }));
 
-export default function() {
+export default function () {
   const [token, setToken] = useState("");
 
   const classes = useStyles();
@@ -64,58 +86,62 @@ export default function() {
         flex: 1,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-around",
         alignItems: "center",
         width: "100%",
-        height: "100%"
+        height: "100%",
       }}
     >
+      <div className={classes.img}>
+        <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
+      </div>
+      <div style={{ width: "100%" }} className={classes.subTitle}>
+        <Typography variant="h5" color="textSecondary" align="center">
+          Chave de acesso
+        </Typography>
+      </div>
       <form
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
-        className={classes.main}
+        className={classes.form}
         onSubmit={verification}
       >
-        <div style={{ width: "250px", height: "200px", marginBottom: "30px" }}>
-          <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
-        </div>
-        <Typography
-          variant="h4"
-          color="textSecondary"
-          align="center"
-          style={{ paddingBottom: "20px" }}
-        >
-          Chave de acesso
-        </Typography>
         <ValidationTextField
           variant="outlined"
           required
           size="small"
           fullWidth
           type="text"
-          style={{ margin: "5px" }}
           value={token}
-          onChange={e => setToken(e.target.value)}
+          onChange={(e) => setToken(e.target.value)}
+          style={{ width: "100%" }}
         />
         <Button
           variant="contained"
           type="submit"
           style={{
-            width: "60%",
-            marginTop: "10px",
-            marginBottom: "15px",
+            width: "100%",
+            marginTop: "15px",
             backgroundColor: "#04B4AE",
-            color: "#BDBDBD"
+            color: "#ffffff",
           }}
         >
           Verificar
         </Button>
       </form>
-      <Copyright />
+      <div
+        style={{
+          position: "absolute",
+          bottom: "8px",
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        <Copyright />
+      </div>
     </div>
   );
 }

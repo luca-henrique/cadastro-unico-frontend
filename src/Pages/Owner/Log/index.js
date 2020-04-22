@@ -10,18 +10,18 @@ import { Modal, Backdrop } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       width: "100%",
       height: "80%",
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     [theme.breakpoints.up("md")]: {
-      width: "40%"
-    }
-  }
+      width: "70%",
+    },
+  },
 }));
 
 function View(props) {
@@ -59,11 +59,11 @@ function View(props) {
         style={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
         BackdropComponent={Backdrop}
         BackdropProps={{
-          timeout: 500
+          timeout: 500,
         }}
       >
         {load(data) === true ? (
@@ -72,7 +72,7 @@ function View(props) {
               style={{
                 height: "auto",
                 boxShadow: "none",
-                color: "rgb(2,99,44)"
+                color: "rgb(2,99,44)",
               }}
               actions={[
                 {
@@ -81,49 +81,49 @@ function View(props) {
                   isFreeAction: true,
                   onClick: (event, rowData) => {
                     hideModalLog();
-                  }
-                }
+                  },
+                },
               ]}
               title="Log"
               data={changer(data)}
               localization={{
                 header: {
-                  actions: "Ações"
+                  actions: "Ações",
                 },
 
                 body: {
                   emptyDataSourceMessage: "Não existe",
                   filterRow: {
-                    filterTooltip: "Procurar"
-                  }
+                    filterTooltip: "Procurar",
+                  },
                 },
                 toolbar: {
                   searchTooltip: "Procurar",
-                  searchPlaceholder: "Procurar"
-                }
+                  searchPlaceholder: "Procurar",
+                },
               }}
               columns={[
                 {
                   title: "Url",
-                  field: "url"
+                  field: "url",
                 },
                 {
                   title: "Method",
-                  field: "method"
+                  field: "method",
                 },
                 {
                   title: "Usuario",
-                  field: "user_modified.email"
+                  field: "user_modified.email",
                 },
 
                 {
                   title: "Data da modificação",
-                  field: "data_modified"
+                  field: "data_modified",
                 },
                 {
                   title: "Horario da modificação",
-                  field: "hour_modified"
-                }
+                  field: "hour_modified",
+                },
               ]}
             />
           </div>
@@ -135,11 +135,11 @@ function View(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...LogCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(View);

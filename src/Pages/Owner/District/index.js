@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       width: "100%",
-      height: "80%",
+      height: "100%",
       overflowY: "scroll",
     },
     [theme.breakpoints.up("md")]: {
-      width: "35%",
+      width: "50%",
     },
   },
 }));
