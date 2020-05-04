@@ -4,21 +4,27 @@ export const Types = {
   SHOW_MODAL_GENERATOR_PDF: "@pdf/SHOW_MODAL_GENERATOR_PDF",
   HIDE_MODAL_GENERATOR_PDF: "@pdf/HIDE_MODAL_GENERATOR_PDF",
 
-  GENERATOR_PDF_TODOS_REQUEST: " @pdf/GENERATOR_PDF_TODOS_REQUEST",
-  GENERATOR_PDF_TODOS_SUCCESS: "@pdf/GENERATOR_PDF_TODOS_SUCCESS",
+  GENERATE_PDF_RELATIONSHIP_BOX_FAMILIES_REQUEST:
+    "@pdf/GENERATE_PDF_RELATIONSHIP_BOX_FAMILIES_REQUEST",
 
-  GENERATOR_PDF_ETIQUETA_REQUEST: " @pdf/GENERATOR_PDF_ETIQUETA_REQUEST",
-  GENERATOR_PDF_ETIQUETA_SUCCESS: "@pdf/GENERATOR_PDF_ETIQUETA_SUCCESS",
+  GENERATE_PDF_HANG_TAGS_REQUEST: "@pdf/GENERATE_PDF_HANG_TAGS_REQUEST",
 
-  GENERATOR_PDF_DESCARTES_REQUEST: " @pdf/GENERATOR_PDF_DESCARTES_REQUEST",
-  GENERATOR_PDF_DESCARTES_SUCCESS: "@pdf/GENERATOR_PDF_DESCARTES_SUCCESS"
+  GENERATE_PDF_SINTETICO_REQUEST: "pdf/GENERATE_PDF_SINTETICO_REQUEST",
+
+  GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST:
+    "pdf/GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST",
+  GENERETE_PDF_UNIQUE_BOX_FAMILIES_SUCCESS:
+    "pdf/GENERETE_PDF_UNIQUE_BOX_FAMILIES_SUCCESS",
+
+  GENERATE_PDF_DISCARD_REQUEST: "pdf/GENERATE_PDF_DISCARD_REQUEST",
+  GENERATE_PDF_DISCARD_SUCCESS: "pdf/GENERATE_PDF_DISCARD_SUCCESS",
 };
 
 const INITIAL_STATE = Immutable({
   open: false,
-  todos: {},
-  etiqueta: {},
-  descartes: {}
+  box_id: null,
+  unique_box_families: {},
+  discard: {},
 });
 
 export default function generator(state = INITIAL_STATE, action) {
@@ -26,30 +32,27 @@ export default function generator(state = INITIAL_STATE, action) {
     case Types.SHOW_MODAL_GENERATOR_PDF:
       return {
         ...state,
-        open: true
+        open: true,
       };
     case Types.HIDE_MODAL_GENERATOR_PDF:
       return {
         ...state,
-        open: false
+        open: false,
       };
-
-    case Types.GENERATOR_PDF_TODOS_SUCCESS:
+    case Types.GENERETE_PDF_UNIQUE_BOX_FAMILIES_SUCCESS:
       return {
         ...state,
-        todos: action.payload.todos
+        unique_box_families: action.payload.unique_box_families,
       };
-
-    case Types.GENERATOR_PDF_ETIQUETA_SUCCESS:
+    case Types.GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST:
       return {
         ...state,
-        etiqueta: action.payload.etiqueta
+        box_id: action.payload.box_id,
       };
-
-    case Types.GENERATOR_PDF_DESCARTES_SUCCESS:
+    case Types.GENERATE_PDF_DISCARD_SUCCESS:
       return {
         ...state,
-        descartes: action.payload.descartes
+        discard: action.payload.discard,
       };
 
     default:
@@ -59,32 +62,46 @@ export default function generator(state = INITIAL_STATE, action) {
 
 export const Creators = {
   showModalGeneratorPdf: () => ({
-    type: Types.SHOW_MODAL_GENERATOR_PDF
+    type: Types.SHOW_MODAL_GENERATOR_PDF,
   }),
   hideModalGeneratorPdf: () => ({
-    type: Types.HIDE_MODAL_GENERATOR_PDF
+    type: Types.HIDE_MODAL_GENERATOR_PDF,
   }),
 
-  generatorPdfTodosRequest: () => ({
-    type: Types.GENERATOR_PDF_TODOS_REQUEST
-  }),
-  generatorPdfTodosSuccess: todos => ({
-    type: Types.GENERATOR_PDF_TODOS_SUCCESS,
-    payload: { todos }
-  }),
-  generatorPdfEtiquetasRequest: () => ({
-    type: Types.GENERATOR_PDF_ETIQUETA_REQUEST
-  }),
-  generatorPdfEtiquetasSuccess: etiqueta => ({
-    type: Types.GENERATOR_PDF_ETIQUETA_SUCCESS,
-    payload: { etiqueta }
+  generateRelationshipBoxFamiliesRequest: () => ({
+    type: Types.GENERATE_PDF_RELATIONSHIP_BOX_FAMILIES_REQUEST,
   }),
 
-  generatorPdfDescartesRequest: () => ({
-    type: Types.GENERATOR_PDF_DESCARTES_REQUEST
+  generateHangTagsRequest: () => ({
+    type: Types.GENERATE_PDF_HANG_TAGS_REQUEST,
   }),
-  generatorPdfDescartesSuccess: descartes => ({
-    type: Types.GENERATOR_PDF_DESCARTES_SUCCESS,
-    payload: { descartes }
-  })
+
+  generateSinteticoRequest: () => ({
+    type: Types.GENERATE_PDF_SINTETICO_REQUEST,
+  }),
+
+  GeneratePdfUniqueBoxFamiliesRequest: (box_id) => ({
+    type: Types.GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST,
+    payload: {
+      box_id,
+    },
+  }),
+
+  GeneratePdfUniqueBoxFamiliesSuccess: (unique_box_families) => ({
+    type: Types.GENERETE_PDF_UNIQUE_BOX_FAMILIES_SUCCESS,
+    payload: {
+      unique_box_families,
+    },
+  }),
+
+  generatePdfDiscardRequest: () => ({
+    type: Types.GENERATE_PDF_DISCARD_REQUEST,
+  }),
+
+  generatePdfDiscardSuccess: (discard) => ({
+    type: Types.GENERATE_PDF_DISCARD_SUCCESS,
+    payload: {
+      discard,
+    },
+  }),
 };

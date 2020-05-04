@@ -15,18 +15,18 @@ import MaterialTable from "material-table";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       width: "100% ",
       height: "100%",
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     [theme.breakpoints.up("md")]: {
-      width: "60%"
-    }
-  }
+      width: "60%",
+    },
+  },
 }));
 
 function View(props) {
@@ -36,39 +36,39 @@ function View(props) {
         title: "Nome",
         field: "nome",
         headerStyle: {
-          color: "rgb(2,90,10)"
-        }
+          color: "rgb(2,90,10)",
+        },
       },
       {
         title: "CPF",
         field: "cpf",
         headerStyle: {
-          color: "rgb(2,90,10)"
-        }
+          color: "rgb(2,90,10)",
+        },
       },
       {
         title: "NIS",
         field: "nis",
         headerStyle: {
-          color: "rgb(2,90,10)"
-        }
+          color: "rgb(2,90,10)",
+        },
       },
 
       {
         title: "Situação",
         field: "situacao",
         headerStyle: {
-          color: "rgb(2,90,10)"
-        }
+          color: "rgb(2,90,10)",
+        },
       },
       {
         title: "Tipo",
         field: "tipo",
         headerStyle: {
-          color: "rgb(2,90,10)"
-        }
-      }
-    ]
+          color: "rgb(2,90,10)",
+        },
+      },
+    ],
   });
 
   const {
@@ -77,7 +77,7 @@ function View(props) {
     hideModalFamily,
     deleteFamilyRequest,
     showModalUpdateFamily,
-    readBoxesRequest
+    readBoxesRequest,
   } = props;
 
   const { id } = props.redux.box;
@@ -119,7 +119,7 @@ function View(props) {
         justifyContent: "center",
         alignItems: "center",
         overflowX: "visible",
-        overflowY: "scroll"
+        overflowY: "scroll",
       }}
     >
       {load(data) === true ? (
@@ -133,32 +133,32 @@ function View(props) {
             }}
             options={{
               headerStyle: {
-                color: "rgb(2,90,10)"
+                color: "rgb(2,90,10)",
               },
               actionsCellStyle: { color: "#848484" },
-              rowStyle: rowData => ({
+              rowStyle: (rowData) => ({
                 backgroundColor:
                   selectedRow &&
                   selectedRow.tableData.id === rowData.tableData.id
                     ? "#F3F781"
-                    : "#FFF"
-              })
+                    : "#FFF",
+              }),
             }}
             localization={{
               header: {
-                actions: "Ações"
+                actions: "Ações",
               },
 
               body: {
                 emptyDataSourceMessage: "Não existe",
                 filterRow: {
-                  filterTooltip: "Procurar"
-                }
+                  filterTooltip: "Procurar",
+                },
               },
               toolbar: {
                 searchTooltip: "Procurar",
-                searchPlaceholder: "Procurar"
-              }
+                searchPlaceholder: "Procurar",
+              },
             }}
             actions={[
               {
@@ -167,14 +167,14 @@ function View(props) {
                 isFreeAction: true,
                 onClick: (event, rowData) => {
                   showModalNewFamiliar();
-                }
+                },
               },
 
               {
                 icon: "printer",
                 tooltip: "Gerar PDF",
                 isFreeAction: true,
-                onClick: (event, rowData) => openTab()
+                onClick: (event, rowData) => openTab(),
               },
 
               {
@@ -184,7 +184,7 @@ function View(props) {
                 onClick: (event, rowData) => {
                   readBoxesRequest();
                   hideModalFamily();
-                }
+                },
               },
 
               {
@@ -192,15 +192,15 @@ function View(props) {
                 tooltip: "Excluir",
                 onClick: (event, rowData) => {
                   deleteFamiliar(rowData);
-                }
+                },
               },
               {
                 icon: "edit",
                 tooltip: "Editar",
                 onClick: (event, rowData) => {
                   showModalUpdateFamily(rowData);
-                }
-              }
+                },
+              },
             ]}
           />
           <Create />
@@ -213,11 +213,11 @@ function View(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...FamilyCreators, ...BoxCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(View);

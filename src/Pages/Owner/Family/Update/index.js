@@ -17,22 +17,22 @@ import {
   Grid,
   TextField,
   Select,
-  FormControl
+  FormControl,
 } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       height: "100%",
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     [theme.breakpoints.up("md")]: {
-      width: "400px"
-    }
-  }
+      width: "400px",
+    },
+  },
 }));
 
 function Update(props) {
@@ -41,7 +41,7 @@ function Update(props) {
   const {
     hideModalUpdateFamily,
     updateFamilyRequest,
-    readFamiliesRequest
+    readFamiliesRequest,
   } = props;
 
   const { data, visible } = props.redux.family.updateFamily;
@@ -60,8 +60,10 @@ function Update(props) {
     setNome(data.nome);
     setCpf(data.cpf);
     setNis(data.nis);
-    setTipo(data.tipo);
-    setSituacao(data.situacao);
+    setTipo(data.tipo === null ? "" : data.tipo);
+    setSituacao(
+      data.situacao === null ? "" : data.situacao === "Ativo" ? "ativo" : ""
+    );
   }, [data.cpf, data.nis, data.nome, data.situacao, data.tipo]);
 
   function changerCpf(e) {
@@ -77,7 +79,7 @@ function Update(props) {
       nis,
       nome,
       situacao,
-      tipo
+      tipo,
     };
 
     await updateFamilyRequest(family);
@@ -94,13 +96,13 @@ function Update(props) {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
           open={visible}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
-            timeout: 500
+            timeout: 500,
           }}
         >
           <form onSubmit={create}>
@@ -110,7 +112,7 @@ function Update(props) {
                   backgroundColor: "#fff",
                   padding: "20px",
                   border: "1px solid #D8D8D8",
-                  borderRadius: "5px"
+                  borderRadius: "5px",
                 }}
                 className={classes.modal}
               >
@@ -126,7 +128,7 @@ function Update(props) {
                       style={{
                         color: "rgba(2,99,44,0.7)",
                         textAlign: "center",
-                        marginBottom: "10px"
+                        marginBottom: "10px",
                       }}
                     >
                       Cadastrar Familiar
@@ -155,7 +157,7 @@ function Update(props) {
                         fullWidth
                         type="text"
                         value={nis}
-                        onChange={e => setNis(e.target.value)}
+                        onChange={(e) => setNis(e.target.value)}
                       />
                     </div>
                   </Grid>
@@ -169,7 +171,7 @@ function Update(props) {
                         fullWidth
                         type="text"
                         value={nome}
-                        onChange={e => setNome(e.target.value)}
+                        onChange={(e) => setNome(e.target.value)}
                       />
                     </div>
                   </Grid>
@@ -188,11 +190,11 @@ function Update(props) {
                           size="small"
                           fullWidth
                           value={tipo}
-                          onChange={e => setTipo(e.target.value)}
+                          onChange={(e) => setTipo(e.target.value)}
                         >
                           <option value="" />
-                          <option value={"dependente"}>Dependente</option>
-                          <option value={"responsavel"}>Responsavel</option>
+                          <option value={"DEPENDETE"}>Dependente</option>
+                          <option value={"RESPONSAVEL"}>Responsavel</option>
                         </Select>
                       </FormControl>
                     </div>
@@ -212,7 +214,7 @@ function Update(props) {
                           size="small"
                           fullWidth
                           value={situacao}
-                          onChange={e => setSituacao(e.target.value)}
+                          onChange={(e) => setSituacao(e.target.value)}
                         >
                           <option value="" />
                           <option value={"ativo"}>Ativo</option>
@@ -259,11 +261,11 @@ function Update(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...BoxCreators, ...FamilyCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Update);

@@ -21,40 +21,40 @@ import {
   FormGroup,
   FormControlLabel,
   FormControl,
-  FormLabel
+  FormLabel,
 } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      height: "100%"
+      height: "100%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "600px"
-    }
+      width: "600px",
+    },
   },
   main: {
     display: "flex",
     [theme.breakpoints.down("sm")]: {
       height: "100%",
-      display: "inline-block"
-    }
-  }
+      display: "inline-block",
+    },
+  },
 }));
 
 const GreenCheckbox = withStyles({
   root: {
     color: green[200],
     "&$checked": {
-      color: green[300]
-    }
+      color: green[300],
+    },
   },
-  checked: {}
-})(props => <Checkbox color="default" {...props} />);
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 function Update(props) {
   const { data, visible } = props.redux.box.updateBox;
@@ -79,16 +79,16 @@ function Update(props) {
 
   useEffect(() => {
     if (typeof data !== "undefined") {
-      setNumPaste(data.numPaste);
-      setNumBox(data.numBox);
-      setCodHome(data.codHome);
+      setNumPaste(data.num_paste);
+      setNumBox(data.num_box);
+      setCodHome(data.cod_home);
       setDisctric(data.district);
-      setDateInterview(data.dateInterview);
-      setDateVisit(data.dateVisit);
-      setReason(data.reason);
-      setNote(data.note);
+      setDateInterview(data.date_interview);
+      setDateVisit(data.date_visit);
+      setReason(data.reason === null ? "" : data.reason);
+      setNote(data.note === null ? "" : data.note);
       setSituation(data.situation);
-      setOldMan(data.oldMan);
+      setOldMan(data.old_man);
       setDeficient(data.deficient);
       setBenefit(data.benefit);
       setLocal(data.local);
@@ -106,23 +106,23 @@ function Update(props) {
     var box = {
       id: data.id,
 
-      numPaste,
-      numBox,
-      codHome,
+      num_paste: numPaste,
+      num_box: numBox,
+      cod_home: codHome,
 
       district,
 
-      dateInterview,
-      dateVisit,
+      date_interview: dateInterview,
+      date_visit: dateVisit,
 
       reason,
       note,
 
       situation,
       deficient,
-      oldMan,
+      old_man: oldMan,
       benefit,
-      local
+      local,
     };
 
     const { updateBoxRequest } = props;
@@ -147,13 +147,13 @@ function Update(props) {
         overflowX: "visible",
         overflowY: "scroll",
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
       }}
       className={classes.main}
       open={typeof visible === "undefined" ? false : visible}
       BackdropComponent={Backdrop}
       BackdropProps={{
-        timeout: 500
+        timeout: 500,
       }}
     >
       <form onSubmit={create}>
@@ -163,7 +163,7 @@ function Update(props) {
               backgroundColor: "#fff",
               padding: "20px",
               border: "1px solid #D8D8D8",
-              borderRadius: "5px"
+              borderRadius: "5px",
             }}
             className={classes.modal}
           >
@@ -179,7 +179,7 @@ function Update(props) {
                   style={{
                     color: "rgba(2,99,44,0.7)",
                     textAlign: "center",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
                   }}
                 >
                   Cadastrar
@@ -193,7 +193,7 @@ function Update(props) {
                     size="small"
                     fullWidth
                     value={numBox}
-                    onChange={e => setNumBox(e.target.value)}
+                    onChange={(e) => setNumBox(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -206,7 +206,7 @@ function Update(props) {
                     size="small"
                     fullWidth
                     value={numPaste}
-                    onChange={e => setNumPaste(e.target.value)}
+                    onChange={(e) => setNumPaste(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -233,7 +233,7 @@ function Update(props) {
                     fullWidth
                     type="text"
                     value={district}
-                    onChange={e => setDisctric(e.target.value)}
+                    onChange={(e) => setDisctric(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -246,7 +246,7 @@ function Update(props) {
                     fullWidth
                     type="date"
                     value={formatDate(dateInterview)}
-                    onChange={e => setDateInterview(e.target.value)}
+                    onChange={(e) => setDateInterview(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -259,7 +259,7 @@ function Update(props) {
                     fullWidth
                     type="date"
                     value={formatDate(dateVisit)}
-                    onChange={e => setDateVisit(e.target.value)}
+                    onChange={(e) => setDateVisit(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -274,7 +274,7 @@ function Update(props) {
                     multiline
                     rows="2"
                     value={reason}
-                    onChange={e => setReason(e.target.value)}
+                    onChange={(e) => setReason(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -289,7 +289,7 @@ function Update(props) {
                     multiline
                     rows="2"
                     value={note}
-                    onChange={e => setNote(e.target.value)}
+                    onChange={(e) => setNote(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -312,7 +312,7 @@ function Update(props) {
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
                           checked={local}
-                          onChange={e => setLocal(e.target.checked)}
+                          onChange={(e) => setLocal(e.target.checked)}
                           control={<GreenCheckbox />}
                           label="local"
                           labelPlacement="end"
@@ -321,7 +321,7 @@ function Update(props) {
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
                           checked={situation}
-                          onChange={e => setSituation(e.target.checked)}
+                          onChange={(e) => setSituation(e.target.checked)}
                           control={<GreenCheckbox />}
                           label="situação"
                           labelPlacement="end"
@@ -329,7 +329,7 @@ function Update(props) {
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
                           checked={oldMan}
-                          onChange={e => setOldMan(e.target.checked)}
+                          onChange={(e) => setOldMan(e.target.checked)}
                           control={<GreenCheckbox />}
                           label="idoso"
                           labelPlacement="end"
@@ -338,7 +338,7 @@ function Update(props) {
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
                           checked={benefit}
-                          onChange={e => setBenefit(e.target.checked)}
+                          onChange={(e) => setBenefit(e.target.checked)}
                           control={<GreenCheckbox />}
                           label="BPC"
                           labelPlacement="end"
@@ -346,7 +346,7 @@ function Update(props) {
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
                           checked={deficient}
-                          onChange={e => {
+                          onChange={(e) => {
                             setDeficient(e.target.checked);
                           }}
                           control={<GreenCheckbox />}
@@ -390,11 +390,11 @@ function Update(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...BoxCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Update);

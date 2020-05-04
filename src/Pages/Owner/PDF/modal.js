@@ -11,24 +11,24 @@ import {
   Fade,
   Grid,
   Checkbox,
-  withStyles
+  withStyles,
 } from "@material-ui/core/";
 
 import { green } from "@material-ui/core/colors";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       height: "100%",
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     [theme.breakpoints.up("md")]: {
-      width: "500px"
-    }
-  }
+      width: "500px",
+    },
+  },
 }));
 
 // eslint-disable-next-line no-unused-vars
@@ -36,18 +36,18 @@ const GreenCheckbox = withStyles({
   root: {
     color: green[200],
     "&$checked": {
-      color: green[300]
-    }
+      color: green[300],
+    },
   },
-  checked: {}
-})(props => <Checkbox color="default" {...props} />);
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 export default function Create() {
   const dispatch = useDispatch();
 
   const classes = useStyles();
 
-  const visible = useSelector(state => state.generator.open);
+  const visible = useSelector((state) => state.generator.open);
 
   /*
   const districts = useSelector(state => state.district.districts);
@@ -70,38 +70,18 @@ export default function Create() {
   const [district, setDisctrict] = useState("");
   */
 
-  function etiquetas() {
-    dispatch(GeneratorCreators.generatorPdfEtiquetasRequest());
-    dispatch(GeneratorCreators.hideModalGeneratorPdf());
-    openTabEtiquetas();
-  }
-
   function descartes() {
-    dispatch(GeneratorCreators.generatorPdfDescartesRequest());
+    dispatch(GeneratorCreators.generatePdfDiscardRequest());
     dispatch(GeneratorCreators.hideModalGeneratorPdf());
     openTabDescartes();
-  }
-
-  function sintetico() {
-    dispatch(GeneratorCreators.generatorPdfTodosRequest());
-    dispatch(GeneratorCreators.hideModalGeneratorPdf());
-    openTabSintetico();
   }
 
   function hide() {
     dispatch(GeneratorCreators.hideModalGeneratorPdf());
   }
 
-  function openTabEtiquetas() {
-    window.open("/etiquetas");
-  }
-
   function openTabDescartes() {
     window.open("/descartes");
-  }
-
-  function openTabSintetico() {
-    window.open("/sintetico");
   }
 
   return (
@@ -111,13 +91,13 @@ export default function Create() {
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
       open={visible}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
-        timeout: 500
+        timeout: 500,
       }}
     >
       <form>
@@ -127,7 +107,7 @@ export default function Create() {
               backgroundColor: "#fff",
               padding: "20px",
               border: "1px solid #D8D8D8",
-              borderRadius: "5px"
+              borderRadius: "5px",
             }}
             className={classes.modal}
           >
@@ -143,7 +123,7 @@ export default function Create() {
                   style={{
                     color: "rgba(2,99,44,0.7)",
                     textAlign: "center",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
                   }}
                 >
                   Relatorio geral
@@ -363,7 +343,9 @@ export default function Create() {
                 <div style={{ width: "100%", marginTop: "15px" }}>
                   <Button
                     variant="contained"
-                    onClick={etiquetas}
+                    onClick={() =>
+                      dispatch(GeneratorCreators.generateHangTagsRequest())
+                    }
                     style={{ color: "rgb(2,99,44)", width: "100%" }}
                   >
                     Etiquetas
@@ -386,9 +368,11 @@ export default function Create() {
               <Grid item xs={12} sm={12}>
                 <div style={{ width: "100%", marginTop: "15px" }}>
                   <Button
-                    onClick={sintetico}
                     variant="contained"
                     style={{ color: "rgb(2,99,44)", width: "100%" }}
+                    onClick={() => {
+                      dispatch(GeneratorCreators.generateSinteticoRequest());
+                    }}
                   >
                     Sintetico
                   </Button>

@@ -15,22 +15,22 @@ import {
   Grid,
   TextField,
   Select,
-  FormControl
+  FormControl,
 } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       height: "100%",
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     [theme.breakpoints.up("md")]: {
-      width: "400px"
-    }
-  }
+      width: "400px",
+    },
+  },
 }));
 
 export default function Create() {
@@ -38,8 +38,8 @@ export default function Create() {
 
   const classes = useStyles();
 
-  const visible = useSelector(state => state.family.visible);
-  const id = useSelector(state => state.box.id);
+  const visible = useSelector((state) => state.family.visible);
+  const id = useSelector((state) => state.box.id);
 
   const update = () => dispatch(BoxCreators.readFamiliesRequest(id));
 
@@ -62,7 +62,7 @@ export default function Create() {
       nis,
       nome,
       situacao,
-      tipo
+      tipo,
     };
     await dispatch(FamilyCreators.createFamilyRequest(family));
     await update();
@@ -85,13 +85,13 @@ export default function Create() {
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
       open={visible}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
-        timeout: 500
+        timeout: 500,
       }}
     >
       <form onSubmit={create}>
@@ -101,7 +101,7 @@ export default function Create() {
               backgroundColor: "#fff",
               padding: "20px",
               border: "1px solid #D8D8D8",
-              borderRadius: "5px"
+              borderRadius: "5px",
             }}
             className={classes.modal}
           >
@@ -117,7 +117,7 @@ export default function Create() {
                   style={{
                     color: "rgba(2,99,44,0.7)",
                     textAlign: "center",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
                   }}
                 >
                   Cadastrar Familiar
@@ -146,7 +146,7 @@ export default function Create() {
                     fullWidth
                     type="text"
                     value={nis}
-                    onChange={e => setNis(e.target.value)}
+                    onChange={(e) => setNis(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -160,7 +160,7 @@ export default function Create() {
                     fullWidth
                     type="text"
                     value={nome}
-                    onChange={e => setNome(e.target.value)}
+                    onChange={(e) => setNome(e.target.value)}
                   />
                 </div>
               </Grid>
@@ -173,13 +173,13 @@ export default function Create() {
                     size="small"
                     fullWidth
                     value={tipo}
-                    onChange={e => setTipo(e.target.value)}
+                    onChange={(e) => setTipo(e.target.value)}
                   >
                     <Typography variant="button">Tipo:</Typography>
                     <Select native size="small" fullWidth>
                       <option value="" />
-                      <option value={"dependente"}>Dependente</option>
-                      <option value={"responsavel"}>Responsavel</option>
+                      <option value={"DEPENDENTE"}>Dependente</option>
+                      <option value={"RESPONSAVEL"}>Responsavel</option>
                     </Select>
                   </FormControl>
                 </div>
@@ -193,7 +193,7 @@ export default function Create() {
                     size="small"
                     fullWidth
                     value={situacao}
-                    onChange={e => setSituacao(e.target.value)}
+                    onChange={(e) => setSituacao(e.target.value)}
                   >
                     <Typography variant="button">Situação:</Typography>
                     <Select native size="small" fullWidth>

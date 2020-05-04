@@ -23,7 +23,7 @@ const TopBar = () => {
             color: "rgb(246,238,89)",
             flexGrow: 1,
             alignItems: "flex-start",
-            fontSize: "28px"
+            fontSize: "28px",
           }}
         >
           Cadastro único

@@ -38,13 +38,13 @@ export function* deleteBox({ payload }) {
     // eslint-disable-next-line no-unused-vars
     const response = yield call(api.delete, `/box/${payload.id}`);
     yield put(BoxCreators.readBoxesRequest());
-    toastr.success("Caixa excluida.");
+    toastr.error("Caixa excluida.");
   } catch (err) {}
 }
 
 export function* getBoxes() {
   try {
-    const response = yield call(api.get, "/responsavel/");
+    const response = yield call(api.get, "/search");
 
     yield put(BoxCreators.readBoxesSuccess(response.data));
   } catch (err) {}

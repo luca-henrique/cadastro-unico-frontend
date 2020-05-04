@@ -1,11 +1,10 @@
 /* eslint-disable array-callback-return */
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as CreatorsBox } from "../../../../store/ducks/box";
 import { Creators as CreatorsFamily } from "../../../../store/ducks/family";
-
-import { Creators as GeneratorCreators } from "../../../../store/ducks/generator";
+import { Creators as CreatorsGenerete } from "../../../../store/ducks/generator";
 
 import WarningIcon from "@material-ui/icons/Warning";
 import MaterialTable from "material-table";
@@ -14,11 +13,17 @@ import Create from "../../Box/Create";
 import Update from "../../Box/Update";
 import Family from "../../Family/index";
 
-export default function Table() {
-  const data = useSelector(state => state.box.boxes);
-
+function Table() {
+  // eslint-disable-next-line no-unused-vars
   const [selectedRow, setSelectedRow] = useState("");
+
   const dispatch = useDispatch();
+
+  function remove(id) {
+    dispatch(CreatorsBox.deleteBoxRequest(id));
+  }
+
+  const data = useSelector((state) => state.box.boxes);
 
   function load(data) {
     if (Array.isArray(data)) {
@@ -28,165 +33,157 @@ export default function Table() {
     }
   }
 
-  function remove(id) {
-    dispatch(CreatorsBox.deleteBoxRequest(id));
-  }
-
-  function openTab() {
-    dispatch(GeneratorCreators.generatorPdfTodosRequest());
-    window.open("/pdf");
-  }
-
   return (
     <>
       {load(data) === true ? (
-        <>
-          <MaterialTable
-            style={{
-              boxShadow: "none"
-            }}
-            title={null}
-            data={data}
-            onRowClick={(evt, selectedRow) => {
-              setSelectedRow(selectedRow);
-            }}
-            localization={{
-              header: {
-                actions: "Ações"
-              },
+        <MaterialTable
+          style={{
+            boxShadow: "none",
+          }}
+          title={null}
+          data={data}
+          onRowClick={(evt, selectedRow) => {
+            setSelectedRow(selectedRow);
+          }}
+          localization={{
+            header: {
+              actions: "Ações",
+            },
 
-              body: {
-                emptyDataSourceMessage: "Não existe",
-                filterRow: {
-                  filterTooltip: "Procurar"
-                }
+            body: {
+              emptyDataSourceMessage: "Não existe",
+              filterRow: {
+                filterTooltip: "Procurar",
               },
-              toolbar: {
-                searchTooltip: "Procurar",
-                searchPlaceholder: "Procurar"
-              }
-            }}
-            options={{
-              headerStyle: {
-                color: "rgb(2,90,10)"
+            },
+            toolbar: {
+              searchTooltip: "Procurar",
+              searchPlaceholder: "Procurar",
+            },
+          }}
+          options={{
+            headerStyle: {
+              color: "rgb(2,90,10)",
+            },
+            actionsCellStyle: { color: "#848484" },
+          }}
+          actions={[
+            {
+              icon: "add",
+              tooltip: "Adicionar",
+              isFreeAction: true,
+              onClick: () => {
+                dispatch(CreatorsBox.showModalNewBox());
               },
-              actionsCellStyle: { color: "#848484" },
-              rowStyle: rowData => ({
-                backgroundColor:
-                  selectedRow &&
-                  selectedRow.tableData.id === rowData.tableData.id
-                    ? "#F3F781"
-                    : "#FFF"
-              })
-            }}
-            actions={[
-              {
-                icon: "add",
-                tooltip: "Adicionar",
-                isFreeAction: true,
-                onClick: (event, rowData) => {
-                  dispatch(CreatorsBox.showModalNewBox());
-                }
-              },
+            },
 
-              {
-                icon: "printer",
-                tooltip: "Gerar PDF",
-                isFreeAction: true,
-                onClick: (event, rowData) => openTab()
+            {
+              icon: "printer",
+              tooltip: "Gerar PDF",
+              isFreeAction: true,
+              onClick: (event, rowData) => {
+                dispatch(
+                  CreatorsGenerete.generateRelationshipBoxFamiliesRequest()
+                );
               },
-              {
-                icon: "visibility",
-                tooltip: "Mostrar Familiares",
-                onClick: (event, rowData) => {
-                  dispatch(CreatorsBox.readFamiliesRequest(rowData.id));
-                  dispatch(CreatorsFamily.showModalFamily());
-                }
+            },
+            {
+              icon: "visibility",
+              tooltip: "Mostrar Familiares",
+              onClick: (event, rowData) => {
+                dispatch(
+                  CreatorsGenerete.GeneratePdfUniqueBoxFamiliesRequest(
+                    rowData.id
+                  )
+                );
+                dispatch(CreatorsBox.readFamiliesRequest(rowData.id));
+                dispatch(CreatorsFamily.showModalFamily());
               },
-              {
-                icon: "delete",
-                tooltip: "Excluir",
-                onClick: (event, rowData) => {
-                  remove(rowData.id);
-                }
+            },
+            {
+              icon: "delete",
+              tooltip: "Excluir",
+              onClick: (event, rowData) => {
+                remove(rowData.id);
               },
-              {
-                icon: "edit",
-                tooltip: "Editar",
-                onClick: (event, rowData) => {
-                  dispatch(CreatorsBox.showModalUpdateBox(rowData));
-                }
+            },
+            {
+              icon: "edit",
+              tooltip: "Editar",
+              onClick: (event, rowData) => {
+                dispatch(CreatorsBox.showModalUpdateBox(rowData));
               },
-              {
-                icon: "refresh",
-                tooltip: "Atualizar informações",
-                isFreeAction: true,
-                onClick: () => dispatch(CreatorsBox.readBoxesRequest())
-              }
-            ]}
-            // eslint-disable-next-line react/jsx-no-duplicate-props
-            columns={[
-              {
-                title: "Codigo",
-                field: "id"
-              },
+            },
+            {
+              icon: "refresh",
+              tooltip: "Atualizar informações",
+              isFreeAction: true,
+              onClick: () => dispatch(CreatorsBox.readBoxesRequest()),
+            },
+          ]}
+          // eslint-disable-next-line react/jsx-no-duplicate-props
+          columns={[
+            {
+              title: "Codigo",
+              field: "id",
+            },
 
-              {
-                title: "Caixa",
-                field: "numBox"
-              },
-              {
-                title: "Pasta",
-                field: "numPaste"
-              },
-              {
-                title: "Codigo domiciliar",
-                field: "codHome"
-              },
+            {
+              title: "Caixa",
+              field: "num_box",
+            },
+            {
+              title: "Pasta",
+              field: "num_paste",
+            },
+            {
+              title: "Codigo domiciliar",
+              field: "cod_home",
+            },
 
-              {
-                title: "Responsavel",
-                field: "nome"
-              },
+            {
+              title: "Responsavel",
+              field: "nome",
+            },
 
-              {
-                title: "Data visita",
-                type: "date",
-                field: "dateInterview"
-              },
-              {
-                title: "Data entrevista",
-                type: "date",
-                field: "dateVisit"
-              },
-              {
-                title: "Local",
-                field: "local",
-                render: rowData => (
-                  <>
-                    <WarningIcon
-                      style={
-                        rowData.local === true
-                          ? { color: "#088A08" }
-                          : { color: "#DF0101" }
-                      }
-                    />
-                  </>
-                ),
-                lookup: { true: "Está", false: "Não está" }
-              }
-            ]}
-          />
-
-          <Create />
-
-          <Update />
-
-          <Family />
-        </>
+            {
+              title: "Data visita",
+              type: "date",
+              field: "date_interview",
+            },
+            {
+              title: "Data entrevista",
+              type: "date",
+              field: "date_visit",
+            },
+            {
+              title: "Local",
+              field: "local",
+              render: (rowData) => (
+                <>
+                  <WarningIcon
+                    style={
+                      rowData.local === false
+                        ? { color: "#088A08" }
+                        : { color: "#DF0101" }
+                    }
+                  />
+                </>
+              ),
+            },
+          ]}
+        />
       ) : (
         <></>
       )}
+
+      <Create />
+
+      <Update />
+
+      <Family />
     </>
   );
 }
+
+export default memo(Table);

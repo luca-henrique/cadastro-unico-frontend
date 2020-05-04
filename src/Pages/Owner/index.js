@@ -12,11 +12,15 @@ import { Creators as GeneratortsCreators } from "../../store/ducks/generator";
 import { Creators as PrefeituraAddrressCreators } from "../../store/ducks/address_prefecture";
 import { Creators as PrefeituraContactCreators } from "../../store/ducks/contact_prefecture";
 
+import { Creators as UserCreators } from "../../store/ducks/user";
+
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import Main from "./Components/Table/";
 import TopBar from "./Components/TopBar/";
+
+import ChangerPasswordModal from "../Auth/ChangerPassword/index";
 
 import {
   Add,
@@ -24,7 +28,8 @@ import {
   HomeWorkOutlined,
   Description,
   EditLocation,
-  PictureAsPdf
+  PictureAsPdf,
+  LockOutlined,
 } from "@material-ui/icons/";
 
 import Funcionario from "./Funcionario/";
@@ -37,7 +42,7 @@ import Log from "./Log/";
 
 import District from "./District/index";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     height: "100%",
@@ -45,13 +50,13 @@ const useStyles = makeStyles(theme => ({
       width: "100%",
       height: "100%",
       overflowX: "visible",
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     [theme.breakpoints.up("md")]: {
       width: "100%",
       overflowX: "visible",
-      overflowY: "scroll"
-    }
+      overflowY: "scroll",
+    },
   },
   content: {
     width: "100%",
@@ -63,12 +68,12 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(7),
       width: "100%",
-      height: "100%"
+      height: "100%",
     },
     [theme.breakpoints.up("md")]: {
       paddingTop: theme.spacing(20),
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
 
   center: {
@@ -76,9 +81,9 @@ const useStyles = makeStyles(theme => ({
 
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      height: "100%"
-    }
-  }
+      height: "100%",
+    },
+  },
 }));
 
 function View(props) {
@@ -95,7 +100,8 @@ function View(props) {
     readPrefectureRequest,
     showModalDistrict,
     readDistrictRequest,
-    showModalGeneratorPdf
+    showModalGeneratorPdf,
+    showModalChangerPassword,
   } = props;
 
   const isAdmin = props.redux.user.user.admin;
@@ -121,11 +127,13 @@ function View(props) {
           <Log />
           <GeneratorPdf />
 
+          <ChangerPasswordModal />
+
           <Container
             styles={{
               position: "fixed",
               bottom: "2px",
-              right: "5px"
+              right: "5px",
             }}
           >
             {isAdmin === true ? (
@@ -134,7 +142,7 @@ function View(props) {
                   tooltip="Funcionario"
                   styles={{
                     backgroundColor: "rgb(10,103,30)",
-                    color: "rgb(246,238,89)"
+                    color: "rgb(246,238,89)",
                   }}
                 >
                   <Person
@@ -148,7 +156,7 @@ function View(props) {
                   tooltip="Prefeitura"
                   styles={{
                     backgroundColor: "rgb(10,103,30)",
-                    color: "rgb(246,238,89)"
+                    color: "rgb(246,238,89)",
                   }}
                 >
                   <HomeWorkOutlined
@@ -165,7 +173,7 @@ function View(props) {
                   tooltip="Log"
                   styles={{
                     backgroundColor: "rgb(10,103,30)",
-                    color: "rgb(246,238,89)"
+                    color: "rgb(246,238,89)",
                   }}
                 >
                   <Description
@@ -184,7 +192,7 @@ function View(props) {
               tooltip="Bairro"
               styles={{
                 backgroundColor: "rgb(10,103,30)",
-                color: "rgb(246,238,89)"
+                color: "rgb(246,238,89)",
               }}
             >
               <EditLocation
@@ -199,7 +207,7 @@ function View(props) {
               tooltip="PDF"
               styles={{
                 backgroundColor: "rgb(10,103,30)",
-                color: "rgb(246,238,89)"
+                color: "rgb(246,238,89)",
               }}
             >
               <PictureAsPdf
@@ -210,10 +218,24 @@ function View(props) {
             </Button>
 
             <Button
+              tooltip="Mudar senha"
+              styles={{
+                backgroundColor: "rgb(10,103,30)",
+                color: "rgb(246,238,89)",
+              }}
+            >
+              <LockOutlined
+                onClick={() => {
+                  showModalChangerPassword();
+                }}
+              />
+            </Button>
+
+            <Button
               tooltip="Menu"
               styles={{
                 backgroundColor: "rgb(10,103,30)",
-                color: "rgb(246,238,89)"
+                color: "rgb(246,238,89)",
               }}
             >
               <Add />
@@ -225,11 +247,11 @@ function View(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...FuncionarioCreators,
@@ -238,7 +260,8 @@ const mapDispatchToProps = dispatch =>
       ...PrefeituraAddrressCreators,
       ...PrefeituraContactCreators,
       ...DistrictsCreators,
-      ...GeneratortsCreators
+      ...GeneratortsCreators,
+      ...UserCreators,
     },
     dispatch
   );
