@@ -28,8 +28,13 @@ export function* update({ payload }) {
 export function* destroy({ payload }) {
   try {
     yield call(api.delete, `user/${payload.id}`);
+
+    yield put(UserCreators.readUserRequest());
   } catch (err) {
-    yield toastr.error("Falha", "Falha ao excluir o funcionario");
+    yield toastr.error(
+      "Falha",
+      "Falha ao excluir o funcionário, verifique se o funcionário é um administrador"
+    );
   }
 }
 
@@ -44,7 +49,7 @@ export function* list() {
 export function* changerPassword({ payload }) {
   try {
     yield call(api.put, "/changer", {
-      password: payload.password
+      password: payload.password,
     });
     yield toastr.success("Senha alterada.");
   } catch (err) {

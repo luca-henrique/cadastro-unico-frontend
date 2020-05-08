@@ -9,6 +9,8 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Logo from "../../../Assets/Images/empresalogo.png";
 import Copyright from "../../Copyright/index";
 
+import { Container } from "./styled";
+
 const ValidationTextField = withStyles({
   root: {
     "& input:valid + fieldset": {
@@ -81,16 +83,7 @@ export default function () {
   }
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <Container>
       <div className={classes.img}>
         <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
       </div>
@@ -142,6 +135,6 @@ export default function () {
       >
         <Copyright />
       </div>
-    </div>
+    </Container>
   );
 }
