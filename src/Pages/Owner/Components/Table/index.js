@@ -9,6 +9,8 @@ import { Creators as CreatorsGenerete } from "../../../../store/ducks/generator"
 import WarningIcon from "@material-ui/icons/Warning";
 import MaterialTable from "material-table";
 
+import LabelIcon from "@material-ui/icons/Label";
+
 import Create from "../../Box/Create";
 import Update from "../../Box/Update";
 import Family from "../../Family/index";
@@ -31,6 +33,10 @@ function Table() {
     } else {
       return false;
     }
+  }
+
+  function openTabTagBoxUnique() {
+    window.open("/tag");
   }
 
   return (
@@ -119,6 +125,15 @@ function Table() {
               tooltip: "Atualizar informações",
               isFreeAction: true,
               onClick: () => dispatch(CreatorsBox.readBoxesRequest()),
+            },
+            {
+              icon: "label",
+              tooltip: "Gerar Etiquetas da caixa",
+              onClick: (event, rowData) => {
+                dispatch(CreatorsBox.readFamiliesRequest(rowData.id));
+                openTabTagBoxUnique();
+                dispatch(CreatorsGenerete.generateTagsUniqueBox(rowData));
+              },
             },
           ]}
           // eslint-disable-next-line react/jsx-no-duplicate-props

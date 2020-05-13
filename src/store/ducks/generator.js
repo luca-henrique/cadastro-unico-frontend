@@ -18,6 +18,8 @@ export const Types = {
 
   GENERATE_PDF_DISCARD_REQUEST: "pdf/GENERATE_PDF_DISCARD_REQUEST",
   GENERATE_PDF_DISCARD_SUCCESS: "pdf/GENERATE_PDF_DISCARD_SUCCESS",
+
+  GENERATE_PDF_TAG_UNIQUE_BOX: "pdf/GENERATE_PDF_TAG_UNIQUE_BOX",
 };
 
 const INITIAL_STATE = Immutable({
@@ -25,6 +27,7 @@ const INITIAL_STATE = Immutable({
   box_id: null,
   unique_box_families: {},
   discard: {},
+  tag_box_unique: {},
 });
 
 export default function generator(state = INITIAL_STATE, action) {
@@ -53,6 +56,12 @@ export default function generator(state = INITIAL_STATE, action) {
       return {
         ...state,
         discard: action.payload.discard,
+      };
+
+    case Types.GENERATE_PDF_TAG_UNIQUE_BOX:
+      return {
+        ...state,
+        tag_box_unique: action.payload.tag,
       };
 
     default:
@@ -102,6 +111,13 @@ export const Creators = {
     type: Types.GENERATE_PDF_DISCARD_SUCCESS,
     payload: {
       discard,
+    },
+  }),
+
+  generateTagsUniqueBox: (tag) => ({
+    type: Types.GENERATE_PDF_TAG_UNIQUE_BOX,
+    payload: {
+      tag,
     },
   }),
 };

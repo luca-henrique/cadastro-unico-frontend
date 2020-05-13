@@ -9,6 +9,8 @@ import Private from "./private";
 import Pdf from "../Pages/Owner/PDF/index";
 import Specific from "../Pages/Owner/PDF/specific";
 
+import Etiqueta from "../Pages/Owner/PDF/etiquetas";
+
 import districts from "../Pages/Owner/PDF/districts";
 
 import discard from "../Pages/Owner/PDF/descartes";
@@ -26,6 +28,8 @@ const Routes = () => (
       <Route path="/pdf" exact component={Pdf} />
 
       <Route path="/district" exact component={districts} />
+
+      <Route path="/tag" exact component={Etiqueta} />
 
       <Route path="/descartes" exact component={discard} />
 

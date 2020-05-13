@@ -17,21 +17,21 @@ import Contact from "./Components/Contact/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   main: {
     backgroundColor: "#fff",
     padding: "20px",
     border: "1px solid #D8D8D8",
     borderRadius: "5px",
+
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       height: "100%",
-      overflowY: "scroll"
     },
     [theme.breakpoints.up("md")]: {
-      width: "700px"
-    }
-  }
+      width: "700px",
+    },
+  },
 }));
 
 function View(props) {
@@ -63,7 +63,7 @@ function View(props) {
         cnpj,
         nome,
         razao,
-        numero
+        numero,
       };
 
       checkAttributesObj(pref);
@@ -95,7 +95,9 @@ function View(props) {
         style={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          overflowX: "visible",
+          overflowY: "scroll",
         }}
       >
         <div className={classes.main}>
@@ -105,7 +107,7 @@ function View(props) {
               color: "rgb(2,99,44)",
               justifyContent: "center",
               textAlign: "center",
-              marginBottom: "15px"
+              marginBottom: "15px",
             }}
           >
             Prefeitura
@@ -113,7 +115,7 @@ function View(props) {
           <Typography
             variant="h5"
             style={{
-              color: "rgb(2,99,44)"
+              color: "rgb(2,99,44)",
             }}
           >
             Informações
@@ -164,7 +166,7 @@ function View(props) {
                         fullWidth
                         type="text"
                         value={numero}
-                        onChange={e => setNumero(e.target.value)}
+                        onChange={(e) => setNumero(e.target.value)}
                       />
                     </div>
                   </Grid>
@@ -182,7 +184,7 @@ function View(props) {
                         fullWidth
                         type="text"
                         value={nome}
-                        onChange={e => setNome(e.target.value)}
+                        onChange={(e) => setNome(e.target.value)}
                       />
                     </div>
                   </Grid>
@@ -200,7 +202,7 @@ function View(props) {
                         fullWidth
                         type="text"
                         value={razao}
-                        onChange={e => setRazao(e.target.value)}
+                        onChange={(e) => setRazao(e.target.value)}
                       />
                     </div>
                   </Grid>
@@ -212,7 +214,7 @@ function View(props) {
               <Typography
                 variant="h5"
                 style={{
-                  color: "rgb(2,99,44)"
+                  color: "rgb(2,99,44)",
                 }}
               >
                 Endereço
@@ -227,7 +229,7 @@ function View(props) {
               <Typography
                 variant="h5"
                 style={{
-                  color: "rgb(2,99,44)"
+                  color: "rgb(2,99,44)",
                 }}
               >
                 Contato
@@ -261,11 +263,11 @@ function View(props) {
     </>
   );
 }
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...PrefectureCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(View);
