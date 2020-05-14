@@ -65,6 +65,7 @@ import {
   generatePdfSintetico,
   generatePdfUniqueBoxFamilies,
   generatePdfDiscard,
+  generatesearchAllFamiliesUniqueBox,
 } from "./generator";
 
 import { teste } from "./teste";
@@ -164,5 +165,10 @@ export default function* rootSaga() {
       generatePdfUniqueBoxFamilies
     ),
     takeLatest(GeneratorTypes.GENERATE_PDF_DISCARD_REQUEST, generatePdfDiscard),
+
+    takeLatest(
+      GeneratorTypes.GENERATE_PDF_TAG_UNIQUE_BOX_REQUEST,
+      generatesearchAllFamiliesUniqueBox
+    ),
   ]);
 }

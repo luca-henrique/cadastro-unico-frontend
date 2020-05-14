@@ -11,6 +11,8 @@ import Specific from "../Pages/Owner/PDF/specific";
 
 import Etiqueta from "../Pages/Owner/PDF/etiquetas";
 
+import EtiquetaBox from "../Pages/Owner/PDF/etiquetasBox";
+
 import districts from "../Pages/Owner/PDF/districts";
 
 import discard from "../Pages/Owner/PDF/descartes";
@@ -30,6 +32,8 @@ const Routes = () => (
       <Route path="/district" exact component={districts} />
 
       <Route path="/tag" exact component={Etiqueta} />
+
+      <Route path="/tag_box" exact component={EtiquetaBox} />
 
       <Route path="/descartes" exact component={discard} />
 

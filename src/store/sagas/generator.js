@@ -77,3 +77,16 @@ export function* generatePdfUniqueBoxFamilies({ payload }) {
     );
   } catch (err) {}
 }
+
+/* Lista todas a pastas de uma caixa especifica */
+
+export function* generatesearchAllFamiliesUniqueBox({ payload }) {
+  try {
+    const response = yield call(
+      api.get,
+      `/search_all_families_unique_box/${payload.id}`
+    );
+
+    yield put(GeneratorCreators.generateTagsUniqueBoxSuccess(response.data));
+  } catch (err) {}
+}
