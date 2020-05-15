@@ -58,15 +58,15 @@ const PDF = (props) => {
                       >
                         <View style={{ display: "flex", flexDirection: "row" }}>
                           <Text>pasta:</Text>
-                          <Text>{familiar.numPaste}</Text>
+                          <Text>{familiar.num_paste}</Text>
                         </View>
                         <View style={{ display: "flex", flexDirection: "row" }}>
                           <Text>caixa:</Text>
-                          <Text>{familiar.numBox}</Text>
+                          <Text>{familiar.num_box}</Text>
                         </View>
                         <View style={{ display: "flex", flexDirection: "row" }}>
                           <Text>cod. domiciliar:</Text>
-                          <Text>{familiar.codHome}</Text>
+                          <Text>{familiar.cod_home}</Text>
                         </View>
                       </View>
                     </View>

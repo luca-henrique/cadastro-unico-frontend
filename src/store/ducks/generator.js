@@ -11,10 +11,11 @@ export const Types = {
 
   GENERATE_PDF_SINTETICO_REQUEST: "pdf/GENERATE_PDF_SINTETICO_REQUEST",
 
-  GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST:
-    "pdf/GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST",
-  GENERETE_PDF_UNIQUE_BOX_FAMILIES_SUCCESS:
-    "pdf/GENERETE_PDF_UNIQUE_BOX_FAMILIES_SUCCESS",
+  /* Vai buscar as familias de uma caixa e pasta [pelo o id] {CAIXA ESPECIFICA} */
+  GENERETE_FAMILIES_BOX_REQUEST: "pdf/GENERETE_FAMILIES_BOX_REQUEST",
+
+  /* Retorno com as familias da caixa [pega o id] {CAIXA ESPECIFICA} */
+  GENERETE_FAMILIES_BOX_SUCCESS: "pdf/GENERETE_FAMILIES_BOX_SUCCESS",
 
   GENERATE_PDF_DISCARD_REQUEST: "pdf/GENERATE_PDF_DISCARD_REQUEST",
   GENERATE_PDF_DISCARD_SUCCESS: "pdf/GENERATE_PDF_DISCARD_SUCCESS",
@@ -27,10 +28,15 @@ export const Types = {
 
 const INITIAL_STATE = Immutable({
   open: false,
-  box_id: null,
-  unique_box_families: {},
+
+  /* Atributos para gerar pdf de uma caixa selecionada */
+  box_id_families: null,
+  families_box: {},
+
+  /* Descartes */
   discard: {},
-  tag_box_id: null,
+
+  tag_box_id: 0,
   tag_box_unique: [],
 });
 
@@ -46,16 +52,19 @@ export default function generator(state = INITIAL_STATE, action) {
         ...state,
         open: false,
       };
-    case Types.GENERETE_PDF_UNIQUE_BOX_FAMILIES_SUCCESS:
+
+    case Types.GENERETE_FAMILIES_BOX_REQUEST:
       return {
         ...state,
-        unique_box_families: action.payload.unique_box_families,
+        box_id_families: action.payload.box_id,
       };
-    case Types.GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST:
+
+    case Types.GENERETE_FAMILIES_BOX_SUCCESS:
       return {
         ...state,
-        box_id: action.payload.box_id,
+        families_box: action.payload.familiesBox,
       };
+
     case Types.GENERATE_PDF_DISCARD_SUCCESS:
       return {
         ...state,
@@ -65,13 +74,13 @@ export default function generator(state = INITIAL_STATE, action) {
     case Types.GENERATE_PDF_TAG_UNIQUE_BOX_REQUEST:
       return {
         ...state,
-        tag_box_id: action.payload.families,
+        tag_box_id: action.payload.id,
       };
 
     case Types.GENERATE_PDF_TAG_UNIQUE_BOX_SUCCESS:
       return {
         ...state,
-        tag_box_unique: action.payload.families,
+        tag_box_unique: action.payload.familiesBox,
       };
 
     default:
@@ -99,20 +108,6 @@ export const Creators = {
     type: Types.GENERATE_PDF_SINTETICO_REQUEST,
   }),
 
-  GeneratePdfUniqueBoxFamiliesRequest: (box_id) => ({
-    type: Types.GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST,
-    payload: {
-      box_id,
-    },
-  }),
-
-  GeneratePdfUniqueBoxFamiliesSuccess: (unique_box_families) => ({
-    type: Types.GENERETE_PDF_UNIQUE_BOX_FAMILIES_SUCCESS,
-    payload: {
-      unique_box_families,
-    },
-  }),
-
   generatePdfDiscardRequest: () => ({
     type: Types.GENERATE_PDF_DISCARD_REQUEST,
   }),
@@ -131,10 +126,26 @@ export const Creators = {
     },
   }),
 
-  generateTagsUniqueBoxSuccess: (families) => ({
+  generateTagsUniqueBoxSuccess: (familiesBox) => ({
     type: Types.GENERATE_PDF_TAG_UNIQUE_BOX_SUCCESS,
     payload: {
-      families,
+      familiesBox,
+    },
+  }),
+
+  /* Vai buscar as familias de uma caixa e pasta [pelo o id] {CAIXA ESPECIFICA} */
+  generateFamiliesBoxRequest: (box_id) => ({
+    type: Types.GENERETE_FAMILIES_BOX_REQUEST,
+    payload: {
+      box_id,
+    },
+  }),
+
+  /* Retorno com as familias da caixa [pega o id] {CAIXA ESPECIFICA} */
+  generateFamiliesBoxSuccess: (familiesBox) => ({
+    type: Types.GENERETE_FAMILIES_BOX_SUCCESS,
+    payload: {
+      familiesBox,
     },
   }),
 };

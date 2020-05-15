@@ -4,6 +4,9 @@ export const Types = {
   SHOW_NEW_USER_VIEW: "@user/SHOW_NEW_USER_VIEW",
   HIDE_NEW_USER_VIEW: "@user/HIDE_NEW_USER_VIEW",
 
+  SHOW_UPDATE_USER_VIEW: "@user/SHOW_UPDATE_USER_VIEW",
+  HIDE_UPDATE_USER_VIEW: "@user/HIDE_UPDATE_USER_VIEW",
+
   READ_USER_REQUEST: "@user/READ_USER_REQUEST",
   READ_USER_SUCCESS: "@user/READ_USER_SUCCESS",
 
@@ -14,14 +17,15 @@ export const Types = {
   HIDE_CHANGER_PASSWORD_VIEW: "@user/HIDE_CHANGER_PASSWORD_VIEW",
 
   CHANGER_PASSWORD_REQUEST: "@user/CHANGER_PASSWORD_REQUEST",
-  CHANGER_PASSWORD_SUCESS: "@user/CHANGER_PASSWORD_SUCESS"
+  CHANGER_PASSWORD_SUCESS: "@user/CHANGER_PASSWORD_SUCESS",
 };
 
 const INITIAL_STATE = Immutable({
   password: null,
   visible: false,
   user: {},
-  changer: {}
+  changer: {},
+  update_account: { visible: false, data: [] },
 });
 
 export default function User(state = INITIAL_STATE, action) {
@@ -30,6 +34,14 @@ export default function User(state = INITIAL_STATE, action) {
       return { ...state, show: { visible: true, type: action.payload.type } };
     case Types.HIDE_NEW_USER_VIEW:
       return { ...state, show: { visible: false } };
+
+    case Types.SHOW_UPDATE_USER_VIEW:
+      return {
+        ...state,
+        update_account: { visible: true, data: action.payload.data },
+      };
+    case Types.HIDE_UPDATE_USER_VIEW:
+      return { ...state, update_account: { visible: false } };
 
     case Types.SHOW_CHANGER_PASSWORD_VIEW:
       return { ...state, visible: true };
@@ -42,14 +54,14 @@ export default function User(state = INITIAL_STATE, action) {
     case Types.UPDATE_USER_REQUEST: {
       return {
         ...state,
-        user: action.payload.user
+        user: action.payload.user,
       };
     }
 
     case Types.CHANGER_PASSWORD_REQUEST: {
       return {
         ...state,
-        password: action.payload.password
+        password: action.payload.password,
       };
     }
 
@@ -59,44 +71,53 @@ export default function User(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
-  show: type => ({
+  show: (type) => ({
     type: Types.SHOW_NEW_USER_VIEW,
     payload: {
-      type
-    }
+      type,
+    },
   }),
 
   hide: () => ({
-    type: Types.HIDE_NEW_USER_VIEW
+    type: Types.HIDE_NEW_USER_VIEW,
   }),
 
   showModalChangerPassword: () => ({
-    type: Types.SHOW_CHANGER_PASSWORD_VIEW
+    type: Types.SHOW_CHANGER_PASSWORD_VIEW,
   }),
 
   hideModalChangerPassword: () => ({
-    type: Types.HIDE_CHANGER_PASSWORD_VIEW
+    type: Types.HIDE_CHANGER_PASSWORD_VIEW,
+  }),
+
+  showUpdateAccount: (data) => ({
+    type: Types.SHOW_UPDATE_USER_VIEW,
+    payload: { data },
+  }),
+
+  hideUpdateAccount: () => ({
+    type: Types.HIDE_UPDATE_USER_VIEW,
   }),
 
   readUserRequest: () => ({
-    type: Types.READ_USER_REQUEST
+    type: Types.READ_USER_REQUEST,
   }),
 
-  readUserSuccess: user => ({
+  readUserSuccess: (user) => ({
     type: Types.READ_USER_SUCCESS,
-    payload: { user }
+    payload: { user },
   }),
 
-  updateUserRequest: user => ({
+  updateUserRequest: (user) => ({
     type: Types.UPDATE_USER_REQUEST,
-    payload: { user }
+    payload: { user },
   }),
-  updateUserSucess: user => ({
+  updateUserSucess: (user) => ({
     type: Types.UPDATE_USER_SUCESS,
-    payload: { user }
+    payload: { user },
   }),
-  changerPasswordRequest: password => ({
+  changerPasswordRequest: (password) => ({
     type: Types.CHANGER_PASSWORD_REQUEST,
-    payload: { password }
-  })
+    payload: { password },
+  }),
 };

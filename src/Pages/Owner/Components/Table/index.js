@@ -98,9 +98,7 @@ function Table() {
               tooltip: "Mostrar Familiares",
               onClick: (event, rowData) => {
                 dispatch(
-                  CreatorsGenerete.GeneratePdfUniqueBoxFamiliesRequest(
-                    rowData.id
-                  )
+                  CreatorsGenerete.generateFamiliesBoxRequest(rowData.id)
                 );
                 dispatch(CreatorsBox.readFamiliesRequest(rowData.id));
                 dispatch(CreatorsFamily.showModalFamily());
@@ -125,15 +123,6 @@ function Table() {
               tooltip: "Atualizar informações",
               isFreeAction: true,
               onClick: () => dispatch(CreatorsBox.readBoxesRequest()),
-            },
-            {
-              icon: "label",
-              tooltip: "Gerar Etiquetas da caixa",
-              onClick: (event, rowData) => {
-                dispatch(CreatorsBox.readFamiliesRequest(rowData.id));
-                openTabTagBoxUnique();
-                dispatch(CreatorsGenerete.generateTagsUniqueBox(rowData));
-              },
             },
           ]}
           // eslint-disable-next-line react/jsx-no-duplicate-props

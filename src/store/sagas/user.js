@@ -25,6 +25,14 @@ export function* update({ payload }) {
   }
 }
 
+export function* updateNew({ payload }) {
+  try {
+    const response = yield call(api.put, `/user_update`, payload.user);
+  } catch (err) {
+    yield toastr.error("Falha", "Falha ao atualizar o email");
+  }
+}
+
 export function* destroy({ payload }) {
   try {
     yield call(api.delete, `user/${payload.id}`);

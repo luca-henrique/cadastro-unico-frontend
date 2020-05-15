@@ -161,7 +161,7 @@ export default function* rootSaga() {
       generatePdfSintetico
     ),
     takeLatest(
-      GeneratorTypes.GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST,
+      GeneratorTypes.GENERETE_FAMILIES_BOX_REQUEST,
       generatePdfUniqueBoxFamilies
     ),
     takeLatest(GeneratorTypes.GENERATE_PDF_DISCARD_REQUEST, generatePdfDiscard),

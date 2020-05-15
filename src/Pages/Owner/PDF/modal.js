@@ -87,8 +87,13 @@ export default function Create() {
     window.open("/descartes");
   }
 
+  const list = useSelector((state) => state.generator.tag_box_unique);
+
   function openTabBoxEtiquetas() {
+    //console.log(list[0].num_box);
+    // if (list[0].num_box == boxNumber) {
     window.open("/tag_box");
+    // }
   }
 
   return (
@@ -346,51 +351,16 @@ export default function Create() {
               </Grid>
               */}
 
-              <Grid item xs={12} sm={4} style={{ marginTop: "10px" }}>
-                <div>
-                  <Typography variant="button">Numbero da caixa:</Typography>
-                  <TextField
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                    value={boxNumber}
-                    onChange={(e) => setBoxNumber(e.target.value)}
-                    type="number"
-                  />
-                </div>
-              </Grid>
-
-              <Grid item xs={12} sm={1} />
-
-              <Grid item xs={12} sm={7}>
+              <Grid item xs={12} sm={12}>
                 <div style={{ width: "100%", marginTop: "35px" }}>
                   <Button
                     variant="contained"
                     onClick={() => {
-                      dispatch(
-                        GeneratorCreators.generateTagsUniqueBoxRequest(
-                          boxNumber
-                        )
-                      );
                       openTabBoxEtiquetas();
                     }}
                     style={{ color: "rgb(2,99,44)", width: "100%" }}
                   >
                     Gerar etiquetas por caixa
-                  </Button>
-                </div>
-              </Grid>
-
-              <Grid item xs={12} sm={12}>
-                <div style={{ width: "100%", marginTop: "15px" }}>
-                  <Button
-                    variant="contained"
-                    onClick={() =>
-                      dispatch(GeneratorCreators.generateHangTagsRequest())
-                    }
-                    style={{ color: "rgb(2,99,44)", width: "100%" }}
-                  >
-                    Etiquetas
                   </Button>
                 </div>
               </Grid>

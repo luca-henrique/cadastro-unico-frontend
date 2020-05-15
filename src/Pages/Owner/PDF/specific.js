@@ -11,135 +11,18 @@ import { Creators as BoxCreators } from "../../../store/ducks/box";
 import styled from "@react-pdf/styled-components";
 import moment from "moment";
 
-const Header = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 5px;
-  padding: 5px;
-`;
-
-const Heading = styled.View`
-  font-size: 16px;
-  width: 50%;
-`;
-
-const Data = styled.Text`
-  font-size: 10px;
-`;
-
-const TextInformation = styled.Text`
-  margin-top: 5px;
-  font-size: 10px;
-`;
-
-const SubText = styled.Text`
-  font-size: 14px;
-`;
-
-/* Informações da pasta */
-
-const Container = styled.View`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  width: 160px;
-  padding: 2px;
-`;
-
-const ContainerBox = styled.View`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  width: 20%;
-  padding: 2px;
-`;
-
-const List = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  margin: 5px;
-  padding: 5px;
-`;
-
-const Area = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  margin: 5px;
-  padding: 5px;
-`;
-
-const TextArea = styled.View`
-  width: 160px;
-  height: auto;
-`;
-
-const Atributes = styled.Text`
-  font-size: 12px;
-`;
-
-const Result = styled.Text`
-  margin-top: 3px;
-  font-size: 10px;
-`;
-
-/* Tabela grupo familiar */
-
-const Table = styled.View`
-  display: flex;
-
-  width: auto;
-  margin: 5px;
-  padding: 5px;
-`;
-
-const ColumnAlign = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const ColumnName = styled.View`
-  width: 160px;
-  text-align: center;
-  margin-top: 2px;
-  border-width: 1px;
-  border-style: solid;
-`;
-
-const ResultName = styled.View`
-  width: 160px;
-  border-width: 1px;
-  border-style: solid;
-  margin-top: 2px;
-`;
-
-const OthersColumns = styled.View`
-  width: 100px;
-  text-align: center;
-  margin-top: 2px;
-  margin-left: 2px;
-  border-width: 1px;
-  border-style: solid;
-`;
-
-const Title = styled.Text`
-  font-size: 12px;
-`;
-
-const SubTitle = styled.Text`
-  font-size: 10px;
-  margin-left: 2px;
-`;
+/*
+  
+  Method
+  [ 
+    generateFamiliesBoxRequest(box_id),
+    generateFamiliesBoxSuccess(<Families>Array)
+  ]
+ 
+ */
 
 const PDF = (props) => {
-  const box = props.redux.generator.unique_box_families;
+  const box = props.redux.generator.families_box;
 
   const { prefecture } = props.redux.prefecture;
 
@@ -331,3 +214,130 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...BoxCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PDF);
+
+const Header = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px;
+  padding: 5px;
+`;
+
+const Heading = styled.View`
+  font-size: 16px;
+  width: 50%;
+`;
+
+const Data = styled.Text`
+  font-size: 10px;
+`;
+
+const TextInformation = styled.Text`
+  margin-top: 5px;
+  font-size: 10px;
+`;
+
+const SubText = styled.Text`
+  font-size: 14px;
+`;
+
+/* Informações da pasta */
+
+const Container = styled.View`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  width: 160px;
+  padding: 2px;
+`;
+
+const ContainerBox = styled.View`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  width: 20%;
+  padding: 2px;
+`;
+
+const List = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin: 5px;
+  padding: 5px;
+`;
+
+const Area = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin: 5px;
+  padding: 5px;
+`;
+
+const TextArea = styled.View`
+  width: 160px;
+  height: auto;
+`;
+
+const Atributes = styled.Text`
+  font-size: 12px;
+`;
+
+const Result = styled.Text`
+  margin-top: 3px;
+  font-size: 10px;
+`;
+
+/* Tabela grupo familiar */
+
+const Table = styled.View`
+  display: flex;
+
+  width: auto;
+  margin: 5px;
+  padding: 5px;
+`;
+
+const ColumnAlign = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const ColumnName = styled.View`
+  width: 160px;
+  text-align: center;
+  margin-top: 2px;
+  border-width: 1px;
+  border-style: solid;
+`;
+
+const ResultName = styled.View`
+  width: 160px;
+  border-width: 1px;
+  border-style: solid;
+  margin-top: 2px;
+`;
+
+const OthersColumns = styled.View`
+  width: 100px;
+  text-align: center;
+  margin-top: 2px;
+  margin-left: 2px;
+  border-width: 1px;
+  border-style: solid;
+`;
+
+const Title = styled.Text`
+  font-size: 12px;
+`;
+
+const SubTitle = styled.Text`
+  font-size: 10px;
+  margin-left: 2px;
+`;

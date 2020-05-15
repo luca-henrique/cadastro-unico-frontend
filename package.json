@@ -1,6 +1,6 @@
 {
   "name": "cadastro-unico",
-  "homepage": "https://cadastro-unico-teste.ctmconsultoria.com/",
+  "homepage": "https://cadastro-unico-arcoverde.ctmconsultoria.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -44,7 +44,7 @@
     "yup": "^0.28.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": " react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

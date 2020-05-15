@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "../store/index";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:3333/",
+  baseURL: "http://api.cadastro-unico-arcoverde.ctmconsultoria.com:16795/",
 });
 
 api.interceptors.request.use((config) => {

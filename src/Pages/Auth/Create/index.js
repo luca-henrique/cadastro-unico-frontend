@@ -9,7 +9,7 @@ import {
   Typography,
   FormControlLabel,
   withStyles,
-  Checkbox
+  Checkbox,
 } from "@material-ui/core/";
 import { toastr } from "react-redux-toastr";
 import { green } from "@material-ui/core/colors";
@@ -28,7 +28,7 @@ export default function Create() {
         nome,
         email,
         password,
-        admin
+        admin,
       };
 
       dispatch(FunCreators.createFuncRequest(funcionario));
@@ -54,7 +54,7 @@ export default function Create() {
               <FormControlLabel
                 style={{ color: "#A4A4A4" }}
                 value={admin}
-                onChange={e => setAdmin(e.target.checked)}
+                onChange={(e) => setAdmin(e.target.checked)}
                 control={<GreenCheckbox />}
               />
             </Grid>
@@ -63,11 +63,12 @@ export default function Create() {
             <div>
               <Typography variant="button">Nome:</Typography>
               <TextField
+                required
                 variant="outlined"
                 size="small"
                 fullWidth
                 value={nome}
-                onChange={e => setNome(e.target.value)}
+                onChange={(e) => setNome(e.target.value)}
               />
             </div>
           </Grid>
@@ -75,11 +76,12 @@ export default function Create() {
             <div>
               <Typography variant="button">E-mail:</Typography>
               <TextField
+                required
                 variant="outlined"
                 size="small"
                 fullWidth
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </Grid>
@@ -93,7 +95,7 @@ export default function Create() {
                 fullWidth
                 type="password"
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </Grid>
@@ -107,8 +109,8 @@ const GreenCheckbox = withStyles({
   root: {
     color: green[200],
     "&$checked": {
-      color: green[300]
-    }
+      color: green[300],
+    },
   },
-  checked: {}
-})(props => <Checkbox color="default" {...props} />);
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
