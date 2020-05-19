@@ -10,6 +10,12 @@ export const Types = {
   READ_USER_REQUEST: "@user/READ_USER_REQUEST",
   READ_USER_SUCCESS: "@user/READ_USER_SUCCESS",
 
+  READ_USER_ACTIVE_REQUEST: "@user/READ_USER_ACTIVE_REQUEST",
+  READ_USER_ACTIVE_SUCCESS: "@user/READ_USER_ACTIVE_SUCCESS",
+
+  UPDATE_USER_ACTIVE_REQUEST: "@user/RUPDATE_USER_ACTIVE_REQUEST",
+  UPDATE_USER_ACTIVE_SUCCESS: "@user/UPDATE_USER_ACTIVE_SUCCESS",
+
   UPDATE_USER_REQUEST: "@user/UPDATE_USER_REQUEST",
   UPDATE_USER_SUCESS: "@user/UPDATE_USER_SUCESS",
 
@@ -25,7 +31,10 @@ const INITIAL_STATE = Immutable({
   visible: false,
   user: {},
   changer: {},
-  update_account: { visible: false, data: [] },
+
+  /* Estado inicial do modal para atualizar informações do usuario */
+  update_account_visible: false,
+  update_account_data: [],
 });
 
 export default function User(state = INITIAL_STATE, action) {
@@ -38,10 +47,10 @@ export default function User(state = INITIAL_STATE, action) {
     case Types.SHOW_UPDATE_USER_VIEW:
       return {
         ...state,
-        update_account: { visible: true, data: action.payload.data },
+        update_account_visible: true,
       };
     case Types.HIDE_UPDATE_USER_VIEW:
-      return { ...state, update_account: { visible: false } };
+      return { ...state, update_account_visible: false };
 
     case Types.SHOW_CHANGER_PASSWORD_VIEW:
       return { ...state, visible: true };
@@ -50,6 +59,9 @@ export default function User(state = INITIAL_STATE, action) {
 
     case Types.READ_USER_SUCCESS:
       return { ...state, user: action.payload.user };
+
+    case Types.READ_USER_ACTIVE_SUCCESS:
+      return { ...state, update_account_data: action.payload.data };
 
     case Types.UPDATE_USER_REQUEST: {
       return {
@@ -90,9 +102,8 @@ export const Creators = {
     type: Types.HIDE_CHANGER_PASSWORD_VIEW,
   }),
 
-  showUpdateAccount: (data) => ({
+  showUpdateAccount: () => ({
     type: Types.SHOW_UPDATE_USER_VIEW,
-    payload: { data },
   }),
 
   hideUpdateAccount: () => ({
@@ -106,6 +117,24 @@ export const Creators = {
   readUserSuccess: (user) => ({
     type: Types.READ_USER_SUCCESS,
     payload: { user },
+  }),
+
+  readUserActiveRequest: () => ({
+    type: Types.READ_USER_ACTIVE_REQUEST,
+  }),
+
+  readUserActiveSuccess: (data) => ({
+    type: Types.READ_USER_ACTIVE_SUCCESS,
+    payload: {
+      data,
+    },
+  }),
+
+  updateUserActiveRequest: (account) => ({
+    type: Types.UPDATE_USER_ACTIVE_REQUEST,
+    payload: {
+      account,
+    },
   }),
 
   updateUserRequest: (user) => ({

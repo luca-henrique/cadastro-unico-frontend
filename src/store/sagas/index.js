@@ -7,7 +7,13 @@ import { Types as LicenseTypes } from "../ducks/license";
 import { checkToken, requestToken } from "./license";
 
 import { Types as UserTypes } from "../ducks/user";
-import { index, update, changerPassword } from "./user";
+import {
+  index,
+  update,
+  changerPassword,
+  getUserActive,
+  changerUserActive,
+} from "./user";
 
 import { Types as FunTypes } from "../ducks/funcionario";
 import {
@@ -92,7 +98,9 @@ export default function* rootSaga() {
 
     takeLatest(UserTypes.READ_USER_REQUEST, index),
     takeLatest(UserTypes.UPDATE_USER_REQUEST, update),
+    takeLatest(UserTypes.READ_USER_ACTIVE_REQUEST, getUserActive),
     takeLatest(UserTypes.CHANGER_PASSWORD_REQUEST, changerPassword),
+    takeLatest(UserTypes.UPDATE_USER_ACTIVE_REQUEST, changerUserActive),
 
     takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
     takeLatest(PrefectureTypes.READ_PREFECTURE_REQUEST, getPrefecture),

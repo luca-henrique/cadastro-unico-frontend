@@ -18,6 +18,7 @@ export function* index() {
 
 export function* update({ payload }) {
   try {
+    console.log(payload);
     const response = yield call(api.put, "user/0", payload.user);
     yield put(UserCreators.readUserSuccess(response.data));
   } catch (err) {
@@ -62,5 +63,31 @@ export function* changerPassword({ payload }) {
     yield toastr.success("Senha alterada.");
   } catch (err) {
     yield toastr.error("Falha", "Falha ao alterar o password");
+  }
+}
+
+/**
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
+export function* getUserActive() {
+  try {
+    const response = yield call(api.get, "/user_active");
+    yield put(UserCreators.readUserActiveSuccess(response.data));
+  } catch (err) {}
+}
+
+export function* changerUserActive({ payload }) {
+  try {
+    yield call(api.put, "/user_active", payload.account);
+    yield toastr.success("Sucesso.", "Alterações feitas com sucesso.");
+  } catch (err) {
+    yield toastr.error("Falha", "Email já existe");
   }
 }

@@ -16,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up("md")]: {
       width: "30%",
-      height: "45%",
+      height: "35%",
     },
   },
 }));
 
 export default function Update() {
   const classes = useStyles();
-  const visible = useSelector((state) => state.user.update_account.visible);
+  const visible = useSelector((state) => state.user.update_account_visible);
 
   return (
     <Modal
@@ -34,7 +34,7 @@ export default function Update() {
         alignItems: "center",
         justifyContent: "center",
       }}
-      open={visible || false}
+      open={visible}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
