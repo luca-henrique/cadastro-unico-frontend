@@ -92,15 +92,25 @@ const PDF = (props) => {
         <PDFViewer style={{ width: "100%", height: "100%" }}>
           <Document title="Relatorio geral" orientation="portrait">
             <Page size="A3">
-              <View>
+              <View
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  height: "100%",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                }}
+              >
                 {etiqueta.map((familiar, index) => (
-                  <View key={index}>
+                  <View key={index} style={{ margin: "10px" }}>
                     <View style={{ display: "flex", flexDirection: "column" }}>
                       <View
                         style={{
                           justifyContent: "center",
                           alignItems: "center",
-                          padding: "5px",
+
+                          width: "40%",
                         }}
                       >
                         <Text>Software de cadastro único</Text>

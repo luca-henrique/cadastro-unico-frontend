@@ -84,16 +84,6 @@ function Table() {
             },
 
             {
-              icon: "printer",
-              tooltip: "Gerar PDF",
-              isFreeAction: true,
-              onClick: (event, rowData) => {
-                dispatch(
-                  CreatorsGenerete.generateRelationshipBoxFamiliesRequest()
-                );
-              },
-            },
-            {
               icon: "visibility",
               tooltip: "Mostrar Familiares",
               onClick: (event, rowData) => {
