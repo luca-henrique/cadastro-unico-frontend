@@ -143,12 +143,12 @@ function Table() {
             {
               title: "Data visita",
               type: "date",
-              field: "date_interview",
+              field: "data_visit",
             },
             {
               title: "Data entrevista",
               type: "date",
-              field: "date_visit",
+              field: "date_interview",
             },
             {
               title: "Local",
