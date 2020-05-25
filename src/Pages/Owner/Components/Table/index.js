@@ -136,6 +136,11 @@ function Table() {
             },
 
             {
+              title: "CPF",
+              field: "cpf",
+            },
+
+            {
               title: "Responsavel",
               field: "nome",
             },
@@ -143,7 +148,7 @@ function Table() {
             {
               title: "Data visita",
               type: "date",
-              field: "data_visit",
+              field: "date_visit",
             },
             {
               title: "Data entrevista",
