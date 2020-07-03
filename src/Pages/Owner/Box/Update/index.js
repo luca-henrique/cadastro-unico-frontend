@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
       height: "100%",
     },
     [theme.breakpoints.up("md")]: {
+      height: "700px",
       width: "600px",
     },
   },
@@ -164,6 +165,8 @@ function Update(props) {
               padding: "20px",
               border: "1px solid #D8D8D8",
               borderRadius: "5px",
+              overflowX: "visible",
+              overflowY: "scroll",
             }}
             className={classes.modal}
           >
@@ -182,7 +185,7 @@ function Update(props) {
                     marginBottom: "10px",
                   }}
                 >
-                  Cadastrar
+                  Atualizar
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>

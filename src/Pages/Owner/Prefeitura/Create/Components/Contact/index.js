@@ -21,7 +21,7 @@ function Contact(props) {
       var cont = {
         prefecture_id: 1,
         numero: number,
-        email: email
+        email: email,
       };
 
       checkAttributesObj(cont);
@@ -33,8 +33,8 @@ function Contact(props) {
   }
 
   function checkAttributesObj(obj) {
+    // eslint-disable-next-line no-unused-vars
     for (var [key, value] of Object.entries(obj)) {
-      console.log(key);
       if (typeof value === "undefined" || value === null || value === "") {
         throw new UserException("Null");
       }
@@ -73,7 +73,7 @@ function Contact(props) {
                 variant="outlined"
                 size="small"
                 fullWidth
-                onChange={e => setNumber(validatePhone(e.target.value))}
+                onChange={(e) => setNumber(validatePhone(e.target.value))}
                 value={number}
               />
             </div>
@@ -94,7 +94,7 @@ function Contact(props) {
                 size="small"
                 type="email"
                 fullWidth
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
             </div>
@@ -105,11 +105,11 @@ function Contact(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...ContactCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contact);

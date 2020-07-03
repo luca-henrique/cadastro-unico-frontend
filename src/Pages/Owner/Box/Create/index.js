@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
       height: "100%",
     },
     [theme.breakpoints.up("md")]: {
+      height: "700px",
       width: "600px",
     },
   },
@@ -140,10 +141,10 @@ const Create = (props) => {
       style={{
         alignItems: "center",
         justifyContent: "center",
-        overflowX: "visible",
-        overflowY: "scroll",
         marginLeft: "auto",
         marginRight: "auto",
+        overflowX: "visible",
+        overflowY: "scroll",
       }}
       className={classes.main}
       open={visible}
@@ -160,6 +161,8 @@ const Create = (props) => {
               padding: "20px",
               border: "1px solid #D8D8D8",
               borderRadius: "5px",
+              overflowX: "visible",
+              overflowY: "scroll",
             }}
             className={classes.modal}
           >

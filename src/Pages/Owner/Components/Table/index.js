@@ -9,6 +9,8 @@ import { Creators as CreatorsGenerete } from "../../../../store/ducks/generator"
 import WarningIcon from "@material-ui/icons/Warning";
 import MaterialTable from "material-table";
 
+import LabelIcon from "@material-ui/icons/Label";
+
 import Create from "../../Box/Create";
 import Update from "../../Box/Update";
 import Family from "../../Family/index";
@@ -31,6 +33,10 @@ function Table() {
     } else {
       return false;
     }
+  }
+
+  function openTabTagBoxUnique() {
+    window.open("/tag");
   }
 
   return (
@@ -78,23 +84,11 @@ function Table() {
             },
 
             {
-              icon: "printer",
-              tooltip: "Gerar PDF",
-              isFreeAction: true,
-              onClick: (event, rowData) => {
-                dispatch(
-                  CreatorsGenerete.generateRelationshipBoxFamiliesRequest()
-                );
-              },
-            },
-            {
               icon: "visibility",
               tooltip: "Mostrar Familiares",
               onClick: (event, rowData) => {
                 dispatch(
-                  CreatorsGenerete.GeneratePdfUniqueBoxFamiliesRequest(
-                    rowData.id
-                  )
+                  CreatorsGenerete.generateFamiliesBoxRequest(rowData.id)
                 );
                 dispatch(CreatorsBox.readFamiliesRequest(rowData.id));
                 dispatch(CreatorsFamily.showModalFamily());
@@ -142,6 +136,11 @@ function Table() {
             },
 
             {
+              title: "CPF",
+              field: "cpf",
+            },
+
+            {
               title: "Responsavel",
               field: "nome",
             },
@@ -149,12 +148,12 @@ function Table() {
             {
               title: "Data visita",
               type: "date",
-              field: "date_interview",
+              field: "date_visit",
             },
             {
               title: "Data entrevista",
               type: "date",
-              field: "date_visit",
+              field: "date_interview",
             },
             {
               title: "Local",

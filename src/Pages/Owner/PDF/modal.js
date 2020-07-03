@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Creators as GeneratorCreators } from "../../../store/ducks/generator";
@@ -12,6 +12,7 @@ import {
   Grid,
   Checkbox,
   withStyles,
+  TextField,
 } from "@material-ui/core/";
 
 import { green } from "@material-ui/core/colors";
@@ -70,6 +71,8 @@ export default function Create() {
   const [district, setDisctrict] = useState("");
   */
 
+  const [boxNumber, setBoxNumber] = useState("");
+
   function descartes() {
     dispatch(GeneratorCreators.generatePdfDiscardRequest());
     dispatch(GeneratorCreators.hideModalGeneratorPdf());
@@ -82,6 +85,15 @@ export default function Create() {
 
   function openTabDescartes() {
     window.open("/descartes");
+  }
+
+  const list = useSelector((state) => state.generator.tag_box_unique);
+
+  function openTabBoxEtiquetas() {
+    //console.log(list[0].num_box);
+    // if (list[0].num_box == boxNumber) {
+    window.open("/tag_box");
+    // }
   }
 
   return (
@@ -340,15 +352,15 @@ export default function Create() {
               */}
 
               <Grid item xs={12} sm={12}>
-                <div style={{ width: "100%", marginTop: "15px" }}>
+                <div style={{ width: "100%", marginTop: "35px" }}>
                   <Button
                     variant="contained"
-                    onClick={() =>
-                      dispatch(GeneratorCreators.generateHangTagsRequest())
-                    }
+                    onClick={() => {
+                      openTabBoxEtiquetas();
+                    }}
                     style={{ color: "rgb(2,99,44)", width: "100%" }}
                   >
-                    Etiquetas
+                    Gerar etiquetas por caixa
                   </Button>
                 </div>
               </Grid>

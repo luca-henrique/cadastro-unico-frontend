@@ -14,7 +14,7 @@ import {
   StepLabel,
   Button,
   Typography,
-  StepConnector
+  StepConnector,
 } from "@material-ui/core/";
 
 import Check from "@material-ui/icons/Check";
@@ -25,41 +25,52 @@ import Information from "./Components/Informacoes/index";
 import Endereco from "./Components/Addrress/index";
 import Contato from "./Components/Contact/";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%"
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      height: "100%",
+      overflowX: "visible",
+      overflowY: "scroll",
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+      overflowX: "visible",
+      overflowY: "scroll",
+    },
   },
   button: {
     marginRight: theme.spacing(1),
-    color: "rgba(0, 0, 0, 0.54)"
+    color: "rgba(0, 0, 0, 0.54)",
   },
   instructions: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
-  }
+    marginBottom: theme.spacing(1),
+  },
 }));
 
 const QontoConnector = withStyles({
   alternativeLabel: {
     top: 10,
     left: "calc(-50% + 16px)",
-    right: "calc(50% + 16px)"
+    right: "calc(50% + 16px)",
   },
   active: {
     "& $line": {
-      borderColor: "rgb(2,99,44)"
-    }
+      borderColor: "rgb(2,99,44)",
+    },
   },
   completed: {
     "& $line": {
-      borderColor: "rgb(2,99,44)"
-    }
+      borderColor: "rgb(2,99,44)",
+    },
   },
   line: {
     borderColor: "#eaeaf0",
     borderTopWidth: 3,
-    borderRadius: 1
-  }
+    borderRadius: 1,
+  },
 })(StepConnector);
 
 const useQontoStepIconStyles = makeStyles({
@@ -68,22 +79,22 @@ const useQontoStepIconStyles = makeStyles({
     display: "flex",
     height: 22,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   active: {
-    color: "rgb(2,99,44)"
+    color: "rgb(2,99,44)",
   },
   circle: {
     width: 8,
     height: 8,
     borderRadius: "50%",
-    backgroundColor: "currentColor"
+    backgroundColor: "currentColor",
   },
   completed: {
     color: "rgb(2,99,44)",
     zIndex: 1,
-    fontSize: 18
-  }
+    fontSize: 18,
+  },
 });
 
 function QontoStepIcon(props) {
@@ -93,7 +104,7 @@ function QontoStepIcon(props) {
   return (
     <div
       className={clsx(classes.root, {
-        [classes.active]: active
+        [classes.active]: active,
       })}
     >
       {completed ? (
@@ -122,7 +133,7 @@ function getStepContent(step) {
   }
 }
 
-const Create = props => {
+const Create = (props) => {
   const { exist } = props.redux.prefecture;
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -137,7 +148,7 @@ const Create = props => {
     handleReset();
   }
 
-  const isStepSkipped = step => {
+  const isStepSkipped = (step) => {
     return skipped.has(step);
   };
 
@@ -148,7 +159,7 @@ const Create = props => {
       newSkipped.delete(activeStep);
     }
 
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
   };
 
@@ -163,7 +174,7 @@ const Create = props => {
         style={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <div
@@ -173,7 +184,7 @@ const Create = props => {
             border: "1px solid #D8D8D8",
             borderRadius: "5px",
             height: "auto",
-            width: "800px"
+            width: "800px",
           }}
         >
           <div className={classes.root}>
@@ -237,11 +248,11 @@ const Create = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...PrefeituraCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);

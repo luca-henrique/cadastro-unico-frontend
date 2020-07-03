@@ -7,7 +7,13 @@ import { Types as LicenseTypes } from "../ducks/license";
 import { checkToken, requestToken } from "./license";
 
 import { Types as UserTypes } from "../ducks/user";
-import { index, update, changerPassword } from "./user";
+import {
+  index,
+  update,
+  changerPassword,
+  getUserActive,
+  changerUserActive,
+} from "./user";
 
 import { Types as FunTypes } from "../ducks/funcionario";
 import {
@@ -65,6 +71,7 @@ import {
   generatePdfSintetico,
   generatePdfUniqueBoxFamilies,
   generatePdfDiscard,
+  generatesearchAllFamiliesUniqueBox,
 } from "./generator";
 
 import { teste } from "./teste";
@@ -91,7 +98,9 @@ export default function* rootSaga() {
 
     takeLatest(UserTypes.READ_USER_REQUEST, index),
     takeLatest(UserTypes.UPDATE_USER_REQUEST, update),
+    takeLatest(UserTypes.READ_USER_ACTIVE_REQUEST, getUserActive),
     takeLatest(UserTypes.CHANGER_PASSWORD_REQUEST, changerPassword),
+    takeLatest(UserTypes.UPDATE_USER_ACTIVE_REQUEST, changerUserActive),
 
     takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
     takeLatest(PrefectureTypes.READ_PREFECTURE_REQUEST, getPrefecture),
@@ -160,9 +169,14 @@ export default function* rootSaga() {
       generatePdfSintetico
     ),
     takeLatest(
-      GeneratorTypes.GENERETE_PDF_UNIQUE_BOX_FAMILIES_REQUEST,
+      GeneratorTypes.GENERETE_FAMILIES_BOX_REQUEST,
       generatePdfUniqueBoxFamilies
     ),
     takeLatest(GeneratorTypes.GENERATE_PDF_DISCARD_REQUEST, generatePdfDiscard),
+
+    takeLatest(
+      GeneratorTypes.GENERATE_PDF_TAG_UNIQUE_BOX_REQUEST,
+      generatesearchAllFamiliesUniqueBox
+    ),
   ]);
 }

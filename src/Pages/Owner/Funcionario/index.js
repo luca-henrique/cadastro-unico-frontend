@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Creators as FuncionarioCreators } from "../../../store/ducks/funcionario";
+import { Creators as UserCreators } from "../../../store/ducks/user";
 
 import MaterialTable from "material-table";
 import { Modal, Backdrop } from "@material-ui/core/";
@@ -13,18 +14,18 @@ import Create from "./Create/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       width: "100%",
       height: "100%",
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     [theme.breakpoints.up("md")]: {
-      width: "45%"
-    }
-  }
+      width: "45%",
+    },
+  },
 }));
 
 function View(props) {
@@ -58,11 +59,11 @@ function View(props) {
         style={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
         BackdropComponent={Backdrop}
         BackdropProps={{
-          timeout: 500
+          timeout: 500,
         }}
       >
         {load(data) === true ? (
@@ -75,71 +76,71 @@ function View(props) {
                   title: "Nome",
                   field: "nome",
                   headerStyle: {
-                    color: "rgb(2,90,10)"
-                  }
+                    color: "rgb(2,90,10)",
+                  },
                 },
                 {
                   title: "E-mail",
                   field: "email",
                   headerStyle: {
-                    color: "rgb(2,90,10)"
-                  }
+                    color: "rgb(2,90,10)",
+                  },
                 },
 
                 {
                   title: "Privilegio",
                   field: "admin",
                   headerStyle: {
-                    color: "rgb(2,90,10)"
+                    color: "rgb(2,90,10)",
                   },
-                  render: rowData => (
+                  render: (rowData) => (
                     <>
                       {rowData.admin === true ? <LockOpenOutlined /> : <Lock />}
                     </>
                   ),
-                  lookup: { true: "Está", false: "Não está" }
-                }
+                  lookup: { true: "Está", false: "Não está" },
+                },
               ]}
               onRowClick={(evt, selectedRow) => {
                 setSelectedRow(selectedRow);
               }}
               options={{
                 headerStyle: {
-                  color: "rgb(2,90,10)"
+                  color: "rgb(2,90,10)",
                 },
                 actionsCellStyle: { color: "#848484" },
-                rowStyle: rowData => ({
+                rowStyle: (rowData) => ({
                   backgroundColor:
                     selectedRow &&
                     selectedRow.tableData.id === rowData.tableData.id
                       ? "#F4FA58"
-                      : "#FFF"
-                })
+                      : "#FFF",
+                }),
               }}
               localization={{
                 header: {
-                  actions: "Ações"
+                  actions: "Ações",
                 },
 
                 body: {
                   emptyDataSourceMessage: "Não existe",
                   filterRow: {
-                    filterTooltip: "Procurar"
-                  }
+                    filterTooltip: "Procurar",
+                  },
                 },
                 toolbar: {
                   searchTooltip: "Procurar",
-                  searchPlaceholder: "Procurar"
-                }
+                  searchPlaceholder: "Procurar",
+                },
               }}
               actions={[
                 {
                   icon: "add",
                   tooltip: "Add User",
                   isFreeAction: true,
-                  onClick: event => {
+                  onClick: (event) => {
                     showModalNewFuncionario();
-                  }
+                  },
                 },
                 {
                   icon: "close",
@@ -147,16 +148,17 @@ function View(props) {
                   isFreeAction: true,
                   onClick: (event, rowData) => {
                     hide();
-                  }
+                  },
                 },
+
                 {
                   icon: "delete",
                   tooltip: "Deletar funcionario",
                   onClick: (event, rowData) => {
                     const { deleteFuncionarioSuccess } = props;
                     deleteFuncionarioSuccess(rowData);
-                  }
-                }
+                  },
+                },
               ]}
             />
             <Create />
@@ -169,11 +171,11 @@ function View(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...FuncionarioCreators }, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ ...FuncionarioCreators, ...UserCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(View);

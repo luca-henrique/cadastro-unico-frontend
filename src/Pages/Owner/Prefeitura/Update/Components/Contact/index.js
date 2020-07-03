@@ -9,7 +9,7 @@ import TextField from "../../../../../Components/TextField/index";
 import { toastr } from "react-redux-toastr";
 
 export default function Components() {
-  const contact = useSelector(state => state.prefectureContact.contact);
+  const contact = useSelector((state) => state.prefectureContact.contact);
 
   const dispatch = useDispatch();
 
@@ -27,10 +27,9 @@ export default function Components() {
       var cont = {
         prefecture_id: 1,
         numero: number,
-        email: email
+        email: email,
       };
 
-      console.log(e);
       checkAttributesObj(cont);
 
       dispatch(ContactCreators.updatePrefectureContactRequest(cont));
@@ -40,8 +39,8 @@ export default function Components() {
   }
 
   function checkAttributesObj(obj) {
+    // eslint-disable-next-line no-unused-vars
     for (var [key, value] of Object.entries(obj)) {
-      console.log(key);
       if (typeof value === "undefined" || value === null || value === "") {
         throw new UserException("Null");
       }
@@ -60,7 +59,7 @@ export default function Components() {
 
   return (
     <>
-      <form onBlur={e => onUpdate(e)}>
+      <form onBlur={(e) => onUpdate(e)}>
         <Grid
           container
           direction="row"
@@ -77,7 +76,7 @@ export default function Components() {
                 variant="outlined"
                 size="small"
                 fullWidth
-                onChange={e => setNumber(validatePhone(e.target.value))}
+                onChange={(e) => setNumber(validatePhone(e.target.value))}
                 value={number}
               />
             </div>
@@ -95,7 +94,7 @@ export default function Components() {
                 size="small"
                 type="email"
                 fullWidth
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
             </div>

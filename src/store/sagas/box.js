@@ -2,7 +2,6 @@ import api from "../../services/api";
 
 import { call, put } from "redux-saga/effects";
 import { toastr } from "react-redux-toastr";
-
 import { Creators as BoxCreators } from "../ducks/box";
 
 export function* createBox({ payload }) {

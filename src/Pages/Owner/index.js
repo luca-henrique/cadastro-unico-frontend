@@ -19,6 +19,7 @@ import { bindActionCreators } from "redux";
 
 import Main from "./Components/Table/";
 import TopBar from "./Components/TopBar/";
+import UserUpdate from "./Funcionario/update/";
 
 import ChangerPasswordModal from "../Auth/ChangerPassword/index";
 
@@ -30,6 +31,7 @@ import {
   EditLocation,
   PictureAsPdf,
   LockOutlined,
+  GroupAdd,
 } from "@material-ui/icons/";
 
 import Funcionario from "./Funcionario/";
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     height: "100%",
+
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       height: "100%",
@@ -102,6 +105,8 @@ function View(props) {
     readDistrictRequest,
     showModalGeneratorPdf,
     showModalChangerPassword,
+    showUpdateAccount,
+    readUserActiveRequest,
   } = props;
 
   const isAdmin = props.redux.user.user.admin;
@@ -139,13 +144,13 @@ function View(props) {
             {isAdmin === true ? (
               <>
                 <Button
-                  tooltip="Funcionario"
+                  tooltip="Funcionarios"
                   styles={{
                     backgroundColor: "rgb(10,103,30)",
                     color: "rgb(246,238,89)",
                   }}
                 >
-                  <Person
+                  <GroupAdd
                     onClick={() => {
                       showModalFuncionario();
                       loadFuncionarioRequest();
@@ -187,6 +192,21 @@ function View(props) {
             ) : (
               <></>
             )}
+
+            <Button
+              tooltip="Minhas informações"
+              styles={{
+                backgroundColor: "rgb(10,103,30)",
+                color: "rgb(246,238,89)",
+              }}
+            >
+              <Person
+                onClick={() => {
+                  readUserActiveRequest();
+                  showUpdateAccount();
+                }}
+              />
+            </Button>
 
             <Button
               tooltip="Bairro"
@@ -243,6 +263,7 @@ function View(props) {
           </Container>
         </div>
       </main>
+      <UserUpdate />
     </div>
   );
 }

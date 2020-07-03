@@ -72,8 +72,20 @@ export function* generatePdfUniqueBoxFamilies({ payload }) {
       api.get,
       `/generate_pdf_unique_box_families/${payload.box_id}`
     );
-    yield put(
-      GeneratorCreators.GeneratePdfUniqueBoxFamiliesSuccess(response.data[0])
+    yield put(GeneratorCreators.generateFamiliesBoxSuccess(response.data[0]));
+  } catch (err) {}
+}
+
+/* Lista todas a pastas de uma caixa especifica */
+
+export function* generatesearchAllFamiliesUniqueBox({ payload }) {
+  try {
+    console.log(payload.id);
+    const response = yield call(
+      api.get,
+      `/search_all_families_unique_box/${payload.id}`
     );
+
+    yield put(GeneratorCreators.generateTagsUniqueBoxSuccess(response.data));
   } catch (err) {}
 }
