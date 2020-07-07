@@ -17,11 +17,11 @@ import { Creators as UserCreators } from "../../store/ducks/user";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import Main from "./Components/Table/";
+import Main from "./Box/list/";
 import TopBar from "./Components/TopBar/";
 import UserUpdate from "./Funcionario/update/";
 
-import ChangerPasswordModal from "../Auth/ChangerPassword/index";
+import ChangerPasswordModal from "../authentication/changer-password/index";
 
 import {
   Add,

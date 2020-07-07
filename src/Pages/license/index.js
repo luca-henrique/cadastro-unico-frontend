@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import { useDispatch } from "react-redux";
-import { Creators as LicenseCreators } from "../../../store/ducks/license";
+import { Creators as LicenseCreators } from "../../store/ducks/license";
 
 import { Typography, Button, TextField } from "@material-ui/core/";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
-import Logo from "../../../Assets/Images/empresalogo.png";
-import Copyright from "../../Copyright/index";
+import Logo from "../../Assets/Images/empresalogo.png";
+import Copyright from "../Components/Copyright";
 
 import { Container } from "./styled";
 

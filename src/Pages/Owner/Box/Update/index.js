@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { Creators as BoxCreators } from "../../../../store/ducks/box";
+import { Creators as BoxCreators } from "~/store/ducks/box";
+
+import { useSelector } from "react-redux";
 
 import moment from "moment";
 import { nisMask } from "../../../Components/TextField/MaskNIS";
@@ -22,6 +24,7 @@ import {
   FormControlLabel,
   FormControl,
   FormLabel,
+  Select,
 } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -58,13 +61,15 @@ const GreenCheckbox = withStyles({
 })((props) => <Checkbox color="default" {...props} />);
 
 function Update(props) {
-  const { data, visible } = props.redux.box.updateBox;
+  const districts = useSelector((state) => state.district.districts);
+  const { data, visible } = useSelector((state) => state.box.updateBox);
+  const classes = useStyles();
 
   const [numPaste, setNumPaste] = useState("");
 
   const [numBox, setNumBox] = useState("");
   const [codHome, setCodHome] = useState("");
-  const [district, setDisctric] = useState("");
+  const [district, setDistrict] = useState("");
   const [dateInterview, setDateInterview] = useState("");
   const [dateVisit, setDateVisit] = useState("");
   const [reason, setReason] = useState("");
@@ -76,14 +81,12 @@ function Update(props) {
   const [benefit, setBenefit] = useState(false);
   const [local, setLocal] = useState(false);
 
-  const classes = useStyles();
-
   useEffect(() => {
     if (typeof data !== "undefined") {
       setNumPaste(data.num_paste);
       setNumBox(data.num_box);
       setCodHome(data.cod_home);
-      setDisctric(data.district);
+      setDistrict(data.district);
       setDateInterview(data.date_interview);
       setDateVisit(data.date_visit);
       setReason(data.reason === null ? "" : data.reason);
@@ -126,8 +129,10 @@ function Update(props) {
       local,
     };
 
+    const objUpdated = Object.assign(data, box);
+
     const { updateBoxRequest } = props;
-    updateBoxRequest(box);
+    updateBoxRequest(box, objUpdated);
     hide();
   }
 
@@ -229,15 +234,23 @@ function Update(props) {
               </Grid>
               <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
                 <div>
-                  <Typography variant="button">Bairro:</Typography>
-                  <TextField
+                  <FormControl
                     variant="outlined"
+                    style={{ width: "100%" }}
                     size="small"
                     fullWidth
-                    type="text"
                     value={district}
-                    onChange={(e) => setDisctric(e.target.value)}
-                  />
+                    onChange={(e) => setDistrict(e.target.value)}
+                  >
+                    <Typography variant="button">Bairro:</Typography>
+                    <Select native size="small" fullWidth value={district}>
+                      {districts.map((teste) => (
+                        <option key={teste.id} value={teste.nome}>
+                          {teste.nome}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
               </Grid>
               <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>

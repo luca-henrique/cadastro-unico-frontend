@@ -12,24 +12,24 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { Form, Container } from "../../Components/Style/";
 import Logo from "../../../Assets/Images/cadunico.png";
 
-import Copyright from "../../Copyright/";
+import Copyright from "../../Components/Copyright";
 
 const ValidationTextField = withStyles({
   root: {
     "& input:valid + fieldset": {
       borderColor: "#A4A4A4",
-      borderWidth: 1
+      borderWidth: 1,
     },
     "& input:invalid + fieldset": {
       borderColor: "red",
-      borderWidth: 2
+      borderWidth: 2,
     },
     "& input:valid:focus + fieldset": {
       borderColor: "#02632c",
       borderLeftWidth: 6,
-      padding: "4px !important" // override inline-style
-    }
-  }
+      padding: "4px !important", // override inline-style
+    },
+  },
 })(TextField);
 
 function SignUp(props) {
@@ -72,7 +72,7 @@ function SignUp(props) {
               fullWidth
               type="text"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className={classes.button}>
@@ -85,7 +85,7 @@ function SignUp(props) {
               fullWidth
               type="password"
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className={classes.signIn}>
@@ -107,22 +107,22 @@ function SignUp(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
 // Ações
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...LicenseCreators, ...AuthActions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: "#F4D03F",
     backgroundImage: "linear-gradient(132deg, #F4D03F 10%, #02632c 100%)",
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
 
   img: {
@@ -131,26 +131,26 @@ const useStyles = makeStyles(theme => ({
     marginTop: "40px",
 
     [theme.breakpoints.down("sm")]: {
-      width: "300px"
+      width: "300px",
     },
     [theme.breakpoints.up("md")]: {
-      width: "500px"
+      width: "500px",
     },
-    [theme.breakpoints.up("lg")]: {}
+    [theme.breakpoints.up("lg")]: {},
   },
   title: {
-    marginBottom: "30px"
+    marginBottom: "30px",
   },
   typography: {
-    color: "rgba(2,99,44,0.7)"
+    color: "rgba(2,99,44,0.7)",
   },
   button: {
     marginTop: "10px",
     marginBottom: "10px",
-    width: "100%"
+    width: "100%",
   },
   signIn: {
     width: "100%",
-    marginTop: "15px"
-  }
+    marginTop: "15px",
+  },
 }));

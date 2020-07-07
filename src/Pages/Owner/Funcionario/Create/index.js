@@ -1,9 +1,9 @@
 import React from "react";
 
-import { Creators as FuncionarioCreators } from "../../../../store/ducks/funcionario";
+import { Creators as FuncionarioCreators } from "~/store/ducks/funcionario";
 import { useSelector, useDispatch } from "react-redux";
 
-import CreateLogin from "../../../Auth/Create/";
+import CreateLogin from "../../../authentication/Create/";
 
 import {
   Typography,
@@ -11,31 +11,31 @@ import {
   Modal,
   Backdrop,
   Fade,
-  Grid
+  Grid,
 } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       width: "100%",
       height: "80%",
-      overflowY: "scroll"
+      overflowY: "scroll",
     },
     [theme.breakpoints.up("md")]: {
-      width: "20%"
-    }
-  }
+      width: "20%",
+    },
+  },
 }));
 
 export default function Create() {
   const dispatch = useDispatch();
 
-  const funcionario = useSelector(state => state.funcionario.funcionario);
+  const funcionario = useSelector((state) => state.funcionario.funcionario);
 
-  const visible = useSelector(state => state.funcionario.visible);
+  const visible = useSelector((state) => state.funcionario.visible);
 
   const classes = useStyles();
 
@@ -56,13 +56,13 @@ export default function Create() {
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
       open={visible}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
-        timeout: 500
+        timeout: 500,
       }}
     >
       <Fade in={visible}>
@@ -71,7 +71,7 @@ export default function Create() {
             backgroundColor: "#fff",
             padding: "20px",
             border: "1px solid #D8D8D8",
-            borderRadius: "5px"
+            borderRadius: "5px",
           }}
           className={classes.modal}
         >
@@ -87,7 +87,7 @@ export default function Create() {
                 style={{
                   color: "rgba(2,99,44,0.7)",
                   textAlign: "center",
-                  marginBottom: "10px"
+                  marginBottom: "10px",
                 }}
               >
                 Cadastrar Funcionario
@@ -112,7 +112,7 @@ export default function Create() {
                   style={{
                     width: "100%",
                     marginTop: "15px",
-                    marginBottom: "5px"
+                    marginBottom: "5px",
                   }}
                   onClick={hide}
                 >

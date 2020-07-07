@@ -4,6 +4,7 @@ import { applyMiddleware, createStore, compose } from "redux";
 import "../config/ReactotronConfig";
 import createSagaMiddleware from "redux-saga";
 import { routerMiddleware } from "connected-react-router";
+import logger from "redux-logger";
 
 import rootReducer from "./ducks";
 import rootSaga from "./sagas";
@@ -14,7 +15,7 @@ const sagaMonitor =
     : null;
 const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 
-const middlewares = [sagaMiddleware, routerMiddleware(history)];
+const middlewares = [logger, sagaMiddleware, routerMiddleware(history)];
 
 const store = createStore(
   persistReducers(rootReducer(history)),

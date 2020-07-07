@@ -82,10 +82,11 @@ function View(props) {
 
   const { id } = props.redux.box;
 
+  /*
   useEffect(() => {
     readFamiliesRequest(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []);*/
 
   async function deleteFamiliar(row) {
     await deleteFamilyRequest(row.id);

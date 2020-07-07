@@ -1,7 +1,11 @@
 import React from "react";
 import { Switch } from "react-router-dom";
-import SignIn from "../Pages/Auth/SignIn/index";
-import Lisence from "../Pages/Auth/Lisence/index";
+import { Route } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
+
+import SignIn from "../Pages/authentication/SignIn/index";
+import Lisence from "../Pages/license";
+
 import OwnerView from "../Pages/Owner/index";
 import history from "./history";
 import Private from "./private";
@@ -16,10 +20,6 @@ import EtiquetaBox from "../Pages/Owner/PDF/etiquetasBox";
 import districts from "../Pages/Owner/PDF/districts";
 
 import discard from "../Pages/Owner/PDF/descartes";
-
-import { Route } from "react-router-dom";
-
-import { ConnectedRouter } from "connected-react-router";
 
 const Routes = () => (
   <ConnectedRouter history={history}>

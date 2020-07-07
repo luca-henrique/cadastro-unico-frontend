@@ -235,7 +235,6 @@ const Create = (props) => {
                   >
                     <Typography variant="button">Bairro:</Typography>
                     <Select native size="small" fullWidth>
-                      <option value="" />
                       {districts.map((teste) => (
                         <option key={teste.id} value={teste.nome}>
                           {teste.nome}
