@@ -4,14 +4,8 @@ import api from "../../services/api";
 import { push } from "connected-react-router";
 
 import AuthActions from "../ducks/auth";
-
-import { Creators as UserCreators } from "../ducks/user";
-import { Creators as BoxCreators } from "../ducks/box";
-import { Creators as LogCreators } from "../ducks/log";
-import { Creators as PrefeituraCreators } from "../ducks/prefecture";
-import { Creators as DistrictCreators } from "../ducks/district";
-
 import { actions as toastrActions } from "react-redux-toastr";
+import { Creators as UserCreators } from "../ducks/user";
 
 export function* signIn({ email, password }) {
   try {
@@ -23,15 +17,7 @@ export function* signIn({ email, password }) {
 
     yield put(AuthActions.signInSuccess(response.data.token));
 
-    yield put(UserCreators.readUserRequest());
-
-    yield put(BoxCreators.readBoxesRequest()); //Recuperar todas as caixas
-
-    yield put(PrefeituraCreators.readPrefectureRequest());
-
-    yield put(LogCreators.readLogRequest());
-
-    yield put(DistrictCreators.readDistrictRequest());
+    yield put(UserCreators.readUserJoinedRequest());
 
     yield put(push("/owner"));
   } catch (err) {
@@ -39,7 +25,7 @@ export function* signIn({ email, password }) {
       toastrActions.add({
         title: "Falha no login",
         message:
-          "Email/senha errados, entre em contato com a empresa responsavel ou com o administrador."
+          "Email/senha errados, entre em contato com a empresa responsavel ou com o administrador.",
       })
     );
   }
@@ -53,5 +39,5 @@ export function* signOut() {
   localStorage.removeItem("@Omni:token");
   localStorage.removeItem("@Omni:team");
 
-  yield put(push("/"));
+  yield put(push("/login"));
 }

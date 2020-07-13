@@ -11,6 +11,7 @@ import { store, persistor } from "./store";
 import "./config/ReactotronConfig";
 
 import GlobalStyle from "./Styles/global";
+import "./index.css";
 
 const App = () => (
   <Provider store={store}>
@@ -24,6 +25,5 @@ const App = () => (
     </PersistGate>
   </Provider>
 );
-
 
 export default App;

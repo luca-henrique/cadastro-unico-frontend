@@ -8,86 +8,52 @@ import api from "../../services/api";
 
 import { Creators as UserCreators } from "../ducks/user";
 
-export function* index() {
+export function* readUserJoined() {
   try {
-    const id = yield call(api.get, "/user/");
-    const response = yield call(api.get, `/user/${id.data}`);
-    yield put(UserCreators.readUserSuccess(response.data));
-  } catch (err) {}
+    const { data } = yield call(api.get, "/user-joined");
+
+    yield put(UserCreators.readUserJoinedSuccess(data));
+  } catch (error) {}
 }
 
-export function* update({ payload }) {
+export function* createUser({ payload }) {
   try {
-    console.log(payload);
-    const response = yield call(api.put, "user/0", payload.user);
-    yield put(UserCreators.readUserSuccess(response.data));
-  } catch (err) {
-    yield toastr.error("Falha", "Falha ao atualizar o email");
+    const respose = yield call(api.post, "/user", payload.user);
+    console.log(respose);
+    yield put(UserCreators.createUserSuccess(respose.data));
+    toastr.success("Usuário criado.");
+  } catch (error) {
+    toastr.error("Erro ao criar usuário.");
   }
 }
 
-export function* updateNew({ payload }) {
+export function* updateUser({ payload }) {
   try {
-    const response = yield call(api.put, `/user_update`, payload.user);
-  } catch (err) {
-    yield toastr.error("Falha", "Falha ao atualizar o email");
+    yield call(api.put, `/user/${payload.id}`, payload.user);
+    yield put(UserCreators.updateUserRequest(payload.user));
+  } catch (error) {}
+}
+
+export function* readUser() {
+  try {
+    const { data } = yield call(api.get, "/user");
+    console.log(data);
+    yield put(UserCreators.readUserSuccess(data));
+  } catch (error) {
+    console.log(error);
   }
 }
 
-export function* destroy({ payload }) {
+export function* deleteUser({ payload }) {
   try {
-    yield call(api.delete, `user/${payload.id}`);
-
-    yield put(UserCreators.readUserRequest());
-  } catch (err) {
-    yield toastr.error(
-      "Falha",
-      "Falha ao excluir o funcionário, verifique se o funcionário é um administrador"
-    );
-  }
+    yield call(api.delete, `/user/${payload.id}`);
+    yield put(UserCreators.deleteUserSuccess(payload.id));
+    toastr.error("Usuário excluido.");
+  } catch (error) {}
 }
 
-export function* list() {
+export function* changerPasswordUserJoined({ payload }) {
   try {
-    yield call(api.get, "/users");
-  } catch (err) {
-    yield toastr.error("Falha", "Falha ao carregar funcionarios");
-  }
-}
-
-export function* changerPassword({ payload }) {
-  try {
-    yield call(api.put, "/changer", {
-      password: payload.password,
-    });
-    yield toastr.success("Senha alterada.");
-  } catch (err) {
-    yield toastr.error("Falha", "Falha ao alterar o password");
-  }
-}
-
-/**
- *
- *
- *
- *
- *
- *
- *
- */
-
-export function* getUserActive() {
-  try {
-    const response = yield call(api.get, "/user_active");
-    yield put(UserCreators.readUserActiveSuccess(response.data));
-  } catch (err) {}
-}
-
-export function* changerUserActive({ payload }) {
-  try {
-    yield call(api.put, "/user_active", payload.account);
-    yield toastr.success("Sucesso.", "Alterações feitas com sucesso.");
-  } catch (err) {
-    yield toastr.error("Falha", "Email já existe");
-  }
+    yield call(api.put, `/user/`, payload.password);
+  } catch (error) {}
 }

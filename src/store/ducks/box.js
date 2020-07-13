@@ -35,12 +35,9 @@ const INITIAL_STATE = Immutable({
   loading: false,
   erro: false,
 
-  id: null,
   visible: false,
 
   box: {},
-
-  idDeleteBox: null,
 
   boxSize: { id: null, total: null },
 
@@ -204,116 +201,3 @@ function updateAccount(items, account) {
   const index = items.findIndex((item) => item.id === account.id);
   return [...items.slice(0, index), { ...account }, ...items.slice(index + 1)];
 }
-
-/*
-case Types.CREATE_BOX_REQUEST: {
-      return { ...state, box: action.payload.box };
-    }
-
-    case Types.CREATE_BOX_SUCCESS: {
-      return { ...state, box: action.payload.box };
-    }
-
-    case Types.UPDATE_BOX_REQUEST: {
-      return { ...state, update: action.payload.box };
-    }
-
-    case Types.UPDATE_BOX_SUCCESS: {
-      return { ...state, update: action.payload.box };
-    }
-
-    
-
-    case Types.READ_BOXES_SUCCESS: {
-      return { ...state, boxes: action.payload.boxes };
-    }
-
-    case Types.READ_FAMILY_BOX_REQUEST: {
-      return { ...state, id: action.payload.id };
-    }
-
-    case Types.READ_FAMILY_BOX_SUCCESS: {
-      return { ...state, families: action.payload.families };
-    }
-
-    case Types.SIZE_BOX_REQUEST: {
-      return { ...state, boxSize: { id: action.payload.id } };
-    }
-
-    case Types.SIZE_BOX_SUCCESS: {
-      return { ...state, boxSize: { total: action.payload.size } };
-    }
-
-
-
-    createBoxRequest: box => ({
-    type: Types.CREATE_BOX_REQUEST,
-    payload: { box }
-  }),
-  createBoxSuccess: box => ({
-    type: Types.CREATE_BOX_SUCCESS,
-    payload: { box }
-  }),
-  updateBoxRequest: box => ({
-    type: Types.UPDATE_BOX_REQUEST,
-    payload: { box }
-  }),
-  updateBoxSuccess: box => ({
-    type: Types.UPDATE_BOX_SUCCESS,
-    payload: { box }
-  }),
-  deleteBoxRequest: id => ({
-    type: Types.DELETE_BOX_REQUEST,
-    payload: { id }
-  }),
-  deleteBoxSuccess: box => ({
-    type: Types.DELETE_BOX_SUCCESS,
-    payload: { box }
-  }),
-  readBoxesRequest: () => ({
-    type: Types.READ_BOXES_REQUEST
-  }),
-  readBoxesSuccess: boxes => ({
-    type: Types.READ_BOXES_SUCCESS,
-    payload: { boxes }
-  }),
-
-  readPastesRequest: id => ({
-    type: Types.READ_PASTES_BOX_REQUEST,
-    payload: { id }
-  }),
-  readPastesSuccess: pastes => ({
-    type: Types.READ_PASTES_BOX_SUCCESS,
-    payload: { pastes }
-  }),
-
-  readFamiliesRequest: id => ({
-    type: Types.READ_FAMILY_BOX_REQUEST,
-    payload: { id }
-  }),
-
-  readFamiliesSuccess: families => ({
-    type: Types.READ_FAMILY_BOX_SUCCESS,
-    payload: { families }
-  }),
-
-  boxSelectedRequest: id => ({
-    type: Types.SELECTED_BOX_REQUEST,
-    payload: { id }
-  }),
-
-  boxSelectedSuccess: box => ({
-    type: Types.SELECTED_BOX_SUCCESS,
-    payload: { box }
-  }),
-
-  boxSizeRequest: id => ({
-    type: Types.SIZE_BOX_REQUEST,
-    payload: { id }
-  }),
-  boxSizeSuccess: size => ({
-    type: Types.SIZE_BOX_SUCCESS,
-    payload: { size }
-  })
-
-*/

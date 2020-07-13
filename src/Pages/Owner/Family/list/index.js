@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { Creators as FamilyCreators } from "../../../store/ducks/family";
-import { Creators as BoxCreators } from "../../../store/ducks/box";
+import { Creators as FamilyCreators } from "~/store/ducks/family";
 
 import { Modal } from "@material-ui/core/";
 
-import Create from "./Create/";
-import Update from "./Update/";
+import Create from "../Create";
+
+import Update from "../Update/";
+
+import { useSelector } from "react-redux";
 
 import MaterialTable from "material-table";
 
@@ -30,68 +32,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function View(props) {
-  const [state] = useState({
-    columns: [
-      {
-        title: "Nome",
-        field: "nome",
-        headerStyle: {
-          color: "rgb(2,90,10)",
-        },
-      },
-      {
-        title: "CPF",
-        field: "cpf",
-        headerStyle: {
-          color: "rgb(2,90,10)",
-        },
-      },
-      {
-        title: "NIS",
-        field: "nis",
-        headerStyle: {
-          color: "rgb(2,90,10)",
-        },
-      },
-
-      {
-        title: "Situação",
-        field: "situacao",
-        headerStyle: {
-          color: "rgb(2,90,10)",
-        },
-      },
-      {
-        title: "Tipo",
-        field: "tipo",
-        headerStyle: {
-          color: "rgb(2,90,10)",
-        },
-      },
-    ],
-  });
-
   const {
-    readFamiliesRequest,
     showModalNewFamiliar,
     hideModalFamily,
     deleteFamilyRequest,
     showModalUpdateFamily,
-    readBoxesRequest,
+    readGroupFamiliarRequest,
   } = props;
 
-  const { id } = props.redux.box;
+  const id = useSelector((state) => state.family.show_family.id);
 
-  /*
   useEffect(() => {
-    readFamiliesRequest(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);*/
-
-  async function deleteFamiliar(row) {
-    await deleteFamilyRequest(row.id);
-    await readFamiliesRequest(id);
-  }
+    readGroupFamiliarRequest(id);
+  }, [id, readGroupFamiliarRequest]);
 
   function openTab() {
     window.open("/specific");
@@ -99,51 +52,57 @@ function View(props) {
 
   const classes = useStyles();
 
-  const [selectedRow, setSelectedRow] = useState("");
-  const data = props.redux.box.families;
+  const data = useSelector((state) => state.family.group_familiar);
 
-  const visible = props.redux.family.open;
+  const visible = useSelector((state) => state.family.show_family.visible);
 
-  function load(data) {
-    if (Array.isArray(data)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  const loading = useSelector((state) => state.family.loading);
 
   return (
-    <Modal
-      open={visible}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        overflowX: "visible",
-        overflowY: "scroll",
-      }}
-    >
-      {load(data) === true ? (
+    <>
+      <Modal
+        open={visible}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          overflowX: "visible",
+          overflowY: "scroll",
+        }}
+      >
         <div className={classes.modal}>
           <MaterialTable
             title="Grupo Familiar"
-            columns={state.columns}
+            isLoading={loading}
+            columns={[
+              {
+                title: "Nome",
+                field: "nome",
+              },
+              {
+                title: "CPF",
+                field: "cpf",
+              },
+              {
+                title: "NIS",
+                field: "nis",
+              },
+
+              {
+                title: "Situação",
+                field: "situacao",
+              },
+              {
+                title: "Tipo",
+                field: "tipo",
+              },
+            ]}
             data={data}
-            onRowClick={(evt, selectedRow) => {
-              setSelectedRow(selectedRow);
-            }}
             options={{
               headerStyle: {
                 color: "rgb(2,90,10)",
               },
               actionsCellStyle: { color: "#848484" },
-              rowStyle: (rowData) => ({
-                backgroundColor:
-                  selectedRow &&
-                  selectedRow.tableData.id === rowData.tableData.id
-                    ? "#F3F781"
-                    : "#FFF",
-              }),
             }}
             localization={{
               header: {
@@ -183,7 +142,6 @@ function View(props) {
                 tooltip: "Fechar",
                 isFreeAction: true,
                 onClick: (event, rowData) => {
-                  readBoxesRequest();
                   hideModalFamily();
                 },
               },
@@ -192,7 +150,7 @@ function View(props) {
                 icon: "delete",
                 tooltip: "Excluir",
                 onClick: (event, rowData) => {
-                  deleteFamiliar(rowData);
+                  deleteFamilyRequest(rowData.id);
                 },
               },
               {
@@ -204,21 +162,20 @@ function View(props) {
               },
             ]}
           />
-          <Create />
-          <Update />
         </div>
-      ) : (
-        <></>
-      )}
-    </Modal>
+      </Modal>
+
+      <Create />
+      <Update />
+    </>
   );
 }
 
 const mapStateToProps = (state) => ({
-  redux: state,
+  family: state.family,
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...FamilyCreators, ...BoxCreators }, dispatch);
+  bindActionCreators({ ...FamilyCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(View);

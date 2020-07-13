@@ -1,32 +1,34 @@
 /* eslint-disable array-callback-return */
-import React, { useState, memo, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { memo, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import { Creators as CreatorsBox } from "../../../../store/ducks/box";
-import { Creators as CreatorsFamily } from "../../../../store/ducks/family";
-import { Creators as CreatorsGenerete } from "../../../../store/ducks/generator";
+import { Creators as CreatorsBox } from "~/store/ducks/box";
+import { Creators as CreatorsFamily } from "~/store/ducks/family";
 
 import WarningIcon from "@material-ui/icons/Warning";
 import MaterialTable from "material-table";
 
+import "./index.css";
+
+/*
 import Create from "../create";
 import Update from "../update";
-import Family from "../../Family/index";
+
+import Family from "../../Family/list/";
+*/
 
 function Table() {
-  // eslint-disable-next-line no-unused-vars
-  const [selectedRow, setSelectedRow] = useState("");
-
   const dispatch = useDispatch();
 
-  const data = useSelector((state) => state.box.boxes);
+  //const data = useSelector((state) => state.box.boxes);
+  const data = [];
 
-  const loading = useSelector((state) => state.box.loading);
+  //const loading = useSelector((state) => state.box.loading);
 
-  const updateData = () => dispatch(CreatorsBox.readBoxesRequest());
+  //const updateData = () => dispatch(CreatorsBox.readBoxesRequest());
 
   useEffect(() => {
-    updateData();
+    // updateData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -36,12 +38,8 @@ function Table() {
         style={{
           boxShadow: "none",
         }}
-        isLoading={loading}
         title={null}
         data={data}
-        onRowClick={(evt, selectedRow) => {
-          setSelectedRow(selectedRow);
-        }}
         localization={{
           header: {
             actions: "Ações",
@@ -78,9 +76,7 @@ function Table() {
             icon: "visibility",
             tooltip: "Mostrar Familiares",
             onClick: (event, rowData) => {
-              dispatch(CreatorsGenerete.generateFamiliesBoxRequest(rowData.id));
-              dispatch(CreatorsBox.readFamiliesRequest(rowData.id));
-              dispatch(CreatorsFamily.showModalFamily());
+              dispatch(CreatorsFamily.showModalFamily(rowData.id));
             },
           },
           {
@@ -102,7 +98,7 @@ function Table() {
             icon: "refresh",
             tooltip: "Atualizar informações",
             isFreeAction: true,
-            onClick: () => updateData(),
+            onClick: () => console.log("Teste"),
           },
         ]}
         // eslint-disable-next-line react/jsx-no-duplicate-props
@@ -149,25 +145,17 @@ function Table() {
             title: "Local",
             field: "local",
             render: (rowData) => (
-              <>
-                <WarningIcon
-                  style={
-                    rowData.local === false
-                      ? { color: "#088A08" }
-                      : { color: "#DF0101" }
-                  }
-                />
-              </>
+              <WarningIcon
+                style={
+                  rowData.local === false
+                    ? { color: "#088A08" }
+                    : { color: "#DF0101" }
+                }
+              />
             ),
           },
         ]}
       />
-
-      <Create />
-
-      <Update />
-
-      <Family />
     </>
   );
 }

@@ -48,22 +48,6 @@ export function* getBoxes() {
   } catch (err) {}
 }
 
-export function* getPastesBox({ payload }) {
-  try {
-    const response = yield call(api.get, `/pastes/${payload.id}`);
-
-    yield put(BoxCreators.readPastesSuccess(response.data));
-  } catch (err) {}
-}
-
-export function* getFamilyBox({ payload }) {
-  try {
-    const response = yield call(api.get, `/families/${payload.id}`);
-
-    yield put(BoxCreators.readFamiliesSuccess(response.data));
-  } catch (err) {}
-}
-
 export function* getBoxSize({ payload }) {
   try {
     const response = yield call(api.get, `/boxes/${payload.id}`);
@@ -71,3 +55,14 @@ export function* getBoxSize({ payload }) {
     yield put(BoxCreators.boxSizeSuccess(response.data));
   } catch (err) {}
 }
+
+/*
+
+export function* getPastesBox({ payload }) {
+  try {
+    const response = yield call(api.get, `/pastes/${payload.id}`);
+
+    yield put(BoxCreators.readPastesSuccess(response.data));
+  } catch (err) {}
+}
+*/

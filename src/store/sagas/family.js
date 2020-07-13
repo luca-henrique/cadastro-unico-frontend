@@ -8,34 +8,19 @@ import { toastr } from "react-redux-toastr";
 
 export function* createFamily({ payload }) {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const response = yield call(api.post, "/family/", payload.family);
-    // eslint-disable-next-line no-unused-vars
-
+    const { data } = yield call(api.post, "/family/", payload.family);
+    console.log(data);
+    yield put(FamilyCreators.createFamilySuccess(data));
     toastr.success("Familiar criado.");
   } catch (err) {
     toastr.error("Erro ao criar um familiar.");
   }
 }
 
-export function* getFamilies() {
-  try {
-    const response = yield call(api.get, "/family");
-
-    yield put(FamilyCreators.readFamilySuccess(response.data));
-  } catch (err) {}
-}
-
 export function* updateFamily({ payload }) {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const response = yield call(
-      api.put,
-      `/family/${payload.family.id}`,
-      payload.family
-    );
-    // eslint-disable-next-line no-unused-vars
-
+    yield call(api.put, `/family/${payload.family.id}`, payload.family);
+    yield put(FamilyCreators.updateFamilySuccess(payload.family));
     toastr.success("Familiar atualizado.");
   } catch (err) {
     toastr.error("Erro ao atualizar um familiar.");
@@ -44,12 +29,23 @@ export function* updateFamily({ payload }) {
 
 export function* deleteFamily({ payload }) {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const response = yield call(
-      api.delete,
-      `/family/${JSON.stringify(payload.id)}`
-    );
+    yield call(api.delete, `/family/${payload.id}`);
+    yield put(FamilyCreators.deleteFamilySuccess(payload.id));
+    toastr.error("Familiar excluido.");
+  } catch (err) {}
+}
 
-    // eslint-disable-next-line no-unused-vars
+export function* readGroupFamilies({ payload }) {
+  try {
+    const { data } = yield call(api.get, `/families/${payload.id}`);
+    yield put(FamilyCreators.readGroupFamiliarSuccess(data));
+  } catch (err) {}
+}
+
+export function* getFamilies() {
+  try {
+    const response = yield call(api.get, "/family");
+
+    yield put(FamilyCreators.readFamilySuccess(response.data));
   } catch (err) {}
 }

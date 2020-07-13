@@ -1,81 +1,134 @@
 import Immutable from "seamless-immutable";
 
 export const Types = {
+  SHOW_USER_VIEW: "@user/SHOW_USER_VIEW",
+  HIDE_USER_VIEW: "@user/HIDE_USER_VIEW",
+
   SHOW_NEW_USER_VIEW: "@user/SHOW_NEW_USER_VIEW",
   HIDE_NEW_USER_VIEW: "@user/HIDE_NEW_USER_VIEW",
 
   SHOW_UPDATE_USER_VIEW: "@user/SHOW_UPDATE_USER_VIEW",
   HIDE_UPDATE_USER_VIEW: "@user/HIDE_UPDATE_USER_VIEW",
 
-  READ_USER_REQUEST: "@user/READ_USER_REQUEST",
-  READ_USER_SUCCESS: "@user/READ_USER_SUCCESS",
-
-  READ_USER_ACTIVE_REQUEST: "@user/READ_USER_ACTIVE_REQUEST",
-  READ_USER_ACTIVE_SUCCESS: "@user/READ_USER_ACTIVE_SUCCESS",
-
-  UPDATE_USER_ACTIVE_REQUEST: "@user/RUPDATE_USER_ACTIVE_REQUEST",
-  UPDATE_USER_ACTIVE_SUCCESS: "@user/UPDATE_USER_ACTIVE_SUCCESS",
-
-  UPDATE_USER_REQUEST: "@user/UPDATE_USER_REQUEST",
-  UPDATE_USER_SUCESS: "@user/UPDATE_USER_SUCESS",
-
   SHOW_CHANGER_PASSWORD_VIEW: "@user/SHOW_CHANGER_PASSWORD_VIEW",
   HIDE_CHANGER_PASSWORD_VIEW: "@user/HIDE_CHANGER_PASSWORD_VIEW",
 
+  READ_USER_JOINED_REQUEST: "@user/READ_USER_JOINED_REQUEST",
+  READ_USER_JOINED_SUCCESS: "@user/READ_USER_JOINED_SUCCESS",
+
+  READ_USER_REQUEST: "@user/READ_USER_REQUEST",
+  READ_USER_SUCCESS: "@user/READ_USER_SUCCESS",
+
+  CREATE_USER_REQUEST: "@user/CREATE_USER_REQUEST",
+  CREATE_USER_SUCCESS: "@user/CREATE_USER_SUCCESS",
+
+  DELETE_USER_REQUEST: "@user/DELETE_USER_REQUEST",
+  DELETE_USER_SUCCESS: "@user/DELETE_USER_SUCCESS",
+
+  REMOVE_USER_SUCCESS: "@user/REMOVE_USER_SUCCESS",
+
+  UPDATE_USER_REQUEST: "@user/UPDATE_USER_REQUEST",
+  UPDATE_USER_SUCCESS: "@user/UPDATE_USER_SUCCESS",
+
   CHANGER_PASSWORD_REQUEST: "@user/CHANGER_PASSWORD_REQUEST",
-  CHANGER_PASSWORD_SUCESS: "@user/CHANGER_PASSWORD_SUCESS",
+  CHANGER_PASSWORD_SUCCESS: "@user/CHANGER_PASSWORD_SUCCESS",
 };
 
 const INITIAL_STATE = Immutable({
-  password: null,
-  visible: false,
-  user: {},
-  changer: {},
+  user_joined: {},
+  users: [],
+  loading: true,
 
-  /* Estado inicial do modal para atualizar informações do usuario */
-  update_account_visible: false,
-  update_account_data: [],
+  user_list_view: false,
+  create_user: false,
+  update_user: { visible: false, user: [] },
+  update_password_view: false,
 });
 
 export default function User(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.SHOW_USER_VIEW:
+      return {
+        ...state,
+        user_list_view: true,
+      };
+
+    case Types.HIDE_USER_VIEW:
+      return {
+        ...state,
+        user_list_view: false,
+      };
+
     case Types.SHOW_NEW_USER_VIEW:
-      return { ...state, show: { visible: true, type: action.payload.type } };
+      return {
+        ...state,
+        create_user: true,
+      };
+
     case Types.HIDE_NEW_USER_VIEW:
-      return { ...state, show: { visible: false } };
+      return {
+        ...state,
+        create_user: false,
+      };
 
     case Types.SHOW_UPDATE_USER_VIEW:
       return {
         ...state,
-        update_account_visible: true,
+        update_user: { visible: true, user: action.payload.user },
       };
+
     case Types.HIDE_UPDATE_USER_VIEW:
-      return { ...state, update_account_visible: false };
+      return {
+        ...state,
+        update_user: { visible: false, user: {} },
+      };
 
     case Types.SHOW_CHANGER_PASSWORD_VIEW:
-      return { ...state, visible: true };
+      return {
+        ...state,
+        update_password_view: true,
+      };
+
     case Types.HIDE_CHANGER_PASSWORD_VIEW:
-      return { ...state, visible: false };
+      return {
+        ...state,
+        update_password_view: false,
+      };
+
+    case Types.READ_USER_JOINED_SUCCESS:
+      return {
+        ...state,
+        user_joined: action.payload.user,
+      };
 
     case Types.READ_USER_SUCCESS:
-      return { ...state, user: action.payload.user };
-
-    case Types.READ_USER_ACTIVE_SUCCESS:
-      return { ...state, update_account_data: action.payload.data };
-
-    case Types.UPDATE_USER_REQUEST: {
       return {
         ...state,
-        user: action.payload.user,
+        users: action.payload.user,
+        loading: false,
       };
-    }
 
-    case Types.CHANGER_PASSWORD_REQUEST: {
+    case Types.DELETE_USER_SUCCESS:
       return {
         ...state,
-        password: action.payload.password,
+        users: [
+          ...state.users.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
       };
-    }
+
+    case Types.CREATE_USER_SUCCESS:
+      return {
+        ...state,
+        users: [...state.users, action.payload.user],
+      };
+
+    case Types.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        users: update(state.users, action.payload.user),
+      };
 
     default:
       return state;
@@ -83,31 +136,49 @@ export default function User(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
-  show: (type) => ({
-    type: Types.SHOW_NEW_USER_VIEW,
-    payload: {
-      type,
-    },
+  showUserView: () => ({
+    type: Types.SHOW_USER_VIEW,
   }),
 
-  hide: () => ({
+  hideUserView: () => ({
+    type: Types.HIDE_USER_VIEW,
+  }),
+
+  showNewUserView: () => ({
+    type: Types.SHOW_NEW_USER_VIEW,
+  }),
+
+  hideNewUserView: () => ({
     type: Types.HIDE_NEW_USER_VIEW,
   }),
 
-  showModalChangerPassword: () => ({
-    type: Types.SHOW_CHANGER_PASSWORD_VIEW,
-  }),
-
-  hideModalChangerPassword: () => ({
-    type: Types.HIDE_CHANGER_PASSWORD_VIEW,
-  }),
-
-  showUpdateAccount: () => ({
+  showUpdateAccount: (user) => ({
     type: Types.SHOW_UPDATE_USER_VIEW,
+    payload: {
+      user,
+    },
   }),
 
   hideUpdateAccount: () => ({
     type: Types.HIDE_UPDATE_USER_VIEW,
+  }),
+
+  showChangerPasswordView: () => ({
+    type: Types.SHOW_CHANGER_PASSWORD_VIEW,
+  }),
+
+  hideChangerPasswordView: () => ({
+    type: Types.HIDE_CHANGER_PASSWORD_VIEW,
+  }),
+
+  readUserJoinedRequest: () => ({
+    type: Types.READ_USER_JOINED_REQUEST,
+  }),
+  readUserJoinedSuccess: (user) => ({
+    type: Types.READ_USER_JOINED_SUCCESS,
+    payload: {
+      user,
+    },
   }),
 
   readUserRequest: () => ({
@@ -119,21 +190,17 @@ export const Creators = {
     payload: { user },
   }),
 
-  readUserActiveRequest: () => ({
-    type: Types.READ_USER_ACTIVE_REQUEST,
-  }),
-
-  readUserActiveSuccess: (data) => ({
-    type: Types.READ_USER_ACTIVE_SUCCESS,
+  deleteUserRequest: (id) => ({
+    type: Types.DELETE_USER_REQUEST,
     payload: {
-      data,
+      id,
     },
   }),
 
-  updateUserActiveRequest: (account) => ({
-    type: Types.UPDATE_USER_ACTIVE_REQUEST,
+  deleteUserSuccess: (id) => ({
+    type: Types.DELETE_USER_SUCCESS,
     payload: {
-      account,
+      id,
     },
   }),
 
@@ -141,12 +208,29 @@ export const Creators = {
     type: Types.UPDATE_USER_REQUEST,
     payload: { user },
   }),
-  updateUserSucess: (user) => ({
-    type: Types.UPDATE_USER_SUCESS,
+
+  updateUserSuccess: (user) => ({
+    type: Types.UPDATE_USER_SUCCESS,
     payload: { user },
   }),
+
+  createUserRequest: (user) => ({
+    type: Types.CREATE_USER_REQUEST,
+    payload: { user },
+  }),
+
+  createUserSuccess: (user) => ({
+    type: Types.CREATE_USER_SUCCESS,
+    payload: { user },
+  }),
+
   changerPasswordRequest: (password) => ({
     type: Types.CHANGER_PASSWORD_REQUEST,
     payload: { password },
   }),
 };
+
+function update(items, account) {
+  const index = items.findIndex((item) => item.id === account.id);
+  return [...items.slice(0, index), { ...account }, ...items.slice(index + 1)];
+}

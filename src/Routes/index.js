@@ -6,7 +6,7 @@ import { ConnectedRouter } from "connected-react-router";
 import SignIn from "../Pages/authentication/SignIn/index";
 import Lisence from "../Pages/license";
 
-import OwnerView from "../Pages/Owner/index";
+import OwnerView from "../Pages/Owner/Home/";
 import history from "./history";
 import Private from "./private";
 

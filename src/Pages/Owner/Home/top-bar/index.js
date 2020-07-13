@@ -1,11 +1,11 @@
 import React from "react";
 
-import AuthActions from "../../../../store/ducks/auth";
+import AuthActions from "~/store/ducks/auth";
 import { useDispatch } from "react-redux";
 
 import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core/";
 
-import PowerSettingsNewOutlinedIcon from "@material-ui/icons/PowerSettingsNewOutlined";
+import { PowerSettingsNewOutlined } from "@material-ui/icons/";
 
 const TopBar = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const TopBar = () => {
             color: "rgb(246,238,89)",
             flexGrow: 1,
             alignItems: "flex-start",
-            fontSize: "28px",
+            fontSize: "30px",
           }}
         >
           Cadastro único
@@ -36,7 +36,7 @@ const TopBar = () => {
             style={{ color: "rgb(246,238,89)" }}
             onClick={logout}
           >
-            <PowerSettingsNewOutlinedIcon style={{ fontSize: 25 }} />
+            <PowerSettingsNewOutlined style={{ fontSize: 25 }} />
           </IconButton>
         </div>
       </Toolbar>

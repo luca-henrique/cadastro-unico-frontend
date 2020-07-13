@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Creators as FamilyCreators } from "../../../../store/ducks/family";
-import { Creators as BoxCreators } from "../../../../store/ducks/box";
+import { Creators as FamilyCreators } from "~/store/ducks/family";
 
 import { cpfMask } from "../../../Components/TextField/MaskInput";
 
@@ -38,10 +37,9 @@ export default function Create() {
 
   const classes = useStyles();
 
-  const visible = useSelector((state) => state.family.visible);
-  const id = useSelector((state) => state.box.id);
+  const visible = useSelector((state) => state.family.create_family.visible);
 
-  const update = () => dispatch(BoxCreators.readFamiliesRequest(id));
+  const id = useSelector((state) => state.family.create_family.id);
 
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -53,7 +51,7 @@ export default function Create() {
     setCpf(cpfMask(e.target.value, cpf));
   }
 
-  async function create(e) {
+  function create(e) {
     e.preventDefault();
 
     var family = {
@@ -64,9 +62,8 @@ export default function Create() {
       situacao,
       tipo,
     };
-    await dispatch(FamilyCreators.createFamilyRequest(family));
-    await update();
-    await hide();
+    dispatch(FamilyCreators.createFamilyRequest(family));
+    hide();
   }
 
   function hide() {
