@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { Creators as LogCreators } from "../../../store/ducks/log";
+import { Creators as LogCreators } from "~/store/ducks/log";
 
 import MaterialTable from "material-table";
 import { Modal, Backdrop } from "@material-ui/core/";
@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function View(props) {
+  const open = props.redux.log.open;
   const data = props.redux.log.log;
-  const { open } = props.redux.log;
 
   const { hideModalLog } = props;
 
@@ -37,101 +37,86 @@ function View(props) {
     for (var i in array) {
       if (i < array.length - 1) {
         var json = JSON.parse(array[i].trim());
-
         log.push(json);
       }
     }
     return log;
   }
 
-  function load(data) {
-    if (Array.isArray(data)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   return (
-    <>
-      <Modal
-        open={open}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        {load(data) === true ? (
-          <div className={classes.modal}>
-            <MaterialTable
-              style={{
-                height: "auto",
-                boxShadow: "none",
-                color: "rgb(2,99,44)",
-              }}
-              actions={[
-                {
-                  icon: "close",
-                  tooltip: "Fechar",
-                  isFreeAction: true,
-                  onClick: (event, rowData) => {
-                    hideModalLog();
-                  },
-                },
-              ]}
-              title="Log"
-              data={changer(data)}
-              localization={{
-                header: {
-                  actions: "Ações",
-                },
+    <Modal
+      open={open}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <div className={classes.modal}>
+        <MaterialTable
+          style={{
+            height: "auto",
+            boxShadow: "none",
+            color: "rgb(2,99,44)",
+          }}
+          actions={[
+            {
+              icon: "close",
+              tooltip: "Fechar",
+              isFreeAction: true,
+              onClick: (event, rowData) => {
+                hideModalLog();
+              },
+            },
+          ]}
+          title="Log"
+          data={changer(data)}
+          localization={{
+            header: {
+              actions: "Ações",
+            },
 
-                body: {
-                  emptyDataSourceMessage: "Não existe",
-                  filterRow: {
-                    filterTooltip: "Procurar",
-                  },
-                },
-                toolbar: {
-                  searchTooltip: "Procurar",
-                  searchPlaceholder: "Procurar",
-                },
-              }}
-              columns={[
-                {
-                  title: "Url",
-                  field: "url",
-                },
-                {
-                  title: "Method",
-                  field: "method",
-                },
-                {
-                  title: "Usuario",
-                  field: "user_modified.email",
-                },
+            body: {
+              emptyDataSourceMessage: "Não existe",
+              filterRow: {
+                filterTooltip: "Procurar",
+              },
+            },
+            toolbar: {
+              searchTooltip: "Procurar",
+              searchPlaceholder: "Procurar",
+            },
+          }}
+          columns={[
+            {
+              title: "Url",
+              field: "url",
+            },
+            {
+              title: "Method",
+              field: "method",
+            },
+            {
+              title: "Usuario",
+              field: "user_modified.email",
+            },
 
-                {
-                  title: "Data da modificação",
-                  field: "data_modified",
-                },
-                {
-                  title: "Horario da modificação",
-                  field: "hour_modified",
-                },
-              ]}
-            />
-          </div>
-        ) : (
-          <></>
-        )}
-      </Modal>
-    </>
+            {
+              title: "Data da modificação",
+              field: "data_modified",
+            },
+            {
+              title: "Horario da modificação",
+              field: "hour_modified",
+            },
+          ]}
+        />
+      </div>
+    </Modal>
   );
 }
 

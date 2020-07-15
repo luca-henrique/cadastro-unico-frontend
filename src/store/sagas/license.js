@@ -5,11 +5,18 @@ import { push } from "connected-react-router";
 
 import api from "../../services/api";
 
+import { store } from "../index";
+
 export function* checkToken({ payload }) {
   try {
     const { data } = yield call(api.put, "/update-license", payload);
+    const signedIn = store.getState().auth.signedIn;
     if (data.license) {
-      yield put(push("/login"));
+      if (signedIn) {
+        yield put(push("/dashboard"));
+      } else {
+        yield put(push("/login"));
+      }
     }
     yield toastr.success("Acesso liberado.");
   } catch (err) {
@@ -20,9 +27,14 @@ export function* checkToken({ payload }) {
 export function* requestToken() {
   try {
     const { data } = yield call(api.get, "/last-license");
-    console.log(data);
+    const signedIn = store.getState().auth.signedIn;
+
     if (data.license) {
-      yield put(push("/login"));
+      if (signedIn) {
+        yield put(push("/dashboard"));
+      } else {
+        yield put(push("/login"));
+      }
     } else {
       yield put(push("/"));
     }

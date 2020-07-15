@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Creators as CreatorsAccount } from "../../../../../../store/ducks/account";
+import { Creators as CreatorsUser } from "~/store/ducks/user";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,10 +16,7 @@ import {
 } from "@material-ui/core/";
 
 export default function ChangerPassword() {
-  const visible = useSelector(
-    (state) => state.account.password_account.visible
-  );
-  const id = useSelector((state) => state.account.password_account.id);
+  const visible = useSelector((state) => state.user.update_password_view);
 
   const dispatch = useDispatch();
 
@@ -40,16 +37,17 @@ export default function ChangerPassword() {
       toastr.error("Password invalido ou nulo");
     } else {
       var senha = {
-        id,
         password,
       };
-      //dispatch(CreatorsAccount.changerPasswordRequest(senha));
+      dispatch(CreatorsUser.changerPasswordRequest(senha));
       hide();
     }
   }
 
   function hide() {
-    dispatch(CreatorsAccount.hideChangePasswordAccount());
+    dispatch(CreatorsUser.hideChangerPasswordView());
+    setPassword("");
+    setPassword1("");
   }
 
   return (

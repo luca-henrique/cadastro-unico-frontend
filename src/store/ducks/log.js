@@ -5,13 +5,13 @@ export const Types = {
   HIDE_MODAL_LOG: "@log/HIDE_MODAL_LOG",
 
   READ_LOG_REQUEST: "@log/READ_LOG_REQUEST",
-  READ_LOG_SUCCESS: "@log/READ_LOG_SUCCESS"
+  READ_LOG_SUCCESS: "@log/READ_LOG_SUCCESS",
 };
 
 const INITIAL_STATE = Immutable({
   log: {},
   open: false,
-  fail: false
+  loading: true,
 });
 
 export default function log(state = INITIAL_STATE, action) {
@@ -19,17 +19,18 @@ export default function log(state = INITIAL_STATE, action) {
     case Types.SHOW_MODAL_LOG:
       return {
         ...state,
-        open: true
+        open: true,
       };
     case Types.HIDE_MODAL_LOG:
       return {
         ...state,
-        open: false
+        open: false,
       };
     case Types.READ_LOG_SUCCESS:
       return {
         ...state,
-        log: action.payload.log
+        log: action.payload.log,
+        loading: false,
       };
 
     default:
@@ -39,16 +40,16 @@ export default function log(state = INITIAL_STATE, action) {
 
 export const Creators = {
   showModalLog: () => ({
-    type: Types.SHOW_MODAL_LOG
+    type: Types.SHOW_MODAL_LOG,
   }),
   hideModalLog: () => ({
-    type: Types.HIDE_MODAL_LOG
+    type: Types.HIDE_MODAL_LOG,
   }),
   readLogRequest: () => ({
-    type: Types.READ_LOG_REQUEST
+    type: Types.READ_LOG_REQUEST,
   }),
-  readLogSuccess: log => ({
+  readLogSuccess: (log) => ({
     type: Types.READ_LOG_SUCCESS,
-    payload: { log }
-  })
+    payload: { log },
+  }),
 };

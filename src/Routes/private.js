@@ -7,7 +7,7 @@ import { store } from "../store/index";
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={props =>
+    render={(props) =>
       store.getState().auth.signedIn ? (
         <Component {...props} />
       ) : (

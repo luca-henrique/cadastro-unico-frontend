@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import AuthActions from "../../../store/ducks/auth";
+import AuthActions from "~/store/ducks/auth";
 import { Creators as LicenseCreators } from "../../../store/ducks/license";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+
+import { store } from "~/store/index";
 
 import { Typography, TextField, Button } from "@material-ui/core/";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
@@ -38,11 +40,7 @@ function SignUp(props) {
 
   const classes = useStyles();
 
-  useEffect(() => {
-    const { requestToken } = props;
-    requestToken();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  console.log(store.getState().auth.signedIn);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -50,60 +48,59 @@ function SignUp(props) {
     signInRequest(email, password);
   }
 
+  console.log(props);
   return (
-    <>
-      <Container className={classes.container}>
-        <div className={classes.img}>
-          <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
+    <Container className={classes.container}>
+      <div className={classes.img}>
+        <img src={Logo} width="100%" height="100%" alt="Cadastro único" />
+      </div>
+      <Form onSubmit={handleSubmit}>
+        <div className={classes.title}>
+          <Typography variant="h3" className={classes.typography}>
+            Entrar
+          </Typography>
         </div>
-        <Form onSubmit={handleSubmit}>
-          <div className={classes.title}>
-            <Typography variant="h3" className={classes.typography}>
-              Entrar
-            </Typography>
-          </div>
-          <div className={classes.button}>
-            <Typography variant="button" className={classes.typography}>
-              Email
-            </Typography>
-            <ValidationTextField
-              variant="outlined"
-              size="small"
-              fullWidth
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className={classes.button}>
-            <Typography variant="button" className={classes.typography}>
-              Senha
-            </Typography>
-            <ValidationTextField
-              variant="outlined"
-              size="small"
-              fullWidth
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className={classes.signIn}>
-            <Button
-              variant="contained"
-              fullWidth
-              className={classes.title}
-              type="submit"
-            >
-              Entrar
-            </Button>
-          </div>
-        </Form>
-        <div>
-          <Copyright />
+        <div className={classes.button}>
+          <Typography variant="button" className={classes.typography}>
+            Email
+          </Typography>
+          <ValidationTextField
+            variant="outlined"
+            size="small"
+            fullWidth
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
-      </Container>
-    </>
+        <div className={classes.button}>
+          <Typography variant="button" className={classes.typography}>
+            Senha
+          </Typography>
+          <ValidationTextField
+            variant="outlined"
+            size="small"
+            fullWidth
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className={classes.signIn}>
+          <Button
+            variant="contained"
+            fullWidth
+            className={classes.title}
+            type="submit"
+          >
+            Entrar
+          </Button>
+        </div>
+      </Form>
+      <div>
+        <Copyright />
+      </div>
+    </Container>
   );
 }
 

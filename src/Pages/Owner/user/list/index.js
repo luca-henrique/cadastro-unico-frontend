@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, lazy } from "react";
 
 import { Creators as CreatorsUser } from "~/store/ducks/user";
 
@@ -14,8 +14,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import "./index.css";
 
-import Create from "../create";
-//import Update from '../update'
+const Create = lazy(() => import("../create"));
+const Update = lazy(() => import("../update"));
+const ChangePassword = lazy(() => import("../change-password"));
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -110,6 +111,7 @@ const View = () => {
                   dispatch(CreatorsUser.showNewUserView());
                 },
               },
+
               {
                 icon: "close",
                 tooltip: "Fechar",
@@ -131,7 +133,7 @@ const View = () => {
                 icon: "edit",
                 tooltip: "Editar usuário",
                 onClick: (event, rowData) => {
-                  dispatch(CreatorsUser.showUpdateUserView(rowData));
+                  dispatch(CreatorsUser.showUpdateUser(rowData));
                 },
               },
             ]}
@@ -139,6 +141,8 @@ const View = () => {
         </div>
       </Modal>
       <Create />
+      <Update />
+      <ChangePassword />
     </>
   );
 };

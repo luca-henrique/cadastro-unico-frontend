@@ -6,10 +6,11 @@ import { Container, Button } from "react-floating-action-button";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as CreatorsUser } from "~/store/ducks/user";
+import { Creators as CreatorsLog } from "~/store/ducks/log";
 
 import {
-  Add,
   Person,
+  Add,
   HomeWorkOutlined,
   Description,
   EditLocation,
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
 });
 
 const Index = () => {
-  const role = useSelector((state) => state.user.user_joined.role);
+  const user = useSelector((state) => state.user.user_joined);
 
   const style = useStyles();
 
@@ -41,11 +42,23 @@ const Index = () => {
       }}
     >
       <Button tooltip="Minhas informações" className={style.root}>
-        <Person onClick={() => {}} />
+        <Person
+          onClick={() => {
+            dispatch(CreatorsUser.showUpdateUser(user));
+          }}
+        />
       </Button>
-      {role === true ? (
+      <Button tooltip="Mudar senha" className={style.root}>
+        <LockOutlined
+          onClick={() => {
+            dispatch(CreatorsUser.showChangerPasswordView());
+          }}
+        />
+      </Button>
+
+      {user.role === true ? (
         <>
-          <Button tooltip="Funcionarios" className={style.root}>
+          <Button tooltip="Usuários" className={style.root}>
             <GroupAdd
               onClick={() => {
                 dispatch(CreatorsUser.showUserView());
@@ -60,23 +73,23 @@ const Index = () => {
           </Button>
 
           <Button tooltip="Log" className={style.root}>
-            <Description onClick={() => {}} />
+            <Description
+              onClick={() => {
+                dispatch(CreatorsLog.showModalLog());
+              }}
+            />
           </Button>
         </>
       ) : (
         <></>
       )}
 
-      <Button tooltip="Bairro" className={style.root}>
+      <Button tooltip="Bairros" className={style.root}>
         <EditLocation onClick={() => {}} />
       </Button>
 
-      <Button tooltip="PDF" className={style.root}>
+      <Button tooltip="Gerar Relatórios" className={style.root}>
         <PictureAsPdf onClick={() => {}} />
-      </Button>
-
-      <Button tooltip="Mudar senha" className={style.root}>
-        <LockOutlined onClick={() => {}} />
       </Button>
 
       <Button tooltip="Menu" className={style.root}>

@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
 
-//import { toastr } from "react-redux-toastr";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Creators as CreatorsAccount } from "../../../../../../store/ducks/user";
+import { Creators as CreatorsAccount } from "~/store/ducks/user";
 
-import { TextField, Grid, Typography, Button } from "@material-ui/core/";
+import {
+  TextField,
+  Grid,
+  Typography,
+  Button,
+  withStyles,
+  Checkbox,
+  FormControl,
+  Select,
+} from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+import { green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -23,41 +33,37 @@ function Create() {
 
   const classes = useStyles();
 
-  const account = useSelector((state) => state.user.update_account_data);
+  const user = useSelector((state) => state.user.update_user.user);
+
+  const joined = useSelector((state) => state.user.user_joined.role); //Usuario logado função
 
   const [nome, setNome] = useState("");
-  const [email, setEmail] = useState(account.email);
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState(false);
 
   useEffect(() => {
-    if (account.nome === null || account.nome === undefined) {
-      console.log(account.nome);
-    } else {
-      setNome(account.nome);
-    }
-    setEmail(account.email);
-  }, [account.email, account.nome]);
+    setNome(user.nome || "");
+    setEmail(user.email || "");
+    setRole(user.role || false);
+  }, [user]);
 
   const handleSubmit = (e) => {
-    try {
-      e.preventDefault();
-      if (account.email === email) {
-        var user = {
-          nome,
-        };
-        dispatch(CreatorsAccount.updateUserActiveRequest(user));
-      } else {
-        var userTest = {
-          nome,
-          email,
-        };
-        dispatch(CreatorsAccount.updateUserActiveRequest(userTest));
-      }
-      handleClose();
-    } catch (error) {}
+    e.preventDefault();
+
+    var acc = {
+      id: user.id,
+      nome,
+      email,
+      role,
+    };
+
+    dispatch(CreatorsAccount.updateUserRequest(acc));
+
+    handleClose();
   };
 
   const handleClose = () => {
-    dispatch(CreatorsAccount.hideUpdateAccount());
+    dispatch(CreatorsAccount.hideUpdateUser());
   };
 
   return (
@@ -69,6 +75,27 @@ function Create() {
         alignItems="flex-start"
         className={classes.label}
       >
+        {joined === true ? (
+          <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
+            <FormControl
+              variant="outlined"
+              style={{ width: "100%" }}
+              size="small"
+              fullWidth
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <Typography variant="button">Função:</Typography>
+              <Select native size="small" fullWidth value={role}>
+                <option value={true}>Administrador</option>
+                <option value={false}>Usuário</option>
+              </Select>
+            </FormControl>
+          </Grid>
+        ) : (
+          <></>
+        )}
+
         <Grid item xs={12} sm={12} className={classes.grid}>
           <div>
             <Typography variant="button">Nome:</Typography>

@@ -19,7 +19,6 @@ export function* readUserJoined() {
 export function* createUser({ payload }) {
   try {
     const respose = yield call(api.post, "/user", payload.user);
-    console.log(respose);
     yield put(UserCreators.createUserSuccess(respose.data));
     toastr.success("Usuário criado.");
   } catch (error) {
@@ -29,19 +28,19 @@ export function* createUser({ payload }) {
 
 export function* updateUser({ payload }) {
   try {
-    yield call(api.put, `/user/${payload.id}`, payload.user);
-    yield put(UserCreators.updateUserRequest(payload.user));
-  } catch (error) {}
+    yield call(api.put, `/user/${payload.user.id}`, payload.user);
+    yield put(UserCreators.updateUserSuccess(payload.user));
+    toastr.success("Usuário atualizado.");
+  } catch (error) {
+    toastr.error("Erro ao criar atualizado.");
+  }
 }
 
 export function* readUser() {
   try {
     const { data } = yield call(api.get, "/user");
-    console.log(data);
     yield put(UserCreators.readUserSuccess(data));
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 }
 
 export function* deleteUser({ payload }) {
@@ -54,6 +53,7 @@ export function* deleteUser({ payload }) {
 
 export function* changerPasswordUserJoined({ payload }) {
   try {
-    yield call(api.put, `/user/`, payload.password);
+    yield call(api.put, `/changer-password`, payload.password);
+    toastr.success("Senha alterada.");
   } catch (error) {}
 }

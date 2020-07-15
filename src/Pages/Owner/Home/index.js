@@ -1,10 +1,9 @@
-import React from "react";
+import React, { lazy } from "react";
 
 import { CssBaseline, makeStyles } from "@material-ui/core/";
 
 import TopBar from "./top-bar";
 import FloatingButton from "./floating-button";
-import ListBoxes from "../Box/list";
 
 /*
   
@@ -12,7 +11,7 @@ import ListBoxes from "../Box/list";
  
 */
 
-import ListUser from "../user/list";
+const ListBox = lazy(() => import("../Box/list"));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,22 +62,18 @@ function View() {
   const classes = useStyles();
 
   return (
-    <>
-      <div className={classes.root}>
-        <CssBaseline />
-        <TopBar />
+    <div className={classes.root}>
+      <CssBaseline />
+      <TopBar />
 
-        <main className={classes.content}>
-          <div className={classes.center}>
-            <ListBoxes />
+      <main className={classes.content}>
+        <div className={classes.center}>
+          <ListBox />
 
-            <ListUser />
-
-            <FloatingButton />
-          </div>
-        </main>
-      </div>
-    </>
+          <FloatingButton />
+        </div>
+      </main>
+    </div>
   );
 }
 

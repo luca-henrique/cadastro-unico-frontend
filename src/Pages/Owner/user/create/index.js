@@ -9,12 +9,9 @@ import {
   Modal,
   Grid,
   TextField,
-  FormControlLabel,
-  withStyles,
-  Checkbox,
+  FormControl,
+  Select,
 } from "@material-ui/core/";
-
-import { green } from "@material-ui/core/colors";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -79,7 +76,7 @@ export default function Create() {
       <div
         style={{
           backgroundColor: "#fff",
-          padding: "20px",
+          padding: "15px",
           border: "1px solid #D8D8D8",
           borderRadius: "5px",
         }}
@@ -99,17 +96,21 @@ export default function Create() {
             </Typography>
           </Grid>
           <form onSubmit={handleSubmit}>
-            <Grid item xs={12} sm={12}>
-              <Typography variant="button">Adiministrador:</Typography>
-            </Grid>
-
-            <Grid item xs={12} sm={12}>
-              <FormControlLabel
-                style={{ color: "#A4A4A4" }}
+            <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
+              <FormControl
+                variant="outlined"
+                style={{ width: "100%" }}
+                size="small"
+                fullWidth
                 value={role}
-                onChange={(e) => setRole(e.target.checked)}
-                control={<GreenCheckbox />}
-              />
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <Typography variant="button">Função:</Typography>
+                <Select native size="small" fullWidth value={role}>
+                  <option value={true}>Administrador</option>
+                  <option value={false}>Usuário</option>
+                </Select>
+              </FormControl>
             </Grid>
 
             <Grid item xs={12} sm={12}>
@@ -191,13 +192,3 @@ export default function Create() {
     </Modal>
   );
 }
-
-const GreenCheckbox = withStyles({
-  root: {
-    color: green[200],
-    "&$checked": {
-      color: green[300],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);

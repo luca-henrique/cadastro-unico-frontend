@@ -1,47 +1,48 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
+
+import Circular from "@material-ui/core/CircularProgress";
+
 import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 
 import SignIn from "../Pages/authentication/SignIn/index";
 import Lisence from "../Pages/license";
-
-import OwnerView from "../Pages/Owner/Home/";
 import history from "./history";
 import Private from "./private";
 
-import Pdf from "../Pages/Owner/PDF/index";
-import Specific from "../Pages/Owner/PDF/specific";
+const Loader = () => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignContent: "center",
+      }}
+    >
+      <div>
+        <Circular style={{ color: "rgb(2, 90, 10)" }} />
+      </div>
+    </div>
+  );
+};
 
-import Etiqueta from "../Pages/Owner/PDF/etiquetas";
-
-import EtiquetaBox from "../Pages/Owner/PDF/etiquetasBox";
-
-import districts from "../Pages/Owner/PDF/districts";
-
-import discard from "../Pages/Owner/PDF/descartes";
+const Dashboard = lazy(() => import("../Pages/Owner/Home/"));
 
 const Routes = () => (
-  <ConnectedRouter history={history}>
-    <Switch>
-      <Route path="/" exact component={Lisence} />
-      <Route path="/login" exact component={SignIn} />
+  <Suspense fallback={<Loader />}>
+    <ConnectedRouter history={history}>
+      <Switch>
+        <Route path="/" exact component={Lisence} />
+        <Route path="/login" exact component={SignIn} />
 
-      <Route path="/pdf" exact component={Pdf} />
-
-      <Route path="/district" exact component={districts} />
-
-      <Route path="/tag" exact component={Etiqueta} />
-
-      <Route path="/tag_box" exact component={EtiquetaBox} />
-
-      <Route path="/descartes" exact component={discard} />
-
-      <Route path="/specific" exact component={Specific} />
-
-      <Private path="/owner" component={OwnerView} />
-    </Switch>
-  </ConnectedRouter>
+        <Private path="/dashboard" component={Dashboard} />
+      </Switch>
+    </ConnectedRouter>
+  </Suspense>
 );
 
 export default Routes;

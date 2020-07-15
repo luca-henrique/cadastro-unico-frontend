@@ -152,14 +152,14 @@ export const Creators = {
     type: Types.HIDE_NEW_USER_VIEW,
   }),
 
-  showUpdateAccount: (user) => ({
+  showUpdateUser: (user) => ({
     type: Types.SHOW_UPDATE_USER_VIEW,
     payload: {
       user,
     },
   }),
 
-  hideUpdateAccount: () => ({
+  hideUpdateUser: () => ({
     type: Types.HIDE_UPDATE_USER_VIEW,
   }),
 

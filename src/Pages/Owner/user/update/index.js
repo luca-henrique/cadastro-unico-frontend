@@ -15,15 +15,14 @@ const useStyles = makeStyles((theme) => ({
       height: "70%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "30%",
-      height: "35%",
+      width: "25%",
     },
   },
 }));
 
 export default function Update() {
   const classes = useStyles();
-  const visible = useSelector((state) => state.user.update_account_visible);
+  const visible = useSelector((state) => state.user.update_user.visible);
 
   return (
     <Modal
@@ -65,7 +64,7 @@ export default function Update() {
                   textAlign: "center",
                 }}
               >
-                Atualizar conta
+                Atualizar usuário
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12}>
