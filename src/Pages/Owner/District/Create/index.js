@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Creators as DistrictCreators } from "../../../../store/ducks/district";
+import { Creators as DistrictCreators } from "~/store/ducks/district";
 
 import {
   Typography,
@@ -10,30 +10,30 @@ import {
   Backdrop,
   Fade,
   Grid,
-  TextField
+  TextField,
 } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     backgroundColor: "#fff",
-    padding: "20px",
     border: "1px solid #D8D8D8",
     borderRadius: "5px",
+    padding: "20px",
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       width: "100%",
-      height: "80%"
+      height: "80%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "50%"
-    }
-  }
+      width: "30%",
+    },
+  },
 }));
 
 export default function Create() {
-  const visible = useSelector(state => state.district.visible);
+  const visible = useSelector((state) => state.district.create_district);
   const dispatch = useDispatch();
 
   const [nome, setNome] = useState("");
@@ -44,7 +44,7 @@ export default function Create() {
     e.preventDefault();
     try {
       var district = {
-        nome
+        nome,
       };
 
       dispatch(DistrictCreators.createDistrictRequest(district));
@@ -60,23 +60,16 @@ export default function Create() {
 
   return (
     <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
+      open={visible}
       style={{
         display: "flex",
+        justifyContent: "center",
         alignItems: "center",
-        justifyContent: "center"
-      }}
-      open={visible}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500
       }}
     >
-      <form onSubmit={saveBox}>
-        <Fade in={visible}>
-          <div className={classes.modal}>
+      <div className={classes.modal}>
+        <form onSubmit={saveBox}>
+          <Fade in={visible}>
             <Grid
               container
               direction="row"
@@ -89,22 +82,22 @@ export default function Create() {
                   style={{
                     color: "rgba(2,99,44,0.7)",
                     textAlign: "center",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
                   }}
                 >
-                  Cadastrar Novo Bairro
+                  Novo Bairro
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={12}>
                 <div>
-                  <Typography variant="button">Nome do bairro:</Typography>
+                  <Typography variant="button">Bairro:</Typography>
                   <TextField
                     variant="outlined"
                     size="small"
                     fullWidth
                     value={nome}
-                    onChange={e => setNome(e.target.value)}
+                    onChange={(e) => setNome(e.target.value)}
                     type="text"
                   />
                 </div>
@@ -134,9 +127,9 @@ export default function Create() {
                 </div>
               </Grid>
             </Grid>
-          </div>
-        </Fade>
-      </form>
+          </Fade>
+        </form>
+      </div>
     </Modal>
   );
 }

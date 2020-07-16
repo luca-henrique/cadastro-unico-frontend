@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Creators as CreatorsUser } from "~/store/ducks/user";
 import { Creators as CreatorsLog } from "~/store/ducks/log";
+import { Creators as CreatorsDistrict } from "~/store/ducks/district";
 
 import {
   Person,
@@ -85,7 +86,11 @@ const Index = () => {
       )}
 
       <Button tooltip="Bairros" className={style.root}>
-        <EditLocation onClick={() => {}} />
+        <EditLocation
+          onClick={() => {
+            dispatch(CreatorsDistrict.showModalDistrict());
+          }}
+        />
       </Button>
 
       <Button tooltip="Gerar Relatórios" className={style.root}>

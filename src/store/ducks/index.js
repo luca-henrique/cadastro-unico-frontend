@@ -10,6 +10,8 @@ import user from "./user";
 
 import log from "./log";
 
+import district from "./district";
+
 export default (history) =>
   combineReducers({
     toastr,
@@ -20,6 +22,8 @@ export default (history) =>
     auth,
 
     log,
+
+    district,
 
     router: connectRouter(history),
   });

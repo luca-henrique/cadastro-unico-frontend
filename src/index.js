@@ -30,7 +30,6 @@ ReactDOM.render(
     <Fragment>
       <Routes />
       <GlobalStyle />
-
       <ReduxToastr />
     </Fragment>
   </Providers>,

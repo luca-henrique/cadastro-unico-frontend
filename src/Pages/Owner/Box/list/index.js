@@ -10,27 +10,10 @@ import MaterialTable from "material-table";
 
 import "./index.css";
 
-/*
-import Create from "../create";
-import Update from "../update";
-
-import Family from "../../Family/list/";
-*/
-
 function Table() {
   const dispatch = useDispatch();
 
-  //const data = useSelector((state) => state.box.boxes);
   const data = [];
-
-  //const loading = useSelector((state) => state.box.loading);
-
-  //const updateData = () => dispatch(CreatorsBox.readBoxesRequest());
-
-  useEffect(() => {
-    // updateData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>

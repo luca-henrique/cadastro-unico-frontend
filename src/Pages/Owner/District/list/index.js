@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { Creators as DistrictCreators } from "../../../store/ducks/district";
+import { Creators as DistrictCreators } from "~/store/ducks/district";
 
 import { Modal } from "@material-ui/core/";
-
-import Create from "./Create/";
-import Update from "./Update/";
 
 import MaterialTable from "material-table";
 
@@ -28,20 +25,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function View(props) {
-  const [selectedRow] = useState("");
-
-  const { districts } = props.redux.district;
-
   const classes = useStyles();
 
-  const visible = props.redux.district.open;
+  const { districts, loading } = props.redux.district;
+  const visible = props.redux.district.visible_district;
 
   const {
     showModalNewDistrict,
     hideModalDistrict,
     deleteDistrictRequest,
     showModalUpdateDistrict,
+    readDistrictRequest,
   } = props;
+
+  useEffect(() => {
+    if (visible) {
+      readDistrictRequest();
+    }
+  }, [visible, readDistrictRequest]);
 
   function openTab() {
     window.open("/district");
@@ -61,6 +62,7 @@ function View(props) {
       <div className={classes.modal}>
         <MaterialTable
           title="Bairros"
+          isLoading={loading}
           columns={[
             {
               title: "Código",
@@ -140,16 +142,8 @@ function View(props) {
               color: "rgb(2,90,10)",
             },
             actionsCellStyle: { color: "#848484" },
-            rowStyle: (rowData) => ({
-              backgroundColor:
-                selectedRow && selectedRow.tableData.id === rowData.tableData.id
-                  ? "#F3F781"
-                  : "#FFF",
-            }),
           }}
         />
-        <Create />
-        <Update />
       </div>
     </Modal>
   );

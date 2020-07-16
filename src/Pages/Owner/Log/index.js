@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -27,10 +27,17 @@ const useStyles = makeStyles((theme) => ({
 function View(props) {
   const open = props.redux.log.open;
   const data = props.redux.log.log;
+  const loading = props.redux.log.loading;
 
-  const { hideModalLog } = props;
+  const { hideModalLog, readLogRequest } = props;
 
   const classes = useStyles();
+
+  useEffect(() => {
+    if (open) {
+      readLogRequest();
+    }
+  }, [open, readLogRequest]);
 
   function changer(array) {
     const log = [];
@@ -58,6 +65,7 @@ function View(props) {
     >
       <div className={classes.modal}>
         <MaterialTable
+          isLoading={loading}
           style={{
             height: "auto",
             boxShadow: "none",

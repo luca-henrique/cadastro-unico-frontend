@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Creators as DistrictCreators } from "../../../../store/ducks/district";
+import { Creators as DistrictCreators } from "~/store/ducks/district";
 
 import {
   Typography,
   Button,
   Modal,
-  Backdrop,
   Fade,
   Grid,
-  TextField
+  TextField,
 } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     backgroundColor: "#fff",
     padding: "20px",
@@ -24,22 +23,25 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(5),
       width: "100%",
-      height: "80%"
+      height: "80%",
     },
     [theme.breakpoints.up("md")]: {
-      width: "50%"
-    }
-  }
+      width: "30%",
+    },
+  },
 }));
 
 export default function Create() {
-  const visible = useSelector(state => state.district.updateDistrict.visible);
-  const data = useSelector(state => state.district.updateDistrict.data);
+  const visible = useSelector(
+    (state) => state.district.update_district.visible
+  );
+
+  const data = useSelector((state) => state.district.update_district.data);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setNome(data.nome);
-  }, [data.nome]);
+  }, [data]);
 
   const [nome, setNome] = useState("");
 
@@ -48,7 +50,7 @@ export default function Create() {
     try {
       var district = {
         id: data.id,
-        nome
+        nome,
       };
 
       dispatch(DistrictCreators.updateDistrictRequest(district));
@@ -59,7 +61,6 @@ export default function Create() {
 
   function hide() {
     setNome("");
-
     dispatch(DistrictCreators.hideModalUpdateDistrict());
   }
 
@@ -67,23 +68,16 @@ export default function Create() {
 
   return (
     <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
       open={visible}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500
-      }}
     >
-      <form onSubmit={saveBox}>
-        <Fade in={visible}>
-          <div className={classes.modal}>
+      <div className={classes.modal}>
+        <form onSubmit={saveBox}>
+          <Fade in={visible}>
             <Grid
               container
               direction="row"
@@ -96,22 +90,22 @@ export default function Create() {
                   style={{
                     color: "rgba(2,99,44,0.7)",
                     textAlign: "center",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
                   }}
                 >
-                  Cadastrar Novo Bairro
+                  Atualizar bairro
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={12}>
                 <div>
-                  <Typography variant="button">Nome do bairro:</Typography>
+                  <Typography variant="button">Bairro:</Typography>
                   <TextField
                     variant="outlined"
                     size="small"
                     fullWidth
                     value={nome}
-                    onChange={e => setNome(e.target.value)}
+                    onChange={(e) => setNome(e.target.value)}
                     type="text"
                   />
                 </div>
@@ -141,9 +135,9 @@ export default function Create() {
                 </div>
               </Grid>
             </Grid>
-          </div>
-        </Fade>
-      </form>
+          </Fade>
+        </form>
+      </div>
     </Modal>
   );
 }
