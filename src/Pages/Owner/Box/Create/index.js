@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { Creators as BoxCreators } from "../../../../store/ducks/box";
-import { Creators as PrefeituraCreators } from "../../../../store/ducks/prefecture";
+import { Creators as BoxCreators } from "~/store/ducks/box";
+import { Creators as DistrictCreators } from "~/store/ducks/district";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   Typography,
@@ -60,7 +59,7 @@ const GreenCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-const Create = (props) => {
+const Create = () => {
   const [numPaste, setNumPaste] = useState("");
   const [numBox, setNumBox] = useState("");
   const [codHome, setCodHome] = useState("");
@@ -77,11 +76,19 @@ const Create = (props) => {
   const [benefit, setBenefit] = useState(false);
   const [local, setLocal] = useState(false);
 
-  const { districts } = props.redux.district;
+  const { districts } = useSelector((state) => state.district);
 
-  const visible = props.redux.box.visible;
+  const visible = useSelector((state) => state.box.create_box_visible);
+
+  const dispatch = useDispatch();
 
   const classes = useStyles();
+
+  useEffect(() => {
+    if (visible) {
+      dispatch(DistrictCreators.readDistrictRequest());
+    }
+  }, [dispatch, visible]);
 
   function create(e) {
     e.preventDefault();
@@ -107,9 +114,7 @@ const Create = (props) => {
       local,
     };
 
-    const { createBoxRequest } = props;
-
-    createBoxRequest(box);
+    dispatch(BoxCreators.createBoxRequest(box));
     hide();
   }
 
@@ -132,8 +137,8 @@ const Create = (props) => {
     setOldMan(false);
     setBenefit(false);
     setLocal(false);
-    const { hideModalNewBox } = props;
-    hideModalNewBox();
+
+    dispatch(BoxCreators.hideModalNewBox());
   }
 
   return (
@@ -181,7 +186,7 @@ const Create = (props) => {
                     marginBottom: "10px",
                   }}
                 >
-                  Cadastrar
+                  Cadastrar Caixa
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={12} style={{ marginTop: "10px" }}>
@@ -397,11 +402,4 @@ const Create = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  redux: state,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...BoxCreators, ...PrefeituraCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+export default Create;

@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Creators as CreatorsUser } from "~/store/ducks/user";
 import { Creators as CreatorsLog } from "~/store/ducks/log";
 import { Creators as CreatorsDistrict } from "~/store/ducks/district";
+import { Creators as CreatorsPrefecture } from "~/store/ducks/prefecture";
 
 import {
   Person,
@@ -29,6 +30,8 @@ const useStyles = makeStyles({
 
 const Index = () => {
   const user = useSelector((state) => state.user.user_joined);
+
+  const prefecture = useSelector((state) => state.prefecture.prefecture);
 
   const style = useStyles();
 
@@ -69,7 +72,11 @@ const Index = () => {
           <Button tooltip="Prefeitura" className={style.root}>
             <HomeWorkOutlined
               style={{ color: "rgb(246,238,89)" }}
-              onClick={() => {}}
+              onClick={() => {
+                dispatch(
+                  CreatorsPrefecture.showModalUpdatePrefecture(prefecture)
+                );
+              }}
             />
           </Button>
 

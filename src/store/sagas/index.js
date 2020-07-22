@@ -27,9 +27,21 @@ import {
   updateDistrict,
 } from "./district";
 
+import { Types as PrefectureTypes } from "../ducks/prefecture";
+import {
+  createPrefecture,
+  updatePrefecture,
+  getPrefecture,
+} from "./prefecture";
+
+import { Types as BoxTypes } from "../ducks/box";
+import { readBox, createBox, deleteBox, updateBox } from "./box";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", requestToken),
+    takeLatest("persist/REHYDRATE", getPrefecture),
+
     takeLatest(LicenseTypes.CHECK_ACCESS_TOKEN, checkToken),
 
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
@@ -48,5 +60,13 @@ export default function* rootSaga() {
     takeLatest(DistrictTypes.READ_DISTRICT_REQUEST, readDistrict),
     takeLatest(DistrictTypes.DELETE_DISTRICT_REQUEST, deleteDistrict),
     takeLatest(DistrictTypes.UPDATE_DISTRICT_REQUEST, updateDistrict),
+
+    takeLatest(PrefectureTypes.CREATE_PREFECTURE_REQUEST, createPrefecture),
+    takeLatest(PrefectureTypes.UPDATE_PREFECTURE_REQUEST, updatePrefecture),
+
+    takeLatest(BoxTypes.READ_BOX_REQUEST, readBox),
+    takeLatest(BoxTypes.DELETE_BOX_REQUEST, deleteBox),
+    takeLatest(BoxTypes.UPDATE_BOX_REQUEST, updateBox),
+    takeLatest(BoxTypes.CREATE_BOX_REQUEST, createBox),
   ]);
 }

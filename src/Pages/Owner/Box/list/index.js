@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import React, { memo, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Creators as CreatorsBox } from "~/store/ducks/box";
 import { Creators as CreatorsFamily } from "~/store/ducks/family";
@@ -13,7 +13,13 @@ import "./index.css";
 function Table() {
   const dispatch = useDispatch();
 
-  const data = [];
+  const boxes = useSelector((state) => state.box.boxes);
+
+  const loading = useSelector((state) => state.box.loading);
+
+  useEffect(() => {
+    dispatch(CreatorsBox.readBoxRequest());
+  }, []);
 
   return (
     <>
@@ -22,7 +28,8 @@ function Table() {
           boxShadow: "none",
         }}
         title={null}
-        data={data}
+        data={boxes}
+        isLoading={loading}
         localization={{
           header: {
             actions: "Ações",
@@ -73,7 +80,6 @@ function Table() {
             icon: "edit",
             tooltip: "Editar",
             onClick: (event, rowData) => {
-              console.log(rowData);
               dispatch(CreatorsBox.showModalUpdateBox(rowData));
             },
           },
@@ -105,13 +111,13 @@ function Table() {
           },
 
           {
-            title: "CPF",
-            field: "cpf",
+            title: "Responsável",
+            field: "nome",
           },
 
           {
-            title: "Responsavel",
-            field: "nome",
+            title: "CPF",
+            field: "cpf",
           },
 
           {

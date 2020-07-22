@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { Creators as PrefectureCreators } from "../../../../store/ducks/prefecture";
+import { Creators as PrefectureCreators } from "~/store/ducks/prefecture";
 
 import { cnpjMask } from "../../../Components/TextField/MaskCnpj";
 
@@ -11,9 +11,6 @@ import TextField from "../../../Components/TextField/index";
 
 import { Modal, Grid, Typography, Button } from "@material-ui/core/";
 import { toastr } from "react-redux-toastr";
-
-import Address from "./Components/Addrress/";
-import Contact from "./Components/Contact/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -35,12 +32,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function View(props) {
-  const { open, prefecture } = props.redux.prefecture;
+  const { prefecture } = props.redux.prefecture;
+  const { visible } = props.redux.prefecture.prefecture_update;
 
-  const [cnpj, setCnpj] = useState(prefecture.cnpj);
-  const [nome, setNome] = useState(prefecture.nome);
-  const [razao, setRazao] = useState(prefecture.razao);
-  const [numero, setNumero] = useState(prefecture.numero);
+  const [cnpj, setCnpj] = useState("");
+  const [nome, setNome] = useState("");
+  const [razao, setRazao] = useState("");
+  const [numero, setNumero] = useState("");
 
   const { hideModalUpdatePrefecture, updatePrefectureRequest } = props;
 
@@ -51,15 +49,17 @@ function View(props) {
     setNome(prefecture.nome);
     setRazao(prefecture.razao);
     setNumero(prefecture.numero);
-  }, [prefecture.cnpj, prefecture.nome, prefecture.numero, prefecture.razao]);
+  }, [prefecture]);
 
   function changerCnpj(e) {
     setCnpj(cnpjMask(e.target.value, cnpj));
   }
 
   function saveInformation() {
+    console.log(prefecture);
     try {
       var pref = {
+        id: prefecture.id,
         cnpj,
         nome,
         razao,
@@ -91,7 +91,7 @@ function View(props) {
   return (
     <>
       <Modal
-        open={open}
+        open={visible}
         style={{
           display: "flex",
           justifyContent: "center",
@@ -208,35 +208,6 @@ function View(props) {
                   </Grid>
                 </Grid>
               </form>
-            </Grid>
-            {/* Endereço */}
-            <Grid item xs={12} style={{ marginTop: "20px" }}>
-              <Typography
-                variant="h5"
-                style={{
-                  color: "rgb(2,99,44)",
-                }}
-              >
-                Endereço
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <Address />
-            </Grid>
-
-            {/* Contato */}
-            <Grid item xs={12} style={{ marginTop: "20px" }}>
-              <Typography
-                variant="h5"
-                style={{
-                  color: "rgb(2,99,44)",
-                }}
-              >
-                Contato
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <Contact />
             </Grid>
           </Grid>
 

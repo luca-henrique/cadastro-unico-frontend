@@ -12,6 +12,12 @@ import log from "./log";
 
 import district from "./district";
 
+import prefecture from "./prefecture";
+
+import box from "./box";
+
+import family from "./family";
+
 export default (history) =>
   combineReducers({
     toastr,
@@ -24,6 +30,12 @@ export default (history) =>
     log,
 
     district,
+
+    prefecture,
+
+    box,
+
+    family,
 
     router: connectRouter(history),
   });

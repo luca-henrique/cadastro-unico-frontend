@@ -13,6 +13,21 @@ const ListDistrictModal = lazy(() => import("./Pages/Owner/district/list"));
 const CreateDistrictModal = lazy(() => import("./Pages/Owner/district/create"));
 const UpdateDistrictModal = lazy(() => import("./Pages/Owner/district/update"));
 
+const CreatePrefectureModal = lazy(() =>
+  import("./Pages/Owner/prefeitura/create/index")
+);
+
+const UpdatePrefectureModal = lazy(() =>
+  import("./Pages/Owner/prefeitura/update/index")
+);
+
+const CreateBoxModal = lazy(() => import("./Pages/Owner/Box/create"));
+const UpdateBoxModal = lazy(() => import("./Pages/Owner/Box/update"));
+
+const ListGroupFamiliar = lazy(() => import("./Pages/Owner/family/list"));
+const CreateGroupFamiliar = lazy(() => import("./Pages/Owner/family/create"));
+const UpdateGroupFamiliar = lazy(() => import("./Pages/Owner/family/update"));
+
 const Main = () => {
   const LogModal = () => create(<Log />, "log-portal");
 
@@ -26,6 +41,20 @@ const Main = () => {
     create(<CreateDistrictModal />, "create-district-portal");
   const UpdateDistrict = () =>
     create(<UpdateDistrictModal />, "update-district-portal");
+  const CreatePrefecture = () =>
+    create(<CreatePrefectureModal />, "create-prefecture-portal");
+  const UpdatePrefecture = () =>
+    create(<UpdatePrefectureModal />, "update-prefecture-portal");
+
+  const CreateBox = () => create(<CreateBoxModal />, "create-box-portal");
+  const UpdateBox = () => create(<UpdateBoxModal />, "update-box-portal");
+
+  const ListFamiliar = () =>
+    create(<ListGroupFamiliar />, "list-familiar-portal");
+  const CreateFamiliar = () =>
+    create(<CreateGroupFamiliar />, "create-familiar-portal");
+  const UpdateFamiliar = () =>
+    create(<UpdateGroupFamiliar />, "update-familiar-portal");
 
   return (
     <Suspense fallback={<Loader />}>
@@ -37,6 +66,12 @@ const Main = () => {
       <ListDistrict />
       <CreateDistrict />
       <UpdateDistrict />
+
+      <CreatePrefecture />
+      <UpdatePrefecture />
+
+      <CreateBox />
+      <UpdateBox />
     </Suspense>
   );
 };

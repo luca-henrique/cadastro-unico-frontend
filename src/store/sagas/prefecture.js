@@ -20,7 +20,11 @@ export function* createPrefecture({ payload }) {
 
 export function* updatePrefecture({ payload }) {
   try {
-    const response = yield call(api.put, `/prefecture/1`, payload.prefecture);
+    const response = yield call(
+      api.put,
+      `/prefecture/${payload.prefecture.id}`,
+      payload.prefecture
+    );
     yield toastr.success("Informações da prefeitura atualizadas com sucesso.");
     yield put(PrefectureCreators.readPrefectureSuccess(response.data));
   } catch (err) {
@@ -30,17 +34,11 @@ export function* updatePrefecture({ payload }) {
 
 export function* getPrefecture() {
   try {
-    const response = yield call(api.get, "/prefecture/1");
-
-    yield put(PrefectureCreators.readPrefectureSuccess(response.data));
-
-    if (response.status === 204) {
-      throw new Error("Não tem prefeitura");
+    const { data } = yield call(api.get, "/last-prefecture");
+    if (!data) {
+      yield put(PrefectureCreators.showModalCreatePrefecture());
+    } else {
+      yield put(PrefectureCreators.readPrefectureSuccess(data));
     }
-    if (response.status === 200) {
-      yield put(PrefectureCreators.failLoadPrefecture(true));
-    }
-  } catch (err) {
-    yield put(PrefectureCreators.failLoadPrefecture(false));
-  }
+  } catch (err) {}
 }

@@ -62,7 +62,7 @@ const GreenCheckbox = withStyles({
 
 function Update(props) {
   const districts = useSelector((state) => state.district.districts);
-  const { data, visible } = useSelector((state) => state.box.updateBox);
+  const { data, visible } = useSelector((state) => state.box.update_box);
   const classes = useStyles();
 
   const [numPaste, setNumPaste] = useState("");

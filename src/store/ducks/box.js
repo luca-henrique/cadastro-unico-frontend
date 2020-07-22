@@ -16,34 +16,17 @@ export const Types = {
   DELETE_BOX_REQUEST: "@box/DELETE_BOX_REQUEST",
   DELETE_BOX_SUCCESS: "@box/DELETE_BOX_SUCCESS",
 
-  READ_BOXES_REQUEST: "@box/READ_BOXES_REQUEST",
-  READ_BOXES_SUCCESS: "@box/READ_BOXES_SUCCESS",
-  READ_BOXES_FAIL: "@box/READ_BOXES_FAIL",
-
-  READ_FAMILY_BOX_REQUEST: "@box/READ_FAMILY_BOX_REQUEST",
-  READ_FAMILY_BOX_SUCCESS: "@box/READ_FAMILY_BOX_SUCCESS",
-
-  SELECTED_BOX_REQUEST: "@box/SELECTED_BOX_REQUEST",
-  SELECTED_BOX_SUCCESS: "@box/SELECTED_BOX_SUCCESS",
-
-  SIZE_BOX_REQUEST: "@box/SIZE_BOX_REQUEST",
-  SIZE_BOX_SUCCESS: "@box/SIZE_BOX_SUCCESS",
+  READ_BOX_REQUEST: "@box/READ_BOX_REQUEST",
+  READ_BOX_SUCCESS: "@box/READ_BOX_SUCCESS",
 };
 
 const INITIAL_STATE = Immutable({
-  boxes: {},
-  loading: false,
+  boxes: [],
+  loading: true,
   erro: false,
 
-  visible: false,
-
-  box: {},
-
-  boxSize: { id: null, total: null },
-
-  createBox: { visible: false, data: {} },
-
-  updateBox: { visible: false, data: {} },
+  update_box: { data: {}, visible: false },
+  create_box_visible: false,
 });
 
 export default function box(state = INITIAL_STATE, action) {
@@ -51,49 +34,32 @@ export default function box(state = INITIAL_STATE, action) {
     case Types.SHOW_MODAL_NEW_BOX:
       return {
         ...state,
-        visible: true,
+        create_box_visible: true,
       };
 
     case Types.HIDE_MODAL_NEW_BOX:
       return {
         ...state,
-        visible: false,
+        create_box_visible: false,
       };
 
     case Types.SHOW_MODAL_UPDATE_BOX:
       return {
         ...state,
-        updateBox: { data: action.payload.data, visible: true },
+        update_box: { data: action.payload.data, visible: true },
       };
 
     case Types.HIDE_MODAL_UPDATE_BOX:
       return {
         ...state,
-        updateBox: { data: {}, visible: false },
+        update_box: { data: {}, visible: false },
       };
 
-    case Types.READ_BOXES_REQUEST:
-      return {
-        ...state,
-        boxes: [],
-        loading: true,
-        erro: false,
-      };
-
-    case Types.READ_BOXES_SUCCESS:
+    case Types.READ_BOX_SUCCESS:
       return {
         ...state,
         boxes: action.payload.boxes,
         loading: false,
-        erro: false,
-      };
-
-    case Types.READ_BOXES_FAIL:
-      return {
-        ...state,
-        boxes: [],
-        loading: false,
-        erro: true,
       };
 
     case Types.DELETE_BOX_SUCCESS:
@@ -145,17 +111,13 @@ export const Creators = {
 
   /* CRUD */
 
-  readBoxesRequest: () => ({
-    type: Types.READ_BOXES_REQUEST,
+  readBoxRequest: () => ({
+    type: Types.READ_BOX_REQUEST,
   }),
 
-  readBoxesSuccess: (boxes) => ({
-    type: Types.READ_BOXES_SUCCESS,
+  readBoxSuccess: (boxes) => ({
+    type: Types.READ_BOX_SUCCESS,
     payload: { boxes },
-  }),
-
-  readBoxesFail: () => ({
-    type: Types.READ_BOXES_FAIL,
   }),
 
   deleteBoxRequest: (id) => ({

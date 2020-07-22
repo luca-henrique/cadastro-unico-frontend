@@ -16,11 +16,12 @@ export function* createBox({ payload }) {
 
 export function* updateBox({ payload }) {
   try {
-    console.log(payload);
     yield call(api.put, `/box/${payload.box.id}`, payload.box);
-    yield put(BoxCreators.updateBoxSuccess(payload.objUpdated));
-    toastr.success("Atualização feita");
-  } catch (err) {}
+    yield put(BoxCreators.updateBoxSuccess(payload.box));
+    toastr.success("Atualização feita na caixa");
+  } catch (err) {
+    toastr.error("Erro ao atualizar a caixa.");
+  }
 }
 
 export function* deleteBox({ payload }) {
@@ -33,36 +34,9 @@ export function* deleteBox({ payload }) {
   }
 }
 
-export function* getBox({ payload }) {
+export function* readBox() {
   try {
-    const response = yield call(api.get, `/box/${payload.id}`);
-    yield put(BoxCreators.boxSelectedSuccess(response.data));
+    const { data } = yield call(api.get, `/box`);
+    yield put(BoxCreators.readBoxSuccess(data));
   } catch (err) {}
 }
-
-export function* getBoxes() {
-  try {
-    const response = yield call(api.get, "/search");
-
-    yield put(BoxCreators.readBoxesSuccess(response.data));
-  } catch (err) {}
-}
-
-export function* getBoxSize({ payload }) {
-  try {
-    const response = yield call(api.get, `/boxes/${payload.id}`);
-
-    yield put(BoxCreators.boxSizeSuccess(response.data));
-  } catch (err) {}
-}
-
-/*
-
-export function* getPastesBox({ payload }) {
-  try {
-    const response = yield call(api.get, `/pastes/${payload.id}`);
-
-    yield put(BoxCreators.readPastesSuccess(response.data));
-  } catch (err) {}
-}
-*/

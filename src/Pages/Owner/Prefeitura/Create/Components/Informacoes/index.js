@@ -2,16 +2,16 @@ import React, { useState } from "react";
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { Creators as PrefeituraCreators } from "../../../../../../store/ducks/prefecture";
+import { Creators as PrefeituraCreators } from "~/store/ducks/prefecture";
 
-import { Grid, Typography } from "@material-ui/core/";
+import { Grid, Typography, Button } from "@material-ui/core/";
 import { cnpjMask } from "../../../../../Components/TextField/MaskCnpj";
 import TextField from "../../../../../Components/TextField/index";
 
 import { toastr } from "react-redux-toastr";
 
-const Informacoes = props => {
-  const { createPrefectureRequest } = props;
+const Informacoes = (props) => {
+  const { createPrefectureRequest, hideModalCreatePrefecture } = props;
 
   const [cnpj, setCnpj] = useState("");
   const [razao, setRazao] = useState("");
@@ -24,12 +24,13 @@ const Informacoes = props => {
         cnpj,
         nome,
         razao,
-        numero
+        numero,
       };
 
       checkAttributesObj(pref);
 
       createPrefectureRequest(pref);
+      hideModalCreatePrefecture();
     } catch (err) {
       toastr.error("Preencha todos os campos");
     }
@@ -54,111 +55,119 @@ const Informacoes = props => {
   }
 
   return (
-    <Grid
-      container
-      direction="row"
-      justify="flex-start"
-      alignItems="flex-start"
-      style={{
-        paddingLeft: "20px",
-        paddingRight: "20px",
-        paddingBottom: "34px",
-        width: "auto"
-      }}
-    >
-      <Grid item xs={12}>
-        <form onBlur={saveInformation}>
-          <Grid
-            container
-            direction="row"
-            justify="flex-start"
-            alignItems="flex-start"
-          >
-            <Grid item xs={12} sm={4} style={{ marginTop: "15px" }}>
-              <div>
-                <Typography
-                  variant="subtitle2"
-                  style={{ color: "rgba(0, 0, 0, 0.54)" }}
-                >
-                  CNPJ:
-                </Typography>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={cnpj}
-                  onChange={changerCnpj}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={1} />
-
-            <Grid item xs={12} sm={7} style={{ marginTop: "15px" }}>
-              <div>
-                <Typography
-                  variant="subtitle2"
-                  style={{ color: "rgba(0, 0, 0, 0.54)" }}
-                >
-                  Razão:
-                </Typography>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={razao}
-                  onChange={e => setRazao(e.target.value)}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={8} style={{ marginTop: "15px" }}>
-              <div>
-                <Typography
-                  variant="subtitle2"
-                  style={{ color: "rgba(0, 0, 0, 0.54)" }}
-                >
-                  Nome fantasia:
-                </Typography>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={nome}
-                  onChange={e => setNome(e.target.value)}
-                />
-              </div>
-            </Grid>
-
-            <Grid item xs={12} sm={1} />
-
-            <Grid item xs={12} sm={3} style={{ marginTop: "15px" }}>
-              <div>
-                <Typography
-                  variant="subtitle2"
-                  style={{ color: "rgba(0, 0, 0, 0.54)" }}
-                >
-                  Numero de pastas:
-                </Typography>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={numero}
-                  onChange={e => setNumero(e.target.value)}
-                />
-              </div>
-            </Grid>
+    <Grid item xs={12}>
+      <form onBlur={saveInformation}>
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          <Grid item xs={12} sm={12}>
+            <Typography
+              variant="h4"
+              style={{
+                marginTop: "15px",
+                textAlign: "center",
+                color: "rgba(0, 0, 0, 0.54)",
+              }}
+            >
+              Cadastrar Prefeitura
+            </Typography>
           </Grid>
-        </form>
-      </Grid>
+
+          <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
+            <div>
+              <Typography
+                variant="subtitle2"
+                style={{ color: "rgba(0, 0, 0, 0.54)" }}
+              >
+                CNPJ:
+              </Typography>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={cnpj}
+                onChange={changerCnpj}
+              />
+            </div>
+          </Grid>
+
+          <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
+            <div>
+              <Typography
+                variant="subtitle2"
+                style={{ color: "rgba(0, 0, 0, 0.54)" }}
+              >
+                Razão:
+              </Typography>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={razao}
+                onChange={(e) => setRazao(e.target.value)}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
+            <div>
+              <Typography
+                variant="subtitle2"
+                style={{ color: "rgba(0, 0, 0, 0.54)" }}
+              >
+                Nome fantasia:
+              </Typography>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+              />
+            </div>
+          </Grid>
+
+          <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
+            <div>
+              <Typography
+                variant="subtitle2"
+                style={{ color: "rgba(0, 0, 0, 0.54)" }}
+              >
+                Numero de pastas:
+              </Typography>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={numero}
+                onChange={(e) => setNumero(e.target.value)}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={12} style={{ marginTop: "15px" }}>
+            <Button
+              variant="contained"
+              fullWidth
+              type="submit"
+              color="secondary"
+              disableElevation
+            >
+              cadastrar
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
     </Grid>
   );
 };
 
-const mapStateToProps = state => ({
-  redux: state
+const mapStateToProps = (state) => ({
+  redux: state,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ ...PrefeituraCreators }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Informacoes);
