@@ -87,7 +87,7 @@ function Table() {
             icon: "refresh",
             tooltip: "Atualizar informações",
             isFreeAction: true,
-            onClick: () => console.log("Teste"),
+            onClick: () => dispatch(CreatorsBox.readBoxRequest()),
           },
         ]}
         // eslint-disable-next-line react/jsx-no-duplicate-props
@@ -112,13 +112,15 @@ function Table() {
 
           {
             title: "Responsável",
-            field: "nome",
+            field: "responsible.nome",
           },
 
           {
             title: "CPF",
-            field: "cpf",
+            field: "responsible.cpf",
           },
+
+          { title: "Bairro", field: "district" },
 
           {
             title: "Data visita",

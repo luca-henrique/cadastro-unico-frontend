@@ -37,6 +37,14 @@ import {
 import { Types as BoxTypes } from "../ducks/box";
 import { readBox, createBox, deleteBox, updateBox } from "./box";
 
+import { Types as FamilyTypes } from "../ducks/family";
+import {
+  createFamily,
+  readGroupFamilies,
+  deleteFamily,
+  updateFamily,
+} from "./family";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", requestToken),
@@ -68,5 +76,10 @@ export default function* rootSaga() {
     takeLatest(BoxTypes.DELETE_BOX_REQUEST, deleteBox),
     takeLatest(BoxTypes.UPDATE_BOX_REQUEST, updateBox),
     takeLatest(BoxTypes.CREATE_BOX_REQUEST, createBox),
+
+    takeLatest(FamilyTypes.READ_GROUP_FAMILIAR_REQUEST, readGroupFamilies),
+    takeLatest(FamilyTypes.CREATE_FAMILY_REQUEST, createFamily),
+    takeLatest(FamilyTypes.DELETE_FAMILY_REQUEST, deleteFamily),
+    takeLatest(FamilyTypes.UPDATE_FAMILY_REQUEST, updateFamily),
   ]);
 }

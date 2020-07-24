@@ -37,6 +37,7 @@ export function* deleteBox({ payload }) {
 export function* readBox() {
   try {
     const { data } = yield call(api.get, `/box`);
+    console.log(data);
     yield put(BoxCreators.readBoxSuccess(data));
   } catch (err) {}
 }

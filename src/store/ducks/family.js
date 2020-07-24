@@ -48,6 +48,7 @@ export default function family(state = INITIAL_STATE, action) {
       return {
         ...state,
         show_family: { id: 0, visible: false },
+        group_familiar: [],
       };
 
     case Types.SHOW_MODAL_NEW_FAMILIAR:

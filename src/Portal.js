@@ -72,6 +72,10 @@ const Main = () => {
 
       <CreateBox />
       <UpdateBox />
+
+      <ListFamiliar />
+      <CreateFamiliar />
+      <UpdateFamiliar />
     </Suspense>
   );
 };

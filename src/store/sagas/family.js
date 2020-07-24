@@ -37,15 +37,7 @@ export function* deleteFamily({ payload }) {
 
 export function* readGroupFamilies({ payload }) {
   try {
-    const { data } = yield call(api.get, `/families/${payload.id}`);
+    const { data } = yield call(api.get, `/group/${payload.id}`);
     yield put(FamilyCreators.readGroupFamiliarSuccess(data));
-  } catch (err) {}
-}
-
-export function* getFamilies() {
-  try {
-    const response = yield call(api.get, "/family");
-
-    yield put(FamilyCreators.readFamilySuccess(response.data));
   } catch (err) {}
 }

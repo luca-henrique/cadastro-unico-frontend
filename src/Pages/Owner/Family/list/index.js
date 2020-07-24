@@ -32,15 +32,15 @@ const View = () => {
   const visible = useSelector((state) => state.family.show_family.visible);
   const id = useSelector((state) => state.family.show_family.id);
 
-  const data = useSelector((state) => state.family.group_familiar);
+  const data = useSelector((state) => state.family.group_familiar) || [];
 
   const loading = useSelector((state) => state.family.loading);
 
   useEffect(() => {
     if (visible) {
-      dispatch(FamilyCreators.readGroupFamiliyRequest(id));
+      dispatch(FamilyCreators.readGroupFamiliarRequest(id));
     }
-  }, [dispatch, visible]);
+  }, [dispatch, visible, id]);
 
   return (
     <Modal
@@ -108,7 +108,9 @@ const View = () => {
               icon: "add",
               tooltip: "Adicionar",
               isFreeAction: true,
-              onClick: (event, rowData) => {},
+              onClick: (event, rowData) => {
+                dispatch(FamilyCreators.showModalNewFamiliar());
+              },
             },
 
             {
@@ -122,18 +124,24 @@ const View = () => {
               icon: "close",
               tooltip: "Fechar",
               isFreeAction: true,
-              onClick: (event, rowData) => {},
+              onClick: (event, rowData) => {
+                dispatch(FamilyCreators.hideModalFamily());
+              },
             },
 
             {
               icon: "delete",
               tooltip: "Excluir",
-              onClick: (event, rowData) => {},
+              onClick: (event, rowData) => {
+                dispatch(FamilyCreators.deleteFamilyRequest(rowData.id));
+              },
             },
             {
               icon: "edit",
               tooltip: "Editar",
-              onClick: (event, rowData) => {},
+              onClick: (event, rowData) => {
+                dispatch(FamilyCreators.showModalUpdateFamily(rowData));
+              },
             },
           ]}
         />

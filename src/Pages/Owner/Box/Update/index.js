@@ -127,6 +127,8 @@ function Update(props) {
       old_man: oldMan,
       benefit,
       local,
+
+      responsible: data.responsible,
     };
 
     const objUpdated = Object.assign(data, box);
