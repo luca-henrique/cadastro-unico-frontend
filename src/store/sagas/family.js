@@ -1,6 +1,9 @@
 import { call, put } from "redux-saga/effects";
 
 import { Creators as FamilyCreators } from "../ducks/family";
+import { Creators as BoxCreators } from "../ducks/box";
+
+import { store } from "../index";
 
 import api from "../../services/api";
 
@@ -11,6 +14,13 @@ export function* createFamily({ payload }) {
     const { data } = yield call(api.post, "/family/", payload.family);
     console.log(data);
     yield put(FamilyCreators.createFamilySuccess(data));
+    if (data.tipo === "RESPONSAVEL") {
+      const boxes = store.getState().box.boxes;
+      const box = boxes.find((element) => element.id === payload.family.box_id);
+      box.person_id = data.id;
+      box.responsible = data;
+      yield put(BoxCreators.updateBoxSuccess(box));
+    }
     toastr.success("Familiar criado.");
   } catch (err) {
     toastr.error("Erro ao criar um familiar.");
@@ -19,7 +29,10 @@ export function* createFamily({ payload }) {
 
 export function* updateFamily({ payload }) {
   try {
-    yield call(api.put, `/family/${payload.family.id}`, payload.family);
+    const { family } = payload;
+
+    yield call(api.put, `/family/${family.id}`, family);
+
     yield put(FamilyCreators.updateFamilySuccess(payload.family));
     toastr.success("Familiar atualizado.");
   } catch (err) {
@@ -29,8 +42,15 @@ export function* updateFamily({ payload }) {
 
 export function* deleteFamily({ payload }) {
   try {
-    yield call(api.delete, `/family/${payload.id}`);
-    yield put(FamilyCreators.deleteFamilySuccess(payload.id));
+    yield call(api.delete, `/family/${payload.family.id}`);
+    yield put(FamilyCreators.deleteFamilySuccess(payload.family.id));
+    if (payload.family.tipo === "RESPONSAVEL") {
+      const boxes = store.getState().box.boxes;
+      const box = boxes.find((element) => element.id === payload.family.box_id);
+      box.person_id = null;
+      box.responsible = null;
+      yield put(BoxCreators.updateBoxSuccess(box));
+    }
     toastr.error("Familiar excluido.");
   } catch (err) {}
 }

@@ -133,7 +133,7 @@ const View = () => {
               icon: "delete",
               tooltip: "Excluir",
               onClick: (event, rowData) => {
-                dispatch(FamilyCreators.deleteFamilyRequest(rowData.id));
+                dispatch(FamilyCreators.deleteFamilyRequest(rowData));
               },
             },
             {

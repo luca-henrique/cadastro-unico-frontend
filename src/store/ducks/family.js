@@ -93,7 +93,7 @@ export default function family(state = INITIAL_STATE, action) {
         ...state,
         group_familiar: [
           ...state.group_familiar.filter((elem, idx) => {
-            return elem.id !== action.payload.id;
+            return elem.id !== action.payload.family.id;
           }),
         ],
       };
@@ -172,17 +172,17 @@ export const Creators = {
     },
   }),
 
-  deleteFamilyRequest: (id) => ({
+  deleteFamilyRequest: (family) => ({
     type: Types.DELETE_FAMILY_REQUEST,
     payload: {
-      id,
+      family,
     },
   }),
 
-  deleteFamilySuccess: (id) => ({
+  deleteFamilySuccess: (family) => ({
     type: Types.DELETE_FAMILY_SUCCESS,
     payload: {
-      id,
+      family,
     },
   }),
 
