@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Creators as PrefeituraCreators } from "~/store/ducks/prefecture";
 
 import { useSelector } from "react-redux";
 
@@ -8,7 +7,7 @@ import { Modal, Grid } from "@material-ui/core/";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import Information from "./components/informacoes/index";
+import Information from "./Components/Informacoes";
 
 const useStyles = makeStyles((theme) => ({
   root: {

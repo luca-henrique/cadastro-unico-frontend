@@ -21,8 +21,8 @@ const UpdatePrefectureModal = lazy(() =>
   import("./Pages/Owner/prefeitura/update/index")
 );
 
-const CreateBoxModal = lazy(() => import("./Pages/Owner/Box/create"));
-const UpdateBoxModal = lazy(() => import("./Pages/Owner/Box/update"));
+const CreateBoxModal = lazy(() => import("./Pages/Owner/box/create"));
+const UpdateBoxModal = lazy(() => import("./Pages/Owner/box/update"));
 
 const ListGroupFamiliar = lazy(() => import("./Pages/Owner/family/list"));
 const CreateGroupFamiliar = lazy(() => import("./Pages/Owner/family/create"));

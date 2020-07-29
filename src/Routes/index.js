@@ -10,7 +10,7 @@ import Lisence from "../Pages/license";
 import history from "./history";
 import Private from "./private";
 
-const Dashboard = lazy(() => import("../Pages/Owner/Home/"));
+const Dashboard = lazy(() => import("../Pages/Owner/home"));
 
 const Routes = () => (
   <Suspense fallback={<Loader />}>

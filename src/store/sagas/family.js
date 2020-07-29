@@ -12,7 +12,6 @@ import { toastr } from "react-redux-toastr";
 export function* createFamily({ payload }) {
   try {
     const { data } = yield call(api.post, "/family/", payload.family);
-    console.log(data);
     yield put(FamilyCreators.createFamilySuccess(data));
     if (data.tipo === "RESPONSAVEL") {
       const boxes = store.getState().box.boxes;
@@ -31,9 +30,25 @@ export function* updateFamily({ payload }) {
   try {
     const { family } = payload;
 
-    yield call(api.put, `/family/${family.id}`, family);
+    const beforePerson = yield call(api.get, `/family/${family.id}`);
 
-    yield put(FamilyCreators.updateFamilySuccess(payload.family));
+    const afterPerson = yield call(api.put, `/family/${family.id}`, family);
+    
+    if(family.tipo === "RESPONSAVEL"){
+      const boxes = store.getState().box.boxes;
+      const box = boxes.find((element) => element.id === afterPerson.data.box_id);
+      box.person_id = afterPerson.data.id;
+      box.responsible = afterPerson.data;
+      yield put(BoxCreators.updateBoxSuccess(box));
+    }else if(beforePerson.data.tipo === "RESPONSAVEL" && afterPerson.data.tipo === "DEPENDENTE"){
+      const boxes = store.getState().box.boxes;
+      const box = boxes.find((element) => element.id === afterPerson.data.box_id);
+      box.person_id = null;
+      box.responsible = null;
+      yield put(BoxCreators.updateBoxSuccess(box));
+    }
+
+    yield put(FamilyCreators.updateFamilySuccess(family));
     toastr.success("Familiar atualizado.");
   } catch (err) {
     toastr.error("Erro ao atualizar um familiar.");

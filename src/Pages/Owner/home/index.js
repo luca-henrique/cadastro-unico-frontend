@@ -11,7 +11,7 @@ import FloatingButton from "./floating-button";
  
 */
 
-const ListBox = lazy(() => import("../Box/list"));
+const ListBox = lazy(() => import("../box/list"));
 
 const useStyles = makeStyles((theme) => ({
   root: {
