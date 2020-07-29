@@ -18,6 +18,8 @@ import box from "./box";
 
 import family from "./family";
 
+import generete from "./generete";
+
 export default (history) =>
   combineReducers({
     toastr,
@@ -36,6 +38,8 @@ export default (history) =>
     box,
 
     family,
+
+    generete,
 
     router: connectRouter(history),
   });

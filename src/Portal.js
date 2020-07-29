@@ -28,6 +28,8 @@ const ListGroupFamiliar = lazy(() => import("./Pages/Owner/family/list"));
 const CreateGroupFamiliar = lazy(() => import("./Pages/Owner/family/create"));
 const UpdateGroupFamiliar = lazy(() => import("./Pages/Owner/family/update"));
 
+const FilterBoxModal = lazy(() => import("./Pages/Owner/pdf/box-filter"));
+
 const Main = () => {
   const LogModal = () => create(<Log />, "log-portal");
 
@@ -56,6 +58,9 @@ const Main = () => {
   const UpdateFamiliar = () =>
     create(<UpdateGroupFamiliar />, "update-familiar-portal");
 
+  const FilterBox = () =>
+    create(<FilterBoxModal />, "generete-filter-box-portal");
+
   return (
     <Suspense fallback={<Loader />}>
       <LogModal />
@@ -76,6 +81,8 @@ const Main = () => {
       <ListFamiliar />
       <CreateFamiliar />
       <UpdateFamiliar />
+
+      <FilterBox />
     </Suspense>
   );
 };

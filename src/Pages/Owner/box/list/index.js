@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Creators as CreatorsBox } from "~/store/ducks/box";
 import { Creators as CreatorsFamily } from "~/store/ducks/family";
 
+import { Creators as CreatorsGeneratePdf } from "~/store/ducks/generete";
+
 import WarningIcon from "@material-ui/icons/Warning";
 import MaterialTable from "material-table";
 
@@ -19,7 +21,7 @@ function Table() {
 
   useEffect(() => {
     dispatch(CreatorsBox.readBoxRequest());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -59,6 +61,22 @@ function Table() {
             isFreeAction: true,
             onClick: () => {
               dispatch(CreatorsBox.showModalNewBox());
+            },
+          },
+
+          {
+            icon: "person",
+            tooltip: "Procurar Familiar",
+            isFreeAction: true,
+            onClick: () => {},
+          },
+
+          {
+            icon: "printer",
+            tooltip: "Gerar PDF",
+            isFreeAction: true,
+            onClick: () => {
+              dispatch(CreatorsGeneratePdf.showModalGenereteBoxPdf());
             },
           },
 
