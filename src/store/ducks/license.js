@@ -2,15 +2,16 @@ import Immutable from "seamless-immutable";
 
 export const Types = {
   TOKEN_ACCESS_REQUEST: "@license/TOKEN_ACCESS_REQUEST",
+  TOKEN_ACCESS_SUCCESS: "@license/TOKEN_ACCESS_SUCCESS",
 
   CHECK_ACCESS_TOKEN: "@license/CHECK_ACCESS_TOKEN",
 
-  TOKEN_REDIRECT_ACCESS: "@license/TOKEN_REDIRECT_ACCESS"
+  TOKEN_REDIRECT_ACCESS: "@license/TOKEN_REDIRECT_ACCESS",
 };
 
 const INITIAL_STATE = Immutable({
   keyAccess: {},
-  accessToken: false
+  accessToken: false,
 });
 
 export default function license(state = INITIAL_STATE, action) {
@@ -28,20 +29,20 @@ export default function license(state = INITIAL_STATE, action) {
 
 export const Creators = {
   requestToken: () => ({
-    type: Types.TOKEN_ACCESS_REQUEST
+    type: Types.TOKEN_ACCESS_REQUEST,
   }),
 
-  checkTokenAccess: token => ({
+  checkTokenAccess: (token) => ({
     type: Types.CHECK_ACCESS_TOKEN,
     payload: {
-      token
-    }
+      token,
+    },
   }),
 
-  tokenRedirect: license => ({
+  tokenRedirect: (license) => ({
     type: Types.TOKEN_REDIRECT_ACCESS,
     payload: {
-      license
-    }
-  })
+      license,
+    },
+  }),
 };

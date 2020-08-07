@@ -1,19 +1,23 @@
 import { call, put } from "redux-saga/effects";
-import { Creators as LicenseCreators } from "../ducks/license";
-
 import { toastr } from "react-redux-toastr";
 
 import { push } from "connected-react-router";
 
 import api from "../../services/api";
 
+import { store } from "../index";
+
 export function* checkToken({ payload }) {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const response = yield call(api.put, "/token", payload);
-
-    yield put(push("/login"));
-
+    const { data } = yield call(api.put, "/update-license", payload);
+    const signedIn = store.getState().auth.signedIn;
+    if (data.license) {
+      if (signedIn) {
+        yield put(push("/dashboard"));
+      } else {
+        yield put(push("/login"));
+      }
+    }
     yield toastr.success("Acesso liberado.");
   } catch (err) {
     yield toastr.error("Falha", "chave de acesso não existe.");
@@ -22,18 +26,17 @@ export function* checkToken({ payload }) {
 
 export function* requestToken() {
   try {
-    const tokens = yield call(api.get, "/token");
+    const { data } = yield call(api.get, "/last-license");
+    const signedIn = store.getState().auth.signedIn;
 
-    var size = tokens.data.length - 1;
-
-    if (size >= 0) {
-      yield put(LicenseCreators.tokenRedirect(tokens.data[size].license));
-      yield call(api.get, `/token/${tokens.data[size].id}`);
-    }
-    if (size < 0 || tokens.data[size].license === false) {
-      yield put(push("/"));
+    if (data.license) {
+      if (signedIn) {
+        yield put(push("/dashboard"));
+      } else {
+        yield put(push("/login"));
+      }
     } else {
-      yield put(push("/login"));
+      yield put(push("/"));
     }
   } catch (err) {}
 }

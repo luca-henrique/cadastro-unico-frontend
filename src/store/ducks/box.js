@@ -16,32 +16,17 @@ export const Types = {
   DELETE_BOX_REQUEST: "@box/DELETE_BOX_REQUEST",
   DELETE_BOX_SUCCESS: "@box/DELETE_BOX_SUCCESS",
 
-  READ_BOXES_REQUEST: "@box/READ_BOXES_REQUEST",
-  READ_BOXES_SUCCESS: "@box/READ_BOXES_SUCCESS",
-
-  READ_FAMILY_BOX_REQUEST: "@box/READ_FAMILY_BOX_REQUEST",
-  READ_FAMILY_BOX_SUCCESS: "@box/READ_FAMILY_BOX_SUCCESS",
-
-  SELECTED_BOX_REQUEST: "@box/SELECTED_BOX_REQUEST",
-  SELECTED_BOX_SUCCESS: "@box/SELECTED_BOX_SUCCESS",
-
-  SIZE_BOX_REQUEST: "@box/SIZE_BOX_REQUEST",
-  SIZE_BOX_SUCCESS: "@box/SIZE_BOX_SUCCESS"
+  READ_BOX_REQUEST: "@box/READ_BOX_REQUEST",
+  READ_BOX_SUCCESS: "@box/READ_BOX_SUCCESS",
 };
 
 const INITIAL_STATE = Immutable({
-  id: null,
-  visible: false,
+  boxes: [],
+  loading: true,
+  erro: false,
 
-  box: {},
-
-  createBox: {},
-  updateBox: {},
-  idDeleteBox: null,
-
-  boxSize: { id: null, total: null },
-
-  boxes: {}
+  update_box: { data: {}, visible: false },
+  create_box_visible: false,
 });
 
 export default function box(state = INITIAL_STATE, action) {
@@ -49,66 +34,55 @@ export default function box(state = INITIAL_STATE, action) {
     case Types.SHOW_MODAL_NEW_BOX:
       return {
         ...state,
-        visible: true
+        create_box_visible: true,
       };
 
     case Types.HIDE_MODAL_NEW_BOX:
       return {
         ...state,
-        visible: false
+        create_box_visible: false,
       };
 
     case Types.SHOW_MODAL_UPDATE_BOX:
       return {
         ...state,
-        updateBox: { data: action.payload.data, visible: true }
+        update_box: { data: action.payload.data, visible: true },
       };
 
     case Types.HIDE_MODAL_UPDATE_BOX:
       return {
         ...state,
-        updateBox: { data: {}, visible: false }
+        update_box: { data: {}, visible: false },
       };
 
-    case Types.CREATE_BOX_REQUEST: {
-      return { ...state, box: action.payload.box };
-    }
+    case Types.READ_BOX_SUCCESS:
+      return {
+        ...state,
+        boxes: action.payload.boxes,
+        loading: false,
+      };
 
-    case Types.CREATE_BOX_SUCCESS: {
-      return { ...state, box: action.payload.box };
-    }
+    case Types.DELETE_BOX_SUCCESS:
+      return {
+        ...state,
+        boxes: [
+          ...state.boxes.filter((elem, idx) => {
+            return elem.id !== action.payload.id;
+          }),
+        ],
+      };
 
-    case Types.UPDATE_BOX_REQUEST: {
-      return { ...state, update: action.payload.box };
-    }
+    case Types.CREATE_BOX_SUCCESS:
+      return {
+        ...state,
+        boxes: [...state.boxes, action.payload.box],
+      };
 
-    case Types.UPDATE_BOX_SUCCESS: {
-      return { ...state, update: action.payload.box };
-    }
-
-    case Types.DELETE_BOX_REQUEST: {
-      return { ...state, id: action.payload.id };
-    }
-
-    case Types.READ_BOXES_SUCCESS: {
-      return { ...state, boxes: action.payload.boxes };
-    }
-
-    case Types.READ_FAMILY_BOX_REQUEST: {
-      return { ...state, id: action.payload.id };
-    }
-
-    case Types.READ_FAMILY_BOX_SUCCESS: {
-      return { ...state, families: action.payload.families };
-    }
-
-    case Types.SIZE_BOX_REQUEST: {
-      return { ...state, boxSize: { id: action.payload.id } };
-    }
-
-    case Types.SIZE_BOX_SUCCESS: {
-      return { ...state, boxSize: { total: action.payload.size } };
-    }
+    case Types.UPDATE_BOX_SUCCESS:
+      return {
+        ...state,
+        boxes: updateAccount(state.boxes, action.payload.box),
+      };
 
     default:
       return state;
@@ -116,86 +90,76 @@ export default function box(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
+  /* Modal */
+
   showModalNewBox: () => ({
-    type: Types.SHOW_MODAL_NEW_BOX
+    type: Types.SHOW_MODAL_NEW_BOX,
   }),
+
   hideModalNewBox: () => ({
-    type: Types.HIDE_MODAL_NEW_BOX
+    type: Types.HIDE_MODAL_NEW_BOX,
   }),
-  showModalUpdateBox: data => ({
+
+  showModalUpdateBox: (data) => ({
     type: Types.SHOW_MODAL_UPDATE_BOX,
-    payload: { data }
+    payload: { data },
   }),
+
   hideModalUpdateBox: () => ({
-    type: Types.HIDE_MODAL_UPDATE_BOX
+    type: Types.HIDE_MODAL_UPDATE_BOX,
   }),
-  createBoxRequest: box => ({
-    type: Types.CREATE_BOX_REQUEST,
-    payload: { box }
+
+  /* CRUD */
+
+  readBoxRequest: () => ({
+    type: Types.READ_BOX_REQUEST,
   }),
-  createBoxSuccess: box => ({
-    type: Types.CREATE_BOX_SUCCESS,
-    payload: { box }
+
+  readBoxSuccess: (boxes) => ({
+    type: Types.READ_BOX_SUCCESS,
+    payload: { boxes },
   }),
-  updateBoxRequest: box => ({
-    type: Types.UPDATE_BOX_REQUEST,
-    payload: { box }
-  }),
-  updateBoxSuccess: box => ({
-    type: Types.UPDATE_BOX_SUCCESS,
-    payload: { box }
-  }),
-  deleteBoxRequest: id => ({
+
+  deleteBoxRequest: (id) => ({
     type: Types.DELETE_BOX_REQUEST,
-    payload: { id }
+    payload: {
+      id,
+    },
   }),
-  deleteBoxSuccess: box => ({
+  deleteBoxSuccess: (id) => ({
     type: Types.DELETE_BOX_SUCCESS,
-    payload: { box }
-  }),
-  readBoxesRequest: () => ({
-    type: Types.READ_BOXES_REQUEST
-  }),
-  readBoxesSuccess: boxes => ({
-    type: Types.READ_BOXES_SUCCESS,
-    payload: { boxes }
+    payload: {
+      id,
+    },
   }),
 
-  readPastesRequest: id => ({
-    type: Types.READ_PASTES_BOX_REQUEST,
-    payload: { id }
-  }),
-  readPastesSuccess: pastes => ({
-    type: Types.READ_PASTES_BOX_SUCCESS,
-    payload: { pastes }
+  createBoxRequest: (box) => ({
+    type: Types.CREATE_BOX_REQUEST,
+    payload: { box },
   }),
 
-  readFamiliesRequest: id => ({
-    type: Types.READ_FAMILY_BOX_REQUEST,
-    payload: { id }
+  createBoxSuccess: (box) => ({
+    type: Types.CREATE_BOX_SUCCESS,
+    payload: { box },
   }),
 
-  readFamiliesSuccess: families => ({
-    type: Types.READ_FAMILY_BOX_SUCCESS,
-    payload: { families }
+  updateBoxRequest: (box, objUpdated) => ({
+    type: Types.UPDATE_BOX_REQUEST,
+    payload: {
+      box,
+      objUpdated,
+    },
   }),
 
-  boxSelectedRequest: id => ({
-    type: Types.SELECTED_BOX_REQUEST,
-    payload: { id }
+  updateBoxSuccess: (box) => ({
+    type: Types.UPDATE_BOX_SUCCESS,
+    payload: {
+      box,
+    },
   }),
-
-  boxSelectedSuccess: box => ({
-    type: Types.SELECTED_BOX_SUCCESS,
-    payload: { box }
-  }),
-
-  boxSizeRequest: id => ({
-    type: Types.SIZE_BOX_REQUEST,
-    payload: { id }
-  }),
-  boxSizeSuccess: size => ({
-    type: Types.SIZE_BOX_SUCCESS,
-    payload: { size }
-  })
 };
+
+function updateAccount(items, account) {
+  const index = items.findIndex((item) => item.id === account.id);
+  return [...items.slice(0, index), { ...account }, ...items.slice(index + 1)];
+}

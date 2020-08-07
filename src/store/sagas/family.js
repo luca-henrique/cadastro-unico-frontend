@@ -1,6 +1,9 @@
 import { call, put } from "redux-saga/effects";
 
 import { Creators as FamilyCreators } from "../ducks/family";
+import { Creators as BoxCreators } from "../ducks/box";
+
+import { store } from "../index";
 
 import api from "../../services/api";
 
@@ -8,34 +11,44 @@ import { toastr } from "react-redux-toastr";
 
 export function* createFamily({ payload }) {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const response = yield call(api.post, "/family/", payload.family);
-    // eslint-disable-next-line no-unused-vars
-
+    const { data } = yield call(api.post, "/family/", payload.family);
+    yield put(FamilyCreators.createFamilySuccess(data));
+    if (data.tipo === "RESPONSAVEL") {
+      const boxes = store.getState().box.boxes;
+      const box = boxes.find((element) => element.id === payload.family.box_id);
+      box.person_id = data.id;
+      box.responsible = data;
+      yield put(BoxCreators.updateBoxSuccess(box));
+    }
     toastr.success("Familiar criado.");
   } catch (err) {
     toastr.error("Erro ao criar um familiar.");
   }
 }
 
-export function* getFamilies() {
-  try {
-    const response = yield call(api.get, "/family");
-
-    yield put(FamilyCreators.readFamilySuccess(response.data));
-  } catch (err) {}
-}
-
 export function* updateFamily({ payload }) {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const response = yield call(
-      api.put,
-      `/family/${payload.family.id}`,
-      payload.family
-    );
-    // eslint-disable-next-line no-unused-vars
+    const { family } = payload;
 
+    const beforePerson = yield call(api.get, `/family/${family.id}`);
+
+    const afterPerson = yield call(api.put, `/family/${family.id}`, family);
+    
+    if(family.tipo === "RESPONSAVEL"){
+      const boxes = store.getState().box.boxes;
+      const box = boxes.find((element) => element.id === afterPerson.data.box_id);
+      box.person_id = afterPerson.data.id;
+      box.responsible = afterPerson.data;
+      yield put(BoxCreators.updateBoxSuccess(box));
+    }else if(beforePerson.data.tipo === "RESPONSAVEL" && afterPerson.data.tipo === "DEPENDENTE"){
+      const boxes = store.getState().box.boxes;
+      const box = boxes.find((element) => element.id === afterPerson.data.box_id);
+      box.person_id = null;
+      box.responsible = null;
+      yield put(BoxCreators.updateBoxSuccess(box));
+    }
+
+    yield put(FamilyCreators.updateFamilySuccess(family));
     toastr.success("Familiar atualizado.");
   } catch (err) {
     toastr.error("Erro ao atualizar um familiar.");
@@ -44,12 +57,22 @@ export function* updateFamily({ payload }) {
 
 export function* deleteFamily({ payload }) {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const response = yield call(
-      api.delete,
-      `/family/${JSON.stringify(payload.id)}`
-    );
+    yield call(api.delete, `/family/${payload.family.id}`);
+    yield put(FamilyCreators.deleteFamilySuccess(payload.family.id));
+    if (payload.family.tipo === "RESPONSAVEL") {
+      const boxes = store.getState().box.boxes;
+      const box = boxes.find((element) => element.id === payload.family.box_id);
+      box.person_id = null;
+      box.responsible = null;
+      yield put(BoxCreators.updateBoxSuccess(box));
+    }
+    toastr.error("Familiar excluido.");
+  } catch (err) {}
+}
 
-    // eslint-disable-next-line no-unused-vars
+export function* readGroupFamilies({ payload }) {
+  try {
+    const { data } = yield call(api.get, `/group/${payload.id}`);
+    yield put(FamilyCreators.readGroupFamiliarSuccess(data));
   } catch (err) {}
 }

@@ -1,8 +1,9 @@
 export const cpfMask = (v, value) => {
   //Remove tudo o que não é dígito
-  v = v.replace(/\D/g, "");
 
-  if (typeof value !== "undefined") {
+  if (typeof value !== "undefined" || value !== null) {
+    v = v.replace(/\D/g, "");
+
     if (value.length <= 14) {
       //CPF
 
@@ -30,7 +31,7 @@ export const cpfMask = (v, value) => {
       //Coloca um hífen depois do bloco de quatro dígitos
       v = v.replace(/(\d{4})(\d)/, "$1-$2");
     }
-  }
 
-  return v;
+    return v;
+  }
 };

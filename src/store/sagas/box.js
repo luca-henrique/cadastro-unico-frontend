@@ -6,10 +6,8 @@ import { Creators as BoxCreators } from "../ducks/box";
 
 export function* createBox({ payload }) {
   try {
-    // eslint-disable-next-line no-unused-vars
     const response = yield call(api.post, "/box", payload.box);
-
-    yield put(BoxCreators.readBoxesRequest());
+    yield put(BoxCreators.createBoxSuccess(response.data));
     toastr.success("Caixa criada com sucesso");
   } catch (err) {
     toastr.error("Erro ao criar a caixa.");
@@ -18,57 +16,28 @@ export function* createBox({ payload }) {
 
 export function* updateBox({ payload }) {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const response = yield call(api.put, `/box/${payload.box.id}`, payload.box);
-    yield put(BoxCreators.readBoxesRequest());
-    toastr.success("Atualização feita");
-  } catch (err) {}
-}
-
-export function* getBox({ payload }) {
-  try {
-    const response = yield call(api.get, `/box/${payload.id}`);
-    yield put(BoxCreators.boxSelectedSuccess(response.data));
-  } catch (err) {}
+    yield call(api.put, `/box/${payload.box.id}`, payload.box);
+    yield put(BoxCreators.updateBoxSuccess(payload.box));
+    toastr.success("Atualização feita na caixa");
+  } catch (err) {
+    toastr.error("Erro ao atualizar a caixa.");
+  }
 }
 
 export function* deleteBox({ payload }) {
   try {
-    // eslint-disable-next-line no-unused-vars
-    const response = yield call(api.delete, `/box/${payload.id}`);
-    yield put(BoxCreators.readBoxesRequest());
+    yield call(api.delete, `/box/${payload.id}`);
+    yield put(BoxCreators.deleteBoxSuccess(payload.id));
     toastr.error("Caixa excluida.");
-  } catch (err) {}
+  } catch (err) {
+    toastr.error("Ocorreu um erro ao excluir a caixa.");
+  }
 }
 
-export function* getBoxes() {
+export function* readBox() {
   try {
-    const response = yield call(api.get, "/search");
+    const { data } = yield call(api.get, `/box`);
 
-    yield put(BoxCreators.readBoxesSuccess(response.data));
-  } catch (err) {}
-}
-
-export function* getPastesBox({ payload }) {
-  try {
-    const response = yield call(api.get, `/pastes/${payload.id}`);
-
-    yield put(BoxCreators.readPastesSuccess(response.data));
-  } catch (err) {}
-}
-
-export function* getFamilyBox({ payload }) {
-  try {
-    const response = yield call(api.get, `/families/${payload.id}`);
-
-    yield put(BoxCreators.readFamiliesSuccess(response.data));
-  } catch (err) {}
-}
-
-export function* getBoxSize({ payload }) {
-  try {
-    const response = yield call(api.get, `/boxes/${payload.id}`);
-
-    yield put(BoxCreators.boxSizeSuccess(response.data));
+    yield put(BoxCreators.readBoxSuccess(data));
   } catch (err) {}
 }

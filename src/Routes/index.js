@@ -1,47 +1,47 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
+
 import { Switch } from "react-router-dom";
-import SignIn from "../Pages/Auth/SignIn/index";
-import Lisence from "../Pages/Auth/Lisence/index";
-import OwnerView from "../Pages/Owner/index";
+import { Route } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
+
+import Loader from "../components/loader";
+
+import SignIn from "../Pages/authentication/SignIn/index";
+
+import Lisence from "../Pages/license";
+
 import history from "./history";
 import Private from "./private";
 
-import Pdf from "../Pages/Owner/PDF/index";
-import Specific from "../Pages/Owner/PDF/specific";
+const Dashboard = lazy(() => import("../Pages/Owner/home"));
+const HangTag = lazy(() => import("../Pages/Owner/pdf/hantags/"));
+const BoxWithFamiliar = lazy(() =>
+  import("../Pages/Owner/pdf/box-with-familiar")
+);
 
-import Etiqueta from "../Pages/Owner/PDF/etiquetas";
+const Districts = lazy(() => import("../Pages/Owner/pdf/district/"));
 
-import EtiquetaBox from "../Pages/Owner/PDF/etiquetasBox";
-
-import districts from "../Pages/Owner/PDF/districts";
-
-import discard from "../Pages/Owner/PDF/descartes";
-
-import { Route } from "react-router-dom";
-
-import { ConnectedRouter } from "connected-react-router";
+const Discard = lazy(() => import("../Pages/Owner/pdf/discard"));
 
 const Routes = () => (
-  <ConnectedRouter history={history}>
-    <Switch>
-      <Route path="/" exact component={Lisence} />
-      <Route path="/login" exact component={SignIn} />
+  <Suspense fallback={<Loader />}>
+    <ConnectedRouter history={history}>
+      <Switch>
+        <Route path="/" exact component={Lisence} />
+        <Route path="/login" exact component={SignIn} />
 
-      <Route path="/pdf" exact component={Pdf} />
+        <Route path="/box_tag" exact component={HangTag} />
 
-      <Route path="/district" exact component={districts} />
+        <Route path="/box_with_familiar" exact component={BoxWithFamiliar} />
 
-      <Route path="/tag" exact component={Etiqueta} />
+        <Route path="/pdf_districts" exact component={Districts} />
 
-      <Route path="/tag_box" exact component={EtiquetaBox} />
+        <Route path="/discard" exact component={Discard} />
 
-      <Route path="/descartes" exact component={discard} />
-
-      <Route path="/specific" exact component={Specific} />
-
-      <Private path="/owner" component={OwnerView} />
-    </Switch>
-  </ConnectedRouter>
+        <Private path="/dashboard" component={Dashboard} />
+      </Switch>
+    </ConnectedRouter>
+  </Suspense>
 );
 
 export default Routes;

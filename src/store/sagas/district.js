@@ -11,15 +11,13 @@ export function* createDistrict({ payload }) {
 
     yield put(DistrictCreators.createDistrictSuccess(response.data));
 
-    yield put(DistrictCreators.readDistrictRequest());
-
     yield toastr.success("Bairro criado com sucesso.");
   } catch (err) {
     yield toastr.error("Falha", "Falha ao criar bairro.");
   }
 }
 
-export function* getDistricts() {
+export function* readDistrict() {
   try {
     const response = yield call(api.get, "/district");
 
@@ -36,9 +34,9 @@ export function* updateDistrict({ payload }) {
       payload.district
     );
 
-    yield put(DistrictCreators.readDistrictRequest());
+    yield put(DistrictCreators.updateDistrictSuccess(payload.district));
 
-    yield toastr.success("Nome do bairro atualizado com sucesso..");
+    yield toastr.success("bairro atualizado com sucesso..");
   } catch (err) {
     yield toastr.error("Falha ao atualizar o nome do bairro");
   }
@@ -46,12 +44,9 @@ export function* updateDistrict({ payload }) {
 
 export function* deleteDistrict({ payload }) {
   try {
-    const response = yield call(api.delete, `/district/${payload.id}`);
+    yield call(api.delete, `/district/${payload.id}`);
+    yield put(DistrictCreators.deleteDistrictSuccess(payload.id));
 
-    yield toastr.success("Bairro excluido");
-
-    yield put(DistrictCreators.readDistrictRequest());
-  } catch (err) {
-    yield toastr.error("Falha ao excluir");
-  }
+    yield toastr.error("Bairro excluido");
+  } catch (err) {}
 }

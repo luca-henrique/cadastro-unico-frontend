@@ -6,42 +6,40 @@ import { reducer as toastr } from "react-redux-toastr";
 import { reducer as auth } from "./auth";
 
 import license from "./license";
+import user from "./user";
 
-import funcionario from "./funcionario";
+import log from "./log";
 
 import district from "./district";
 
-import user from "./user";
+import prefecture from "./prefecture";
 
 import box from "./box";
 
 import family from "./family";
 
-import prefecture from "./prefecture";
-import prefectureAddrress from "./address_prefecture";
-import prefectureContact from "./contact_prefecture";
+import generete from "./generete";
 
-import log from "./log";
-
-import generator from "./generator";
-
-export default history =>
+export default (history) =>
   combineReducers({
     toastr,
+
     license,
+
     user,
     auth,
-    box,
-    family,
-    funcionario,
-    log,
-    generator,
 
-    prefecture,
-    prefectureAddrress,
-    prefectureContact,
+    log,
 
     district,
 
-    router: connectRouter(history)
+    prefecture,
+
+    box,
+
+    family,
+
+    generete,
+
+    router: connectRouter(history),
   });
