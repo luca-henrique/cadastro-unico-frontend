@@ -71,7 +71,9 @@ const Create = () => {
   const [deficient, setDeficient] = useState(false);
   const [benefit, setBenefit] = useState(false);
   const [local, setLocal] = useState(false);
-  const [responsible, setResponsible] = useState(false);
+
+  const [responsibleStatus, setResponsibleStatus] = useState(false);
+  const [all, setAll] = useState(false);
 
   const { districts } = useSelector((state) => state.district);
 
@@ -110,11 +112,15 @@ const Create = () => {
       deficient,
       old_man: oldMan,
       benefit,
-
       local,
 
-      responsible,
+      responsible: {
+        responsibleStatus,
+        all,
+      },
     };
+
+    dispatch(GeneretePdfCreators.filterBoxRequest(box));
 
     hide();
   }
@@ -131,6 +137,9 @@ const Create = () => {
     setBenefit(false);
     setLocal(false);
 
+    setResponsibleStatus(false);
+
+    setAll(false);
     dispatch(GeneretePdfCreators.hideModalGenereteBoxPdf());
   }
 
@@ -317,6 +326,30 @@ const Create = () => {
                       <Grid item xs={12} sm={12}>
                         <FormControlLabel
                           style={{ color: "#A4A4A4" }}
+                          value={all}
+                          onChange={(e) => {
+                            setAll(e.target.checked);
+                          }}
+                          control={<GreenCheckbox />}
+                          label="todos"
+                          labelPlacement="end"
+                          disabled={responsibleStatus}
+                        />
+
+                        <FormControlLabel
+                          style={{ color: "#A4A4A4" }}
+                          value={responsibleStatus}
+                          disabled={all}
+                          onChange={(e) => {
+                            setResponsibleStatus(e.target.checked);
+                          }}
+                          control={<GreenCheckbox />}
+                          label="responsavel"
+                          labelPlacement="end"
+                        />
+
+                        <FormControlLabel
+                          style={{ color: "#A4A4A4" }}
                           value={local}
                           onChange={(e) => setLocal(e.target.checked)}
                           control={<GreenCheckbox />}
@@ -357,17 +390,6 @@ const Create = () => {
                           }}
                           control={<GreenCheckbox />}
                           label="deficiente"
-                          labelPlacement="end"
-                        />
-
-                        <FormControlLabel
-                          style={{ color: "#A4A4A4" }}
-                          value={responsible}
-                          onChange={(e) => {
-                            setResponsible(e.target.checked);
-                          }}
-                          control={<GreenCheckbox />}
-                          label="responsavel"
                           labelPlacement="end"
                         />
                       </Grid>

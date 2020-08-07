@@ -9,6 +9,7 @@ import { Creators as CreatorsUser } from "~/store/ducks/user";
 import { Creators as CreatorsLog } from "~/store/ducks/log";
 import { Creators as CreatorsDistrict } from "~/store/ducks/district";
 import { Creators as CreatorsPrefecture } from "~/store/ducks/prefecture";
+import { Creators as CreatorsGeneretePdf } from "~/store/ducks/generete";
 
 import {
   Person,
@@ -101,7 +102,11 @@ const Index = () => {
       </Button>
 
       <Button tooltip="Gerar Relatórios" className={style.root}>
-        <PictureAsPdf onClick={() => {}} />
+        <PictureAsPdf
+          onClick={() => {
+            dispatch(CreatorsGeneretePdf.showModalGeneretePdf());
+          }}
+        />
       </Button>
 
       <Button tooltip="Menu" className={style.root}>

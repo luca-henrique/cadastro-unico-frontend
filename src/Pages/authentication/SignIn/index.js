@@ -6,8 +6,6 @@ import { Creators as LicenseCreators } from "../../../store/ducks/license";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { store } from "~/store/index";
-
 import { Typography, TextField, Button } from "@material-ui/core/";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
@@ -40,15 +38,12 @@ function SignUp(props) {
 
   const classes = useStyles();
 
-  console.log(store.getState().auth.signedIn);
-
   function handleSubmit(e) {
     e.preventDefault();
     const { signInRequest } = props;
     signInRequest(email, password);
   }
 
-  console.log(props);
   return (
     <Container className={classes.container}>
       <div className={classes.img}>

@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 
 import { Creators as FamilyCreators } from "~/store/ducks/family";
+import { Creators as GenereteCreators } from "~/store/ducks/generete";
 
 import { Modal } from "@material-ui/core/";
 
 import { useSelector, useDispatch } from "react-redux";
 
 import MaterialTable from "material-table";
+
+import history from "~/Routes/history";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -41,6 +44,12 @@ const View = () => {
       dispatch(FamilyCreators.readGroupFamiliarRequest(id));
     }
   }, [dispatch, visible, id]);
+
+  function goTo() {
+    dispatch(FamilyCreators.hideModalFamily());
+    dispatch(GenereteCreators.generateFamiliesBoxRequest(id));
+    history.push("/box_with_familiar");
+  }
 
   return (
     <Modal
@@ -117,7 +126,7 @@ const View = () => {
               icon: "printer",
               tooltip: "Gerar PDF",
               isFreeAction: true,
-              onClick: (event, rowData) => console.log("pdf"),
+              onClick: (event, rowData) => goTo(),
             },
 
             {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -6,16 +6,26 @@ import { connect } from "react-redux";
 import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
 
-import { Creators as GeneratorCreators } from "../../../store/ducks/generator";
+import { Creators as GeneratorCreators } from "~/store/ducks/generete";
 
-import Logo from "../../../Assets/Images/ctm-logo.png";
+import Loader from "~/components/loader/";
+
+import Logo from "../../../../Assets/Images/ctm-logo.png";
 
 import moment from "moment";
 
 const PDF = (props) => {
-  const { discard } = props.redux.generator;
+  const { discard_boxes, discard_boxes_loading } = props.redux.generete;
 
   const { prefecture } = props.redux.prefecture;
+
+  const { generatePdfDiscardRequest } = props;
+
+  useEffect(() => {
+    if (discard_boxes_loading) {
+      generatePdfDiscardRequest();
+    }
+  }, [discard_boxes_loading, generatePdfDiscardRequest]);
 
   function dataAtualFormatada() {
     var data = new Date(),
@@ -31,6 +41,10 @@ const PDF = (props) => {
   }
 
   const date = dataAtualFormatada();
+
+  if (discard_boxes_loading) {
+    return <Loader />;
+  }
 
   return (
     <PDFViewer style={{ width: "100%", height: "100%" }}>
@@ -115,7 +129,7 @@ const PDF = (props) => {
                 justifyContent: "space-around",
               }}
             >
-              {discard.map((descarte) => (
+              {discard_boxes.map((descarte) => (
                 <>
                   <View style={{ width: " 10%" }}>
                     <Text>{descarte.numPaste}</Text>
@@ -143,27 +157,6 @@ const PDF = (props) => {
     </PDFViewer>
   );
 };
-
-/**
- * 
-  {<View>
-  <Text>{descarte.numPaste}</Text>
-  </View>
-  <View>
-    <Text>{descarte.numBox}</Text>
-  </View>
-  <View>
-    <Text>{formatDate(descarte.dateInterview)}</Text>
-  </View>
-  <View>
-    <Text>{descarte.codHome}</Text>
-  </View>
-  <View>
-    <Text>
-      {descarte.situation === true ? "ativa" : "desativada"}
-    </Text>
-  </View>} state 
- */
 
 const mapStateToProps = (state) => ({
   redux: state,

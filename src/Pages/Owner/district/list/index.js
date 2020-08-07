@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -9,6 +9,8 @@ import { Modal } from "@material-ui/core/";
 import MaterialTable from "material-table";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+import history from "~/Routes/history";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -45,7 +47,8 @@ function View(props) {
   }, [visible, readDistrictRequest]);
 
   function openTab() {
-    window.open("/district");
+    history.push("/pdf_districts");
+    hideModalDistrict();
   }
 
   return (

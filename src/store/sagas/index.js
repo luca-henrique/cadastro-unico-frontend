@@ -45,6 +45,15 @@ import {
   updateFamily,
 } from "./family";
 
+import { Types as GenereteTypes } from "../ducks/generete";
+import {
+  generatePdfFilters,
+  generateHangTagId,
+  generatePdfUniqueBoxFamilies,
+  generatePdfDiscard,
+  generatePdfSynthetic,
+} from "./generete";
+
 export default function* rootSaga() {
   return yield all([
     takeLatest("persist/REHYDRATE", requestToken),
@@ -81,5 +90,22 @@ export default function* rootSaga() {
     takeLatest(FamilyTypes.CREATE_FAMILY_REQUEST, createFamily),
     takeLatest(FamilyTypes.DELETE_FAMILY_REQUEST, deleteFamily),
     takeLatest(FamilyTypes.UPDATE_FAMILY_REQUEST, updateFamily),
+
+    takeLatest(GenereteTypes.FILTER_BOX_REQUEST, generatePdfFilters),
+    takeLatest(
+      GenereteTypes.GENERATE_PDF_TAG_UNIQUE_BOX_REQUEST,
+      generateHangTagId
+    ),
+
+    takeLatest(
+      GenereteTypes.GENERETE_FAMILIES_BOX_REQUEST,
+      generatePdfUniqueBoxFamilies
+    ),
+    takeLatest(GenereteTypes.GENERATE_PDF_DISCARD_REQUEST, generatePdfDiscard),
+
+    takeLatest(
+      GenereteTypes.GENERETE_PDF_SYNTHETIC_REQUEST,
+      generatePdfSynthetic
+    ),
   ]);
 }

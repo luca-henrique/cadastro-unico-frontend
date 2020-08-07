@@ -40,11 +40,7 @@ const useStyles = makeStyles((theme) => ({
 function Update(props) {
   const classes = useStyles();
 
-  const {
-    hideModalUpdateFamily,
-    updateFamilyRequest,
-    readBoxesRequest,
-  } = props;
+  const { hideModalUpdateFamily, updateFamilyRequest } = props;
 
   const visible = useSelector((state) => state.family.update_family.visible);
   const data = useSelector((state) => state.family.update_family.data);
@@ -69,8 +65,6 @@ function Update(props) {
     setCpf(cpfMask(e.target.value, cpf));
   }
 
-  console.log(data.tipo);
-
   function create(e) {
     e.preventDefault();
 
@@ -84,7 +78,6 @@ function Update(props) {
     };
 
     if (data.tipo === "RESPONSAVEL" || family.tipo === "DEPENDENTE") {
-      console.log("Teste");
     }
 
     hide();

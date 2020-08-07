@@ -29,6 +29,7 @@ const CreateGroupFamiliar = lazy(() => import("./Pages/Owner/family/create"));
 const UpdateGroupFamiliar = lazy(() => import("./Pages/Owner/family/update"));
 
 const FilterBoxModal = lazy(() => import("./Pages/Owner/pdf/box-filter"));
+const ModalGeneretePdf = lazy(() => import("./Pages/Owner/pdf/index"));
 
 const Main = () => {
   const LogModal = () => create(<Log />, "log-portal");
@@ -61,6 +62,8 @@ const Main = () => {
   const FilterBox = () =>
     create(<FilterBoxModal />, "generete-filter-box-portal");
 
+  const GeneretePdf = () => create(<ModalGeneretePdf />, "generete-pdf-modal");
+
   return (
     <Suspense fallback={<Loader />}>
       <LogModal />
@@ -83,6 +86,7 @@ const Main = () => {
       <UpdateFamiliar />
 
       <FilterBox />
+      <GeneretePdf />
     </Suspense>
   );
 };

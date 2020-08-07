@@ -1,12 +1,9 @@
 import React from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
 import { Page, Text, View, Document } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
 
-import { Creators as BoxCreators } from "../../../store/ducks/box";
+import { useSelector } from "react-redux";
 
 import styled from "@react-pdf/styled-components";
 
@@ -41,10 +38,10 @@ const SubTitle = styled.Text`
   margin-left: 2px;
 `;
 
-const PDF = (props) => {
-  const { districts } = props.redux.district;
+const PDF = () => {
+  const districts = useSelector((state) => state.district.districts);
 
-  const { prefecture } = props.redux.prefecture;
+  const prefecture = useSelector((state) => state.prefecture.prefecture);
 
   const date = dataAtualFormatada();
 
@@ -70,7 +67,7 @@ const PDF = (props) => {
                 <Text>{date}</Text>
               </Data>
               <TextInformation>
-                <Text>Relatorio geral</Text>
+                <Text>Relatorio</Text>
               </TextInformation>
             </View>
           </Header>
@@ -163,11 +160,4 @@ const PDF = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  redux: state,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...BoxCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(PDF);
+export default PDF;
