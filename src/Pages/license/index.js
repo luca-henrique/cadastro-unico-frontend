@@ -73,6 +73,7 @@ export default function () {
 
   useEffect(() => {
     dispatch(LicenseCreators.requestToken());
+    localStorage.clear();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

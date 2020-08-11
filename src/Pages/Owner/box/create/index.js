@@ -132,6 +132,9 @@ const Create = () => {
     setReason("");
     setNote("");
 
+    setDateInterview("");
+    setDateVisit("");
+
     setSituation(false);
     setDeficient(false);
     setOldMan(false);

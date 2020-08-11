@@ -65,13 +65,6 @@ function Table() {
           },
 
           {
-            icon: "person",
-            tooltip: "Procurar Familiar",
-            isFreeAction: true,
-            onClick: () => {},
-          },
-
-          {
             icon: "printer",
             tooltip: "Gerar PDF",
             isFreeAction: true,
