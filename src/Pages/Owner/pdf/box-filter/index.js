@@ -139,6 +139,12 @@ const Create = () => {
 
     setResponsibleStatus(false);
 
+    setInterviewInitDate("");
+    setInterviewFinalDate("");
+
+    setVisitFinalDate("");
+    setVisitInitDate("");
+
     setAll(false);
     dispatch(GeneretePdfCreators.hideModalGenereteBoxPdf());
   }

@@ -11,7 +11,7 @@ const producao = "http://api.cadastro-unico-arcoverde.ctmconsultoria.com:16795";
 const local = "http://127.0.0.1:3333/";
 
 const api = axios.create({
-  baseURL: local,
+  baseURL: teste,
 });
 
 api.interceptors.request.use((config) => {

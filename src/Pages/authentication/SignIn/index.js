@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import AuthActions from "~/store/ducks/auth";
 import { Creators as LicenseCreators } from "../../../store/ducks/license";
@@ -43,6 +43,10 @@ function SignUp(props) {
     const { signInRequest } = props;
     signInRequest(email, password);
   }
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   return (
     <Container className={classes.container}>
