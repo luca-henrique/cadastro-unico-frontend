@@ -19,7 +19,7 @@ const sagaMonitor =
 
 const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 
-const middlewares = [sagaMiddleware, routerMiddleware(history)];
+const middlewares = [sagaMiddleware, routerMiddleware(history), logger];
 
 const store = createStore(
   persistReducers(rootReducer(history)),

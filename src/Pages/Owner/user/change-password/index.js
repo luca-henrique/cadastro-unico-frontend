@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { Creators as CreatorsUser } from "~/store/ducks/user";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -39,13 +38,11 @@ export default function ChangerPassword() {
       var senha = {
         password,
       };
-      dispatch(CreatorsUser.changerPasswordRequest(senha));
       hide();
     }
   }
 
   function hide() {
-    dispatch(CreatorsUser.hideChangerPasswordView());
     setPassword("");
     setPassword1("");
   }

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { Creators as UserCreators } from "../../../store/ducks/user";
 import { useDispatch, useSelector } from "react-redux";
 
 import { toastr } from "react-redux-toastr";
@@ -30,13 +29,11 @@ export default function ChangerPassword() {
     ) {
       toastr.error("Password invalido ou nulo");
     } else {
-      dispatch(UserCreators.changerPasswordRequest(password));
       hide();
     }
   }
 
   function hide() {
-    dispatch(UserCreators.hideModalChangerPassword());
     setPassword("");
     setPassword1("");
   }

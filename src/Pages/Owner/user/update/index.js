@@ -1,6 +1,5 @@
 import React from "react";
 
-import CreateLogin from "./components/body-page/";
 
 import { useSelector } from "react-redux";
 
@@ -67,9 +66,7 @@ export default function Update() {
                 Atualizar usuário
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={12}>
-              <CreateLogin />
-            </Grid>
+
           </Grid>
         </div>
       </Fade>

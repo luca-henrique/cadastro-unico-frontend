@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -8,33 +7,30 @@ import { useSelector, useDispatch } from "react-redux";
 import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
 
-import { Creators as GeneratorCreators } from "~/store/ducks/generete";
 
 import { Typography, Button, Modal, TextField } from "@material-ui/core/";
 
 import Logo from "../../../../Assets/Images/cadastro-unico.jpg";
 
 const Container = () => {
-  const loading = useSelector((state) => state.generete.hang_tag_loading);
 
-  return <> {loading === true ? <Form /> : <PDF />}</>;
+
+  return <></>;
 };
 
 const Form = () => {
   const [boxNumber, setBoxNumber] = useState(0);
 
-  const loading = useSelector((state) => state.generete.hang_tag_loading);
+
 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(GeneratorCreators.generateTagsUniqueBoxRequest(boxNumber));
   };
 
   return (
     <Modal
-      open={loading}
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       style={{
@@ -159,11 +155,6 @@ const PDF = () => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  redux: state,
-});
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...GeneratorCreators }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Container);
+export default (Container);

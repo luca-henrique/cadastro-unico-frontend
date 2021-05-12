@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 
-import { Creators as FamilyCreators } from "~/store/ducks/family";
-import { Creators as GenereteCreators } from "~/store/ducks/generete";
 
 import { Modal } from "@material-ui/core/";
 
@@ -39,15 +37,10 @@ const View = () => {
 
   const loading = useSelector((state) => state.family.loading);
 
-  useEffect(() => {
-    if (visible) {
-      dispatch(FamilyCreators.readGroupFamiliarRequest(id));
-    }
-  }, [dispatch, visible, id]);
+
 
   function goTo() {
-    dispatch(FamilyCreators.hideModalFamily());
-    dispatch(GenereteCreators.generateFamiliesBoxRequest(id));
+
     history.push("/box_with_familiar");
   }
 
@@ -117,9 +110,7 @@ const View = () => {
               icon: "add",
               tooltip: "Adicionar",
               isFreeAction: true,
-              onClick: (event, rowData) => {
-                dispatch(FamilyCreators.showModalNewFamiliar());
-              },
+
             },
 
             {
@@ -133,24 +124,18 @@ const View = () => {
               icon: "close",
               tooltip: "Fechar",
               isFreeAction: true,
-              onClick: (event, rowData) => {
-                dispatch(FamilyCreators.hideModalFamily());
-              },
+
             },
 
             {
               icon: "delete",
               tooltip: "Excluir",
-              onClick: (event, rowData) => {
-                dispatch(FamilyCreators.deleteFamilyRequest(rowData));
-              },
+
             },
             {
               icon: "edit",
               tooltip: "Editar",
-              onClick: (event, rowData) => {
-                dispatch(FamilyCreators.showModalUpdateFamily(rowData));
-              },
+
             },
           ]}
         />

@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { Creators as AddressCreators } from "../../../../../../store/ducks/address_prefecture";
 
 import { Grid, Typography } from "@material-ui/core/";
 
@@ -51,7 +48,7 @@ function Address(props) {
         setEstado(data.uf);
         setComplemento(data.complemento);
       })
-      .catch(err => {});
+      .catch(err => { });
   }
 
   function format(d) {
@@ -232,15 +229,6 @@ function Address(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  redux: state
-});
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...AddressCreators }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Address);
-
-TextField.defaultProps = {
-  value: ""
-};
+export default (Address);

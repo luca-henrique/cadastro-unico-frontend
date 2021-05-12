@@ -1,7 +1,6 @@
 import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Creators as GeneratorCreators } from "~/store/ducks/generete";
 
 import history from "~/Routes/history";
 
@@ -52,7 +51,6 @@ export default function Create() {
   const visible = useSelector((state) => state.generete.modal_generete_pdf);
 
   function hide() {
-    dispatch(GeneratorCreators.hideModalGeneretePdf());
   }
 
   function openTabDiscard() {
@@ -142,9 +140,7 @@ export default function Create() {
                   <Button
                     variant="contained"
                     style={{ color: "rgb(2,99,44)", width: "100%" }}
-                    onClick={() => {
-                      dispatch(GeneratorCreators.generetePdfSynthetic());
-                    }}
+
                   >
                     Sintetico
                   </Button>

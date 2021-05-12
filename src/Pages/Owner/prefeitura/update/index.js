@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-
-import { Creators as PrefectureCreators } from "~/store/ducks/prefecture";
 
 import { cnpjMask } from "../../../Components/TextField/MaskCnpj";
 
@@ -234,11 +230,6 @@ function View(props) {
     </>
   );
 }
-const mapStateToProps = (state) => ({
-  redux: state,
-});
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...PrefectureCreators }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(View);
+export default (View);

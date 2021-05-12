@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { Creators as CreatorsAccount } from "~/store/ducks/user";
 
 import {
   TextField,
@@ -29,10 +28,6 @@ function Create() {
 
   const classes = useStyles();
 
-  const user = useSelector((state) => state.user.update_user.user);
-
-  const joined = useSelector((state) => state.user.user_joined.role); //Usuario logado função
-
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState(false);
@@ -53,13 +48,11 @@ function Create() {
       role,
     };
 
-    dispatch(CreatorsAccount.updateUserRequest(acc));
 
     handleClose();
   };
 
   const handleClose = () => {
-    dispatch(CreatorsAccount.hideUpdateUser());
   };
 
   return (
@@ -89,8 +82,8 @@ function Create() {
             </FormControl>
           </Grid>
         ) : (
-          <></>
-        )}
+            <></>
+          )}
 
         <Grid item xs={12} sm={12} className={classes.grid}>
           <div>

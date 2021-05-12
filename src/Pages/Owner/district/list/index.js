@@ -1,8 +1,4 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-
-import { Creators as DistrictCreators } from "~/store/ducks/district";
 
 import { Modal } from "@material-ui/core/";
 
@@ -26,29 +22,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function View(props) {
+export default (props) => {
   const classes = useStyles();
 
   const { districts, loading } = props.redux.district;
   const visible = props.redux.district.visible_district;
 
-  const {
-    showModalNewDistrict,
-    hideModalDistrict,
-    deleteDistrictRequest,
-    showModalUpdateDistrict,
-    readDistrictRequest,
-  } = props;
+
 
   useEffect(() => {
     if (visible) {
-      readDistrictRequest();
     }
-  }, [visible, readDistrictRequest]);
+  }, [visible]);
 
   function openTab() {
     history.push("/pdf_districts");
-    hideModalDistrict();
   }
 
   return (
@@ -105,7 +93,6 @@ function View(props) {
               tooltip: "Adicionar",
               isFreeAction: true,
               onClick: (event, rowData) => {
-                showModalNewDistrict();
               },
             },
             {
@@ -113,7 +100,6 @@ function View(props) {
               tooltip: "Gerar PDF",
               isFreeAction: true,
               onClick: (event, rowData) => {
-                openTab();
               },
             },
             {
@@ -121,7 +107,6 @@ function View(props) {
               tooltip: "Fechar",
               isFreeAction: true,
               onClick: (event, rowData) => {
-                hideModalDistrict();
               },
             },
 
@@ -129,14 +114,12 @@ function View(props) {
               icon: "delete",
               tooltip: "Excluir",
               onClick: (event, rowData) => {
-                deleteDistrictRequest(rowData.id);
               },
             },
             {
               icon: "edit",
               tooltip: "Editar",
               onClick: (event, rowData) => {
-                showModalUpdateDistrict(rowData);
               },
             },
           ]}
@@ -151,12 +134,3 @@ function View(props) {
     </Modal>
   );
 }
-
-const mapStateToProps = (state) => ({
-  redux: state,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...DistrictCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(View);

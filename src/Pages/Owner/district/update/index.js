@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Creators as DistrictCreators } from "~/store/ducks/district";
 
 import {
   Typography,
@@ -53,15 +52,13 @@ export default function Create() {
         nome,
       };
 
-      dispatch(DistrictCreators.updateDistrictRequest(district));
 
       hide();
-    } catch (err) {}
+    } catch (err) { }
   }
 
   function hide() {
     setNome("");
-    dispatch(DistrictCreators.hideModalUpdateDistrict());
   }
 
   const classes = useStyles();

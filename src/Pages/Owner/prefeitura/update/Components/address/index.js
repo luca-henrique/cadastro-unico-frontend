@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Creators as AddressCreators } from "../../../../../../store/ducks/address_prefecture";
 
 import { Grid, Typography } from "@material-ui/core/";
 
@@ -55,7 +54,6 @@ export default function Components() {
 
       checkAttributesObj(addr);
 
-      dispatch(AddressCreators.updateAddressPrefectureRequest(addr));
     } catch (err) {
       toastr.error("Preencha todos os campos do endereço");
     }
@@ -71,7 +69,7 @@ export default function Components() {
         setEstado(data.uf);
         setComplemento(data.complemento);
       })
-      .catch(err => {});
+      .catch(err => { });
   }
 
   function format(d) {

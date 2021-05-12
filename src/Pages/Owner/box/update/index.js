@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
-import { Creators as BoxCreators } from "~/store/ducks/box";
 
 import { useSelector } from "react-redux";
 
@@ -60,7 +58,7 @@ const GreenCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-function Update(props) {
+export default (props) => {
   const districts = useSelector((state) => state.district.districts);
   const { data, visible } = useSelector((state) => state.box.update_box);
   const classes = useStyles();
@@ -407,12 +405,3 @@ function Update(props) {
     </Modal>
   );
 }
-
-const mapStateToProps = (state) => ({
-  redux: state,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...BoxCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Update);

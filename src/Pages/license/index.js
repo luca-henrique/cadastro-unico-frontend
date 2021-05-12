@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import { useDispatch } from "react-redux";
-import { Creators as LicenseCreators } from "../../store/ducks/license";
 
 import { Typography, Button, TextField } from "@material-ui/core/";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
@@ -64,23 +63,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function () {
+export default () => {
   const [token, setToken] = useState("");
 
   const classes = useStyles();
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(LicenseCreators.requestToken());
-    localStorage.clear();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
 
   function verification(e) {
     e.preventDefault();
 
-    dispatch(LicenseCreators.checkTokenAccess(token));
   }
 
   return (

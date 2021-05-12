@@ -2,10 +2,6 @@
 import React, { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Creators as CreatorsBox } from "~/store/ducks/box";
-import { Creators as CreatorsFamily } from "~/store/ducks/family";
-
-import { Creators as CreatorsGeneratePdf } from "~/store/ducks/generete";
 
 import WarningIcon from "@material-ui/icons/Warning";
 import MaterialTable from "material-table";
@@ -20,7 +16,6 @@ function Table() {
   const loading = useSelector((state) => state.box.loading);
 
   useEffect(() => {
-    dispatch(CreatorsBox.readBoxRequest());
   }, [dispatch]);
 
   return (
@@ -60,7 +55,7 @@ function Table() {
             tooltip: "Adicionar",
             isFreeAction: true,
             onClick: () => {
-              dispatch(CreatorsBox.showModalNewBox());
+              console.log('teste')
             },
           },
 
@@ -68,40 +63,32 @@ function Table() {
             icon: "printer",
             tooltip: "Gerar PDF",
             isFreeAction: true,
-            onClick: () => {
-              dispatch(CreatorsGeneratePdf.showModalGenereteBoxPdf());
-            },
+
           },
 
           {
             icon: "visibility",
             tooltip: "Mostrar Familiares",
-            onClick: (event, rowData) => {
-              dispatch(CreatorsFamily.showModalFamily(rowData.id));
-            },
+
           },
           {
             icon: "delete",
             tooltip: "Excluir",
-            onClick: (event, rowData) => {
-              dispatch(CreatorsBox.deleteBoxRequest(rowData.id));
-            },
+
           },
           {
             icon: "edit",
             tooltip: "Editar",
-            onClick: (event, rowData) => {
-              dispatch(CreatorsBox.showModalUpdateBox(rowData));
-            },
+
           },
           {
             icon: "refresh",
             tooltip: "Atualizar informações",
             isFreeAction: true,
-            onClick: () => dispatch(CreatorsBox.readBoxRequest()),
+
           },
         ]}
-        // eslint-disable-next-line react/jsx-no-duplicate-props
+
         columns={[
           {
             title: "Codigo",

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import { Creators as GeneretePdfCreators } from "~/store/ducks/generete";
-import { Creators as DistrictCreators } from "~/store/ducks/district";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -83,11 +81,7 @@ const Create = () => {
 
   const classes = useStyles();
 
-  useEffect(() => {
-    if (visible) {
-      dispatch(DistrictCreators.readDistrictRequest());
-    }
-  }, [dispatch, visible]);
+
 
   function create(e) {
     e.preventDefault();
@@ -120,7 +114,7 @@ const Create = () => {
       },
     };
 
-    dispatch(GeneretePdfCreators.filterBoxRequest(box));
+
 
     hide();
   }
@@ -146,7 +140,7 @@ const Create = () => {
     setVisitInitDate("");
 
     setAll(false);
-    dispatch(GeneretePdfCreators.hideModalGenereteBoxPdf());
+
   }
 
   return (

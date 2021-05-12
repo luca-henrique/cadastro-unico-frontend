@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
-import { Creators as LogCreators } from "~/store/ducks/log";
 
 import MaterialTable from "material-table";
 import { Modal, Backdrop } from "@material-ui/core/";
@@ -25,19 +23,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function View(props) {
-  const open = props.redux.log.open;
-  const data = props.redux.log.log;
-  const loading = props.redux.log.loading;
 
-  const { hideModalLog, readLogRequest } = props;
+
+
 
   const classes = useStyles();
 
-  useEffect(() => {
-    if (open) {
-      readLogRequest();
-    }
-  }, [open, readLogRequest]);
+
 
   function changer(array) {
     const log = [];
@@ -52,7 +44,6 @@ function View(props) {
 
   return (
     <Modal
-      open={open}
       style={{
         display: "flex",
         justifyContent: "center",
@@ -65,7 +56,6 @@ function View(props) {
     >
       <div className={classes.modal}>
         <MaterialTable
-          isLoading={loading}
           style={{
             height: "auto",
             boxShadow: "none",
@@ -76,13 +66,10 @@ function View(props) {
               icon: "close",
               tooltip: "Fechar",
               isFreeAction: true,
-              onClick: (event, rowData) => {
-                hideModalLog();
-              },
+
             },
           ]}
           title="Log"
-          data={changer(data)}
           localization={{
             header: {
               actions: "Ações",
@@ -128,11 +115,6 @@ function View(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  redux: state,
-});
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...LogCreators }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(View);
+export default (View);

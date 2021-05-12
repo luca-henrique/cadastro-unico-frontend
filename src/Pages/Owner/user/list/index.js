@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, lazy } from "react";
 
-import { Creators as CreatorsUser } from "~/store/ducks/user";
+
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -14,9 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import "./index.css";
 
-const Create = lazy(() => import("../create"));
-const Update = lazy(() => import("../update"));
-const ChangePassword = lazy(() => import("../change-password"));
+
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -40,11 +38,7 @@ const View = () => {
   const visible = useSelector((state) => state.user.user_list_view);
   const loading = useSelector((state) => state.user.loading);
 
-  useEffect(() => {
-    if (visible) {
-      dispatch(CreatorsUser.readUserRequest());
-    }
-  }, [visible]);
+
 
   return (
     <>
@@ -107,42 +101,32 @@ const View = () => {
                 icon: "add",
                 tooltip: "Adicionar usuário",
                 isFreeAction: true,
-                onClick: (event, rowData) => {
-                  dispatch(CreatorsUser.showNewUserView());
-                },
+
               },
 
               {
                 icon: "close",
                 tooltip: "Fechar",
                 isFreeAction: true,
-                onClick: (event, rowData) => {
-                  dispatch(CreatorsUser.hideUserView());
-                },
+
               },
 
               {
                 icon: "delete",
                 tooltip: "Deletar usuário",
-                onClick: (event, rowData) => {
-                  dispatch(CreatorsUser.deleteUserRequest(rowData.id));
-                },
+
               },
 
               {
                 icon: "edit",
                 tooltip: "Editar usuário",
-                onClick: (event, rowData) => {
-                  dispatch(CreatorsUser.showUpdateUser(rowData));
-                },
+
               },
             ]}
           />
         </div>
       </Modal>
-      <Create />
-      <Update />
-      <ChangePassword />
+
     </>
   );
 };

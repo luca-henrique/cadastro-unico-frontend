@@ -4,7 +4,6 @@ import api from "../../services/api";
 import { push } from "connected-react-router";
 
 import AuthActions from "../ducks/auth";
-import { Creators as UserCreators } from "../ducks/user";
 
 import { toastr } from "react-redux-toastr";
 
@@ -19,7 +18,6 @@ export function* signIn({ email, password }) {
 
     yield put(AuthActions.signInSuccess(response.data.token));
 
-    yield put(UserCreators.readUserJoinedRequest());
 
     yield put(push("/dashboard"));
   } catch (err) {
@@ -32,8 +30,7 @@ export function* signIn({ email, password }) {
 
 export function* signOut() {
   localStorage.removeItem("@Omni:token");
-  localStorage.removeItem("@Omni:team");
-  localStorage.removeItem("persist:cadastro");
+
 
   yield put(push("/login"));
 }

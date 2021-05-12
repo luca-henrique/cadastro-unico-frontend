@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { Creators as UserCreators } from "~/store/ducks/user";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -50,7 +49,6 @@ export default function Create() {
       role,
     };
 
-    dispatch(UserCreators.createUserRequest(user));
 
     hide();
   }
@@ -61,7 +59,6 @@ export default function Create() {
     setPassword("");
     setRole(false);
 
-    dispatch(UserCreators.hideNewUserView());
   };
 
   return (

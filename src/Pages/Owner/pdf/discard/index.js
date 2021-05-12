@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
 
 import { Page, Text, View, Document, Image } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
 
-import { Creators as GeneratorCreators } from "~/store/ducks/generete";
 
 import Loader from "~/components/loader/";
 
@@ -158,11 +155,6 @@ const PDF = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  redux: state,
-});
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...GeneratorCreators }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(PDF);
+export default (PDF);

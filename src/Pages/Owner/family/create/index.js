@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Creators as FamilyCreators } from "~/store/ducks/family";
 
 import { cpfMask } from "../../../Components/TextField/MaskInput";
 
@@ -62,12 +61,10 @@ export default function Create() {
       situacao,
       tipo,
     };
-    dispatch(FamilyCreators.createFamilyRequest(family));
     hide();
   }
 
   function hide() {
-    dispatch(FamilyCreators.hideModalNewFamiliar());
     setNome("");
     setCpf("");
     setNis("");

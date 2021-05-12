@@ -35,10 +35,3 @@ ReactDOM.render(
   </Providers>,
   document.getElementById("root")
 );
-
-ReactDOM.render(
-  <Providers>
-    <Portal />
-  </Providers>,
-  document.getElementById("main-portal")
-);

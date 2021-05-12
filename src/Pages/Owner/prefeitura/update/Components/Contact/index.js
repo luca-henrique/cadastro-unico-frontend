@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Creators as ContactCreators } from "../../../../../../store/ducks/contact_prefecture";
 
 import { Grid, Typography } from "@material-ui/core/";
 
@@ -32,7 +31,6 @@ export default function Components() {
 
       checkAttributesObj(cont);
 
-      dispatch(ContactCreators.updatePrefectureContactRequest(cont));
     } catch (err) {
       toastr.error("Verifique o seu numero");
     }

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import { Creators as BoxCreators } from "~/store/ducks/box";
-import { Creators as DistrictCreators } from "~/store/ducks/district";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -86,7 +84,6 @@ const Create = () => {
 
   useEffect(() => {
     if (visible) {
-      dispatch(DistrictCreators.readDistrictRequest());
     }
   }, [dispatch, visible]);
 
@@ -114,7 +111,6 @@ const Create = () => {
       local,
     };
 
-    dispatch(BoxCreators.createBoxRequest(box));
     hide();
   }
 
@@ -141,7 +137,6 @@ const Create = () => {
     setBenefit(false);
     setLocal(false);
 
-    dispatch(BoxCreators.hideModalNewBox());
   }
 
   return (

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { Creators as ContactCreators } from "../../../../../../store/ducks/contact_prefecture";
+
 
 import { Grid, Typography } from "@material-ui/core/";
 
@@ -105,11 +103,6 @@ function Contact(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  redux: state,
-});
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...ContactCreators }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contact);
+export default (Contact);

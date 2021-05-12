@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { Creators as UserCreators } from "../../../store/ducks/user";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Grid, Typography, Button } from "@material-ui/core/";
@@ -21,7 +20,6 @@ export default function View() {
       email
     };
     if (user.email !== email) {
-      dispatch(UserCreators.updateUserRequest(updateUser));
     }
   }
 
@@ -54,9 +52,7 @@ export default function View() {
           <Grid item xs={12} sm={5} style={{ marginTop: "40px" }}>
             <div style={{ width: "100%" }}>
               <Button
-                onClick={e => {
-                  dispatch(UserCreators.showModalChangerPassword());
-                }}
+
                 variant="contained"
                 style={{ color: "rgb(2,99,44)", width: "100%" }}
               >

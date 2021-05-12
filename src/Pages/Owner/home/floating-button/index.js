@@ -5,11 +5,6 @@ import { Container, Button } from "react-floating-action-button";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { Creators as CreatorsUser } from "~/store/ducks/user";
-import { Creators as CreatorsLog } from "~/store/ducks/log";
-import { Creators as CreatorsDistrict } from "~/store/ducks/district";
-import { Creators as CreatorsPrefecture } from "~/store/ducks/prefecture";
-import { Creators as CreatorsGeneretePdf } from "~/store/ducks/generete";
 
 import {
   Person,
@@ -49,15 +44,12 @@ const Index = () => {
       <Button tooltip="Minhas informações" className={style.root}>
         <Person
           onClick={() => {
-            dispatch(CreatorsUser.showUpdateUser(user));
           }}
         />
       </Button>
       <Button tooltip="Mudar senha" className={style.root}>
         <LockOutlined
-          onClick={() => {
-            dispatch(CreatorsUser.showChangerPasswordView());
-          }}
+
         />
       </Button>
 
@@ -65,47 +57,35 @@ const Index = () => {
         <>
           <Button tooltip="Usuários" className={style.root}>
             <GroupAdd
-              onClick={() => {
-                dispatch(CreatorsUser.showUserView());
-              }}
+
             />
           </Button>
           <Button tooltip="Prefeitura" className={style.root}>
             <HomeWorkOutlined
               style={{ color: "rgb(246,238,89)" }}
-              onClick={() => {
-                dispatch(
-                  CreatorsPrefecture.showModalUpdatePrefecture(prefecture)
-                );
-              }}
+
             />
           </Button>
 
           <Button tooltip="Log" className={style.root}>
             <Description
-              onClick={() => {
-                dispatch(CreatorsLog.showModalLog());
-              }}
+
             />
           </Button>
         </>
       ) : (
-        <></>
-      )}
+          <></>
+        )}
 
       <Button tooltip="Bairros" className={style.root}>
         <EditLocation
-          onClick={() => {
-            dispatch(CreatorsDistrict.showModalDistrict());
-          }}
+
         />
       </Button>
 
       <Button tooltip="Gerar Relatórios" className={style.root}>
         <PictureAsPdf
-          onClick={() => {
-            dispatch(CreatorsGeneretePdf.showModalGeneretePdf());
-          }}
+
         />
       </Button>
 

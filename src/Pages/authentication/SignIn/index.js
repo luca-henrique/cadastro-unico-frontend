@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import AuthActions from "~/store/ducks/auth";
-import { Creators as LicenseCreators } from "../../../store/ducks/license";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 import { Typography, TextField, Button } from "@material-ui/core/";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
@@ -32,7 +28,7 @@ const ValidationTextField = withStyles({
   },
 })(TextField);
 
-function SignUp(props) {
+export default (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -40,13 +36,10 @@ function SignUp(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const { signInRequest } = props;
-    signInRequest(email, password);
+
   }
 
-  useEffect(() => {
-    localStorage.clear();
-  }, []);
+
 
   return (
     <Container className={classes.container}>
@@ -103,15 +96,8 @@ function SignUp(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  redux: state,
-});
 
-// Ações
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...LicenseCreators, ...AuthActions }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
 
 const useStyles = makeStyles((theme) => ({
   container: {

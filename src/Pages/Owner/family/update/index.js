@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
-import { Creators as FamilyCreators } from "~/store/ducks/family";
-import { Creators as BoxCreators } from "~/store/ducks/box";
 
 import { useSelector } from "react-redux";
 
@@ -37,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Update(props) {
+export default (props) => {
   const classes = useStyles();
 
   const { hideModalUpdateFamily, updateFamilyRequest } = props;
@@ -255,16 +251,3 @@ function Update(props) {
     </Modal>
   );
 }
-
-const mapStateToProps = (state) => ({
-  redux: state,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ ...FamilyCreators, ...BoxCreators }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Update);
-
-Update.defaultProps = {
-  cpf: "",
-};
