@@ -2,7 +2,7 @@ import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import history from "~/Routes/history";
+import history from "~/routes/history";
 
 import {
   Typography,

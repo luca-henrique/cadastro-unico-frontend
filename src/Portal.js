@@ -1,35 +1,35 @@
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
 
-import Loader from "./components/loader";
+import Loader from "~/components/Loader";
 
-const Log = lazy(() => import("./Pages/Owner/log"));
+const Log = lazy(() => import("./pages/Owner/log"));
 
-const ListUsersModal = lazy(() => import("./Pages/Owner/user/list"));
-const CreateUserModal = lazy(() => import("./Pages/Owner/user/create"));
-const UpdateUserModal = lazy(() => import("./Pages/Owner/user/update"));
+const ListUsersModal = lazy(() => import("./pages/Owner/user/list"));
+const CreateUserModal = lazy(() => import("./pages/Owner/user/create"));
+const UpdateUserModal = lazy(() => import("./pages/Owner/user/update"));
 
-const ListDistrictModal = lazy(() => import("./Pages/Owner/district/list"));
-const CreateDistrictModal = lazy(() => import("./Pages/Owner/district/create"));
-const UpdateDistrictModal = lazy(() => import("./Pages/Owner/district/update"));
+const ListDistrictModal = lazy(() => import("./pages/Owner/district/list"));
+const CreateDistrictModal = lazy(() => import("./pages/Owner/district/create"));
+const UpdateDistrictModal = lazy(() => import("./pages/Owner/district/update"));
 
 const CreatePrefectureModal = lazy(() =>
-  import("./Pages/Owner/prefeitura/create/index")
+  import("./pages/Owner/prefeitura/create/index")
 );
 
 const UpdatePrefectureModal = lazy(() =>
-  import("./Pages/Owner/prefeitura/update/index")
+  import("./pages/Owner/prefeitura/update/index")
 );
 
-const CreateBoxModal = lazy(() => import("./Pages/Owner/box/create"));
-const UpdateBoxModal = lazy(() => import("./Pages/Owner/box/update"));
+const CreateBoxModal = lazy(() => import("./pages/Owner/box/create"));
+const UpdateBoxModal = lazy(() => import("./pages/Owner/box/update"));
 
-const ListGroupFamiliar = lazy(() => import("./Pages/Owner/family/list"));
-const CreateGroupFamiliar = lazy(() => import("./Pages/Owner/family/create"));
-const UpdateGroupFamiliar = lazy(() => import("./Pages/Owner/family/update"));
+const ListGroupFamiliar = lazy(() => import("./pages/Owner/family/list"));
+const CreateGroupFamiliar = lazy(() => import("./pages/Owner/family/create"));
+const UpdateGroupFamiliar = lazy(() => import("./pages/Owner/family/update"));
 
-const FilterBoxModal = lazy(() => import("./Pages/Owner/pdf/box-filter"));
-const ModalGeneretePdf = lazy(() => import("./Pages/Owner/pdf/index"));
+const FilterBoxModal = lazy(() => import("./pages/Owner/pdf/box-filter"));
+const ModalGeneretePdf = lazy(() => import("./pages/Owner/pdf/index"));
 
 const Main = () => {
   const LogModal = () => create(<Log />, "log-portal");

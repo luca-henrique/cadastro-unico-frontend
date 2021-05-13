@@ -10,7 +10,7 @@ import logger from "redux-logger";
 import rootReducer from "./ducks";
 import rootSaga from "./sagas";
 
-import history from "../Routes/history";
+import history from "~/routes/history";
 
 const sagaMonitor =
   process.env.NODE_ENV === "development"

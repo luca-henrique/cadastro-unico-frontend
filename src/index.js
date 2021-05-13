@@ -6,16 +6,14 @@ import ReduxToastr from "react-redux-toastr";
 
 import { PersistGate } from "redux-persist/integration/react";
 
-import Routes from "./Routes/index";
+import Routes from "~/routes/index";
 
 import { store, persistor } from "./store";
 
 import "./config/ReactotronConfig";
 
-import GlobalStyle from "./Styles/global";
+import GlobalStyle from "./style/global";
 import "./index.css";
-
-import Portal from "./Portal";
 
 const Providers = (props) => {
   return (

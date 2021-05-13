@@ -6,7 +6,7 @@ import MaterialTable from "material-table";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import history from "~/Routes/history";
+import history from "~/routes/history";
 
 const useStyles = makeStyles((theme) => ({
   modal: {

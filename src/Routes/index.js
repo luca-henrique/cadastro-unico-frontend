@@ -4,9 +4,8 @@ import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 
-import Loader from "../components/loader";
-
-import SignIn from "../Pages/authentication/SignIn/index";
+import Loader from "~/components/Loader";
+import SignIn from "~/pages/SignIn/";
 
 import history from "./history";
 

@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import MaterialTable from "material-table";
 
-import history from "~/Routes/history";
+import history from "~/routes/history";
 
 import { makeStyles } from "@material-ui/core/styles";
 

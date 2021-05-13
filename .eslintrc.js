@@ -15,14 +15,27 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module",
   },
-  plugins: ["react", "prettier"],
+  plugins: ["react", "prettier", "import-helpers"],
   rules: {
     "prettier/prettier": "error",
-    // "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
     "react/jsx-filename-extension": [
       "warn",
       {
         extensions: [".js", ".jsx"],
+      },
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        newlinesBetween: "always",
+        groups: [
+          "/^react/",
+          "module",
+          "/^~/",
+          [("parent", "sibling", "index")],
+        ],
+        alphabetize: { order: "asc", ignoreCase: true },
       },
     ],
     "import/prefer-default-export": "off",

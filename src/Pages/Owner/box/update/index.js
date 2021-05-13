@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { connect } from "react-redux";
 
-
 import { useSelector } from "react-redux";
 
 import moment from "moment";
@@ -404,4 +403,4 @@ export default (props) => {
       </form>
     </Modal>
   );
-}
+};

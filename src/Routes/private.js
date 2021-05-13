@@ -2,7 +2,7 @@ import React from "react";
 
 import { Route, Redirect } from "react-router-dom";
 
-import { store } from "../store/index";
+import { store } from "~/store/index";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -11,8 +11,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       store.getState().auth.signedIn ? (
         <Component {...props} />
       ) : (
-        <Redirect to={{ pathname: "/", state: { from: props.location } }} />
-      )
+          <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+        )
     }
   ></Route>
 );
