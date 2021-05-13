@@ -5,17 +5,18 @@ import Immutable from "seamless-immutable";
 const { Types, Creators } = createActions({
   signInRequest: ["email", "password"],
   signInSuccess: ["token"],
-  signOut: null
+  signOut: null,
 });
 
 export const AuthTypes = Types;
+console.log(AuthTypes);
 export default Creators;
 
 /* Initial State */
 
 export const INITIAL_STATE = Immutable({
   signedIn: !!localStorage.getItem("@Omni:token"),
-  token: localStorage.getItem("@Omni:token") || null
+  token: localStorage.getItem("@Omni:token") || null,
 });
 
 /* Reducers */
@@ -24,10 +25,10 @@ export const success = (state, { token }) => {
   return { ...state, signedIn: true, token };
 };
 
-export const logout = state => ({ ...state, signedIn: false, token: null });
+export const logout = (state) => ({ ...state, signedIn: false, token: null });
 
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGN_IN_SUCCESS]: success,
-  [Types.SIGN_OUT]: logout
+  [Types.SIGN_OUT]: logout,
 });

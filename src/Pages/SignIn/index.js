@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-
-import AuthActions from "~/store/ducks/auth";
 import { useDispatch } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+import AuthActions from "~/store/ducks/auth";
 
 import ContainerInput from "~/components/ContainerInput";
 import Typography from "~/components/Typography";
