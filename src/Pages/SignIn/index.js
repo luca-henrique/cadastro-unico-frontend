@@ -7,8 +7,10 @@ import AuthActions from "~/store/ducks/auth";
 
 import ContainerInput from "~/components/ContainerInput";
 import Typography from "~/components/Typography";
-import Copyright from "~/components/Copyright";
 import Button from "~/components/Button";
+
+import Copyright from "~/containers/Copyright";
+
 import LogoImg from "~/assets/Images/logocadastrounico.png";
 
 import { Container, Form } from "./style";
