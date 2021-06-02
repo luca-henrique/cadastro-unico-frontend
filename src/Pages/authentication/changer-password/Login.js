@@ -8,7 +8,7 @@ import TextField from "../../Components/TextField/index";
 import Modal from "./index";
 
 export default function View() {
-  const user = useSelector(state => state.user.user);
+  const user = useSelector((state) => state.user.user);
 
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ export default function View() {
   function onUpdate() {
     const updateUser = {
       id: user.id,
-      email
+      email,
     };
     if (user.email !== email) {
     }
@@ -37,6 +37,7 @@ export default function View() {
               <Typography variant="button" style={{ color: "#BDBDBD" }}>
                 Email
               </Typography>
+
               <TextField
                 variant="outlined"
                 size="small"
@@ -44,7 +45,7 @@ export default function View() {
                 required
                 value={email}
                 type="email"
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </Grid>
@@ -52,7 +53,6 @@ export default function View() {
           <Grid item xs={12} sm={5} style={{ marginTop: "40px" }}>
             <div style={{ width: "100%" }}>
               <Button
-
                 variant="contained"
                 style={{ color: "rgb(2,99,44)", width: "100%" }}
               >
@@ -68,5 +68,5 @@ export default function View() {
 }
 
 TextField.defaultProps = {
-  value: ""
+  value: "",
 };

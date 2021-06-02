@@ -8,8 +8,8 @@ import { Modal, Backdrop, Fade, Typography, Button } from "@material-ui/core/";
 
 import TextField from "../../Components/TextField/";
 
-export default function ChangerPassword() {
-  const visible = useSelector(state => state.user.visible);
+export default function ChangerPassword(props) {
+  const visible = useSelector((state) => state.user.visible);
 
   const dispatch = useDispatch();
 
@@ -46,13 +46,13 @@ export default function ChangerPassword() {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
         open={visible}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
-          timeout: 500
+          timeout: 500,
         }}
       >
         <Fade in={visible}>
@@ -61,7 +61,7 @@ export default function ChangerPassword() {
               backgroundColor: "#fff",
               padding: "20px",
               border: "1px solid #D8D8D8",
-              borderRadius: "5px"
+              borderRadius: "5px",
             }}
           >
             <Typography
@@ -81,7 +81,7 @@ export default function ChangerPassword() {
                   fullWidth
                   type="password"
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div style={{ marginTop: "20px", marginBottom: "10px" }}>
@@ -94,7 +94,7 @@ export default function ChangerPassword() {
                   fullWidth
                   type="password"
                   value={password1}
-                  onChange={e => setPassword1(e.target.value)}
+                  onChange={(e) => setPassword1(e.target.value)}
                 />
               </div>
               <div>
@@ -104,7 +104,7 @@ export default function ChangerPassword() {
                     width: "100%",
                     color: "rgb(2,99,44)",
                     marginTop: "15px",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
                   }}
                   type="submit"
                 >
@@ -118,7 +118,7 @@ export default function ChangerPassword() {
                   style={{
                     width: "100%",
                     marginTop: "10px",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
                   }}
                   onClick={hide}
                 >
@@ -134,5 +134,5 @@ export default function ChangerPassword() {
 }
 
 TextField.defaultProps = {
-  value: ""
+  value: "",
 };
