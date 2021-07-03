@@ -4,7 +4,7 @@ import propTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
-import { Colors } from "~/common/colors";
+import { Colors } from "olds/Typography/node_modules/~/common/colors";
 
 const StyledTextField = withStyles({
   root: {

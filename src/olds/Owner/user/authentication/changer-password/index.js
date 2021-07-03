@@ -6,7 +6,7 @@ import { toastr } from "react-redux-toastr";
 
 import { Modal, Backdrop, Fade, Typography, Button } from "@material-ui/core/";
 
-import TextField from "../../Components/TextField/";
+import TextField from "../../Components/TextField";
 
 export default function ChangerPassword(props) {
   const visible = useSelector((state) => state.user.visible);

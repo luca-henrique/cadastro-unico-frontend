@@ -1,7 +1,7 @@
 import React from "react";
 import propTypes from "prop-types";
 
-import Typography from "~/components/Typography";
+import Typography from "pages/SignIn/node_modules/~/components/Typography";
 import Input from "~/components/Input";
 
 import { Container } from "./style";

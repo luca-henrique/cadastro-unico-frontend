@@ -1,18 +1,21 @@
 import styled from "styled-components";
-import { Colors } from '~/common/colors';
+import { Colors } from "olds/Input/node_modules/components/olds/Typography/node_modules/~/common/colors";
 
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  
+
   display: flex;
   align-items: center;
   flex-direction: column;
-  
+
   justify-content: space-around;
-  
-  background-image: linear-gradient(132deg, ${Colors.primaryYellow} 10%, ${Colors.primaryGreen} 100%);
- 
+
+  background-image: linear-gradient(
+    132deg,
+    ${Colors.primaryYellow} 10%,
+    ${Colors.primaryGreen} 100%
+  );
 `;
 
 export const Form = styled.form`

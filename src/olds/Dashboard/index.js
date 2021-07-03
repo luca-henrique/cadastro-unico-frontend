@@ -14,7 +14,7 @@ import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import { Colors } from "~/common/colors/";
+import { Colors } from "olds/ListItemButton/node_modules/~/common/colors";
 import ButtonTeste from "~/components/ListItemButton";
 import UsersTable from "~/containers/Users/";
 
