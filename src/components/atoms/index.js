@@ -5,3 +5,4 @@ export { default as Form } from "./Form";
 export { default as Title } from "./Title";
 export { default as SubTitle } from "./Subtitle";
 export { default as Input } from "./Input/TextField";
+export { default as Image } from "./Image";
