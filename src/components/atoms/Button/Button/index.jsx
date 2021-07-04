@@ -1,45 +1,32 @@
 import React from "react";
 import propTypes from "prop-types";
 
-import Button from "@material-ui/core/Button";
+import { StyledButton } from "./style";
 
-const DefaultButton = ({
-  label,
-  onClick,
-  type,
-  variant,
-  Icon,
-  startIcon,
-  endIcon,
-}) => {
+const Index = ({ label, onClick, type, variant }, props) => {
   return (
-    <Button
+    <StyledButton
       variant={variant}
       fullWidth
       type={type}
       onClick={onClick}
-      startIcon={startIcon && <Icon />}
-      endIcon={endIcon && <Icon />}
-      color="primary"
+      {...props}
     >
       {label}
-    </Button>
+    </StyledButton>
   );
 };
 
-DefaultButton.propTypes = {
+Index.propTypes = {
   onClick: propTypes.func,
   type: propTypes.string,
   label: propTypes.string.isRequired,
   variant: propTypes.string,
-  startIcon: propTypes.bool,
-  endIcon: propTypes.bool,
-  Icon: propTypes.elementType,
 };
 
-DefaultButton.defaultProps = {
+Index.defaultProps = {
   label: "",
   variant: "contained",
 };
 
-export default DefaultButton;
+export default Index;

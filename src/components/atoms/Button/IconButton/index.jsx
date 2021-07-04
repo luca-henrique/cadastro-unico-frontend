@@ -3,9 +3,25 @@ import propTypes from "prop-types";
 
 import Button from "@material-ui/core/Button";
 
-const DefaultButton = ({ label, onClick, type, variant }) => {
+const DefaultButton = ({
+  label,
+  onClick,
+  type,
+  variant,
+  Icon,
+  startIcon,
+  endIcon,
+}) => {
   return (
-    <Button variant={variant} fullWidth type={type} onClick={onClick}>
+    <Button
+      variant={variant}
+      fullWidth
+      type={type}
+      onClick={onClick}
+      startIcon={startIcon && <Icon />}
+      endIcon={endIcon && <Icon />}
+      color="primary"
+    >
       {label}
     </Button>
   );
@@ -16,6 +32,9 @@ DefaultButton.propTypes = {
   type: propTypes.string,
   label: propTypes.string.isRequired,
   variant: propTypes.string,
+  startIcon: propTypes.bool,
+  endIcon: propTypes.bool,
+  Icon: propTypes.elementType,
 };
 
 DefaultButton.defaultProps = {

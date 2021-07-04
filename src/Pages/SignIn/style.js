@@ -1,41 +1,34 @@
 import styled from "styled-components";
-import { Colors } from "olds/Input/node_modules/components/olds/Typography/node_modules/~/common/colors";
 
-export const Container = styled.div`
-  width: 100%;
-  height: 100%;
+export const ImageContainer = styled.div`
+  width: 320px;
+  height: 150px;
 
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  @media (max-width: 992px) {
+    width: 520px;
+    height: 200px;
+  }
 
-  justify-content: space-around;
-
-  background-image: linear-gradient(
-    132deg,
-    ${Colors.primaryYellow} 10%,
-    ${Colors.primaryGreen} 100%
-  );
+  @media (max-width: 491px) {
+    width: 250px;
+    height: 130px;
+    margin-top: 10px;
+  }
 `;
 
-export const Form = styled.form`
-  width: 400px;
-  height: 400px;
-  border-radius: 10px;
-  padding: 20px;
-
+export const RecoveryContainer = styled.div`
+  width: 100%;
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
+  align-items: flex-end;
+`;
 
-  background: ${Colors.primaryWhite};
+export const ButtonContainer = styled.div`
+  width: 100%;
+  margin-top: 30px;
+`;
 
-  @media (max-width: 991px) {
-    width: 100%;
-    border-radius: 0px;
-  }
-  @media (min-width: 991px) {
-    width: 500px;
-  }
+export const ContainerInputs = styled.div`
+  width: 100%;
 `;
