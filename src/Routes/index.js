@@ -4,14 +4,18 @@ import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 
-import SignIn from "~/components/organisms/SignIn/index.jsx";
 import history from "./history";
+
+import SignIn from "~/pages/SignIn01";
+import Sign from "~/pages/SignIn02";
+
 
 const Routes = () => (
   <Suspense fallback={<div />}>
     <ConnectedRouter history={history}>
       <Switch>
         <Route path="/" exact component={SignIn} />
+        <Route path="/sign" exact component={Sign} />
       </Switch>
     </ConnectedRouter>
   </Suspense>
