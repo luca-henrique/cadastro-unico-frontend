@@ -6,7 +6,7 @@ import { ConnectedRouter } from "connected-react-router";
 
 import history from "./history";
 
-import SignIn from "~/pages/SignIn01";
+import SignIn from "~/pages/SignIn";
 import Sign from "~/pages/SignIn02";
 
 
