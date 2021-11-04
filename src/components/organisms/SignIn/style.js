@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ImageContainer = styled.div`
-  width: 320px;
-  height: 150px;
+  width: 560px;
+  height: 200px;
 
   @media (max-width: 992px) {
     width: 520px;

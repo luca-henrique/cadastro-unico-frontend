@@ -1,23 +1,15 @@
-import React, { Suspense } from "react";
+import React from 'react';
 
-import { Switch,Route } from "react-router-dom";
-import { ConnectedRouter } from "connected-react-router";
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-import history from "./history";
+import SignIn from '../pages/SignIn/index';
 
-import SignIn from "../pages/SignIn/";
-
-
-
-const Routes = () => (
-  <Suspense fallback={<div />}>
-    <ConnectedRouter history={history}>
-      <Switch>
-        <Route path="/" exact component={SignIn} />
-       
-      </Switch>
-    </ConnectedRouter>
-  </Suspense>
+const Container = () => (
+  <Router>
+    <Switch>
+      <Route path='/' exact component={SignIn} />
+    </Switch>
+  </Router>
 );
 
-export default Routes;
+export default Container;

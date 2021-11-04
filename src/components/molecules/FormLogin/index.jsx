@@ -1,22 +1,16 @@
-import React, { useState } from "react";
-import AuthActions from "../../../store/ducks/auth";
-import { useDispatch } from "react-redux";
+import React, {useState} from 'react';
+import AuthActions from 'store/ducks/auth';
+import {useDispatch} from 'react-redux';
 
-import {
-  Form,
-  Input,
-  Title,
-  SubTitle,
-  StyledButton,
-} from "../../atoms";
+import {Form, Input, Title, SubTitle, StyledButton} from '../../atoms';
 
-import { RecoveryContainer, ButtonContainer, ContainerInputs } from "./style";
+import {RecoveryContainer, ButtonContainer, ContainerInputs} from './style';
 
 const Index = () => {
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,44 +21,44 @@ const Index = () => {
     <Form
       onSubmit={handleSubmit}
       width={500}
-      height="400"
+      height='400'
       border={10}
       padding={20}
-      justify={"space-around"}
+      justify={'space-around'}
     >
-      <Title variant="h3" label="Entrar" />
+      <Title variant='h3' label='Entrar' />
 
       <ContainerInputs>
         <Input
-          label="Email"
+          label='Email'
           value={email}
           onChange={setEmail}
-          type="email"
-          placeholder="Insira seu email"
+          type='email'
+          placeholder='Insira seu email'
           required
         />
 
         <ButtonContainer>
           <Input
-            label="Senha"
+            label='Senha'
             value={password}
             onChange={setPassword}
-            type="password"
-            placeholder="Insira sua senha"
+            type='password'
+            placeholder='Insira sua senha'
             required={true}
           />
         </ButtonContainer>
 
         <RecoveryContainer>
-          <SubTitle variant="subtitle2" label="Recuperar conta" />
+          <SubTitle variant='subtitle2' label='Recuperar conta' />
         </RecoveryContainer>
       </ContainerInputs>
 
       <StyledButton
-        variant="contained"
+        variant='contained'
         fullWidth
-        type="submit"
-        label="Entrar"
+        type='submit'
+        label='Entrar'
       />
     </Form>
   );

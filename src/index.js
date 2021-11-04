@@ -1,26 +1,33 @@
-import React, { Fragment } from "react";
-import ReactDOM from "react-dom";
+import React, {Fragment} from 'react';
+import ReactDOM from 'react-dom';
 
-import { Provider } from "react-redux";
-import ReduxToastr from "react-redux-toastr";
+import PropTypes from 'prop-types';
 
-import { PersistGate } from "redux-persist/integration/react";
+import {Provider} from 'react-redux';
+import ReduxToastr from 'react-redux-toastr';
 
-import Routes from "../src/routes/index";
+import {PersistGate} from 'redux-persist/integration/react';
 
-import { store, persistor } from "./store";
+import Routes from '../src/routes/index';
 
-import "./config/ReactotronConfig";
+import {store, persistor} from './store';
 
-import GlobalStyle from "./style/global";
-import "./index.css";
+import './config/ReactotronConfig';
 
-const Providers = (props) => {
+import GlobalStyle from './style/global';
+import './index.css';
+
+// eslint-disable-next-line react/prop-types
+const Providers = ({children}) => {
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor}>{props.children}</PersistGate>
+      <PersistGate persistor={persistor}>{children}</PersistGate>
     </Provider>
   );
+};
+
+Providers.PropTypes = {
+  children: PropTypes.elementType,
 };
 
 ReactDOM.render(
@@ -31,5 +38,5 @@ ReactDOM.render(
       <ReduxToastr />
     </Fragment>
   </Providers>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );

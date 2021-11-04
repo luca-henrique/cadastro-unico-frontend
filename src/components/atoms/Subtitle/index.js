@@ -1,17 +1,18 @@
-import React from "react";
+import React from 'react';
 
-import Typography from "@material-ui/core/Typography";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import PropTypes from 'prop-types';
 
-import { COLORS } from "../../../common/colors";
+import {COLORS} from '../../../common/colors';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   typography: {
     color: COLORS.primaryGreen,
   },
 }));
 
-export default ({ label, variant }) => {
+const Subtitle = ({label, variant}) => {
   const classes = useStyles();
 
   return (
@@ -20,3 +21,10 @@ export default ({ label, variant }) => {
     </Typography>
   );
 };
+
+Subtitle.propTypes = {
+  variant: PropTypes.string,
+  label: PropTypes.string,
+};
+
+export default Subtitle;
