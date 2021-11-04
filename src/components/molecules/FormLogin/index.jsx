@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AuthActions from "~/store/ducks/auth";
+import AuthActions from "../../../store/ducks/auth";
 import { useDispatch } from "react-redux";
 
 import {
@@ -8,7 +8,7 @@ import {
   Title,
   SubTitle,
   StyledButton,
-} from "~/components/atoms/";
+} from "../../atoms";
 
 import { RecoveryContainer, ButtonContainer, ContainerInputs } from "./style";
 

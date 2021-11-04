@@ -6,7 +6,7 @@ import ReduxToastr from "react-redux-toastr";
 
 import { PersistGate } from "redux-persist/integration/react";
 
-import Routes from "~/routes/";
+import Routes from "../src/routes/index";
 
 import { store, persistor } from "./store";
 

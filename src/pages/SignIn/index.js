@@ -1,13 +1,13 @@
 import React from "react";
 
-import Logo from "~/assets/images/logo-cadastro-unico.png";
+import Logo from "assets/Images/logo-cadastro-unico.png";
 
-import { SignInContainer } from "~/components/template/Layout";
-import { Image } from "~/components/atoms";
+import { SignInContainer } from "../../components/template/Layout";
+import { Image } from "../../components/atoms";
 import { ImageContainer } from "./style";
 
-import Form from "~/components/molecules/FormLogin";
-import Copyright from "~/components/molecules/Copyright";
+import Form from "../../components/molecules/FormLogin/";
+import Copyright from "../../components/molecules/Copyright";
 
 export default () => {
   return (
