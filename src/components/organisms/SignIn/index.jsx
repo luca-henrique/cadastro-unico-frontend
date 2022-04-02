@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Logo from 'src/asset/images/logo-cadastro-unico.png';
+import Logo from 'src/assets/images/logo-cadastro-unico.png';
 
 import {SignInContainer} from 'src/components/template/Layout';
 import {Image} from 'src/components/atoms';

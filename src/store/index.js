@@ -1,7 +1,7 @@
 import {createStore, applyMiddleware} from 'redux';
 import createSagaMiddleware from '@redux-saga/core';
 import reduxLogger from 'redux-logger';
-import history from 'src/route/history';
+import history from 'src/routes/history';
 
 import {composeWithDevTools} from '@redux-devtools/extension';
 import rootSaga from './modules/rootSagas';
