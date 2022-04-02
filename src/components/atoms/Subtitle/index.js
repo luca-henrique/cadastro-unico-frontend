@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import Typography from "@material-ui/core/Typography";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { Colors } from "~/common/colors";
+import {Colors} from 'src/common/colors';
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default ({ label, variant }) => {
+export default ({label, variant}) => {
   const classes = useStyles();
 
   return (

@@ -1,33 +1,20 @@
-import { persistStore } from "redux-persist";
-import persistReducers from "./persistReducers";
-import { applyMiddleware, createStore, compose } from "redux";
-import "../config/ReactotronConfig";
-import createSagaMiddleware from "redux-saga";
-import { routerMiddleware } from "connected-react-router";
+import {createStore, applyMiddleware} from 'redux';
+import createSagaMiddleware from '@redux-saga/core';
+import reduxLogger from 'redux-logger';
+import history from 'src/route/history';
 
-import logger from "redux-logger";
+import {composeWithDevTools} from '@redux-devtools/extension';
+import rootSaga from './modules/rootSagas';
+import rootReducer from './modules/rootReducer';
 
-import rootReducer from "./ducks";
-import rootSaga from "./sagas";
-
-import history from "~/routes/history.js";
-
-const sagaMonitor =
-  process.env.NODE_ENV === "development"
-    ? console.tron.createSagaMonitor()
-    : null;
-
-const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
-
-const middlewares = [sagaMiddleware, routerMiddleware(history), logger];
+const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
-  persistReducers(rootReducer(history)),
-  compose(applyMiddleware(...middlewares))
+  rootReducer(history),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    ? composeWithDevTools(applyMiddleware(sagaMiddleware, reduxLogger))
+    : applyMiddleware(sagaMiddleware, reduxLogger),
 );
-
-const persistor = persistStore(store);
-
 sagaMiddleware.run(rootSaga);
 
-export { store, persistor };
+export default store;

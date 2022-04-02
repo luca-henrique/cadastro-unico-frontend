@@ -1,35 +1,24 @@
-import React, { Fragment } from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import { Provider } from "react-redux";
-import ReduxToastr from "react-redux-toastr";
+import {Provider} from 'react-redux';
 
-import { PersistGate } from "redux-persist/integration/react";
+import Routes from 'src/route/';
 
-import Routes from "~/routes/index";
+import store from 'src/store';
 
-import { store, persistor } from "./store";
+import './config/ReactotronConfig';
 
-import "./config/ReactotronConfig";
+import GlobalStyle from './style/global';
+import './index.css';
 
-import GlobalStyle from "./style/global";
-import "./index.css";
-
-const Providers = (props) => {
+const App = () => {
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor}>{props.children}</PersistGate>
+      <Routes />
+      <GlobalStyle />
     </Provider>
   );
 };
 
-ReactDOM.render(
-  <Providers store={store}>
-    <Fragment>
-      <Routes />
-      <GlobalStyle />
-      <ReduxToastr />
-    </Fragment>
-  </Providers>,
-  document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById('root'));
