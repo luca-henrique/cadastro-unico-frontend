@@ -1,11 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React from "react";
+import React from 'react';
+import MaterialTable from 'material-table';
+import './index.css';
 
-import MaterialTable from "material-table";
-
-import "./index.css";
-
-const Table = ({ title, columns, actions, data, loader }) => {
+const Table = ({title, columns, actions, data, loader}) => {
   return (
     <MaterialTable
       title={title}
@@ -15,24 +12,24 @@ const Table = ({ title, columns, actions, data, loader }) => {
       isLoading={loader}
       options={{
         headerStyle: {
-          color: "rgb(2,90,10)",
+          color: 'rgb(2,90,10)',
         },
-        actionsCellStyle: { color: "#848484" },
+        actionsCellStyle: {color: '#848484'},
       }}
       localization={{
         header: {
-          actions: "Ações",
+          actions: 'Ações',
         },
 
         body: {
-          emptyDataSourceMessage: "Não existe",
+          emptyDataSourceMessage: 'Não existe',
           filterRow: {
-            filterTooltip: "Procurar",
+            filterTooltip: 'Procurar',
           },
         },
         toolbar: {
-          searchTooltip: "Procurar",
-          searchPlaceholder: "Procurar",
+          searchTooltip: 'Procurar',
+          searchPlaceholder: 'Procurar',
         },
       }}
     />
@@ -40,25 +37,3 @@ const Table = ({ title, columns, actions, data, loader }) => {
 };
 
 export default Table;
-
-/*
-
-{
-          title: "Nome",
-          field: "nome",
-        },
-        {
-          title: "E-mail",
-          field: "email",
-        },
-
-        {
-          title: "Privilegio",
-          field: "role",
-
-          render: (rowData) => (
-            <>{rowData.role === true ? <LockOpenOutlined /> : <Lock />}</>
-          ),
-        },
-
-*/
