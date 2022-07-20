@@ -16,8 +16,8 @@ export function signInSuccess(data) {
   return {type: Types.SIGN_IN_SUCCESS, data};
 }
 
-export function signOutRequest(data) {
-  return {type: Types.SIGN_OUT_REQUEST, data};
+export function signOutRequest() {
+  return {type: Types.SIGN_OUT_REQUEST};
 }
 
 export function signOutSuccess() {
