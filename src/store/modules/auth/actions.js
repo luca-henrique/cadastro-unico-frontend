@@ -12,8 +12,8 @@ export function signInRequest(data) {
   return {type: Types.SIGN_IN_REQUEST, data};
 }
 
-export function signInSuccess() {
-  return {type: Types.SIGN_IN_SUCCESS};
+export function signInSuccess(data) {
+  return {type: Types.SIGN_IN_SUCCESS, data};
 }
 
 export function signOutRequest(data) {

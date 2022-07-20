@@ -1,9 +1,7 @@
 # Task
 
-- organizar importações de imagens
-- adicionar atomic design ao projeto
-- remover reacttotron
-- remover bootstrap
-- remover biblioteca de gerar pdf
-- remover via cep
-- remove moment (atulizar biblioteca de formatação de data)
+# SignIn
+
+- ajustar api (quando o usuario logar trazer a informações básicas do usuario)
+- ajustar messagens de error
+- componentizar o card form (form)

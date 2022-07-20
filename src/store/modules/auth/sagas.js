@@ -3,28 +3,19 @@ import {takeLatest, all, call, put} from 'redux-saga/effects';
 import api from 'src/services/api';
 
 import Types from './types';
-import {signInSuccess, signOutSuccess} from './actions';
+import {signInSuccess} from './actions';
+
+import {toastr} from 'react-redux-toastr';
 
 export function* signIn({data}) {
   try {
-    const response = yield call(api.post, '/signin', data);
-    const res = response.data;
-    yield put(signInSuccess(res));
+    const response = yield call(api.post, '/auth', data);
+    const {token} = response.data;
+    localStorage.setItem('token', JSON.stringify(token));
+    yield put(signInSuccess(token));
   } catch (error) {
-    console.log(error);
+    toastr.error(error.response.data);
   }
 }
 
-export function* signOut({data}) {
-  try {
-    yield call(api.get, '/signout', data);
-    yield put(signOutSuccess());
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export default all([
-  takeLatest(Types.SIGN_IN_REQUEST, signIn),
-  takeLatest(Types.SIGN_OUT_REQUEST, signOut),
-]);
+export default all([takeLatest(Types.SIGN_IN_REQUEST, signIn)]);

@@ -2,14 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {Provider} from 'react-redux';
-
 import Routes from 'src/routes';
+import GlobalStyle from './style/global';
+import ReduxToastr from 'react-redux-toastr';
 
 import store from 'src/store';
 
-import './config/ReactotronConfig';
-
-import GlobalStyle from './style/global';
 import './index.css';
 
 const App = () => {
@@ -17,6 +15,7 @@ const App = () => {
     <Provider store={store}>
       <Routes />
       <GlobalStyle />
+      <ReduxToastr />
     </Provider>
   );
 };

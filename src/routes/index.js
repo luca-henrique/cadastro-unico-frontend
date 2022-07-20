@@ -4,11 +4,9 @@ import {Switch} from 'react-router-dom';
 import {Route} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
 
-import SignIn from 'src/components/organisms/SignIn/';
+import SignIn from 'src/pages/SignIn';
 import Table from 'src/components/molecules/Table';
 import history from './history';
-
-const License = lazy(() => import('src/pages/License/index'));
 
 const Dashboard = lazy(() => import('src/pages/Dashboard'));
 
@@ -25,7 +23,7 @@ const Routes = () => (
     <ConnectedRouter history={history}>
       <Switch>
         <Route path='/' exact component={SignIn} />
-        <Route path='/license' exact component={License} />
+
         <Route path='/dashboard' exact component={Example} />
       </Switch>
     </ConnectedRouter>

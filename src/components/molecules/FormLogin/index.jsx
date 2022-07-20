@@ -11,6 +11,8 @@ import {
 
 import {RecoveryContainer, ButtonContainer, ContainerInputs} from './style';
 
+import {signInRequest} from 'src/store/modules/auth/actions';
+
 const Index = () => {
   const dispatch = useDispatch();
 
@@ -19,6 +21,7 @@ const Index = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(signInRequest({email, password}));
   };
 
   return (

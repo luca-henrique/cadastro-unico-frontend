@@ -1,11 +1,12 @@
 import {combineReducers} from 'redux';
 import {connectRouter} from 'connected-react-router';
+import {reducer as toastrReducer} from 'react-redux-toastr';
 
 import auth from './auth/reducer';
-import user from './user/reducer';
-import license from './license/reducer';
 
 export default (history) =>
   combineReducers({
+    auth,
     router: connectRouter(history),
+    toastr: toastrReducer,
   });

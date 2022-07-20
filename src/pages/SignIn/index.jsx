@@ -1,24 +1,28 @@
 import React from 'react';
 
-import Logo from 'src/assets/images/logo-cadastro-unico.png';
+import {Images} from 'src/assets';
 
-import {SignInContainer} from 'src/components/template/Layout';
 import {Image} from 'src/components/atoms';
-import {ImageContainer} from './style';
+import {ImageContainer, Container} from './style';
 
 import Form from 'src/components/molecules/FormLogin';
 import Copyright from 'src/components/molecules/Copyright';
 
 export default () => {
   return (
-    <SignInContainer justify={'space-around'}>
+    <Container justify={'space-around'}>
       <ImageContainer>
-        <Image src={Logo} width='100%' height='100%' alt='Cadastro único' />
+        <Image
+          src={Images['logo-cadastro-unico']}
+          width='100%'
+          height='100%'
+          alt='Cadastro único'
+        />
       </ImageContainer>
 
       <Form />
 
       <Copyright />
-    </SignInContainer>
+    </Container>
   );
 };
