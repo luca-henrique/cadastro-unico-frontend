@@ -2,6 +2,7 @@ import React, {Suspense, lazy} from 'react';
 
 import {Switch} from 'react-router-dom';
 import {Route} from 'react-router-dom';
+import PrivateRoute from './private';
 import {ConnectedRouter} from 'connected-react-router';
 
 import SignIn from 'src/pages/SignIn';
@@ -22,9 +23,9 @@ const Routes = () => (
   <Suspense fallback={<div />}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path='/' exact component={SignIn} />
+        <PrivateRoute path='/' exact component={SignIn} />
 
-        <Route path='/dashboard' exact component={Example} />
+        <PrivateRoute path='/dashboard' exact component={Example} />
       </Switch>
     </ConnectedRouter>
   </Suspense>

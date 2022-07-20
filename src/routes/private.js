@@ -1,20 +1,30 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 
 import {Route, Redirect} from 'react-router-dom';
 
-import {store} from 'src/store';
+const PrivateRoute = ({component: Component, ...rest}) => {
+  const token = useSelector((state) => state.auth.token);
 
-const PrivateRoute = ({component: Component, ...rest}) => (
-  <Route
-    {...rest}
-    render={(props) =>
-      store.getState().auth.signedIn ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to={{pathname: '/', state: {from: props.location}}} />
-      )
-    }
-  />
-);
+  console.log(token);
+  console.log(rest);
+
+  if (rest.path === '/' && !token) {
+    return <Redirect to={{pathname: '/', state: {from: rest.location}}} />;
+  }
+
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        token ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{pathname: '/', state: {from: props.location}}} />
+        )
+      }
+    />
+  );
+};
 
 export default PrivateRoute;
