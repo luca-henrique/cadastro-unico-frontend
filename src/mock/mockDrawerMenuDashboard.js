@@ -1,9 +1,10 @@
+import Family from 'src/assets/icons/family.png';
 const mockMenuLeft = [
-  {name: 'Usuarios', to: '/usuarios', icon: ''},
-  {name: 'Bairro', to: '/bairros', icon: ''},
-  {name: 'Familias', to: '/familias', icon: ''},
-  {name: 'Prefeitura', to: '/prefeitura', icon: ''},
-  {name: 'Log', to: '/log', icon: ''},
+  {name: 'Usuarios', to: '/usuarios', icon: Family},
+  {name: 'Bairro', to: '/bairros', icon: Family},
+  {name: 'Familias', to: '/familias', icon: Family},
+  {name: 'Prefeitura', to: '/prefeitura', icon: Family},
+  {name: 'Log', to: '/log', icon: Family},
 ];
 
 export default mockMenuLeft;

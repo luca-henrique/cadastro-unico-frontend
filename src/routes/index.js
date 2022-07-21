@@ -12,7 +12,7 @@ import SignIn from 'src/pages/SignIn';
 import Table from 'src/components/molecules/Table';
 import history from './history';
 
-const Dashboard = lazy(() => import('src/pages/Dashboard'));
+const Dashboard = lazy(() => import('src/components/layout/Dashboard'));
 
 const Routes = () => {
   const token = useSelector((state) => state.auth.token);
@@ -29,7 +29,7 @@ const Routes = () => {
             <Dashboard title={'Dashboard'} />
           </PrivateRoute>
 
-          <PrivateRoute path='/familia' exact isAuthenticated={token}>
+          <PrivateRoute path='/familias' exact isAuthenticated={token}>
             <Dashboard title={'Dashboard'}>
               <Table />
             </Dashboard>

@@ -9,8 +9,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+
 import mockMenuLeft from 'src/mock/mockDrawerMenuDashboard';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
@@ -66,7 +65,7 @@ const DrawerMenuDashboard = ({setOpen, open}) => {
         {mockMenuLeft.map((item, index) => (
           <ListItem button key={index} component={Link} to={item.to}>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <img src={item.icon} alt='' />
             </ListItemIcon>
             <ListItemText primary={item.name} />
           </ListItem>

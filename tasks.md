@@ -1,5 +1,5 @@
 # Task
 
-# SignIn
-
-- Ajustar Private Router
+- Ajustar componentes do Dashboard
+- Criar mocks
+- Ajustar ações
