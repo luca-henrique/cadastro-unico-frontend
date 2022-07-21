@@ -9,7 +9,7 @@ import PublicRoute from 'src/components/atoms/PublicRoute';
 import PrivateRoute from 'src/components/atoms/PrivateRoute';
 
 import SignIn from 'src/pages/SignIn';
-import Table from 'src/components/molecules/Table';
+import Table from 'src/components/molecules/FamiliarTable';
 import history from './history';
 
 const Dashboard = lazy(() => import('src/components/layout/Dashboard'));
