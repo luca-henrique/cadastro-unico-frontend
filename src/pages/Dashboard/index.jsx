@@ -1,25 +1,21 @@
 import React from 'react';
 import clsx from 'clsx';
-import {Link} from 'react-router-dom';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
+
+import {makeStyles} from '@material-ui/core/styles';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
+
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+
+import DrawerMenuDashboard from 'src/components/molecules/DrawerMenuDashboard';
 
 const drawerWidth = 240;
 
@@ -87,7 +83,7 @@ export default function DrawerLeft({children, title}) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBarMenu setOpen={setOpen} title={title} open={open} />
-      <DrawerMenu setOpen={setOpen} open={open} />
+      <DrawerMenuDashboard setOpen={setOpen} open={open} />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
@@ -186,48 +182,5 @@ const AppBarMenu = ({title, open, setOpen}) => {
         </div>
       </Toolbar>
     </AppBar>
-  );
-};
-
-const DrawerMenu = ({setOpen, open}) => {
-  const classes = useStyles();
-  const theme = useTheme();
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <Drawer
-      className={classes.drawer}
-      variant='persistent'
-      anchor='left'
-      open={open}
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <div className={classes.drawerHeader}>
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === 'ltr' ? (
-            <ChevronLeftIcon />
-          ) : (
-            <ChevronRightIcon />
-          )}
-        </IconButton>
-      </div>
-      <List>
-        {['Usuarios', 'Bairro', 'Familia', 'Prefeitura', 'Log'].map(
-          (text, index) => (
-            <ListItem button key={text} component={Link} to='/'>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ),
-        )}
-      </List>
-    </Drawer>
   );
 };

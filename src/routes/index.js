@@ -26,6 +26,10 @@ const Routes = () => {
           </PublicRoute>
 
           <PrivateRoute path='/dashboard' exact isAuthenticated={token}>
+            <Dashboard title={'Dashboard'} />
+          </PrivateRoute>
+
+          <PrivateRoute path='/familia' exact isAuthenticated={token}>
             <Dashboard title={'Dashboard'}>
               <Table />
             </Dashboard>
