@@ -1,5 +1,4 @@
 # Task
 
-- Ajustar componentes do Dashboard
-- Criar mocks
-- Ajustar ações
+- Ajustar cores
+- Aumentar o height do AppBar
