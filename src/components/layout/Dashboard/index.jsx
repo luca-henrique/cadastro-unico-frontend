@@ -4,10 +4,10 @@ import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import DrawerMenuDashboard from 'src/components/molecules/DrawerMenuDashboard';
+import DrawerMenuDashboard from 'src/components/organisms/DrawerMenuDashboard';
 import AppBarMenu from 'src/components/organisms/AppBarMenu';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 function DashboardLayout({children, title}) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   return (
     <div className={classes.root}>

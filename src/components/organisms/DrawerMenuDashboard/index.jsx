@@ -6,16 +6,11 @@ import {makeStyles, useTheme} from '@material-ui/core/styles';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import mockMenuLeft from 'src/mock/mockDrawerMenuDashboard';
 import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import {Link} from 'react-router-dom';
 
-const drawerWidth = 240;
+import DrawerListIcons from '../../molecules/DrawerListIcons';
+
+const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -61,16 +56,7 @@ const DrawerMenuDashboard = ({setOpen, open}) => {
           )}
         </IconButton>
       </div>
-      <List>
-        {mockMenuLeft.map((item, index) => (
-          <ListItem button key={index} component={Link} to={item.to}>
-            <ListItemIcon>
-              <img src={item.icon} alt='' />
-            </ListItemIcon>
-            <ListItemText primary={item.name} />
-          </ListItem>
-        ))}
-      </List>
+      <DrawerListIcons />
     </Drawer>
   );
 };

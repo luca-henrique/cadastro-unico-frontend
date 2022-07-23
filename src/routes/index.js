@@ -14,6 +14,8 @@ import history from './history';
 
 const Dashboard = lazy(() => import('src/components/layout/Dashboard'));
 
+const UserList = lazy(() => import('src/components/organisms/UserList'));
+
 const Routes = () => {
   const token = useSelector((state) => state.auth.token);
 
@@ -32,6 +34,12 @@ const Routes = () => {
           <PrivateRoute path='/familias' exact isAuthenticated={token}>
             <Dashboard title={'Dashboard'}>
               <Table />
+            </Dashboard>
+          </PrivateRoute>
+
+          <PrivateRoute path='/usuarios' exact isAuthenticated={token}>
+            <Dashboard title={'Dashboard'}>
+              <UserList />
             </Dashboard>
           </PrivateRoute>
         </Switch>
